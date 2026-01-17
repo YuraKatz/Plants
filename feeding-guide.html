@@ -30,15 +30,39 @@
         h1 { font-size: 2.5rem; color: #2d3748; margin-bottom: 10px; }
         h2 { font-size: 1.5rem; color: #2d3748; margin: 30px 0 20px; }
 
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         .nav-back {
             display: inline-block;
-            margin-bottom: 20px;
             text-decoration: none;
             color: #4a5568;
             font-weight: 600;
             transition: color 0.2s;
         }
         .nav-back:hover { color: #2d3748; }
+
+        .nav-mixer {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .nav-mixer:hover {
+            background: linear-gradient(135deg, #38a169, #2f855a);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
 
         .season-indicator {
             display: inline-block;
@@ -198,7 +222,10 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="nav-back">← На главную</a>
+        <div class="nav-row">
+            <a href="index.html" class="nav-back">← На главную</a>
+            <a href="water-mixer.html" class="nav-mixer">🧪 Миксер канистр</a>
+        </div>
         <header>
             <h1>Руководство по подкормкам</h1>
             <div id="seasonIndicator" class="season-indicator">Режим: ЗАГРУЗКА...</div>

@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plants Care Database</title>
 
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Comprehensive plant care system - watering, lighting, feeding, diagnostics">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
     <style>
         * {
             margin: 0;
@@ -231,7 +240,7 @@
         <header>
             <h1>🌿 Plants Care Database</h1>
             <p class="subtitle">Comprehensive plant care system</p>
-            <span class="version">v2.1</span>
+            <span class="version">v3.0 PWA</span>
         </header>
 
         <div class="search-container">
@@ -357,10 +366,86 @@
                     </div>
                 </div>
             </a>
+
+            <!-- Plant Problems Card -->
+            <a href="plant-problems.html" class="nav-card catalog" style="border-color: #f5576c;">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">Диагностика</div>
+                <div class="card-description">
+                    Определите проблему по симптомам и найдите решение.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">10+</div>
+                        <div class="stat-label">Проблем</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">30+</div>
+                        <div class="stat-label">Решений</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Seasonal Care Card -->
+            <a href="seasonal-care.html" class="nav-card catalog" style="border-color: #38a169;">
+                <div class="card-icon">📅</div>
+                <div class="card-title">Сезонный уход</div>
+                <div class="card-description">
+                    Как ухаживать за растениями в разное время года.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Сезона</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">Совета</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Propagation Card -->
+            <a href="propagation.html" class="nav-card catalog" style="border-color: #a18cd1;">
+                <div class="card-icon">🌱</div>
+                <div class="card-title">Размножение</div>
+                <div class="card-description">
+                    Методы размножения для каждого растения.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Методов</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Растений</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Pests & Diseases Card -->
+            <a href="pests-diseases.html" class="nav-card catalog" style="border-color: #e53e3e;">
+                <div class="card-icon">🐛</div>
+                <div class="card-title">Вредители и болезни</div>
+                <div class="card-description">
+                    Определение, лечение и профилактика.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Вредителей</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Болезни</div>
+                    </div>
+                </div>
+            </a>
         </div>
 
         <footer>
-            <p>Plants Database v2.1 | Production Ready</p>
+            <p>Plants Database v3.0 | PWA Ready</p>
             <div class="footer-links">
                 <a href="README.md" class="footer-link">Documentation</a>
                 <a href="QUICK-START.md" class="footer-link">Quick Start</a>
@@ -402,6 +487,19 @@
             if (e.key === '2') window.location.href = 'lighting-groups.html';
             if (e.key === '3') window.location.href = 'soil-groups.html';
         });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('SW registered:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('SW registration failed:', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>

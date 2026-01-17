@@ -82,6 +82,25 @@
             background: #5a67d8;
         }
 
+        .btn-mixer {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-mixer:hover {
+            background: linear-gradient(135deg, #38a169, #2f855a);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+
         .water-group {
             margin-bottom: 40px;
             border-radius: 15px;
@@ -302,6 +321,7 @@
                 placeholder="Поиск по названию или plant_id..."
                 autocomplete="off"
             >
+            <a href="water-mixer.html" class="btn-mixer">🧪 Миксер удобрений</a>
             <button class="btn-print" onclick="window.print()">🖨️ Print</button>
         </div>
 
