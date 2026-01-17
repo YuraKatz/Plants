@@ -183,6 +183,25 @@
             background: linear-gradient(135deg, #a8e06310 0%, #56ab2f10 100%);
         }
 
+        .search-container {
+            margin-bottom: 30px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        #searchInput:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
@@ -214,6 +233,15 @@
             <p class="subtitle">Comprehensive plant care system</p>
             <span class="version">v2.1</span>
         </header>
+
+        <div class="search-container">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Поиск растения (название, латынь или тип)..."
+                autocomplete="off"
+            >
+        </div>
 
         <div class="cards-grid">
             <!-- Plants Catalog Card -->
@@ -327,8 +355,29 @@
     </div>
 
     <script>
-        // Add keyboard shortcuts
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && this.value.trim()) {
+                window.location.href = 'plants-catalog.html?search=' + encodeURIComponent(this.value.trim());
+            }
+        });
+
+        // Instant search - redirect after typing stops
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            if (this.value.trim().length >= 2) {
+                searchTimeout = setTimeout(() => {
+                    window.location.href = 'plants-catalog.html?search=' + encodeURIComponent(this.value.trim());
+                }, 800);
+            }
+        });
+
+        // Keyboard shortcuts (only when not typing in search)
         document.addEventListener('keydown', function(e) {
+            if (document.activeElement === searchInput) return;
             if (e.key === '0') window.location.href = 'plants-catalog.html';
             if (e.key === '1') window.location.href = 'water-groups.html';
             if (e.key === '2') window.location.href = 'lighting-groups.html';

@@ -1181,6 +1181,14 @@
 
         // Initialize
         renderPlants();
+
+        // Check for search query in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search');
+        if (searchQuery) {
+            searchInput.value = searchQuery;
+            searchInput.dispatchEvent(new Event('input'));
+        }
     </script>
 </body>
 </html>
