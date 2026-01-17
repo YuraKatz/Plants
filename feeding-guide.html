@@ -91,7 +91,6 @@
         .dose-eighth { background: #fecaca; color: #991b1b; }
         .dose-forbidden { background: #fee2e2; color: #991b1b; }
         .dose-top { background: #e0e7ff; color: #3730a3; }
-        .dose-calmag { background: #cffafe; color: #0e7490; }
 
         /* Matrix Table */
         .matrix-container {
@@ -246,7 +245,6 @@
                         <th>Universal</th>
                         <th>Flowering</th>
                         <th>Multicote</th>
-                        <th>CalMag</th>
                     </tr>
                 </thead>
                 <tbody id="matrixBody">
@@ -268,10 +266,6 @@
             <div class="fertilizer-card" style="border-left-color: #805ad5;">
                 <h4>Ecogan Multicote</h4>
                 <p>Гранулированное удобрение пролонгированного действия. НЕ использовать на фитильном поливе!</p>
-            </div>
-            <div class="fertilizer-card" style="border-left-color: #0891b2;">
-                <h4>Atami CalMag</h4>
-                <p>Добавка кальция и магния для RO воды. Критически важна при использовании осмоса.</p>
             </div>
         </div>
 
@@ -419,7 +413,7 @@
                     carnivorous: 'Хищные'
                 };
                 const groupRow = document.createElement('tr');
-                groupRow.innerHTML = `<td colspan="5" style="background: #edf2f7; font-weight: 700; color: #4a5568; padding: 8px 12px;">${groupNames[currentGroup]}</td>`;
+                groupRow.innerHTML = `<td colspan="4" style="background: #edf2f7; font-weight: 700; color: #4a5568; padding: 8px 12px;">${groupNames[currentGroup]}</td>`;
                 tbody.appendChild(groupRow);
             }
 
@@ -437,7 +431,6 @@
                 <td>${getDoseBadge(matrix.flower_universal, plant.wick, 'flower_universal')}</td>
                 <td>${getDoseBadge(matrix.flower_flowering, plant.wick, 'flower_flowering')}</td>
                 <td>${getDoseBadge(matrix.ecogan_multicote, plant.wick, 'ecogan_multicote')}</td>
-                <td>${getDoseBadge(matrix.atami_calmag, plant.wick, 'atami_calmag')}</td>
             `;
             tbody.appendChild(row);
         });

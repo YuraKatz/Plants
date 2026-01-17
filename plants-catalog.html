@@ -221,6 +221,71 @@
             color: #c53030 !important;
         }
 
+        /* Moss pole badge */
+        .moss-pole-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .moss-pole-yes {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .moss-pole-optional {
+            background: #fefcbf;
+            color: #744210;
+        }
+
+        .moss-pole-no {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        /* Difficulty badge */
+        .difficulty-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .difficulty-easy {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .difficulty-medium {
+            background: #fefcbf;
+            color: #744210;
+        }
+
+        .difficulty-hard {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .difficulty-expert {
+            background: #e9d5ff;
+            color: #6b21a8;
+        }
+
+        .badges-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
         .nav-home {
             display: inline-block;
             padding: 10px 20px;
@@ -366,6 +431,8 @@
       "name": "Гузмания",
       "latin_name": "Guzmania",
       "type": "Бромелиевые",
+      "difficulty": "medium",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 5000,
         "lux_optimal": 10000,
@@ -403,6 +470,8 @@
       "name": "Драцена маргината",
       "latin_name": "Dracaena marginata",
       "type": "Ложные пальмы",
+      "difficulty": "easy",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 2500,
         "lux_optimal": 6000,
@@ -437,6 +506,8 @@
       "name": "Драцена фрагранс / деременсис",
       "latin_name": "Dracaena fragrans / deremensis",
       "type": "Ложные пальмы",
+      "difficulty": "easy",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 2500,
         "lux_optimal": 6000,
@@ -471,6 +542,8 @@
       "name": "Кротон",
       "latin_name": "Codiaeum variegatum",
       "type": "Пестролистные",
+      "difficulty": "medium",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 4000,
         "lux_optimal": 10000,
@@ -507,6 +580,8 @@
       "name": "Монстера делициоза",
       "latin_name": "Monstera deliciosa",
       "type": "Ароидные (лианы)",
+      "difficulty": "easy",
+      "moss_pole": "recommended",
       "lighting": {
         "lux_min": 2500,
         "lux_optimal": 7000,
@@ -542,6 +617,8 @@
       "name": "Монстера адансони",
       "latin_name": "Monstera adansonii",
       "type": "Ароидные (лианы)",
+      "difficulty": "easy",
+      "moss_pole": "optional",
       "lighting": {
         "lux_min": 2500,
         "lux_optimal": 7000,
@@ -577,6 +654,8 @@
       "name": "Филодендрон (Imperial Green / Red)",
       "latin_name": "Philodendron",
       "type": "Ароидные (кустовые/лианы)",
+      "difficulty": "easy",
+      "moss_pole": "optional",
       "lighting": {
         "lux_min": 2000,
         "lux_optimal": 5000,
@@ -609,6 +688,8 @@
       "name": "Эпипремнум (Золотистый / Марбл Квин)",
       "latin_name": "Epipremnum aureum",
       "type": "Ароидные (лианы)",
+      "difficulty": "easy",
+      "moss_pole": "optional",
       "lighting": {
         "lux_min": 1500,
         "lux_optimal": 5000,
@@ -641,6 +722,8 @@
       "name": "Аглаонема",
       "latin_name": "Aglaonema",
       "type": "Ароидные (кустовые)",
+      "difficulty": "easy",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 800,
         "lux_optimal": 3000,
@@ -676,6 +759,8 @@
       "name": "Калатея лансифолия",
       "latin_name": "Calathea lancifolia",
       "type": "Марантовые",
+      "difficulty": "hard",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 2000,
         "lux_optimal": 4000,
@@ -711,6 +796,8 @@
       "name": "Калатея орната",
       "latin_name": "Calathea ornata",
       "type": "Марантовые",
+      "difficulty": "expert",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 2000,
         "lux_optimal": 4000,
@@ -746,6 +833,8 @@
       "name": "Спатифиллум",
       "latin_name": "Spathiphyllum",
       "type": "Ароидные (кустовые)",
+      "difficulty": "easy",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 1500,
         "lux_optimal": 4000,
@@ -778,6 +867,8 @@
       "name": "Орхидея фаленопсис",
       "latin_name": "Phalaenopsis",
       "type": "Орхидные",
+      "difficulty": "medium",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 5000,
         "lux_optimal": 12000,
@@ -813,6 +904,8 @@
       "name": "Алоказия (Polly)",
       "latin_name": "Alocasia amazonica",
       "type": "Ароидные (клубневые)",
+      "difficulty": "hard",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 3000,
         "lux_optimal": 8000,
@@ -848,6 +941,8 @@
       "name": "Антуриум",
       "latin_name": "Anthurium andraeanum",
       "type": "Ароидные (кустовые)",
+      "difficulty": "medium",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 3000,
         "lux_optimal": 8000,
@@ -880,6 +975,8 @@
       "name": "Бегония макулата",
       "latin_name": "Begonia maculata",
       "type": "Бегониевые",
+      "difficulty": "medium",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 3000,
         "lux_optimal": 7000,
@@ -915,6 +1012,8 @@
       "name": "Хамедорея",
       "latin_name": "Chamaedorea",
       "type": "Пальмы",
+      "difficulty": "medium",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 1000,
         "lux_optimal": 4000,
@@ -947,6 +1046,8 @@
       "name": "Хлорофитум",
       "latin_name": "Chlorophytum comosum",
       "type": "Травянистые",
+      "difficulty": "easy",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 1500,
         "lux_optimal": 6000,
@@ -979,6 +1080,8 @@
       "name": "Дионея (Венерина мухоловка)",
       "latin_name": "Dionaea muscipula",
       "type": "Хищные",
+      "difficulty": "expert",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 10000,
         "lux_optimal": 30000,
@@ -1012,6 +1115,8 @@
       "name": "Папоротник (Нефролепис)",
       "latin_name": "Nephrolepis exaltata",
       "type": "Папоротники",
+      "difficulty": "medium",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 1500,
         "lux_optimal": 4000,
@@ -1051,6 +1156,8 @@
       "name": "Сансевиерия (Щучий хвост)",
       "latin_name": "Sansevieria trifasciata",
       "type": "Суккуленты",
+      "difficulty": "easy",
+      "moss_pole": "none",
       "lighting": {
         "lux_min": 1000,
         "lux_optimal": 5000,
@@ -1186,6 +1293,23 @@
                 });
             }
 
+            // Difficulty badge
+            const difficultyMap = {
+                'easy': { label: 'Легко', class: 'difficulty-easy', icon: '🟢' },
+                'medium': { label: 'Средне', class: 'difficulty-medium', icon: '🟡' },
+                'hard': { label: 'Сложно', class: 'difficulty-hard', icon: '🔴' },
+                'expert': { label: 'Эксперт', class: 'difficulty-expert', icon: '🟣' }
+            };
+            const diff = difficultyMap[plant.difficulty] || difficultyMap['medium'];
+
+            // Moss pole badge
+            const mossPoleMap = {
+                'recommended': { label: 'Нужна опора', class: 'moss-pole-yes', icon: '🌿' },
+                'optional': { label: 'Опора опционально', class: 'moss-pole-optional', icon: '🌱' },
+                'none': null
+            };
+            const mossPole = mossPoleMap[plant.moss_pole];
+
             card.innerHTML = `
                 <div class="plant-image-container">
                     <img src="${imagePath}" alt="${plant.name}" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
@@ -1199,6 +1323,10 @@
                     <div class="plant-header">
                         <div class="plant-name">${plant.name}</div>
                         <div class="plant-latin">${plant.latin_name}</div>
+                    </div>
+                    <div class="badges-row">
+                        <span class="difficulty-badge ${diff.class}">${diff.icon} ${diff.label}</span>
+                        ${mossPole ? `<span class="moss-pole-badge ${mossPole.class}">${mossPole.icon} ${mossPole.label}</span>` : ''}
                     </div>
                     <div class="info-grid">
                         <div class="info-item">
