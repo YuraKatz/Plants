@@ -271,6 +271,10 @@
             border-left: 4px solid #48bb78;
             background: #f0fff4;
         }
+        .tip-card.order {
+            border-left: 4px solid #9f7aea;
+            background: #faf5ff;
+        }
         .tip-icon {
             font-size: 1.5rem;
             flex-shrink: 0;
@@ -435,6 +439,13 @@
                     <p>78/120/152 — ориентиры, не догма. Если растение бодрое, корни белые — всё ок.</p>
                 </div>
             </div>
+            <div class="tip-card order">
+                <div class="tip-icon">📋</div>
+                <div class="tip-content">
+                    <strong>Порядок: PPM → удобрение → pH</strong>
+                    <p>PPM мерь ДО удобрения (проверка CalMag). pH мерь ПОСЛЕ удобрения (оно немного снижает pH).</p>
+                </div>
+            </div>
         </div>
 
         <!-- Canisters -->
@@ -573,17 +584,20 @@
                         </div>
                     </div>
 
-                    <!-- Recipe 2: Universal + Flowering -->
+                    <!-- Recipe 2: Spathiphyllum - choice -->
                     <div class="recipe-group growth-recipe">
                         <div class="recipe-header">
-                            <span class="recipe-dose dose-full">Universal + Flowering</span>
-                            <span class="recipe-hint">(по 3 мл/л каждого)</span>
+                            <span class="recipe-dose dose-full">Universal ИЛИ Flowering</span>
+                            <span class="recipe-hint">(6 мл/л — выбери одно)</span>
                         </div>
                         <div class="plants-grid">
                             <div class="plant-card-mini">
                                 <img src="IMAGES/Спатифиллум.jpg" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Спатифиллум</div>
                             </div>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #718096; margin-top: 10px; padding: 8px; background: #f7fafc; border-radius: 8px;">
+                            💡 Universal — для роста листьев. Flowering — для стимуляции цветения.
                         </div>
                     </div>
 
