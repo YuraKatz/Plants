@@ -18,7 +18,10 @@
       "Bash(curl:*)",
       "WebFetch(domain:yurikatzl.github.io)",
       "Bash(git push:*)",
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(git config:*)",
+      "Bash(git remote:*)",
+      "Bash(gh repo delete:*)"
     ]
   }
 }
