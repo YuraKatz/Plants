@@ -1,0 +1,566 @@
+plants:
+  guzmania:
+    name: Гузмания
+    latin_name: Guzmania
+    type: Бромелиевые
+    lighting:
+      lux_min: 5000
+      lux_optimal: 10000
+      lux_max: 18000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: В розетку
+      frequency: Регулярный
+      notes: Поливать только в розетку
+    humidity:
+      level: Высокая
+      spraying: По необходимости, ориентируясь на сухость воздуха
+      preferred_method: Увлажнитель предпочтительнее
+    wick_watering:
+      recommended: false
+      notes: Основной полив - в розетку
+    soil:
+      mix_number: 7
+      mix_name: для бромелиевых
+    feeding_group: sensitive
+    risks:
+      - Поливать только в розетку
+    care_notes:
+      - Субстрат лишь для опоры
+
+  dracaena_marginata:
+    name: Драцена маргината
+    latin_name: Dracaena marginata
+    type: Ложные пальмы
+    lighting:
+      lux_min: 2500
+      lux_optimal: 6000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Умеренный
+      notes: С лёгкой просушкой верхнего слоя
+    humidity:
+      level: Средняя
+      spraying: 1-2 раза в неделю
+      preferred_method: Протирать листья от пыли
+    wick_watering:
+      recommended: false
+      notes: Лучше контролировать вручную
+    soil:
+      mix_number: 5
+      mix_name: для драцен и кротона
+    feeding_group: general_houseplants
+    risks:
+      - Чувствительна к переливу
+
+  dracaena_fragrans:
+    name: Драцена фрагранс / деременсис
+    latin_name: Dracaena fragrans / deremensis
+    type: Ложные пальмы
+    lighting:
+      lux_min: 2500
+      lux_optimal: 6000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Умеренный
+      notes: С лёгкой просушкой верхнего слоя
+    humidity:
+      level: Средняя
+      spraying: 1-2 раза в неделю
+      preferred_method: Протирать листья от пыли
+    wick_watering:
+      recommended: false
+      notes: Лучше контролировать вручную
+    soil:
+      mix_number: 5
+      mix_name: для драцен и кротона
+    feeding_group: general_houseplants
+    risks:
+      - Чувствительна к переливу
+
+  croton:
+    name: Кротон
+    latin_name: Codiaeum variegatum
+    type: Пестролистные
+    lighting:
+      lux_min: 4000
+      lux_optimal: 10000
+      lux_max: 18000
+      direct_sun: осторожно
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Регулярный
+      notes: Не допускать пересыхания
+    humidity:
+      level: Высокая
+      spraying: По необходимости, ориентируясь на сухость воздуха
+      preferred_method: Предпочтительнее увлажнитель/поддоны. Регулярно протирать листья
+    wick_watering:
+      recommended: true
+      notes: Допустим при лёгкой смеси
+      conditions: Требует лёгкой смеси
+    soil:
+      mix_number: 5
+      mix_name: для драцен и кротона (ручной полив)
+      alternative_mix: 5-Ф (фитильный вариант)
+    feeding_group: general_houseplants
+    risks:
+      - Не любит пересыхание
+      - Следить за переливом
+
+  epipremnum:
+    name: Эпипремнум / сциндапсус
+    latin_name: Epipremnum aureum / Scindapsus
+    type: Лианы
+    lighting:
+      lux_min: 2000
+      lux_optimal: 6000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Умеренный
+    humidity:
+      level: Средняя
+      spraying: 1-2 раза в неделю
+      preferred_method: Протирать листья от пыли
+    wick_watering:
+      recommended: true
+      notes: Допустим
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+      alternative_mix: 2 (ароидная, фитильный)
+    feeding_group: aroids
+    risks:
+      - Устойчив
+
+  philodendron:
+    name: Филодендрон крупнолистный
+    latin_name: Philodendron (типа Imperial Green)
+    type: Ароидные
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 15000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Регулярный
+    humidity:
+      level: Средняя-высокая
+      spraying: По сезону (чаще летом)
+      preferred_method: Протирать крупные листья
+    wick_watering:
+      recommended: true
+      notes: Рекомендован
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+      alternative_mix: 2 (ароидная, фитильный)
+    feeding_group: aroids
+    risks:
+      - Устойчив
+
+  chamaedorea:
+    name: Хамедорея / пальма комнатная
+    latin_name: Chamaedorea
+    type: Пальмы
+    lighting:
+      lux_min: 2000
+      lux_optimal: 5000
+      lux_max: 9000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Регулярный
+      notes: Без застоя воды
+    humidity:
+      level: Высокая
+      spraying: По необходимости, ориентируясь на сухость воздуха
+      preferred_method: Предпочтительнее увлажнитель/поддоны. Можно устраивать душ
+    wick_watering:
+      recommended: false
+      notes: Чувствительна к переливу
+    soil:
+      mix_number: 6
+      mix_name: для пальм
+    feeding_group: general_houseplants
+    risks:
+      - Чувствительна к переливу
+
+  calathea_lancifolia:
+    name: Калатея лансифолия
+    latin_name: Calathea lancifolia
+    type: Марантовые
+    lighting:
+      lux_min: 2500
+      lux_optimal: 5000
+      lux_max: 9000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль*
+      frequency: Регулярный
+      notes: Держать грунт слегка влажным без полного пересыхания
+    humidity:
+      level: Высокая (60-70%)
+      spraying: По ситуации
+      preferred_method: Лучше увлажнитель/поддон с водой
+    wick_watering:
+      recommended: false
+      notes: Допустим при очень воздухопроницаемом грунте (риск застоя воды!)
+      conditions: Для начала лучше использовать ручной полив
+    soil:
+      mix_number: 3
+      mix_name: марантовые (ручной)
+      alternative_mix: 4 (марантовые, фитильный)
+    feeding_group: sensitive
+    risks:
+      - Гниль при застое воды
+    care_notes:
+      - Фитиль только при очень лёгкой смеси и внимательном контроле
+
+  calathea_ornata:
+    name: Калатея орната
+    latin_name: Calathea ornata
+    type: Марантовые
+    lighting:
+      lux_min: 2500
+      lux_optimal: 5000
+      lux_max: 9000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль*
+      frequency: Регулярный
+      notes: Держать грунт слегка влажным без полного пересыхания
+    humidity:
+      level: Высокая (60-70%)
+      spraying: По ситуации
+      preferred_method: Лучше увлажнитель/поддон с водой
+    wick_watering:
+      recommended: false
+      notes: Допустим при очень воздухопроницаемом грунте (риск застоя воды!)
+      conditions: Для начала лучше использовать ручной полив
+    soil:
+      mix_number: 3
+      mix_name: марантовые (ручной)
+      alternative_mix: 4 (марантовые, фитильный)
+    feeding_group: sensitive
+    risks:
+      - Гниль при застое воды
+    care_notes:
+      - Фитиль только при очень лёгкой смеси и внимательном контроле
+
+  monstera_deliciosa:
+    name: Монстера молодая
+    latin_name: Monstera deliciosa (juvenile)
+    type: Ароидные
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 15000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Умеренный
+    humidity:
+      level: Средняя-высокая
+      spraying: По сезону (чаще летом)
+      preferred_method: Протирать крупные листья
+    wick_watering:
+      recommended: true
+      notes: Допустим
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+      alternative_mix: 2 (ароидная, фитильный)
+    feeding_group: aroids
+    risks:
+      - Устойчива
+
+  monstera_adansonii:
+    name: Монстера адансони
+    latin_name: Monstera adansonii
+    type: Ароидные
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 15000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Умеренный
+    humidity:
+      level: Средняя-высокая
+      spraying: По необходимости, ориентируясь на сухость воздуха
+      preferred_method: Предпочтительнее увлажнитель/поддоны
+    wick_watering:
+      recommended: true
+      notes: Рекомендован
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+      alternative_mix: 2 (ароидная, фитильный)
+    feeding_group: aroids
+    risks:
+      - Устойчива
+
+  spathiphyllum:
+    name: Спатифиллум
+    latin_name: Spathiphyllum
+    type: Ароидные цветущие
+    lighting:
+      lux_min: 2500
+      lux_optimal: 6000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Фитиль
+      frequency: Регулярный
+    humidity:
+      level: Средняя-высокая
+      spraying: По необходимости, ориентируясь на сухость воздуха
+      preferred_method: Предпочтительнее увлажнитель/поддоны. Избегать опрыскивания цветков
+    wick_watering:
+      recommended: true
+      notes: Рекомендован (любит стабильную влажность)
+    soil:
+      mix_number: 2
+      mix_name: ароидная (фитильный)
+    feeding_group: aroids
+    risks:
+      - Любит стабильную влажность
+
+  begonia_maculata:
+    name: Бегония макулата
+    latin_name: Begonia maculata
+    type: Декоративно-цветущие
+    lighting:
+      lux_min: 4000
+      lux_optimal: 9000
+      lux_max: 15000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: С просушкой верхнего слоя
+      notes: Очень не любит переувлажнение!
+    humidity:
+      level: Средняя-высокая
+      spraying: НЕ ОПРЫСКИВАТЬ листья!
+      preferred_method: Только повышение влажности воздуха (поддоны, увлажнитель)
+    wick_watering:
+      recommended: false
+      notes: Критичный риск гнили
+    soil:
+      mix_number: 8
+      mix_name: для бегоний
+    feeding_group: general_houseplants
+    risks:
+      - КРИТИЧНО - гниль при переливе
+    care_notes:
+      - Не опрыскивать!
+
+  aglaonema:
+    name: Аглаонема пестролистная
+    latin_name: Aglaonema
+    type: Ароидные
+    lighting:
+      lux_min: 2000
+      lux_optimal: 5000
+      lux_max: 10000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Умеренный
+    humidity:
+      level: Средняя
+      spraying: 1-2 раза в неделю
+      preferred_method: Протирать листья от пыли
+    wick_watering:
+      recommended: true
+      notes: Допустим
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+    feeding_group: aroids
+    risks:
+      - Устойчива
+
+  phalaenopsis:
+    name: Орхидея фаленопсис
+    latin_name: Phalaenopsis
+    type: Эпифитные орхидеи
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: С полной просушкой субстрата между поливами
+      notes: Замачивание или пролив по краю
+    humidity:
+      level: Средняя-высокая
+      spraying: НЕ ОПРЫСКИВАТЬ листья и цветы!
+      preferred_method: Можно опрыскивать воздух вокруг
+    wick_watering:
+      recommended: false
+      notes: Критичный риск гнили корней
+    soil:
+      mix_number: 9
+      mix_name: для орхидей
+    feeding_group: orchids
+    pot_requirements:
+      type: Прозрачный
+      reason: Корни участвуют в фотосинтезе, контроль состояния корней и влажности
+      critical: true
+    risks:
+      - КРИТИЧНО - гниль корней
+    care_notes:
+      - Обязательно прозрачный горшок
+      - Субстрат должен быстро просыхать
+      - Корни должны дышать
+
+  chlorophytum_comosum:
+    name: Хлорофитум
+    latin_name: Chlorophytum comosum
+    type: Декоративнолистные
+    lighting:
+      lux_min: 2000
+      lux_optimal: 5000
+      lux_max: 10000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Умеренный
+      notes: Переносит просушку верхнего слоя
+    humidity:
+      level: Средняя
+      spraying: 1-2 раза в неделю
+      preferred_method: Протирать листья от пыли
+    wick_watering:
+      recommended: true
+      notes: Хорошо переносит фитиль
+    soil:
+      mix_number: 5
+      mix_name: для драцен и кротона (ручной полив)
+      alternative_mix: 5-Ф (фитильный вариант)
+    feeding_group: general_houseplants
+    risks:
+      - Устойчив к ошибкам в уходе
+
+  alocasia_amazonica:
+    name: Алоказия (Polly / Amazonica)
+    latin_name: Alocasia amazonica
+    type: Ароидные
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Регулярный
+      notes: Держать грунт слегка влажным, но без застоя воды
+    humidity:
+      level: Высокая (60-70%)
+      spraying: По ситуации
+      preferred_method: Лучше увлажнитель/поддон с водой
+    wick_watering:
+      recommended: false
+      notes: Высокий риск гнили корней
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+    feeding_group: sensitive
+    risks:
+      - КРИТИЧНО - чувствительна к переливу
+      - Чувствительна к солям в воде
+    care_notes:
+      - Использовать только RO воду (группа A)
+      - Контролировать влажность грунта
+
+  anthurium_andraeanum:
+    name: Антуриум
+    latin_name: Anthurium andraeanum
+    type: Ароидные цветущие
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль*
+      frequency: Регулярный
+      notes: С лёгкой просушкой верхнего слоя
+    humidity:
+      level: Высокая (60-70%)
+      spraying: По ситуации
+      preferred_method: Лучше увлажнитель/поддон с водой. Протирать листья
+    wick_watering:
+      recommended: false
+      notes: Допустим только при очень воздухопроницаемом грунте
+      conditions: Требует лёгкой ароидной смеси и контроля
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+      alternative_mix: 2 (ароидная, фитильный)
+    feeding_group: sensitive
+    risks:
+      - Чувствителен к качеству воды
+      - Гниль корней при застое воды
+    care_notes:
+      - Использовать только RO воду (группа A)
+      - Стабильность важнее частоты полива
+
+  dionaea:
+    name: Дионея (Венерина мухоловка)
+    latin_name: Dionaea muscipula
+    type: Хищные
+    lighting:
+      lux_min: 10000
+      lux_optimal: 30000
+      lux_max: 50000
+      direct_sun: true
+      photoperiod_hours: 12-14
+    watering:
+      method: Поддон (постоянно)
+      frequency: Постоянная влажность
+      notes: Использовать ТОЛЬКО RO воду (TDS < 10)
+    humidity:
+      level: Высокая
+      spraying: Не обязательно при влажном поддоне
+    wick_watering:
+      recommended: false
+      notes: Сидит в болоте в поддоне
+    soil:
+      mix_name: Торф + перлит (без удобрений)
+    feeding_group: carnivorous
+    risks:
+      - КРИТИЧНО - любые удобрения в почву убивают растение
+      - КРИТИЧНО - обычная вода из крана убивает растение
+    care_notes:
+      - Только дистиллят или чистый RO
+      - Питание только через ловушки (живые насекомые)

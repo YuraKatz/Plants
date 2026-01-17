@@ -1,0 +1,226 @@
+fertilizers:
+  liquid:
+    flower_universal:
+      name: FLOWER - UNIVERSAL FERTILIZER
+      full_name: FLOWER-UNIVERSAL
+      type: Жидкое минеральное удобрение для вегетации / общего роста
+      purpose: Поддержка роста листьев и корней
+      dilution:
+        ratio: "6:1000"
+        examples:
+          - "~1 мл на 166 мл воды"
+          - "~6 мл на 1 л воды"
+      composition:
+        npk:
+          nitrogen_n: 5%
+          phosphorus_p2o5: 3%
+          potassium_k2o: 4%
+        amino_acids: 0.1%
+        microelements:
+          iron_fe: 0.02%
+          manganese_mn: 0.01%
+          zinc_zn: 0.0015%
+          copper_cu: 0.001%
+          boron_b: 0.04%
+          molybdenum_mo: 0.0008%
+      application:
+        timing: Поддержка роста листьев и корней
+        frequency:
+          spring_summer: Раз в 1-2 недели
+          winter: 1 раз в месяц
+        method: Полив с разведением 6:1000
+      suitable_for:
+        - Все комнатные растения
+        - В период активного роста
+
+    flower_flowering:
+      name: FLOWER - FLOWERING PLANTS FERTILIZER
+      local_name: דשן לפרחים
+      type: Жидкое минеральное удобрение для фазы цветения
+      purpose: Для цветущих растений, стимуляция цветения
+      dilution:
+        ratio: "6:1000"
+        examples:
+          - "~1 мл на 166 мл воды"
+          - "~6 мл на 1 л воды"
+      composition:
+        npk:
+          nitrogen_n: 4%
+          phosphorus_p2o5: 3% (растворимый в воде)
+          potassium_k2o: 6% (растворимый в воде)
+        microelements:
+          iron_fe: 0.02%
+          manganese_mn: 0.01%
+          zinc_zn: 0.001%
+          copper_cu: 0.001%
+          boron_b: 0.04%
+          molybdenum_mo: 0.0008%
+      application:
+        timing: В период цветения
+        frequency:
+          spring_summer: 1 раз в неделю
+          winter: 1 раз в месяц
+        method: Полив с разведением 6:1000
+      suitable_for:
+        - Цветущие растения
+      effects:
+        - Стимуляция цветения
+        - Поддержка бутонообразования
+
+  granulated:
+    ecogan_multicote:
+      name: Экоген (Ecogan) Multicote
+      brand: Ecogan
+      type: Гранулированное удобрение длительного действия
+      purpose: Пролонгированное удобрение длительного действия
+      application:
+        timing: При посадке
+        method: Добавка в грунт
+        location: Смешивается с грунтом при пересадке
+      characteristics:
+        release_type: Постепенное высвобождение питательных веществ
+        duration: Длительного действия
+      suitable_for:
+        - Все комнатные растения
+      notes:
+        - Удобно для тех, кто забывает о регулярных подкормках
+        - Обеспечивает стабильное питание растений
+
+  additives:
+    green_farmer_ph_down:
+      name: Green Farmer pH-
+      brand: Green Farmer
+      type: Регулятор кислотности (pH Down)
+      purpose: Понижение pH водных растворов
+      composition:
+        active_components:
+          - Кислотная смесь (неорганические кислоты)
+          - Вода (растворитель)
+      application:
+        when: При необходимости понизить pH воды или раствора удобрений
+        method: Добавлять по каплям до достижения нужного pH
+      target_ph:
+        optimal_range: 5.5-6.5 для большинства комнатных растений
+      safety:
+        - Использовать с осторожностью
+        - Не допускать попадания на кожу и в глаза
+        - Добавлять постепенно, контролируя pH
+
+    atami_calmag:
+      name: ATAMI CALMAG
+      brand: ATAMI
+      type: Минеральная добавка Ca/Mg
+      purpose: Восполнение дефицита кальция и магния
+      composition:
+        macroelements:
+          nitrogen_n: 6%
+          calcium_ca: 20%
+          magnesium_mg: 12%
+        element_form:
+          calcium: Водорастворимая форма
+          magnesium: Водорастворимая форма
+      application:
+        when:
+          - При признаках дефицита Ca/Mg
+          - Для растений с высокими требованиями к кальцию
+          - При использовании мягкой воды
+        method: Добавка к основным удобрениям
+        dilution: Согласно инструкции производителя
+      deficiency_signs:
+        calcium:
+          - Деформация молодых листьев
+          - Некроз краёв листьев
+          - Проблемы с точками роста
+        magnesium:
+          - Межжилковый хлороз старых листьев
+          - Пожелтение между жилками
+      suitable_for:
+        - Томаты и другие овощи
+        - Растения в кокосовом субстрате
+        - При использовании осмотической воды
+
+general_guidelines:
+  application_rule: Применяйте удобрения согласно инструкции производителя
+  dosage_warning: Не превышайте рекомендованную дозировку - избыток удобрений вреднее недостатка
+  frequency:
+    active_growth: Чаще (весна-лето)
+    dormant_period: Реже или прекратить (осень-зима)
+  combination:
+    liquid_and_granulated: Можно комбинировать, но учитывать общее количество питательных веществ
+  water_quality: Используйте отстоянную воду комнатной температуры для разведения удобрений
+
+tips:
+  - Лучше недокормить, чем перекормить растение
+  - Не удобряйте больные или недавно пересаженные растения (подождать 2-4 недели после пересадки)
+  - Удобряйте только во влажную почву, чтобы не обжечь корни
+  - В период покоя (обычно зима) сократите или прекратите подкормки
+  - Цветущие растения подкармливайте специализированными удобрениями для лучшего цветения
+
+settings:
+  current_season: growth
+
+feeding_matrix:
+  aroids:
+    growth:
+      flower_universal: allowed
+      flower_flowering: "allowed (for blooming)"
+      ecogan_multicote: allowed
+      atami_calmag: "allowed (water additive)"
+    slow:
+      flower_universal: "restricted (1/2 dose)"
+      flower_flowering: forbidden
+      ecogan_multicote: forbidden
+      atami_calmag: "allowed (water additive)"
+  
+  sensitive:
+    growth:
+      flower_universal: "restricted (1/4 dose)"
+      flower_flowering: forbidden
+      ecogan_multicote: "restricted (top layer only)"
+      atami_calmag: "allowed (critical for RO)"
+    slow:
+      flower_universal: forbidden
+      flower_flowering: forbidden
+      ecogan_multicote: forbidden
+      atami_calmag: "allowed (water additive)"
+  
+  orchids:
+    growth:
+      flower_universal: "restricted (1/8 dose)"
+      flower_flowering: "restricted (1/8 dose)"
+      ecogan_multicote: forbidden
+      atami_calmag: "allowed (minimal dose)"
+    slow:
+      flower_universal: forbidden
+      flower_flowering: forbidden
+      ecogan_multicote: forbidden
+      atami_calmag: "allowed (water additive)"
+  
+  carnivorous:
+    growth:
+      flower_universal: forbidden
+      flower_flowering: forbidden
+      ecogan_multicote: forbidden
+      atami_calmag: forbidden
+      note: "RO-only / keep TDS very low"
+    slow:
+      flower_universal: forbidden
+      flower_flowering: forbidden
+      ecogan_multicote: forbidden
+      atami_calmag: forbidden
+      note: "RO-only / keep TDS very low"
+  
+  general_houseplants:
+    growth:
+      flower_universal: allowed
+      flower_flowering: allowed
+      ecogan_multicote: allowed
+      atami_calmag: "allowed (water additive)"
+    slow:
+      flower_universal: "restricted (1/2 dose)"
+      flower_flowering: forbidden
+      ecogan_multicote: forbidden
+      atami_calmag: "allowed (water additive)"
+
+water_hints:
+  green_farmer_ph_down: "Water: pH adjust (5.8-6.2) if needed"

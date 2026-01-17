@@ -1,0 +1,141 @@
+soil_components:
+  basic_substrates:
+    orchid_mix:
+      name: Смесь для орхидей
+      purpose: Эпифитные растения, дренаж
+      composition:
+        - Кора
+        - Древесный уголь
+      type: Основной субстрат
+      properties:
+        - Воздухопроницаемый
+        - Быстро сохнущий
+
+    coco_substrate:
+      name: Кокосовый субстрат Johnny Green
+      brand: Johnny Green
+      purpose: Влагоудержание, аэрация
+      type: Основной субстрат
+      properties:
+        - Органический
+        - Возобновляемый
+      characteristics:
+        moisture_retention: Высокое
+        aeration: Хорошая
+
+    coco_perlite_mix:
+      name: Кокос-перлит (50% / 50%)
+      purpose: Готовая смесь для аэрации
+      composition:
+        - component: Кокосовый субстрат
+          percentage: 50
+        - component: Перлит
+          percentage: 50
+      type: Готовая смесь
+      properties:
+        - Дренаж + влагоудержание
+      usage_notes:
+        - Можно использовать вместо раздельного добавления кокоса и перлита
+        - Если используете кокос-перлит, уменьшите количество отдельного перлита в рецепте, чтобы не получить слишком лёгкую смесь
+
+    perlite:
+      name: Перлит (тип 4, лёгкий)
+      type_number: 4
+      purpose: Аэрация, дренаж
+      type: Минеральный компонент
+      properties:
+        - Минеральный
+        - Легкий
+      characteristics:
+        weight: Очень лёгкий
+        drainage: Отличный
+        moisture_retention: Низкое
+
+    vermiculite:
+      name: Вермикулит
+      purpose: Влагоудержание, аэрация
+      type: Минеральный компонент
+      properties:
+        - Минеральный
+        - Влагоемкий
+      characteristics:
+        moisture_retention: Высокое
+        aeration: Хорошая
+
+    keramzit:
+      name: Керамзитовые шарики (ARLITA)
+      brand: ARLITA
+      purpose: Дренажный слой
+      type: Дренаж
+      properties:
+        - Пористый
+        - Долговечный
+      usage:
+        location: На дне горшка
+        layer_type: Дренажный слой
+
+    universal_soil:
+      name: Универсальный грунт Premium
+      purpose: Базовый компонент для всех смесей
+      type: Базовый грунт
+      properties:
+        - Питательная основа
+        - Структурная основа
+      important_notes:
+        - Это покупной базовый субстрат
+        - Биогумус — это добавка, а не база для смесей
+      role: Основа для всех грунтовых смесей
+
+  additional_components:
+    sphagnum:
+      name: Сфагнум (мох)
+      purpose:
+        - Влагоудержание
+        - Защита корней
+        - Лёгкий антисептический эффект
+      type: Органический компонент
+      usage:
+        in_mixes:
+          - mix: "№9 (для орхидей)"
+            function: Удерживает влагу между поливами
+        as_top_layer:
+          description: Тонким слоем сверху вокруг влаголюбивых растений
+          suitable_for:
+            - Калатея
+            - Спатифиллум
+          function: Локальное удержание влаги
+        for_rehabilitation:
+          description: Временно при реанимации ослабленных корней
+          applications:
+            - Укоренение
+            - Восстановление
+      important_notes:
+        - Не делать из мха основной компонент для всех растений
+        - При избытке и плохой вентиляции даёт переувлажнение и риск гнили
+
+    charcoal:
+      name: Древесный уголь
+      purpose:
+        - Сорбент (адсорбирует соли и токсины)
+        - Улучшает дренаж
+        - Снижает закисление
+      type: Минеральный компонент
+      usage:
+        in_mixes:
+          - mix: "№7 (для бромелиевых)"
+            percentage: 10
+          - mix: "№9 (для орхидей)"
+            percentage: 5-10
+          - mix: "Ароидные смеси с удобрениями"
+            percentage: 5-10
+      important_notes:
+        - Использовать крупные фракции
+        - Пыль по возможности удалять
+      characteristics:
+        fraction_size: Крупная
+
+general_recommendations:
+  sterilization: Стерилизуйте компоненты перед смешиванием при необходимости
+  storage: Храните неиспользованные компоненты в сухом месте
+  drainage_rule: Всегда используйте дренажный слой из керамзита на дне горшка
+  important_distinction: "ВАЖНО: Биогумус — это добавка для обогащения почвы, а НЕ базовый грунт! Универсальный грунт Premium — это основа, на которой строятся все смеси"

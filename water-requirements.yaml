@@ -1,0 +1,271 @@
+water_requirements:
+  base_principle: RO (осмос) + CalMag
+  important_rule: Чистый RO без CalMag использовать НЕЛЬЗЯ (кроме экстренных случаев)
+
+  individual_requirements:
+    calathea_lancifolia:
+      plant_name: Калатея лансифолия
+      ppm_range: 60-90
+      ph_range: 5.8-6.2
+      group: A
+      sensitivity: very_high
+      notes: Очень чувствительна к солям
+
+    calathea_ornata:
+      plant_name: Калатея орната
+      ppm_range: 60-90
+      ph_range: 5.8-6.2
+      group: A
+      sensitivity: very_high
+      notes: Очень чувствительна к солям
+
+    spathiphyllum:
+      plant_name: Спатифиллум
+      ppm_range: 60-90
+      ph_range: 5.8-6.3
+      group: A
+      sensitivity: very_high
+      notes: Не терпит жёсткую воду
+
+    phalaenopsis:
+      plant_name: Орхидея (Phalaenopsis)
+      ppm_range: 60-80
+      ph_range: 5.8-6.3
+      group: A
+      sensitivity: very_high
+      notes: Для макания, без накопления солей
+
+    guzmania:
+      plant_name: Гузмания
+      ppm_range: 60-90
+      ph_range: 5.8-6.3
+      group: A
+      sensitivity: very_high
+      notes: Особенно для воды в розетке
+
+    begonia_maculata:
+      plant_name: Бегония макулата
+      ppm_range: 90-120
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: medium
+      notes: Важнее не перелить, чем ppm
+
+    monstera_deliciosa:
+      plant_name: Монстера делициоза
+      ppm_range: 90-140
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: low
+      notes: Стабильность важнее точного pH
+
+    monstera_adansonii:
+      plant_name: Монстера адансони
+      ppm_range: 90-140
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: low
+      notes: Стабильность важнее точного pH
+
+    philodendron:
+      plant_name: Филодендрон
+      ppm_range: 90-140
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: low
+      notes: Аналогично монстере
+
+    epipremnum:
+      plant_name: Эпипремнум
+      ppm_range: 90-140
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: low
+      notes: Прощает ошибки
+
+    aglaonema:
+      plant_name: Аглаонема
+      ppm_range: 90-130
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: medium
+      notes: Лучше ближе к нижней границе
+
+    chamaedorea:
+      plant_name: Хамедорея
+      ppm_range: 80-120
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: medium
+      notes: Не любит накопление солей
+
+    dracaena_marginata:
+      plant_name: Драцена маргината
+      ppm_range: 120-170
+      ph_range: 6.2-6.7
+      group: C
+      sensitivity: low
+      notes: Выносливая, но не переливать
+
+    dracaena_fragrans:
+      plant_name: Драцена фрагранс
+      ppm_range: 120-170
+      ph_range: 6.2-6.7
+      group: C
+      sensitivity: low
+      notes: Выносливая, но не переливать
+
+    croton:
+      plant_name: Кротон
+      ppm_range: 120-170
+      ph_range: 6.2-6.7
+      group: C
+      sensitivity: medium
+      notes: Любит питание, но без фанатизма
+
+    chlorophytum_comosum:
+      plant_name: Хлорофитум
+      ppm_range: 90-140
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: low
+      notes: Неприхотлив, прощает ошибки
+
+    alocasia_amazonica:
+      plant_name: Алоказия (Polly / Amazonica)
+      ppm_range: 60-90
+      ph_range: 5.8-6.2
+      group: A
+      sensitivity: very_high
+      notes: Очень чувствительна к солям и переливу
+
+    anthurium_andraeanum:
+      plant_name: Антуриум
+      ppm_range: 60-90
+      ph_range: 5.8-6.3
+      group: A
+      sensitivity: very_high
+      notes: Чувствителен к качеству воды, стабильность критична
+
+  water_groups:
+    group_a:
+      name: Очень мягкая вода
+      ppm_target: 80
+      ppm_range: 60-90
+      ph_range: 5.8-6.3
+      plants:
+        - Калатея лансифолия
+        - Калатея орната
+        - Спатифиллум
+        - Орхидея (Phalaenopsis)
+        - Гузмания
+        - Алоказия (Polly / Amazonica)
+        - Антуриум
+      storage: Одна бутылка
+      sensitivity_level: Очень высокая
+      priority: ppm важнее pH
+
+    group_b:
+      name: Средняя минерализация
+      ppm_target: 120
+      ppm_range: 90-140
+      ph_range: 6.0-6.5
+      plants:
+        - Монстера делициоза
+        - Монстера адансони
+        - Филодендрон
+        - Эпипремнум
+        - Аглаонема
+        - Бегония макулата
+        - Хамедорея
+        - Хлорофитум
+      storage: Вторая стандартная вода
+      sensitivity_level: Средняя
+
+    group_c:
+      name: Чуть более насыщенная
+      ppm_target: 150
+      ppm_range: 120-170
+      ph_range: 6.2-6.7
+      plants:
+        - Драцена маргината
+        - Драцена фрагранс
+        - Кротон
+      storage: Третья бутылка или Group B + чуть CalMag
+      sensitivity_level: Низкая
+      alternative: Можно объединить с Group B + добавка CalMag
+
+  general_rules:
+    - rule: Чистый RO без CalMag — нельзя
+      exception: Только в экстренных случаях
+    - rule: Для чувствительных растений ppm важнее pH
+      reason: Соли накапливаются быстрее, чем pH вредит
+    - rule: Лучше стабильные 90 ppm, чем скачки 60 ↔ 150
+      principle: Стабильность > точность
+    - rule: При сомнениях → бери нижнюю границу диапазона
+      reason: Лучше недокормить, чем перекормить
+
+  practical_setup:
+    bottle_a:
+      target_ppm: ~80
+      group: Group A
+      plants_count: 4
+      description: Для самых чувствительных
+
+    bottle_b:
+      target_ppm: ~120
+      group: Group B
+      plants_count: 6
+      description: Основная вода для большинства растений
+
+    bottle_c:
+      target_ppm: ~150
+      group: Group C
+      plants_count: 2
+      description: Опционально, можно использовать B + CalMag
+      optional: true
+
+  measurement_tools:
+    tds_meter:
+      measures: PPM (Total Dissolved Solids)
+      importance: Критично для RO воды
+      calibration: Регулярная калибровка обязательна
+
+    ph_meter:
+      measures: Кислотность (pH)
+      importance: Важно, но менее критично чем PPM
+      calibration: Регулярная калибровка обязательна
+      adjustment: Использовать pH Down (Green Farmer) по каплям
+
+  troubleshooting:
+    salt_buildup:
+      signs:
+        - Белый налёт на поверхности грунта
+        - Коричневые кончики листьев
+        - Общее угнетение роста
+      solution:
+        - Промыть грунт чистой RO водой с CalMag
+        - Снизить PPM в следующих поливах
+        - Проверить дренаж
+
+    ph_problems:
+      high_ph:
+        signs:
+          - Пожелтение листьев (хлороз)
+          - Плохое усвоение микроэлементов
+        solution: Добавить pH Down по каплям
+
+      low_ph:
+        signs:
+          - Некроз краёв листьев
+          - Токсичность алюминия и марганца
+        solution: Уменьшить дозу pH Down или разбавить водой
+
+  calmag_dosing:
+    purpose: Восполнение Ca и Mg в RO воде
+    base_recommendation: Согласно инструкции ATAMI CALMAG
+    adjustment_strategy:
+      - Начать с нижней рекомендованной дозы
+      - Измерить PPM
+      - Скорректировать до целевого значения группы
+      - Проверить pH и скорректировать при необходимости

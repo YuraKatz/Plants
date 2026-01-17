@@ -1,0 +1,1186 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог растений - Plants Care</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        #searchInput {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #56ab2f;
+        }
+
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .plant-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e2e8f0;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .plant-card.hidden {
+            display: none;
+        }
+
+        .plant-image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: #f7fafc;
+        }
+
+        .plant-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .plant-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #a0aec0;
+            background: #edf2f7;
+        }
+
+        .placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .plant-type-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .plant-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plant-header {
+            margin-bottom: 15px;
+        }
+
+        .plant-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 2px;
+        }
+
+        .plant-latin {
+            font-size: 0.9rem;
+            color: #718096;
+            font-style: italic;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a0aec0;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .care-section {
+            margin-top: auto;
+            border-top: 1px solid #edf2f7;
+            padding-top: 15px;
+        }
+
+        .notes-list {
+            list-style: none;
+            font-size: 0.85rem;
+            color: #4a5568;
+        }
+
+        .notes-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 5px;
+        }
+
+        .notes-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #56ab2f;
+            font-weight: bold;
+        }
+
+        .risk-item {
+            color: #c53030;
+            font-weight: 500;
+        }
+
+        .risk-item::before {
+            color: #c53030 !important;
+        }
+
+        .nav-home {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #56ab2f;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        .nav-home:hover {
+            background: #469126;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #718096;
+            font-size: 1.2rem;
+            display: none;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .plants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-home">← Главная</a>
+            <h1>🌿 Каталог растений</h1>
+            <p class="subtitle">Подробная информация и советы по уходу</p>
+        </header>
+
+        <div class="controls">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Поиск по названию, латыни или типу..."
+                autocomplete="off"
+            >
+        </div>
+
+        <div id="plantsGrid" class="plants-grid">
+            <!-- Растения будут добавлены через JS -->
+        </div>
+
+        <div id="noResults" class="no-results">
+            Растения не найдены
+        </div>
+    </div>
+
+    <script>
+        const plantsData = {
+  "settings": {
+    "current_season": "growth"
+  },
+  "feeding_matrix": {
+    "aroids": {
+      "growth": {
+        "flower_universal": "allowed",
+        "flower_flowering": "allowed (for blooming)",
+        "ecogan_multicote": "allowed",
+        "atami_calmag": "allowed (water additive)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/2 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (water additive)"
+      }
+    },
+    "sensitive": {
+      "growth": {
+        "flower_universal": "restricted (1/4 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "restricted (top layer only)",
+        "atami_calmag": "allowed (critical for RO)"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (water additive)"
+      }
+    },
+    "orchids": {
+      "growth": {
+        "flower_universal": "restricted (1/8 dose)",
+        "flower_flowering": "restricted (1/8 dose)",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (minimal dose)"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (water additive)"
+      }
+    },
+    "carnivorous": {
+      "growth": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "forbidden",
+        "note": "RO-only / keep TDS very low"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "forbidden",
+        "note": "RO-only / keep TDS very low"
+      }
+    },
+    "general_houseplants": {
+      "growth": {
+        "flower_universal": "allowed",
+        "flower_flowering": "allowed",
+        "ecogan_multicote": "allowed",
+        "atami_calmag": "allowed (water additive)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/2 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (water additive)"
+      }
+    }
+  },
+  "plants": {
+    "guzmania": {
+      "name": "Гузмания",
+      "latin_name": "Guzmania",
+      "type": "Бромелиевые",
+      "lighting": {
+        "lux_min": 5000,
+        "lux_optimal": 10000,
+        "lux_max": 18000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "В розетку",
+        "frequency": "Регулярный",
+        "notes": "Поливать только в розетку"
+      },
+      "humidity": {
+        "level": "Высокая",
+        "spraying": "По необходимости, ориентируясь на сухость воздуха",
+        "preferred_method": "Увлажнитель предпочтительнее"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Основной полив - в розетку"
+      },
+      "soil": {
+        "mix_number": 7,
+        "mix_name": "для бромелиевых"
+      },
+      "feeding_group": "sensitive",
+      "risks": [
+        "Поливать только в розетку"
+      ],
+      "care_notes": [
+        "Субстрат лишь для опоры"
+      ]
+    },
+    "dracaena_marginata": {
+      "name": "Драцена маргината",
+      "latin_name": "Dracaena marginata",
+      "type": "Ложные пальмы",
+      "lighting": {
+        "lux_min": 2500,
+        "lux_optimal": 6000,
+        "lux_max": 12000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной",
+        "frequency": "Умеренный",
+        "notes": "С лёгкой просушкой верхнего слоя"
+      },
+      "humidity": {
+        "level": "Средняя",
+        "spraying": "1-2 раза в неделю",
+        "preferred_method": "Протирать листья от пыли"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Лучше контролировать вручную"
+      },
+      "soil": {
+        "mix_number": 5,
+        "mix_name": "для драцен и кротона"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Чувствительна к переливу"
+      ]
+    },
+    "dracaena_fragrans": {
+      "name": "Драцена фрагранс / деременсис",
+      "latin_name": "Dracaena fragrans / deremensis",
+      "type": "Ложные пальмы",
+      "lighting": {
+        "lux_min": 2500,
+        "lux_optimal": 6000,
+        "lux_max": 12000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной",
+        "frequency": "Умеренный",
+        "notes": "С лёгкой просушкой верхнего слоя"
+      },
+      "humidity": {
+        "level": "Средняя",
+        "spraying": "1-2 раза в неделю",
+        "preferred_method": "Протирать листья от пыли"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Лучше контролировать вручную"
+      },
+      "soil": {
+        "mix_number": 5,
+        "mix_name": "для драцен и кротона"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Чувствительна к переливу"
+      ]
+    },
+    "croton": {
+      "name": "Кротон",
+      "latin_name": "Codiaeum variegatum",
+      "type": "Пестролистные",
+      "lighting": {
+        "lux_min": 4000,
+        "lux_optimal": 10000,
+        "lux_max": 18000,
+        "direct_sun": "осторожно",
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Не допускать пересыхания"
+      },
+      "humidity": {
+        "level": "Высокая",
+        "spraying": "По необходимости, ориентируясь на сухость воздуха",
+        "preferred_method": "Предпочтительнее увлажнитель/поддоны. Регулярно протирать листья"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Допустим при лёгкой смеси",
+        "conditions": "Требует лёгкой смеси"
+      },
+      "soil": {
+        "mix_number": 5,
+        "mix_name": "для драцен и кротона (ручной полив)",
+        "alternative_mix": "5-Ф (фитильный вариант)"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Сбрасывает листья при пересушке или сквозняках"
+      ]
+    },
+    "monstera_deliciosa": {
+      "name": "Монстера делициоза",
+      "latin_name": "Monstera deliciosa",
+      "type": "Ароидные (лианы)",
+      "lighting": {
+        "lux_min": 2500,
+        "lux_optimal": 7000,
+        "lux_max": 15000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Обильный, но без застоя воды"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "1-2 раза в неделю",
+        "preferred_method": "Протирать крупные листья"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Очень отзывчива",
+        "conditions": "Рыхлый субстрат"
+      },
+      "soil": {
+        "mix_number": 3,
+        "mix_name": "для ароидных"
+      },
+      "feeding_group": "aroids",
+      "care_notes": [
+        "Нужна опора"
+      ]
+    },
+    "monstera_adansonii": {
+      "name": "Монстера адансони",
+      "latin_name": "Monstera adansonii",
+      "type": "Ароидные (лианы)",
+      "lighting": {
+        "lux_min": 2500,
+        "lux_optimal": 7000,
+        "lux_max": 12000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "По мере просыхания"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "По необходимости",
+        "preferred_method": "Увлажнитель или группировка растений"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Отлично растет",
+        "conditions": "Рыхлый субстрат"
+      },
+      "soil": {
+        "mix_number": 3,
+        "mix_name": "для ароидных"
+      },
+      "feeding_group": "aroids",
+      "care_notes": [
+        "Нужна опора или ампельное выращивание"
+      ]
+    },
+    "philodendron": {
+      "name": "Филодендрон (Imperial Green / Red)",
+      "latin_name": "Philodendron",
+      "type": "Ароидные (кустовые/лианы)",
+      "lighting": {
+        "lux_min": 2000,
+        "lux_optimal": 5000,
+        "lux_max": 10000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Без переувлажнения"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "1-2 раза в неделю",
+        "preferred_method": "Протирать листья"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Хорошо адаптируется",
+        "conditions": "Рыхлый субстрат"
+      },
+      "soil": {
+        "mix_number": 3,
+        "mix_name": "для ароидных"
+      },
+      "feeding_group": "aroids"
+    },
+    "epipremnum": {
+      "name": "Эпипремнум (Золотистый / Марбл Квин)",
+      "latin_name": "Epipremnum aureum",
+      "type": "Ароидные (лианы)",
+      "lighting": {
+        "lux_min": 1500,
+        "lux_optimal": 5000,
+        "lux_max": 12000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Вынослив к небольшим просушкам"
+      },
+      "humidity": {
+        "level": "Средняя",
+        "spraying": "По необходимости",
+        "preferred_method": "Обычные комнатные условия"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Идеально для фитиля",
+        "conditions": "Любой рыхлый субстрат"
+      },
+      "soil": {
+        "mix_number": 3,
+        "mix_name": "для ароидных"
+      },
+      "feeding_group": "aroids"
+    },
+    "aglaonema": {
+      "name": "Аглаонема",
+      "latin_name": "Aglaonema",
+      "type": "Ароидные (кустовые)",
+      "lighting": {
+        "lux_min": 800,
+        "lux_optimal": 3000,
+        "lux_max": 8000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Боится застоя воды в холоде"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "1-2 раза в неделю",
+        "preferred_method": "Комнатные условия + опрыскивание"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Очень любит фитиль",
+        "conditions": "Очень рыхлый субстрат"
+      },
+      "soil": {
+        "mix_number": 3,
+        "mix_name": "для ароидных"
+      },
+      "feeding_group": "aroids",
+      "risks": [
+        "Гниль корней при переохлаждении влажного кома"
+      ]
+    },
+    "calathea_lancifolia": {
+      "name": "Калатея лансифолия",
+      "latin_name": "Calathea lancifolia",
+      "type": "Марантовые",
+      "lighting": {
+        "lux_min": 2000,
+        "lux_optimal": 4000,
+        "lux_max": 8000,
+        "direct_sun": false,
+        "photoperiod_hours": "12-14"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Всегда слегка влажный субстрат"
+      },
+      "humidity": {
+        "level": "Высокая",
+        "spraying": "По необходимости, ориентируясь на сухость воздуха",
+        "preferred_method": "Увлажнитель (55%+)"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Помогает держать влажность",
+        "conditions": "Легкий торфяной субстрат"
+      },
+      "soil": {
+        "mix_number": 1,
+        "mix_name": "для марантовых"
+      },
+      "feeding_group": "sensitive",
+      "risks": [
+        "Сухие края листьев при низкой влажности"
+      ]
+    },
+    "calathea_ornata": {
+      "name": "Калатея орната",
+      "latin_name": "Calathea ornata",
+      "type": "Марантовые",
+      "lighting": {
+        "lux_min": 2000,
+        "lux_optimal": 4000,
+        "lux_max": 8000,
+        "direct_sun": false,
+        "photoperiod_hours": "12-14"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Очень чувствительна к просушке"
+      },
+      "humidity": {
+        "level": "Высокая",
+        "spraying": "По необходимости, ориентируясь на сухость воздуха",
+        "preferred_method": "Увлажнитель (60%+)"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Рекомендуется",
+        "conditions": "Легкий торфяной субстрат"
+      },
+      "soil": {
+        "mix_number": 1,
+        "mix_name": "для марантовых"
+      },
+      "feeding_group": "sensitive",
+      "risks": [
+        "Крайне капризна к качеству воды и влажности"
+      ]
+    },
+    "spathiphyllum": {
+      "name": "Спатифиллум",
+      "latin_name": "Spathiphyllum",
+      "type": "Ароидные (кустовые)",
+      "lighting": {
+        "lux_min": 1500,
+        "lux_optimal": 4000,
+        "lux_max": 10000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Сигнализирует о жажде пониканием листьев"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "Частое",
+        "preferred_method": "Любит теплый душ"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Идеальный кандидат",
+        "conditions": "Рыхлый субстрат"
+      },
+      "soil": {
+        "mix_number": 3,
+        "mix_name": "для ароидных"
+      },
+      "feeding_group": "aroids"
+    },
+    "phalaenopsis": {
+      "name": "Орхидея фаленопсис",
+      "latin_name": "Phalaenopsis",
+      "type": "Орхидные",
+      "lighting": {
+        "lux_min": 5000,
+        "lux_optimal": 12000,
+        "lux_max": 25000,
+        "direct_sun": "яркий рассеянный",
+        "photoperiod_hours": "12-14"
+      },
+      "watering": {
+        "method": "Замачивание",
+        "frequency": "По мере посветления корней",
+        "notes": "Не допускать попадания воды в точку роста"
+      },
+      "humidity": {
+        "level": "Средняя",
+        "spraying": "Только воздуха вокруг",
+        "preferred_method": "Поддоны с керамзитом"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Возможно в спец. субстратах",
+        "conditions": "Требует серамис/пеностекло"
+      },
+      "soil": {
+        "mix_number": 6,
+        "mix_name": "для орхидей (кора)"
+      },
+      "feeding_group": "orchids",
+      "risks": [
+        "Гниль шейки при попадании воды"
+      ]
+    },
+    "alocasia_amazonica": {
+      "name": "Алоказия (Polly)",
+      "latin_name": "Alocasia amazonica",
+      "type": "Ароидные (клубневые)",
+      "lighting": {
+        "lux_min": 3000,
+        "lux_optimal": 8000,
+        "lux_max": 15000,
+        "direct_sun": false,
+        "photoperiod_hours": "12-14"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Не любит застой воды у клубня"
+      },
+      "humidity": {
+        "level": "Высокая",
+        "spraying": "1-2 раза в неделю",
+        "preferred_method": "Увлажнитель (60%+)"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Хорошо при рыхлом грунте",
+        "conditions": "Много разрыхлителей"
+      },
+      "soil": {
+        "mix_number": 3,
+        "mix_name": "для ароидных"
+      },
+      "feeding_group": "sensitive",
+      "risks": [
+        "Период покоя зимой, может сбросить листья"
+      ]
+    },
+    "anthurium_andraeanum": {
+      "name": "Антуриум",
+      "latin_name": "Anthurium andraeanum",
+      "type": "Ароидные (кустовые)",
+      "lighting": {
+        "lux_min": 3000,
+        "lux_optimal": 8000,
+        "lux_max": 18000,
+        "direct_sun": false,
+        "photoperiod_hours": "12-14"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Полив после просушки верхнего слоя"
+      },
+      "humidity": {
+        "level": "Высокая",
+        "spraying": "1-2 раза в неделю",
+        "preferred_method": "Протирать листья"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Рекомендуется",
+        "conditions": "Очень рыхлый 'орхидейный' тип грунта"
+      },
+      "soil": {
+        "mix_number": 4,
+        "mix_name": "для антуриумов"
+      },
+      "feeding_group": "sensitive"
+    },
+    "begonia_maculata": {
+      "name": "Бегония макулата",
+      "latin_name": "Begonia maculata",
+      "type": "Бегониевые",
+      "lighting": {
+        "lux_min": 3000,
+        "lux_optimal": 7000,
+        "lux_max": 12000,
+        "direct_sun": false,
+        "photoperiod_hours": "12-14"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Боится попадания воды на листья"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "Нет",
+        "preferred_method": "Увлажнитель или поддоны"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Отлично себя чувствует",
+        "conditions": "Легкий субстрат"
+      },
+      "soil": {
+        "mix_number": 2,
+        "mix_name": "для бегоний"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Пятна на листьях при опрыскивании"
+      ]
+    },
+    "chamaedorea": {
+      "name": "Хамедорея",
+      "latin_name": "Chamaedorea",
+      "type": "Пальмы",
+      "lighting": {
+        "lux_min": 1000,
+        "lux_optimal": 4000,
+        "lux_max": 10000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной",
+        "frequency": "Регулярный",
+        "notes": "Не допускать полного пересыхания"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "Частое",
+        "preferred_method": "Душ по листу"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Склонна к загниванию при переливе",
+        "conditions": "Не рекомендуется"
+      },
+      "soil": {
+        "mix_number": 2,
+        "mix_name": "для пальм (универсальный)"
+      },
+      "feeding_group": "general_houseplants"
+    },
+    "chlorophytum_comosum": {
+      "name": "Хлорофитум",
+      "latin_name": "Chlorophytum comosum",
+      "type": "Травянистые",
+      "lighting": {
+        "lux_min": 1500,
+        "lux_optimal": 6000,
+        "lux_max": 15000,
+        "direct_sun": "допустимо",
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Выдерживает кратковременную засуху"
+      },
+      "humidity": {
+        "level": "Средняя",
+        "spraying": "По необходимости",
+        "preferred_method": "Обычные комнатные условия"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Растет очень быстро",
+        "conditions": "Любой грунт"
+      },
+      "soil": {
+        "mix_number": 2,
+        "mix_name": "для пальм (универсальный)"
+      },
+      "feeding_group": "general_houseplants"
+    },
+    "dionaea": {
+      "name": "Дионея (Венерина мухоловка)",
+      "latin_name": "Dionaea muscipula",
+      "type": "Хищные",
+      "lighting": {
+        "lux_min": 10000,
+        "lux_optimal": 30000,
+        "lux_max": 50000,
+        "direct_sun": true,
+        "photoperiod_hours": "12-14"
+      },
+      "watering": {
+        "method": "Поддон (постоянно)",
+        "frequency": "Постоянная влажность",
+        "notes": "Использовать ТОЛЬКО RO воду (TDS < 10)"
+      },
+      "humidity": {
+        "level": "Высокая",
+        "spraying": "Не обязательно при влажном поддоне"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Сидит в болоте в поддоне"
+      },
+      "soil": {
+        "mix_name": "Торф + перлит (без удобрений)"
+      },
+      "feeding_group": "carnivorous",
+      "risks": [
+        "КРИТИЧНО - любые удобрения в почву убивают растение",
+        "КРИТИЧНО - обычная вода из крана убивает растение"
+      ]
+    }
+  }
+};
+
+        const imageMap = {
+            "aglaonema": "IMAGES/Аглаонема.jpeg",
+            "alocasia_amazonica": "IMAGES/Алоказия.jpg",
+            "anthurium_andraeanum": "IMAGES/Антуриум.jpg",
+            "begonia_maculata": "IMAGES/Бегония макулата.jpg",
+            "guzmania": "IMAGES/Гузмания.jpg",
+            "dracaena_marginata": "IMAGES/Драцена маргината.jpg",
+            "dracaena_fragrans": "IMAGES/Драцена фрагранс.jpg",
+            "calathea_lancifolia": "IMAGES/Калатея лансифолия.jpg",
+            "croton": "IMAGES/Кротон.jpg",
+            "monstera_adansonii": "IMAGES/Монстера адансони.jpeg",
+            "monstera_deliciosa": "IMAGES/Монстера делициоза.jpg",
+            "phalaenopsis": "IMAGES/Орхидея.jpg",
+            "spathiphyllum": "IMAGES/Спатифиллум.jpg",
+            "chamaedorea": "IMAGES/Хамедорея.jpg",
+            "chlorophytum_comosum": "IMAGES/Хлорофитум.jpg",
+            "calathea_ornata": "IMAGES/алатея орната.jpg",
+            "epipremnum": "IMAGES/пипремнум.jpg",
+            "philodendron": "IMAGES/филодендрон imperial.jpg",
+            "dionaea": "IMAGES/Дионея.jpg"
+        };
+
+        const plantsGrid = document.getElementById('plantsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+
+        function createPlantCard(id, plant) {
+            const card = document.createElement('div');
+            card.className = 'plant-card';
+            card.dataset.name = plant.name;
+            card.dataset.latin = plant.latin_name;
+            card.dataset.type = plant.type;
+
+            const feedingSeason = plantsData.settings.current_season;
+            const feedingGroup = plant.feeding_group || 'general_houseplants';
+            const matrix = plantsData.feeding_matrix[feedingGroup][feedingSeason];
+            
+            let feedingAction = '';
+            let waterAction = 'Cal-Mag (RO) + pH adjust if needed';
+
+            if (feedingGroup === 'carnivorous') {
+                feedingAction = '<span style="color: #e53e3e; font-weight: bold;">FORBIDDEN</span>';
+                waterAction = 'RO only (TDS < 10)';
+            } else {
+                let items = [];
+                const nameMap = {
+                    'flower_universal': 'Universal',
+                    'flower_flowering': 'Flowering',
+                    'ecogan_multicote': 'Multicote'
+                };
+
+                ['flower_universal', 'flower_flowering', 'ecogan_multicote'].forEach(key => {
+                    let status = matrix[key];
+                    if (status && status !== 'forbidden') {
+                        // Wick rule: if plant has wick_watering recommended/true, hide multicote
+                        if (key === 'ecogan_multicote' && plant.wick_watering && plant.wick_watering.recommended) {
+                            return;
+                        }
+                        
+                        let shortName = nameMap[key];
+                        if (status.includes('restricted')) {
+                            // Try to extract dose if present, e.g. "restricted (1/2 dose)" -> "Universal (1/2)"
+                            let doseMatch = status.match(/\((.*?)\)/);
+                            let dose = doseMatch ? doseMatch[1].replace(' dose', '') : 'weak';
+                            items.push(`${shortName} (${dose})`);
+                        } else {
+                            items.push(shortName);
+                        }
+                    }
+                });
+
+                if (items.length === 0) {
+                    feedingAction = 'NO fertilizers';
+                } else {
+                    feedingAction = items.join(' / ') + ' — OK';
+                }
+            }
+
+            const feedingLine = `Feeding (${feedingSeason}): ${feedingAction}. Water: ${waterAction}.`;
+
+            const imagePath = imageMap[id] || `IMAGES/${plant.name}.jpg`;
+            
+            let notesHtml = '';
+            if (plant.care_notes && plant.care_notes.length > 0) {
+                plant.care_notes.forEach(note => {
+                    notesHtml += `<li>${note}</li>`;
+                });
+            }
+            
+            if (plant.risks && plant.risks.length > 0) {
+                plant.risks.forEach(risk => {
+                    notesHtml += `<li class="risk-item">⚠️ ${risk}</li>`;
+                });
+            }
+
+            card.innerHTML = `
+                <div class="plant-image-container">
+                    <img src="${imagePath}" alt="${plant.name}" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет фото</div>
+                    </div>
+                    <div class="plant-type-badge">${plant.type}</div>
+                </div>
+                <div class="plant-content">
+                    <div class="plant-header">
+                        <div class="plant-name">${plant.name}</div>
+                        <div class="plant-latin">${plant.latin_name}</div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Освещение (Lux)</span>
+                            <span class="info-value">${plant.lighting.lux_min} - ${plant.lighting.lux_optimal}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Влажность</span>
+                            <span class="info-value">${plant.humidity.level}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Полив</span>
+                            <span class="info-value">${plant.watering.frequency}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Почва</span>
+                            <span class="info-value">№${plant.soil.mix_number || '-'} ${plant.soil.mix_name}</span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 12px; background: #f0f4f8; border-left: 4px solid #56ab2f; border-radius: 4px; font-size: 0.95rem; line-height: 1.4;">
+                        <strong>${feedingLine}</strong>
+                    </div>
+                    <div class="care-section">
+                        <ul class="notes-list">
+                            <li><strong>Метод:</strong> ${plant.watering.method}</li>
+                            ${plant.wick_watering.recommended ? '<li>✅ Подходит для фитиля</li>' : '<li>❌ Не для фитиля</li>'}
+                            ${notesHtml}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        function renderPlants() {
+            const plants = plantsData.plants;
+            Object.keys(plants).forEach(id => {
+                const card = createPlantCard(id, plants[id]);
+                plantsGrid.appendChild(card);
+            });
+        }
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.plant-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const searchText = `${card.dataset.name} ${card.dataset.latin} ${card.dataset.type}`.toLowerCase();
+                if (searchText.includes(query)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        });
+
+        // Initialize
+        renderPlants();
+    </script>
+</body>
+</html>

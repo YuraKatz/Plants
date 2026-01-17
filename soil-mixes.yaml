@@ -1,0 +1,315 @@
+soil_mixes:
+  mix_1:
+    number: 1
+    name: Ароидная (ручной полив)
+    watering_type: ручной
+    suitable_for:
+      - Монстера
+      - Филодендрон
+      - Эпипремнум
+      - Аглаонема
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 55
+          - component: Кокос-перлит (50/50)
+            percentage: 35
+          - component: Смесь для орхидей (кора)
+            percentage: 5
+          - component: Древесный уголь
+            percentage: 5
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 50
+          - component: Кокосовый субстрат
+            percentage: 25
+          - component: Перлит
+            percentage: 15
+          - component: Смесь для орхидей (кора)
+            percentage: 5
+          - component: Древесный уголь
+            percentage: 5
+
+  mix_2:
+    number: 2
+    name: Ароидная (фитильный полив)
+    watering_type: фитильный
+    suitable_for:
+      - Спатифиллум
+      - Монстера (на фитиле)
+      - Филодендрон (на фитиле)
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 45
+          - component: Кокос-перлит (50/50)
+            percentage: 40
+          - component: Смесь для орхидей (кора)
+            percentage: 10
+          - component: Древесный уголь
+            percentage: 5
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 40
+          - component: Кокосовый субстрат
+            percentage: 20
+          - component: Перлит
+            percentage: 25
+          - component: Смесь для орхидей (кора)
+            percentage: 10
+          - component: Древесный уголь
+            percentage: 5
+
+  mix_3:
+    number: 3
+    name: Марантовые (ручной полив)
+    watering_type: ручной
+    suitable_for:
+      - Калатея лансифолия
+      - Калатея орната
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 45
+          - component: Кокос-перлит (50/50)
+            percentage: 35
+          - component: Вермикулит
+            percentage: 20
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 40
+          - component: Кокосовый субстрат
+            percentage: 30
+          - component: Вермикулит
+            percentage: 20
+          - component: Перлит
+            percentage: 10
+
+  mix_4:
+    number: 4
+    name: Марантовые (фитильный полив)
+    watering_type: фитильный
+    suitable_for:
+      - Калатея (только при очень внимательном контроле!)
+    warnings:
+      - КРИТИЧНО - Следить за застоем воды!
+      - Кору не использовать или максимум 5%
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 40
+          - component: Кокос-перлит (50/50)
+            percentage: 45
+          - component: Вермикулит
+            percentage: 15
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 35
+          - component: Кокосовый субстрат
+            percentage: 30
+          - component: Перлит
+            percentage: 20
+          - component: Вермикулит
+            percentage: 15
+
+  mix_5:
+    number: 5
+    name: Для драцен и кротона (ручной полив)
+    watering_type: ручной
+    suitable_for:
+      - Драцена маргината
+      - Драцена фрагранс
+      - Кротон
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 65
+          - component: Кокос-перлит (50/50)
+            percentage: 35
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 60
+          - component: Кокосовый субстрат
+            percentage: 20
+          - component: Перлит
+            percentage: 20
+
+  mix_5f:
+    number: 5-Ф
+    name: Для драцен и кротона (фитильный полив)
+    watering_type: фитильный
+    suitable_for:
+      - Кротон (на фитиле)
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 55
+          - component: Кокос-перлит (50/50)
+            percentage: 40
+          - component: Смесь для орхидей (кора)
+            percentage: 5
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 50
+          - component: Кокосовый субстрат
+            percentage: 20
+          - component: Перлит
+            percentage: 25
+          - component: Смесь для орхидей (кора)
+            percentage: 5
+
+  mix_6:
+    number: 6
+    name: Для пальм
+    watering_type: ручной
+    suitable_for:
+      - Хамедорея
+    notes:
+      - Фитильный полив не рекомендуется — пальмы чувствительны к переливу
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 65
+          - component: Кокос-перлит (50/50)
+            percentage: 25
+          - component: Вермикулит
+            percentage: 10
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 60
+          - component: Кокосовый субстрат
+            percentage: 20
+          - component: Перлит
+            percentage: 10
+          - component: Вермикулит
+            percentage: 10
+
+  mix_7:
+    number: 7
+    name: Для бромелиевых
+    watering_type: ручной
+    suitable_for:
+      - Гузмания
+    notes:
+      - Основной полив в розетку, субстрат лишь для опоры
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Смесь для орхидей (кора)
+            percentage: 50
+          - component: Кокос-перлит (50/50)
+            percentage: 40
+          - component: Древесный уголь
+            percentage: 10
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Смесь для орхидей (кора)
+            percentage: 50
+          - component: Кокосовый субстрат
+            percentage: 25
+          - component: Перлит
+            percentage: 15
+          - component: Древесный уголь
+            percentage: 10
+
+  mix_8:
+    number: 8
+    name: Для бегоний
+    watering_type: ручной
+    suitable_for:
+      - Бегония макулата
+    notes:
+      - Фитильный полив НЕ рекомендуется — критичный риск гнили
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 55
+          - component: Кокос-перлит (50/50)
+            percentage: 30
+          - component: Вермикулит
+            percentage: 10
+          - component: Древесный уголь
+            percentage: 5
+            optional: true
+      variant_b:
+        name: Без кокос-перлита
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 50
+          - component: Кокосовый субстрат
+            percentage: 25
+          - component: Перлит
+            percentage: 15
+          - component: Вермикулит
+            percentage: 5
+          - component: Древесный уголь
+            percentage: 5
+            optional: true
+
+  mix_9:
+    number: 9
+    name: Для орхидей
+    watering_type: ручной
+    suitable_for:
+      - Орхидея фаленопсис
+    critical_requirements:
+      pot_type: Прозрачный горшок ОБЯЗАТЕЛЬНО!
+      pot_reason: Корни фаленопсис участвуют в фотосинтезе и нуждаются в свете
+      control: Прозрачный горшок позволяет контролировать состояние корней и влажность субстрата
+    warnings:
+      - Субстрат должен быстро просыхать, корни должны дышать
+      - Фитильный полив категорически не подходит
+      - Полная просушка между поливами
+      - При повышенной влажности воздуха процент мха можно уменьшать
+    watering_method:
+      - Замачивание
+      - Пролив по краю
+    composition:
+      - component: Смесь для орхидей (кора + уголь из готовой смеси)
+        percentage: 60-70
+      - component: Сфагнум (мох)
+        percentage: 15-20
+      - component: Перлит
+        percentage: 10-15
+      - component: Дополнительный древесный уголь крупной фракции
+        percentage: 5-10
+        notes: Если нужно больше сорбции
+
+general_principles:
+  wick_watering_rule: Фитильный полив требует более воздухопроницаемого грунта. Застой воды = гниение корней
+  drainage: Всегда используйте дренажный слой из керамзита на дне горшка
+  sterilization: Стерилизуйте компоненты перед смешиванием при необходимости
+  storage: Храните неиспользованные компоненты в сухом месте
+  coco_perlite_note: Кокос-перлит можно использовать вместо раздельного добавления кокоса и перлита. Если используете кокос-перлит, уменьшите количество отдельного перлита в рецепте

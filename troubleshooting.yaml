@@ -1,0 +1,599 @@
+troubleshooting:
+  # Диагностическая система для частых проблем с растениями
+
+  symptoms:
+    yellowing_leaves:
+      name: Желтеющие листья
+      severity: medium
+      common: true
+      possible_causes:
+        - cause_id: overwatering
+          probability: high
+          indicators:
+            - Желтеют нижние листья
+            - Грунт постоянно влажный
+            - Вялые, мягкие листья
+        - cause_id: nitrogen_deficiency
+          probability: medium
+          indicators:
+            - Желтеют старые листья снизу
+            - Замедленный рост
+            - Бледная окраска новых листьев
+        - cause_id: chlorosis
+          probability: medium
+          indicators:
+            - Жилки остаются зелёными
+            - Желтеет межжилковое пространство
+            - Начинается с молодых листьев
+
+    brown_tips:
+      name: Коричневые кончики листьев
+      severity: low
+      common: true
+      possible_causes:
+        - cause_id: low_humidity
+          probability: high
+          indicators:
+            - Сухой воздух в помещении
+            - Кончики сухие и хрустящие
+            - Проблема усиливается зимой
+        - cause_id: salt_buildup
+          probability: high
+          indicators:
+            - Белый налёт на поверхности грунта
+            - Используется водопроводная вода
+            - Кончики коричневые по всему растению
+        - cause_id: overfertilizing
+          probability: medium
+          indicators:
+            - Недавно вносились удобрения
+            - PPM воды выше нормы
+            - Края листьев "обожжённые"
+
+    wilting_leaves:
+      name: Вялые, поникшие листья
+      severity: high
+      common: true
+      possible_causes:
+        - cause_id: underwatering
+          probability: high
+          indicators:
+            - Грунт сухой на ощупь
+            - Листья мягкие, но не желтые
+            - Восстанавливается после полива
+        - cause_id: root_rot
+          probability: high
+          indicators:
+            - Грунт влажный, но листья вялые
+            - Запах гнили от грунта
+            - Не восстанавливается после полива
+        - cause_id: temperature_shock
+          probability: low
+          indicators:
+            - Резко изменилась температура
+            - Сквозняк или холодный воздух
+            - Внезапное начало
+
+    white_crust_on_soil:
+      name: Белый налёт на поверхности грунта
+      severity: medium
+      common: true
+      possible_causes:
+        - cause_id: salt_buildup
+          probability: very_high
+          indicators:
+            - Белый или желтоватый налёт
+            - Используется водопроводная вода
+            - Коричневые кончики листьев
+        - cause_id: hard_water
+          probability: high
+          indicators:
+            - Вода не фильтруется
+            - PPM воды высокий (>200)
+            - Налёт появляется регулярно
+        - cause_id: mold
+          probability: low
+          indicators:
+            - Налёт пушистый, не твёрдый
+            - Грунт постоянно влажный
+            - Плохая вентиляция
+
+    root_rot:
+      name: Гниение корней
+      severity: critical
+      common: true
+      possible_causes:
+        - cause_id: overwatering
+          probability: very_high
+          indicators:
+            - Грунт постоянно мокрый
+            - Запах гнили
+            - Вялые листья при влажном грунте
+        - cause_id: poor_drainage
+          probability: high
+          indicators:
+            - Нет дренажных отверстий
+            - Тяжёлый грунт
+            - Вода стоит на поверхности
+        - cause_id: wick_watering_wrong_soil
+          probability: medium
+          indicators:
+            - Используется фитильный полив
+            - Грунт не воздухопроницаемый
+            - Растение не подходит для фитиля
+
+    slow_growth:
+      name: Замедленный рост
+      severity: low
+      common: true
+      possible_causes:
+        - cause_id: insufficient_light
+          probability: high
+          indicators:
+            - Растение в глубине комнаты
+            - Вытягиваются стебли
+            - Листья мелкие и бледные
+        - cause_id: nutrient_deficiency
+          probability: medium
+          indicators:
+            - Давно не удобрялось
+            - Бледные листья
+            - Слабые побеги
+        - cause_id: root_bound
+          probability: medium
+          indicators:
+            - Давно не пересаживалось
+            - Корни вылезают из дренажных отверстий
+            - Быстро пересыхает грунт
+
+    leaf_drop:
+      name: Опадение листьев
+      severity: medium
+      common: true
+      possible_causes:
+        - cause_id: environmental_stress
+          probability: high
+          indicators:
+            - Недавно переставили растение
+            - Изменились условия содержания
+            - Листья опадают быстро
+        - cause_id: overwatering
+          probability: medium
+          indicators:
+            - Грунт постоянно влажный
+            - Листья желтеют перед опадением
+        - cause_id: underwatering
+          probability: medium
+          indicators:
+            - Грунт постоянно сухой
+            - Листья сухие и ломкие
+
+    leaf_spots:
+      name: Пятна на листьях
+      severity: medium
+      common: true
+      possible_causes:
+        - cause_id: fungal_infection
+          probability: high
+          indicators:
+            - Пятна коричневые с жёлтым ореолом
+            - Высокая влажность
+            - Опрыскивание листьев
+        - cause_id: sunburn
+          probability: medium
+          indicators:
+            - Пятна бледные или белые
+            - Только на листьях с солнечной стороны
+            - После прямого солнца
+        - cause_id: water_spots
+          probability: low
+          indicators:
+            - Пятна после опрыскивания
+            - На солнечной стороне
+            - Круглые, белые пятна
+
+  causes:
+    overwatering:
+      name: Перелив
+      severity: high
+      category: watering
+      description: Слишком частый или обильный полив, грунт не успевает просыхать
+      affected_plants:
+        - Бегония макулата (критично)
+        - Драцены (чувствительны)
+        - Хамедорея (чувствительна)
+        - Калатеи (риск гнили)
+
+    underwatering:
+      name: Недостаточный полив
+      severity: medium
+      category: watering
+      description: Грунт пересыхает слишком сильно, растение не получает влаги
+
+    salt_buildup:
+      name: Накопление солей
+      severity: medium
+      category: water_quality
+      description: Минеральные соли накапливаются в грунте из-за жёсткой воды или избытка удобрений
+      affected_plants:
+        - Калатеи (очень чувствительны)
+        - Спатифиллум (чувствителен)
+        - Орхидеи (критично)
+
+    hard_water:
+      name: Жёсткая вода
+      severity: medium
+      category: water_quality
+      description: Вода с высоким PPM (>150 для чувствительных растений)
+      solution: Использовать RO воду + CalMag
+
+    low_humidity:
+      name: Низкая влажность воздуха
+      severity: low
+      category: environment
+      description: Влажность воздуха ниже комфортной для растения
+
+    nitrogen_deficiency:
+      name: Дефицит азота
+      severity: medium
+      category: nutrition
+      description: Недостаток азота, необходимого для роста листьев
+
+    chlorosis:
+      name: Хлороз (дефицит железа/магния)
+      severity: medium
+      category: nutrition
+      description: Недостаток микроэлементов, часто при высоком pH
+
+    root_rot:
+      name: Гниение корней
+      severity: critical
+      category: disease
+      description: Корни гниют из-за переувлажнения и недостатка кислорода
+
+    poor_drainage:
+      name: Плохой дренаж
+      severity: high
+      category: soil
+      description: Грунт не пропускает воду, застой влаги
+
+    wick_watering_wrong_soil:
+      name: Фитиль + неподходящий грунт
+      severity: high
+      category: soil
+      description: Фитильный полив используется с недостаточно воздухопроницаемым грунтом
+
+    insufficient_light:
+      name: Недостаток света
+      severity: medium
+      category: environment
+      description: Растение не получает достаточно света для фотосинтеза
+
+    nutrient_deficiency:
+      name: Нехватка питания
+      severity: low
+      category: nutrition
+      description: Общий недостаток питательных веществ
+
+    root_bound:
+      name: Тесный горшок
+      severity: low
+      category: pot
+      description: Корни заполнили весь объём горшка
+
+    environmental_stress:
+      name: Стресс от смены условий
+      severity: medium
+      category: environment
+      description: Резкое изменение местоположения, температуры, освещения
+
+    overfertilizing:
+      name: Избыток удобрений
+      severity: medium
+      category: nutrition
+      description: Слишком высокая концентрация или частота подкормок
+
+    fungal_infection:
+      name: Грибковая инфекция
+      severity: high
+      category: disease
+      description: Грибок на листьях из-за высокой влажности и плохой вентиляции
+
+    sunburn:
+      name: Солнечный ожог
+      severity: low
+      category: environment
+      description: Прямые солнечные лучи повредили листья
+
+    temperature_shock:
+      name: Температурный шок
+      severity: medium
+      category: environment
+      description: Резкое изменение температуры, сквозняк
+
+    water_spots:
+      name: Пятна от воды
+      severity: low
+      category: care
+      description: Капли воды на листьях под солнцем работают как линза
+
+  solutions:
+    overwatering_treatment:
+      for_cause: overwatering
+      urgency: high
+      steps:
+        - step: Немедленно прекратить полив
+          duration: До просыхания грунта
+        - step: Проверить корни на наличие гнили
+          action: Вынуть растение из горшка, осмотреть корни
+        - step: Удалить гнилые корни если есть
+          action: Обрезать чёрные/мягкие корни стерильным инструментом
+        - step: Пересадить в свежий воздухопроницаемый грунт
+          details: Использовать подходящую смесь из базы данных
+        - step: Поливать только после просыхания верхнего слоя
+          monitoring: Проверять влажность пальцем на глубине 2-3 см
+      prevention:
+        - Использовать воздухопроницаемый грунт с перлитом
+        - Поливать только после просыхания верхнего слоя
+        - Обеспечить хороший дренаж (слой керамзита)
+        - Не использовать фитиль для чувствительных растений
+
+    underwatering_treatment:
+      for_cause: underwatering
+      urgency: medium
+      steps:
+        - step: Полить растение тщательно
+          details: До вытекания воды из дренажных отверстий
+        - step: Подождать 30-60 минут
+          action: Растение должно восстановить тургор
+        - step: Слить лишнюю воду из поддона
+        - step: Скорректировать график полива
+          details: Чаще проверять влажность грунта
+      prevention:
+        - Установить напоминания о поливе
+        - Рассмотреть фитильный полив для подходящих растений
+        - Использовать грунт с вермикулитом для влагоудержания
+
+    salt_buildup_treatment:
+      for_cause: salt_buildup
+      urgency: medium
+      steps:
+        - step: Промыть грунт чистой водой
+          details: RO вода + CalMag, проливать 2-3 раза объём горшка
+        - step: Дать грунту полностью стечь
+        - step: Снять верхний слой грунта с налётом
+          action: Заменить свежим грунтом
+        - step: Перейти на RO воду + CalMag
+          details: Использовать воду из соответствующей группы (A/B/C)
+        - step: Снизить концентрацию удобрений
+          details: Использовать нижнюю границу рекомендуемой дозы
+      prevention:
+        - Использовать только RO воду + CalMag
+        - Следить за PPM воды (группа A/B/C)
+        - Не превышать рекомендованные дозы удобрений
+        - Промывать грунт раз в 2-3 месяца
+
+    hard_water_solution:
+      for_cause: hard_water
+      urgency: high
+      permanent_fix: true
+      steps:
+        - step: Установить систему обратного осмоса (RO)
+          cost: Единоразовые затраты
+        - step: Добавлять ATAMI CALMAG в RO воду
+          details: Согласно группе растения (A/B/C)
+        - step: Контролировать PPM с помощью TDS метра
+        - step: Корректировать pH если необходимо
+          details: Использовать Green Farmer pH- по каплям
+      alternative:
+        - Использовать дистиллированную воду + CalMag
+        - Собирать дождевую воду (с осторожностью)
+        - Покупать фильтрованную воду
+
+    low_humidity_solution:
+      for_cause: low_humidity
+      urgency: low
+      steps:
+        - step: Использовать увлажнитель воздуха
+          recommendation: Лучший вариант
+        - step: "Альтернатива: поддоны с водой"
+          details: Разместить рядом с растениями
+        - step: Группировать растения вместе
+          effect: Создают микроклимат с повышенной влажностью
+        - step: Опрыскивание (осторожно!)
+          warning: НЕ для бегоний и орхидей!
+          timing: Утром, чтобы листья успели высохнуть
+      plants_affected:
+        high_humidity_lovers:
+          - Калатеи
+          - Хамедорея
+          - Кротон
+          - Гузмания
+        do_not_spray:
+          - Бегония макулата
+          - Орхидея фаленопсис
+
+    nitrogen_deficiency_solution:
+      for_cause: nitrogen_deficiency
+      urgency: low
+      steps:
+        - step: Подкормить удобрением с высоким азотом
+          fertilizer: FLOWER - Universal Fertilizer (N-5%)
+          dilution: "6:1000"
+        - step: Применять раз в 1-2 недели
+          season: Весна-лето
+        - step: Наблюдать за реакцией
+          timeline: Улучшение через 1-2 недели
+        - step: Скорректировать график подкормок
+      prevention:
+        - Регулярно удобрять в период роста
+        - Использовать сбалансированные удобрения
+
+    chlorosis_solution:
+      for_cause: chlorosis
+      urgency: medium
+      steps:
+        - step: Проверить pH воды
+          target: "5.5-6.5 для большинства растений"
+        - step: Скорректировать pH если высокий
+          tool: Green Farmer pH-
+          method: По каплям, постепенно
+        - step: Добавить ATAMI CALMAG
+          reason: Восполняет магний и микроэлементы
+        - step: Подкормить удобрением с микроэлементами
+          fertilizer: FLOWER - Universal (содержит Fe, Mn, Zn)
+        - step: Наблюдать новые листья
+          timeline: Должны расти зелёными
+      note: Старые листья не восстановятся, смотрим на новый рост
+
+    root_rot_treatment:
+      for_cause: root_rot
+      urgency: critical
+      steps:
+        - step: НЕМЕДЛЕННО вынуть растение из горшка
+        - step: Промыть корни под проточной водой
+        - step: Удалить все гнилые корни
+          identification: Чёрные, мягкие, с запахом
+          tool: Стерильные ножницы/секатор
+        - step: Обработать срезы древесным углем
+          alternative: Корица (антисептик)
+        - step: Подсушить корни 2-4 часа
+        - step: Пересадить в свежий стерильный грунт
+          mix: Очень воздухопроницаемый, с перлитом
+        - step: Не поливать 3-5 дней
+        - step: Далее поливать минимально
+          details: Только после полного просыхания
+      critical_plants:
+        - Бегония макулата
+        - Орхидея фаленопсис
+        - Калатеи
+
+    poor_drainage_fix:
+      for_cause: poor_drainage
+      urgency: high
+      steps:
+        - step: Пересадить в правильную смесь
+          reference: Смотреть soil-mixes.yaml для растения
+        - step: Обеспечить дренажный слой
+          material: Керамзит ARLITA, 2-3 см
+        - step: Проверить дренажные отверстия
+          action: Должны быть открыты и достаточного размера
+        - step: Использовать горшок подходящего размера
+          rule: На 2-3 см больше корневой системы
+      prevention:
+        - Всегда использовать горшки с дренажными отверстиями
+        - Следовать рецептам грунтовых смесей из базы
+        - Добавлять перлит для аэрации
+
+    insufficient_light_fix:
+      for_cause: insufficient_light
+      urgency: low
+      steps:
+        - step: Переставить ближе к окну
+          distance: 1-2 метра от окна для большинства
+        - step: "Альтернатива: фитолампа"
+          duration: 10-12 часов в день
+          distance: 20-30 см от растения
+        - step: Наблюдать реакцию 2-3 недели
+      prevention:
+        - Учитывать световые требования при размещении
+        - Использовать фитолампы зимой
+
+    fungal_infection_treatment:
+      for_cause: fungal_infection
+      urgency: high
+      steps:
+        - step: Изолировать заражённое растение
+        - step: Удалить поражённые листья
+          disposal: Выбросить, не в компост!
+        - step: Обработать фунгицидом
+          application: Согласно инструкции
+        - step: Улучшить вентиляцию
+        - step: Прекратить опрыскивание
+        - step: Снизить влажность
+        - step: Наблюдать 2-3 недели
+      prevention:
+        - Не опрыскивать листья (использовать увлажнитель)
+        - Обеспечить хорошую вентиляцию
+        - Не переувлажнять грунт
+        - Не допускать воды на листьях
+
+decision_tree:
+  start:
+    question: Что происходит с растением?
+    options:
+      - answer: Проблемы с листьями
+        next: leaf_issues
+      - answer: Проблемы с ростом
+        next: growth_issues
+      - answer: Проблемы с грунтом/корнями
+        next: soil_issues
+      - answer: Вредители или болезни
+        next: pest_disease
+
+  leaf_issues:
+    question: Какие именно проблемы с листьями?
+    options:
+      - answer: Листья желтеют
+        symptom: yellowing_leaves
+      - answer: Коричневые кончики
+        symptom: brown_tips
+      - answer: Листья вялые, поникшие
+        symptom: wilting_leaves
+      - answer: Пятна на листьях
+        symptom: leaf_spots
+      - answer: Листья опадают
+        symptom: leaf_drop
+
+  growth_issues:
+    question: Что не так с ростом?
+    options:
+      - answer: Рост замедлился или остановился
+        symptom: slow_growth
+      - answer: Листья мелкие и бледные
+        next: check_light_nutrition
+
+  soil_issues:
+    question: Что не так с грунтом или корнями?
+    options:
+      - answer: Белый налёт на грунте
+        symptom: white_crust_on_soil
+      - answer: Запах гнили, вялые листья при влажном грунте
+        symptom: root_rot
+      - answer: Вода не впитывается
+        cause: poor_drainage
+
+quick_reference:
+  emergency_situations:
+    - situation: Гниение корней
+      symptom: root_rot
+      action: НЕМЕДЛЕННАЯ пересадка с удалением гнилых корней
+      time_critical: true
+
+    - situation: Критический перелив
+      plants:
+        - Бегония макулата
+        - Орхидея
+      action: Проверить корни, пересадить если нужно
+      time_critical: true
+
+  most_common_mistakes:
+    - mistake: Полив водопроводной водой
+      affects: Калатеи, Спатифиллум, Орхидеи
+      solution: Переход на RO + CalMag
+      severity: high
+
+    - mistake: Фитильный полив в тяжёлом грунте
+      affects: Любые растения на фитиле
+      solution: Пересадка в воздухопроницаемую смесь
+      severity: critical
+
+    - mistake: Опрыскивание листьев
+      affects: Бегония макулата, Орхидея
+      solution: Прекратить, использовать увлажнитель
+      severity: medium
+
+    - mistake: Игнорирование дренажа
+      affects: Все растения
+      solution: Всегда использовать дренажный слой
+      severity: high

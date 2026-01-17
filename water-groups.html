@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Groups - Plants Care</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        #searchInput {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-print {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-print:hover {
+            background: #5a67d8;
+        }
+
+        .water-group {
+            margin-bottom: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .group-header {
+            padding: 20px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .group-a .group-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .group-b .group-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .group-c .group-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .group-special .group-header {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .group-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .group-params {
+            display: flex;
+            gap: 20px;
+            font-size: 0.95rem;
+        }
+
+        .param {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f7fafc;
+        }
+
+        .plant-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .plant-card.hidden {
+            display: none;
+        }
+
+        .plant-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+
+        .plant-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #a0aec0;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .plant-info {
+            padding: 15px;
+        }
+
+        .plant-name-ru {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .plant-name-en {
+            font-size: 0.85rem;
+            color: #718096;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .plant-id {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-family: 'Courier New', monospace;
+            background: #edf2f7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .nav-home {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        .nav-home:hover {
+            background: #5a67d8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .group-title {
+                font-size: 1.4rem;
+            }
+
+            .group-params {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .plants-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .plant-image,
+            .plant-image-placeholder {
+                height: 150px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .controls, .nav-home {
+                display: none;
+            }
+
+            .plant-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-home">← Главная</a>
+            <h1>💧 Water Groups</h1>
+            <p class="subtitle">RO Water + CalMag System for Indoor Plants</p>
+        </header>
+
+        <div class="controls">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Поиск по названию или plant_id..."
+                autocomplete="off"
+            >
+            <button class="btn-print" onclick="window.print()">🖨️ Print</button>
+        </div>
+
+        <div id="noResults" class="no-results">
+            Растения не найдены
+        </div>
+
+        <!-- GROUP A -->
+        <div class="water-group group-a">
+            <div class="group-header">
+                <div class="group-title">Group A - Очень мягкая вода</div>
+                <div class="group-params">
+                    <div class="param">PPM: 60–90 (target 80)</div>
+                    <div class="param">pH: 5.8–6.3</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Калатея лансифолия" data-id="calathea_lancifolia">
+                    <img src="IMAGES/Калатея лансифолия.jpg" alt="Калатея лансифолия" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Калатея лансифолия</div>
+                        <div class="plant-name-en">Calathea lancifolia</div>
+                        <div class="plant-id">calathea_lancifolia</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Калатея орната" data-id="calathea_ornata">
+                    <img src="IMAGES/алатея орната.jpg" alt="Калатея орната" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Калатея орната</div>
+                        <div class="plant-name-en">Calathea ornata</div>
+                        <div class="plant-id">calathea_ornata</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Спатифиллум" data-id="spathiphyllum">
+                    <img src="IMAGES/Спатифиллум.jpg" alt="Спатифиллум" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌸</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Спатифиллум</div>
+                        <div class="plant-name-en">Spathiphyllum</div>
+                        <div class="plant-id">spathiphyllum</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Орхидея фаленопсис" data-id="phalaenopsis">
+                    <img src="IMAGES/Орхидея.jpg" alt="Орхидея" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌺</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Орхидея фаленопсис</div>
+                        <div class="plant-name-en">Phalaenopsis</div>
+                        <div class="plant-id">phalaenopsis</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Гузмания" data-id="guzmania">
+                    <img src="IMAGES/Гузмания.jpg" alt="Гузмания" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌺</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Гузмания</div>
+                        <div class="plant-name-en">Guzmania</div>
+                        <div class="plant-id">guzmania</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Алоказия" data-id="alocasia_amazonica">
+                    <img src="IMAGES/Алоказия.jpg" alt="Алоказия" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Алоказия (Polly)</div>
+                        <div class="plant-name-en">Alocasia amazonica</div>
+                        <div class="plant-id">alocasia_amazonica</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Антуриум" data-id="anthurium_andraeanum">
+                    <img src="IMAGES/Антуриум.jpg" alt="Антуриум" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌺</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Антуриум</div>
+                        <div class="plant-name-en">Anthurium andraeanum</div>
+                        <div class="plant-id">anthurium_andraeanum</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GROUP B -->
+        <div class="water-group group-b">
+            <div class="group-header">
+                <div class="group-title">Group B - Средняя минерализация</div>
+                <div class="group-params">
+                    <div class="param">PPM: 90–140 (target 120)</div>
+                    <div class="param">pH: 6.0–6.5</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Монстера делициоза" data-id="monstera_deliciosa">
+                    <img src="IMAGES/Монстера делициоза.jpg" alt="Монстера делициоза" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Монстера делициоза</div>
+                        <div class="plant-name-en">Monstera deliciosa</div>
+                        <div class="plant-id">monstera_deliciosa</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Монстера адансони" data-id="monstera_adansonii">
+                    <img src="IMAGES/Монстера адансони.jpeg" alt="Монстера адансони" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Монстера адансони</div>
+                        <div class="plant-name-en">Monstera adansonii</div>
+                        <div class="plant-id">monstera_adansonii</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Филодендрон" data-id="philodendron">
+                    <img src="IMAGES/филодендрон imperial.jpg" alt="Филодендрон" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Филодендрон</div>
+                        <div class="plant-name-en">Philodendron (Imperial Green)</div>
+                        <div class="plant-id">philodendron</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Эпипремнум" data-id="epipremnum">
+                    <img src="IMAGES/пипремнум.jpg" alt="Эпипремнум" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Эпипремнум</div>
+                        <div class="plant-name-en">Epipremnum aureum</div>
+                        <div class="plant-id">epipremnum</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Аглаонема" data-id="aglaonema">
+                    <img src="IMAGES/Аглаонема.jpeg" alt="Аглаонема" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Аглаонема</div>
+                        <div class="plant-name-en">Aglaonema</div>
+                        <div class="plant-id">aglaonema</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Бегония макулата" data-id="begonia_maculata">
+                    <img src="IMAGES/Бегония макулата.jpg" alt="Бегония макулата" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌸</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Бегония макулата</div>
+                        <div class="plant-name-en">Begonia maculata</div>
+                        <div class="plant-id">begonia_maculata</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Хамедорея" data-id="chamaedorea">
+                    <img src="IMAGES/Хамедорея.jpg" alt="Хамедорея" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌴</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Хамедорея</div>
+                        <div class="plant-name-en">Chamaedorea</div>
+                        <div class="plant-id">chamaedorea</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Хлорофитум" data-id="chlorophytum_comosum">
+                    <img src="IMAGES/Хлорофитум.jpg" alt="Хлорофитум" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Хлорофитум</div>
+                        <div class="plant-name-en">Chlorophytum comosum</div>
+                        <div class="plant-id">chlorophytum_comosum</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GROUP C -->
+        <div class="water-group group-c">
+            <div class="group-header">
+                <div class="group-title">Group C - Чуть более насыщенная</div>
+                <div class="group-params">
+                    <div class="param">PPM: 120–170 (target 150)</div>
+                    <div class="param">pH: 6.2–6.7</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Драцена маргината" data-id="dracaena_marginata">
+                    <img src="IMAGES/Драцена маргината.jpg" alt="Драцена маргината" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌴</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Драцена маргината</div>
+                        <div class="plant-name-en">Dracaena marginata</div>
+                        <div class="plant-id">dracaena_marginata</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Драцена фрагранс" data-id="dracaena_fragrans">
+                    <img src="IMAGES/Драцена фрагранс.jpg" alt="Драцена фрагранс" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌴</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Драцена фрагранс</div>
+                        <div class="plant-name-en">Dracaena fragrans</div>
+                        <div class="plant-id">dracaena_fragrans</div>
+                    </div>
+                </div>
+
+                <div class="plant-card" data-name="Кротон" data-id="croton">
+                    <img src="IMAGES/Кротон.jpg" alt="Кротон" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="plant-image-placeholder">
+                        <div class="placeholder-icon">🌿</div>
+                        <div>Нет изображения</div>
+                    </div>
+                    <div class="plant-info">
+                        <div class="plant-name-ru">Кротон</div>
+                        <div class="plant-name-en">Codiaeum variegatum</div>
+                        <div class="plant-id">croton</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const plantCards = document.querySelectorAll('.plant-card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            plantCards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                const id = card.getAttribute('data-id').toLowerCase();
+
+                if (name.includes(searchTerm) || id.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Show/hide "no results" message
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+
+        // Clear search on ESC
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                this.dispatchEvent(new Event('input'));
+                this.blur();
+            }
+        });
+
+        // Highlight plant cards on hover
+        plantCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const plantId = this.getAttribute('data-id');
+                console.log('Selected plant:', plantId);
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && e.target !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- Добавлены стили для особенностей -->
+<style>
+.plant-features {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #edf2f7;
+    font-size: 0.75rem;
+}
+
+.feature-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    margin: 3px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.badge-method {
+    background: #e6fffa;
+    color: #047857;
+}
+
+.badge-wick-yes {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-wick-no {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-risk {
+    background: #fef3c7;
+    color: #92400e;
+}
+</style>

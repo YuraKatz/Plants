@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Mixes - Plants Care</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .nav-home {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #48bb78;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        .nav-home:hover {
+            background: #38a169;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        #searchInput {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #48bb78;
+        }
+
+        .btn-print {
+            padding: 12px 30px;
+            background: #48bb78;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-print:hover {
+            background: #38a169;
+        }
+
+        .soil-group {
+            margin-bottom: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .group-header {
+            padding: 20px 30px;
+            color: white;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+
+        .group-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .group-subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .mix-content {
+            padding: 30px;
+            background: #f7fafc;
+        }
+
+        .composition {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .composition h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .component {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #edf2f7;
+            border-radius: 5px;
+        }
+
+        .component-name {
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .component-percentage {
+            font-weight: 600;
+            color: #48bb78;
+            font-size: 1rem;
+        }
+
+        .plants-list {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .plants-list h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .plant-card-mini {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #48bb78;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .plant-card-mini:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .plant-mini-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .plant-mini-latin {
+            font-size: 0.75rem;
+            color: #718096;
+            font-style: italic;
+            margin-top: 3px;
+        }
+
+        .variants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .group-title {
+                font-size: 1.4rem;
+            }
+
+            .variants {
+                grid-template-columns: 1fr;
+            }
+
+            .plants-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .controls, .nav-home {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-home">← Главная</a>
+            <h1>🌱 Soil Mixes</h1>
+            <p class="subtitle">Рецепты грунтовых смесей для комнатных растений</p>
+        </header>
+
+        <div class="controls">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Поиск по названию смеси или растению..."
+                autocomplete="off"
+            >
+            <button class="btn-print" onclick="window.print()">🖨️ Print</button>
+        </div>
+
+        <div id="noResults" class="no-results">
+            Смеси не найдены
+        </div>
+
+        <!-- MIX 1 - Ароидная ручной -->
+        <div class="soil-group" data-search="ароидная монстера филодендрон эпипремнум аглаонема">
+            <div class="group-header">
+                <div class="group-title">Mix #1 - Ароидная (ручной полив)</div>
+                <div class="group-subtitle">Для ароидных растений с ручным поливом</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Вариант A - С кокос-перлитом 50/50</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">55%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокос-перлит (50/50)</span>
+                            <span class="component-percentage">35%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Смесь для орхидей (кора)</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                    <div class="composition">
+                        <h4>Вариант B - Без кокос-перлита</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">50%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокосовый субстрат</span>
+                            <span class="component-percentage">25%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Перлит</span>
+                            <span class="component-percentage">15%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Смесь для орхидей (кора)</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Монстера</div>
+                            <div class="plant-mini-latin">Monstera sp.</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Филодендрон</div>
+                            <div class="plant-mini-latin">Philodendron</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Эпипремнум</div>
+                            <div class="plant-mini-latin">Epipremnum aureum</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Аглаонема</div>
+                            <div class="plant-mini-latin">Aglaonema</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIX 2 - Ароидная фитиль -->
+        <div class="soil-group" data-search="ароидная фитиль спатифиллум монстера филодендрон">
+            <div class="group-header">
+                <div class="group-title">Mix #2 - Ароидная (фитильный полив)</div>
+                <div class="group-subtitle">Для ароидных растений на фитиле</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Вариант A - С кокос-перлитом 50/50</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">45%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокос-перлит (50/50)</span>
+                            <span class="component-percentage">40%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Смесь для орхидей (кора)</span>
+                            <span class="component-percentage">10%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                    <div class="composition">
+                        <h4>Вариант B - Без кокос-перлита</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">40%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокосовый субстрат</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Перлит</span>
+                            <span class="component-percentage">25%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Смесь для орхидей (кора)</span>
+                            <span class="component-percentage">10%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Спатифиллум</div>
+                            <div class="plant-mini-latin">Spathiphyllum</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Монстера (фитиль)</div>
+                            <div class="plant-mini-latin">Monstera sp.</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Филодендрон (фитиль)</div>
+                            <div class="plant-mini-latin">Philodendron</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIX 3 - Марантовые ручной -->
+        <div class="soil-group" data-search="марантовые калатея">
+            <div class="group-header">
+                <div class="group-title">Mix #3 - Марантовые (ручной полив)</div>
+                <div class="group-subtitle">Для марантовых и калатей</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Вариант A - С кокос-перлитом 50/50</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">45%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокос-перлит (50/50)</span>
+                            <span class="component-percentage">35%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Вермикулит</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                    </div>
+                    <div class="composition">
+                        <h4>Вариант B - Без кокос-перлита</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">40%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокосовый субстрат</span>
+                            <span class="component-percentage">30%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Вермикулит</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Перлит</span>
+                            <span class="component-percentage">10%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Калатея лансифолия</div>
+                            <div class="plant-mini-latin">Calathea lancifolia</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Калатея орната</div>
+                            <div class="plant-mini-latin">Calathea ornata</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIX 5 - Драцены и Кротон -->
+        <div class="soil-group" data-search="драцена кротон">
+            <div class="group-header">
+                <div class="group-title">Mix #5 - Для драцен и кротона</div>
+                <div class="group-subtitle">Универсальная смесь для ложных пальм</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Вариант A - С кокос-перлитом 50/50</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">50%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокос-перлит (50/50)</span>
+                            <span class="component-percentage">30%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Вермикулит</span>
+                            <span class="component-percentage">15%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                    <div class="composition">
+                        <h4>Вариант B - Без кокос-перлита</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">45%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокосовый субстрат</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Перлит</span>
+                            <span class="component-percentage">15%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Вермикулит</span>
+                            <span class="component-percentage">15%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Драцена маргината</div>
+                            <div class="plant-mini-latin">Dracaena marginata</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Драцена фрагранс</div>
+                            <div class="plant-mini-latin">Dracaena fragrans</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Кротон</div>
+                            <div class="plant-mini-latin">Codiaeum variegatum</div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Хлорофитум</div>
+                            <div class="plant-mini-latin">Chlorophytum comosum</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIX 6 - Пальмы -->
+        <div class="soil-group" data-search="пальмы хамедорея">
+            <div class="group-header">
+                <div class="group-title">Mix #6 - Для пальм</div>
+                <div class="group-subtitle">Специальная смесь для настоящих пальм</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Вариант A - С кокос-перлитом 50/50</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">45%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокос-перлит (50/50)</span>
+                            <span class="component-percentage">30%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Листовой перегной</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                    <div class="composition">
+                        <h4>Вариант B - Без кокос-перлита</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">40%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокосовый субстрат</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Перлит</span>
+                            <span class="component-percentage">15%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Листовой перегной</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Хамедорея</div>
+                            <div class="plant-mini-latin">Chamaedorea</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIX 7 - Бромелиевые -->
+        <div class="soil-group" data-search="бромелиевые гузмания">
+            <div class="group-header">
+                <div class="group-title">Mix #7 - Для бромелиевых</div>
+                <div class="group-subtitle">Легкая воздухопроницаемая смесь</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Состав</h4>
+                        <div class="component">
+                            <span class="component-name">Смесь для орхидей (кора)</span>
+                            <span class="component-percentage">40%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокосовый субстрат</span>
+                            <span class="component-percentage">30%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Перлит</span>
+                            <span class="component-percentage">20%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">10%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Гузмания</div>
+                            <div class="plant-mini-latin">Guzmania</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIX 8 - Бегонии -->
+        <div class="soil-group" data-search="бегония">
+            <div class="group-header">
+                <div class="group-title">Mix #8 - Для бегоний</div>
+                <div class="group-subtitle">Легкая смесь с отличным дренажом</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Состав</h4>
+                        <div class="component">
+                            <span class="component-name">Универсальный грунт Premium</span>
+                            <span class="component-percentage">40%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Кокос-перлит (50/50)</span>
+                            <span class="component-percentage">40%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Вермикулит</span>
+                            <span class="component-percentage">15%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Бегония макулата</div>
+                            <div class="plant-mini-latin">Begonia maculata</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIX 9 - Орхидеи -->
+        <div class="soil-group" data-search="орхидея фаленопсис">
+            <div class="group-header">
+                <div class="group-title">Mix #9 - Для орхидей</div>
+                <div class="group-subtitle">Субстрат для эпифитных орхидей</div>
+            </div>
+            <div class="mix-content">
+                <div class="variants">
+                    <div class="composition">
+                        <h4>Состав</h4>
+                        <div class="component">
+                            <span class="component-name">Кора сосновая (средняя фракция)</span>
+                            <span class="component-percentage">70%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Сфагнум</span>
+                            <span class="component-percentage">15%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Перлит</span>
+                            <span class="component-percentage">10%</span>
+                        </div>
+                        <div class="component">
+                            <span class="component-name">Древесный уголь</span>
+                            <span class="component-percentage">5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plants-list">
+                    <h4>Подходит для:</h4>
+                    <div class="plants-grid">
+                        <div class="plant-card-mini">
+                            <div class="plant-mini-name">Орхидея фаленопсис</div>
+                            <div class="plant-mini-latin">Phalaenopsis</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const soilGroups = document.querySelectorAll('.soil-group');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            soilGroups.forEach(group => {
+                const searchText = group.getAttribute('data-search').toLowerCase();
+                const titleText = group.querySelector('.group-title').textContent.toLowerCase();
+
+                if (searchText.includes(searchTerm) || titleText.includes(searchTerm)) {
+                    group.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+
+            // Show/hide "no results" message
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+
+        // Clear search on ESC
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                this.dispatchEvent(new Event('input'));
+                this.blur();
+            }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && e.target !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>

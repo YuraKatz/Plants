@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plants Care Database</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.2rem;
+        }
+
+        .version {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            border: 3px solid transparent;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-card.water {
+            border-color: #667eea;
+        }
+
+        .nav-card.water:hover {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+        }
+
+        .nav-card.light {
+            border-color: #f6ad55;
+        }
+
+        .nav-card.light:hover {
+            background: linear-gradient(135deg, #f6ad5510 0%, #ed893610 100%);
+        }
+
+        .nav-card.soil {
+            border-color: #48bb78;
+        }
+
+        .nav-card.soil:hover {
+            background: linear-gradient(135deg, #48bb7810 0%, #38a16910 100%);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .card-description {
+            color: #718096;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+        }
+
+        .footer-link {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #5a67d8;
+        }
+
+        .nav-card.catalog {
+            border-color: #56ab2f;
+        }
+
+        .nav-card.catalog:hover {
+            background: linear-gradient(135deg, #a8e06310 0%, #56ab2f10 100%);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card-icon {
+                font-size: 3rem;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌿 Plants Care Database</h1>
+            <p class="subtitle">Comprehensive plant care system</p>
+            <span class="version">v2.1</span>
+        </header>
+
+        <div class="cards-grid">
+            <!-- Plants Catalog Card -->
+            <a href="plants-catalog.html" class="nav-card catalog" style="grid-column: 1 / -1;">
+                <div class="card-icon">🌿</div>
+                <div class="card-title">Каталог растений</div>
+                <div class="card-description">
+                    Подробные карточки ухода для каждого растения с фотографиями и рекомендациями.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Растений</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">YAML</div>
+                        <div class="stat-label">Источник</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Water Groups Card -->
+            <a href="water-groups.html" class="nav-card water">
+                <div class="card-icon">💧</div>
+                <div class="card-title">Water Groups</div>
+                <div class="card-description">
+                    RO Water + CalMag система. Группы растений по требованиям к PPM и pH воды.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Groups</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Plants</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Lighting Groups Card -->
+            <a href="lighting-groups.html" class="nav-card light">
+                <div class="card-icon">☀️</div>
+                <div class="card-title">Lighting Groups</div>
+                <div class="card-description">
+                    Lux-based освещение. Группы растений по требованиям к уровню света.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Groups</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Plants</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Soil Groups Card -->
+            <a href="soil-groups.html" class="nav-card soil">
+                <div class="card-icon">🌱</div>
+                <div class="card-title">Soil Mixes</div>
+                <div class="card-description">
+                    Рецепты грунтовых смесей для разных типов растений и методов полива.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">9</div>
+                        <div class="stat-label">Mixes</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Plants</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Feeding Guide Card -->
+            <a href="feeding-guide.html" class="nav-card catalog" style="border-color: #f6e05e;">
+                <div class="card-icon">🧪</div>
+                <div class="card-title">Подкормки</div>
+                <div class="card-description">
+                    Что делать сегодня: вода + удобрения по сезону.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Групп</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Сезона</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <footer>
+            <p>Plants Database v2.1 | Production Ready</p>
+            <div class="footer-links">
+                <a href="README.md" class="footer-link">Documentation</a>
+                <a href="QUICK-START.md" class="footer-link">Quick Start</a>
+                <a href="lighting.md" class="footer-link">Lighting Guide</a>
+                <a href="lamps.md" class="footer-link">Lamps Setup</a>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.8rem;">
+                Last updated: 2025-12-20
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '0') window.location.href = 'plants-catalog.html';
+            if (e.key === '1') window.location.href = 'water-groups.html';
+            if (e.key === '2') window.location.href = 'lighting-groups.html';
+            if (e.key === '3') window.location.href = 'soil-groups.html';
+        });
+    </script>
+</body>
+</html>
