@@ -174,35 +174,35 @@
         .dose-eighth { background: #fecaca; color: #991b1b; }
         .dose-none { background: #fee2e2; color: #c53030; }
 
-        /* Plants List */
-        .plants-section {
-            margin-top: 15px;
-        }
-        .plants-title {
-            font-size: 0.8rem;
-            color: #718096;
-            margin-bottom: 10px;
-        }
+        /* Plants Grid */
         .plants-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
         }
-        .plant-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: #edf2f7;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #4a5568;
+        .plant-card-mini {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .plant-tag img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
+        .plant-card-mini:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .plant-mini-image {
+            width: 100%;
+            height: 90px;
             object-fit: cover;
+            background: #edf2f7;
+        }
+        .plant-mini-name {
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            text-align: center;
         }
 
         /* Print Button */
@@ -238,6 +238,94 @@
         .warning-box p {
             color: #742a2a;
             font-size: 0.95rem;
+        }
+
+        /* Fertilizer Info */
+        .fertilizer-info {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 15px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fertilizer-info h2 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .fertilizer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .fertilizer-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .fertilizer-header {
+            padding: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .fertilizer-header.universal {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+        }
+        .fertilizer-header.flowering {
+            background: linear-gradient(135deg, #ed64a6, #d53f8c);
+        }
+        .fertilizer-content {
+            padding: 15px;
+        }
+        .fertilizer-npk {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .fertilizer-desc {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+        .fertilizer-micro, .fertilizer-amino {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+        .dosage-table {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .dosage-table h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .dosage-note {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .dosage-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .dosage-table th, .dosage-table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .dosage-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
         }
 
         /* Print Styles */
@@ -295,12 +383,30 @@
                             <span class="recipe-hint">(0.25 мл/л)</span>
                         </div>
                         <div class="plants-grid">
-                            <span class="plant-tag"><img src="IMAGES/Калатея лансифолия.jpg" alt="">Калатея Л.</span>
-                            <span class="plant-tag"><img src="IMAGES/Калатея орната.jpg" alt="">Калатея О.</span>
-                            <span class="plant-tag"><img src="IMAGES/ПапоротникНефролепис.jpeg" alt="">Папоротник</span>
-                            <span class="plant-tag"><img src="IMAGES/Алоказия.jpg" alt="">Алоказия</span>
-                            <span class="plant-tag"><img src="IMAGES/Антуриум.jpg" alt="">Антуриум</span>
-                            <span class="plant-tag"><img src="IMAGES/Гузмания.jpg" alt="">Гузмания</span>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Калатея лансифолия.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Калатея Л.</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Калатея орната.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Калатея О.</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/ПапоротникНефролепис.jpeg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Папоротник</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Алоказия.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Алоказия</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Антуриум.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Антуриум</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Гузмания.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Гузмания</div>
+                            </div>
                         </div>
                     </div>
 
@@ -311,7 +417,10 @@
                             <span class="recipe-hint">(0.12 мл/л)</span>
                         </div>
                         <div class="plants-grid">
-                            <span class="plant-tag"><img src="IMAGES/Орхидея.jpg" alt="">Орхидея</span>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Орхидея.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Орхидея</div>
+                            </div>
                         </div>
                     </div>
 
@@ -321,7 +430,10 @@
                             <span class="recipe-dose dose-none">🚫 БЕЗ удобрений!</span>
                         </div>
                         <div class="plants-grid">
-                            <span class="plant-tag"><img src="IMAGES/Дионея.jpg" alt="">Дионея</span>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Дионея.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Дионея</div>
+                            </div>
                         </div>
                     </div>
 
@@ -354,12 +466,30 @@
                             <span class="recipe-hint">(1 мл/л)</span>
                         </div>
                         <div class="plants-grid">
-                            <span class="plant-tag"><img src="IMAGES/Монстера делициоза.jpg" alt="">Монстера Д.</span>
-                            <span class="plant-tag"><img src="IMAGES/Монстера Адансона.jpg" alt="">Монстера А.</span>
-                            <span class="plant-tag"><img src="IMAGES/филодендрон imperial.jpg" alt="">Филодендрон</span>
-                            <span class="plant-tag"><img src="IMAGES/пипремнум.jpg" alt="">Эпипремнум</span>
-                            <span class="plant-tag"><img src="IMAGES/Аглаонема.jpeg" alt="">Аглаонема</span>
-                            <span class="plant-tag"><img src="IMAGES/Бегония макулата.jpg" alt="">Бегония</span>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Монстера делициоза.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Монстера Д.</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Монстера Адансона.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Монстера А.</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/филодендрон imperial.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Филодендрон</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/пипремнум.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Эпипремнум</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Аглаонема.jpeg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Аглаонема</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Бегония макулата.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Бегония</div>
+                            </div>
                         </div>
                     </div>
 
@@ -370,7 +500,10 @@
                             <span class="recipe-hint">(по 1 мл/л каждого)</span>
                         </div>
                         <div class="plants-grid">
-                            <span class="plant-tag"><img src="IMAGES/Спатифиллум.jpg" alt="">Спатифиллум</span>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Спатифиллум.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Спатифиллум</div>
+                            </div>
                         </div>
                     </div>
 
@@ -403,12 +536,30 @@
                             <span class="recipe-hint">(1 мл/л)</span>
                         </div>
                         <div class="plants-grid">
-                            <span class="plant-tag"><img src="IMAGES/Сансевиерия.jpg" alt="">Сансевиерия</span>
-                            <span class="plant-tag"><img src="IMAGES/Драцена маргината.jpg" alt="">Драцена М.</span>
-                            <span class="plant-tag"><img src="IMAGES/Драцена фрагранс.jpg" alt="">Драцена Ф.</span>
-                            <span class="plant-tag"><img src="IMAGES/Хлорофитум.jpg" alt="">Хлорофитум</span>
-                            <span class="plant-tag"><img src="IMAGES/Кротон.jpg" alt="">Кротон</span>
-                            <span class="plant-tag"><img src="IMAGES/Хамедорея.jpg" alt="">Хамедорея</span>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Сансевиерия.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Сансевиерия</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Драцена маргината.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Драцена М.</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Драцена фрагранс.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Драцена Ф.</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Хлорофитум.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Хлорофитум</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Кротон.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Кротон</div>
+                            </div>
+                            <div class="plant-card-mini">
+                                <img src="IMAGES/Хамедорея.jpg" class="plant-mini-image" alt="">
+                                <div class="plant-mini-name">Хамедорея</div>
+                            </div>
                         </div>
                     </div>
 
@@ -423,6 +574,58 @@
             <h3>⚠️ Дионея — особый случай!</h3>
             <p>Используй воду из канистры A, но <strong>БЕЗ УДОБРЕНИЙ</strong>.<br>
             Ещё лучше — чистый RO (PPM < 50). Любые добавки убивают растение!</p>
+        </div>
+
+        <!-- Fertilizer Info -->
+        <div class="fertilizer-info">
+            <h2>🧪 Удобрения FLOWER</h2>
+
+            <div class="fertilizer-grid">
+                <div class="fertilizer-card">
+                    <div class="fertilizer-header universal">Universal</div>
+                    <div class="fertilizer-content">
+                        <div class="fertilizer-npk">NPK: 5-3-4</div>
+                        <div class="fertilizer-desc">Универсальное для всех растений</div>
+                        <div class="fertilizer-micro">+ микроэлементы: Fe, Mn, Zn, Cu, Co, B</div>
+                        <div class="fertilizer-amino">+ аминокислоты 0.1%</div>
+                    </div>
+                </div>
+
+                <div class="fertilizer-card">
+                    <div class="fertilizer-header flowering">Flowering</div>
+                    <div class="fertilizer-content">
+                        <div class="fertilizer-npk">NPK: 4-3-6</div>
+                        <div class="fertilizer-desc">Для цветущих растений (больше калия)</div>
+                        <div class="fertilizer-micro">+ микроэлементы: Fe, Mn, Zn, Cu, Co, B</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dosage-table">
+                <h3>📏 Дозировки (шприц)</h3>
+                <table>
+                    <tr>
+                        <th>Доза</th>
+                        <th>мл/л</th>
+                    </tr>
+                    <tr>
+                        <td><span class="recipe-dose dose-full">100%</span></td>
+                        <td><strong>1 мл</strong> на литр</td>
+                    </tr>
+                    <tr>
+                        <td><span class="recipe-dose dose-half">1/2</span></td>
+                        <td><strong>0.5 мл</strong> на литр</td>
+                    </tr>
+                    <tr>
+                        <td><span class="recipe-dose dose-quarter">1/4</span></td>
+                        <td><strong>0.25 мл</strong> на литр</td>
+                    </tr>
+                    <tr>
+                        <td><span class="recipe-dose dose-eighth">1/8</span></td>
+                        <td><strong>0.12 мл</strong> на литр</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
