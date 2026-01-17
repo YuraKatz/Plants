@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Миксер воды и удобрений - Plants Care</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 { color: #2d3748; font-size: 2.2rem; margin-bottom: 10px; }
+        .subtitle { color: #718096; font-size: 1rem; }
+
+        .nav-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+        }
+        .nav-back:hover { text-decoration: underline; }
+
+        /* Season Toggle */
+        .season-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .season-btn {
+            padding: 12px 30px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .season-btn:hover { border-color: #667eea; }
+        .season-btn.active {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border-color: transparent;
+        }
+        .season-btn.active.dormant {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+        }
+
+        /* Canisters Grid */
+        .canisters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Canister Card */
+        .canister-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 3px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .canister-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .canister-card.canister-a { border-color: #4299e1; }
+        .canister-card.canister-b { border-color: #48bb78; }
+        .canister-card.canister-c { border-color: #a0aec0; }
+
+        .canister-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .canister-a .canister-header { background: linear-gradient(135deg, #4299e1, #3182ce); }
+        .canister-b .canister-header { background: linear-gradient(135deg, #48bb78, #38a169); }
+        .canister-c .canister-header { background: linear-gradient(135deg, #a0aec0, #718096); }
+
+        .canister-letter {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        .canister-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        .canister-params {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .param {
+            text-align: center;
+        }
+        .param-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        .param-label {
+            font-size: 0.75rem;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .canister-content {
+            padding: 20px;
+        }
+
+        /* Recipe Section */
+        .recipe-section {
+            margin-bottom: 20px;
+        }
+        .recipe-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .recipe-box {
+            background: #f0fff4;
+            border: 2px solid #c6f6d5;
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .recipe-box.dormant {
+            background: #fffaf0;
+            border-color: #feebc8;
+        }
+        .recipe-box.forbidden {
+            background: #fff5f5;
+            border-color: #fed7d7;
+        }
+        .recipe-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        .recipe-item:last-child { border-bottom: none; }
+        .recipe-name { font-weight: 500; }
+        .recipe-dose {
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .dose-full { background: #c6f6d5; color: #22543d; }
+        .dose-half { background: #fef3c7; color: #92400e; }
+        .dose-quarter { background: #fed7aa; color: #9a3412; }
+        .dose-eighth { background: #fecaca; color: #991b1b; }
+        .dose-none { background: #fee2e2; color: #c53030; }
+
+        /* Plants List */
+        .plants-section {
+            margin-top: 15px;
+        }
+        .plants-title {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+        .plants-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .plant-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: #edf2f7;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #4a5568;
+        }
+        .plant-tag img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Print Button */
+        .print-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #edf2f7;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4a5568;
+            transition: background 0.2s;
+        }
+        .print-btn:hover { background: #e2e8f0; }
+
+        /* Warning Box */
+        .warning-box {
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .warning-box h3 {
+            color: #c53030;
+            margin-bottom: 10px;
+        }
+        .warning-box p {
+            color: #742a2a;
+            font-size: 0.95rem;
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+            .nav-back, .season-toggle, .print-btn { display: none; }
+            .canister-card { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            .canisters-grid { grid-template-columns: 1fr; }
+            .container { padding: 15px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-back">← На главную</a>
+
+        <header>
+            <h1>💧 Миксер воды + удобрений</h1>
+            <p class="subtitle">Рецепты для каждой канистры</p>
+        </header>
+
+        <!-- Season Toggle -->
+        <div class="season-toggle">
+            <button class="season-btn active" data-season="growth">🌱 Сезон РОСТ</button>
+            <button class="season-btn" data-season="dormant">🍂 Сезон ПОКОЙ</button>
+        </div>
+
+        <!-- Canisters -->
+        <div class="canisters-grid">
+            <!-- Canister A -->
+            <div class="canister-card canister-a">
+                <div class="canister-header">
+                    <div class="canister-letter">A</div>
+                    <div class="canister-title">Чувствительные</div>
+                </div>
+                <div class="canister-params">
+                    <div class="param">
+                        <div class="param-value">78</div>
+                        <div class="param-label">PPM</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value">5.85</div>
+                        <div class="param-label">pH</div>
+                    </div>
+                </div>
+                <div class="canister-content">
+                    <div class="recipe-section">
+                        <div class="recipe-title">📋 Рецепт удобрений</div>
+                        <div class="recipe-box growth-recipe">
+                            <div class="recipe-item">
+                                <span class="recipe-name">Чувствительные</span>
+                                <span class="recipe-dose dose-quarter">Universal 1/4</span>
+                            </div>
+                            <div class="recipe-item">
+                                <span class="recipe-name">Орхидеи</span>
+                                <span class="recipe-dose dose-eighth">Universal 1/8</span>
+                            </div>
+                            <div class="recipe-item">
+                                <span class="recipe-name">Дионея</span>
+                                <span class="recipe-dose dose-none">НИЧЕГО!</span>
+                            </div>
+                        </div>
+                        <div class="recipe-box dormant dormant-recipe" style="display: none;">
+                            <div class="recipe-item">
+                                <span class="recipe-name">Все растения</span>
+                                <span class="recipe-dose dose-none">НЕ удобрять</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plants-section">
+                        <div class="plants-title">Растения этой группы:</div>
+                        <div class="plants-grid">
+                            <span class="plant-tag"><img src="IMAGES/Калатея лансифолия.jpg" alt="">Калатея</span>
+                            <span class="plant-tag"><img src="IMAGES/ПапоротникНефролепис.jpeg" alt="">Папоротник</span>
+                            <span class="plant-tag"><img src="IMAGES/Алоказия.jpg" alt="">Алоказия</span>
+                            <span class="plant-tag"><img src="IMAGES/Антуриум.jpg" alt="">Антуриум</span>
+                            <span class="plant-tag"><img src="IMAGES/Гузмания.jpg" alt="">Гузмания</span>
+                            <span class="plant-tag"><img src="IMAGES/Орхидея.jpg" alt="">Орхидея</span>
+                            <span class="plant-tag"><img src="IMAGES/Дионея.jpg" alt="">Дионея</span>
+                        </div>
+                    </div>
+                    <button class="print-btn" onclick="window.print()">🖨️ Печать рецепта</button>
+                </div>
+            </div>
+
+            <!-- Canister B -->
+            <div class="canister-card canister-b">
+                <div class="canister-header">
+                    <div class="canister-letter">B</div>
+                    <div class="canister-title">Ароидные и стандартные</div>
+                </div>
+                <div class="canister-params">
+                    <div class="param">
+                        <div class="param-value">120</div>
+                        <div class="param-label">PPM</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value">6.30</div>
+                        <div class="param-label">pH</div>
+                    </div>
+                </div>
+                <div class="canister-content">
+                    <div class="recipe-section">
+                        <div class="recipe-title">📋 Рецепт удобрений</div>
+                        <div class="recipe-box growth-recipe">
+                            <div class="recipe-item">
+                                <span class="recipe-name">Ароидные</span>
+                                <span class="recipe-dose dose-full">Universal 100%</span>
+                            </div>
+                            <div class="recipe-item">
+                                <span class="recipe-name">Для цветения</span>
+                                <span class="recipe-dose dose-full">+ Flowering</span>
+                            </div>
+                        </div>
+                        <div class="recipe-box dormant dormant-recipe" style="display: none;">
+                            <div class="recipe-item">
+                                <span class="recipe-name">Ароидные</span>
+                                <span class="recipe-dose dose-half">Universal 1/2</span>
+                            </div>
+                            <div class="recipe-item">
+                                <span class="recipe-name">Цветение</span>
+                                <span class="recipe-dose dose-none">НЕ удобрять</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plants-section">
+                        <div class="plants-title">Растения этой группы:</div>
+                        <div class="plants-grid">
+                            <span class="plant-tag"><img src="IMAGES/Монстера делициоза.jpg" alt="">Монстера</span>
+                            <span class="plant-tag"><img src="IMAGES/филодендрон imperial.jpg" alt="">Филодендрон</span>
+                            <span class="plant-tag"><img src="IMAGES/пипремнум.jpg" alt="">Эпипремнум</span>
+                            <span class="plant-tag"><img src="IMAGES/Аглаонема.jpeg" alt="">Аглаонема</span>
+                            <span class="plant-tag"><img src="IMAGES/Спатифиллум.jpg" alt="">Спатифиллум</span>
+                            <span class="plant-tag"><img src="IMAGES/Бегония макулата.jpg" alt="">Бегония</span>
+                        </div>
+                    </div>
+                    <button class="print-btn" onclick="window.print()">🖨️ Печать рецепта</button>
+                </div>
+            </div>
+
+            <!-- Canister C -->
+            <div class="canister-card canister-c">
+                <div class="canister-header">
+                    <div class="canister-letter">C</div>
+                    <div class="canister-title">Неприхотливые</div>
+                </div>
+                <div class="canister-params">
+                    <div class="param">
+                        <div class="param-value">152</div>
+                        <div class="param-label">PPM</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value">6.62</div>
+                        <div class="param-label">pH</div>
+                    </div>
+                </div>
+                <div class="canister-content">
+                    <div class="recipe-section">
+                        <div class="recipe-title">📋 Рецепт удобрений</div>
+                        <div class="recipe-box growth-recipe">
+                            <div class="recipe-item">
+                                <span class="recipe-name">Все растения</span>
+                                <span class="recipe-dose dose-full">Universal 100%</span>
+                            </div>
+                        </div>
+                        <div class="recipe-box dormant dormant-recipe" style="display: none;">
+                            <div class="recipe-item">
+                                <span class="recipe-name">Все растения</span>
+                                <span class="recipe-dose dose-none">НЕ удобрять</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plants-section">
+                        <div class="plants-title">Растения этой группы:</div>
+                        <div class="plants-grid">
+                            <span class="plant-tag"><img src="IMAGES/Сансевиерия.jpg" alt="">Сансевиерия</span>
+                            <span class="plant-tag"><img src="IMAGES/Драцена маргината.jpg" alt="">Драцена М.</span>
+                            <span class="plant-tag"><img src="IMAGES/Драцена фрагранс.jpg" alt="">Драцена Ф.</span>
+                            <span class="plant-tag"><img src="IMAGES/Хлорофитум.jpg" alt="">Хлорофитум</span>
+                            <span class="plant-tag"><img src="IMAGES/Кротон.jpg" alt="">Кротон</span>
+                            <span class="plant-tag"><img src="IMAGES/Хамедорея.jpg" alt="">Хамедорея</span>
+                        </div>
+                    </div>
+                    <button class="print-btn" onclick="window.print()">🖨️ Печать рецепта</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning for Dionaea -->
+        <div class="warning-box">
+            <h3>⚠️ Дионея — особый случай!</h3>
+            <p>Используй воду из канистры A, но <strong>БЕЗ УДОБРЕНИЙ</strong>.<br>
+            Ещё лучше — чистый RO (PPM < 50). Любые добавки убивают растение!</p>
+        </div>
+    </div>
+
+    <script>
+        const seasonBtns = document.querySelectorAll('.season-btn');
+        const growthRecipes = document.querySelectorAll('.growth-recipe');
+        const dormantRecipes = document.querySelectorAll('.dormant-recipe');
+
+        seasonBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                seasonBtns.forEach(b => b.classList.remove('active', 'dormant'));
+                this.classList.add('active');
+
+                if (this.dataset.season === 'dormant') {
+                    this.classList.add('dormant');
+                    growthRecipes.forEach(r => r.style.display = 'none');
+                    dormantRecipes.forEach(r => r.style.display = 'block');
+                } else {
+                    growthRecipes.forEach(r => r.style.display = 'block');
+                    dormantRecipes.forEach(r => r.style.display = 'none');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
