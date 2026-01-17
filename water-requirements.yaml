@@ -162,6 +162,7 @@ water_requirements:
       group: C
       sensitivity: very_low
       notes: Крайне неприхотлива, переносит любую воду. Главное — не переливать
+      special_note: Можно поливать любой водой из имеющихся (A, B или C) — качество воды не критично
 
   water_groups:
     group_a:
