@@ -14,7 +14,7 @@
             color: #333;
         }
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -25,7 +25,7 @@
             text-align: center;
             margin-bottom: 30px;
         }
-        h1 { color: #2d3748; font-size: 2.2rem; margin-bottom: 10px; }
+        h1 { color: #2d3748; font-size: 2rem; margin-bottom: 10px; }
         .subtitle { color: #718096; font-size: 1rem; }
 
         .nav-back {
@@ -37,240 +37,172 @@
         }
         .nav-back:hover { text-decoration: underline; }
 
-        /* Search */
-        .search-box {
+        /* Plant Selection Grid */
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
             margin-bottom: 30px;
         }
-        #searchInput {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            border: 2px solid #e2e8f0;
+
+        .plant-select-card {
+            background: white;
             border-radius: 12px;
-            transition: border-color 0.3s;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 3px solid transparent;
         }
-        #searchInput:focus {
-            outline: none;
+        .plant-select-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .plant-select-card.selected {
             border-color: #f5576c;
         }
-
-        /* Category Tabs */
-        .category-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+        .plant-select-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
         }
-        .tab-btn {
-            padding: 12px 24px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.95rem;
+        .plant-select-card .name {
+            padding: 10px;
+            text-align: center;
             font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .tab-btn:hover { border-color: #f5576c; }
-        .tab-btn.active {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            color: white;
-            border-color: transparent;
-        }
-
-        /* Problem Cards */
-        .problems-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-        }
-
-        .problem-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 2px solid #e2e8f0;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .problem-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-        }
-        .problem-card.hidden { display: none; }
-
-        .problem-header {
-            padding: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .problem-icon {
-            font-size: 2.5rem;
-            flex-shrink: 0;
-        }
-
-        .problem-title-area {
-            flex-grow: 1;
-        }
-
-        .problem-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 4px;
-        }
-
-        .problem-subtitle {
             font-size: 0.85rem;
-            color: #718096;
+            color: #2d3748;
         }
 
-        .expand-icon {
-            font-size: 1.5rem;
-            color: #a0aec0;
-            transition: transform 0.3s;
-        }
-
-        .problem-card.expanded .expand-icon {
-            transform: rotate(180deg);
-        }
-
-        .problem-content {
+        /* Selected Plant Info */
+        .selected-plant {
             display: none;
-            padding: 0 20px 20px;
-            border-top: 1px solid #e2e8f0;
+            margin-top: 20px;
         }
-
-        .problem-card.expanded .problem-content {
+        .selected-plant.visible {
             display: block;
         }
 
-        /* Symptoms */
-        .symptom-group {
-            margin-top: 15px;
-        }
-
-        .symptom-item {
-            background: #f7fafc;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-left: 4px solid #e2e8f0;
-        }
-
-        .symptom-item.cause-overwater { border-left-color: #4299e1; }
-        .symptom-item.cause-underwater { border-left-color: #ed8936; }
-        .symptom-item.cause-light { border-left-color: #ecc94b; }
-        .symptom-item.cause-nutrients { border-left-color: #48bb78; }
-        .symptom-item.cause-pests { border-left-color: #e53e3e; }
-        .symptom-item.cause-normal { border-left-color: #a0aec0; }
-        .symptom-item.cause-disease { border-left-color: #9f7aea; }
-        .symptom-item.cause-environment { border-left-color: #38b2ac; }
-
-        .symptom-condition {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 8px;
+        .plant-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb20, #f5576c20);
+            border-radius: 15px;
+            margin-bottom: 25px;
         }
-
-        .symptom-cause {
-            font-size: 0.9rem;
-            color: #4a5568;
-            margin-bottom: 8px;
-        }
-
-        .symptom-solution {
-            font-size: 0.85rem;
-            color: #38a169;
-            background: #f0fff4;
-            padding: 8px 12px;
-            border-radius: 6px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .symptom-solution::before {
-            content: "✓";
-            font-weight: bold;
-        }
-
-        /* Severity Badge */
-        .severity-badge {
-            display: inline-block;
-            padding: 3px 10px;
+        .plant-header img {
+            width: 100px;
+            height: 100px;
             border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .severity-low { background: #c6f6d5; color: #22543d; }
-        .severity-medium { background: #fef3c7; color: #92400e; }
-        .severity-high { background: #fed7d7; color: #c53030; }
-        .severity-critical { background: #e53e3e; color: white; }
+        .plant-header-info h2 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .plant-header-info .latin {
+            color: #718096;
+            font-style: italic;
+        }
 
-        /* Quick Tips Box */
-        .quick-tips {
-            background: linear-gradient(135deg, #ebf8ff, #e6fffa);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border: 2px solid #bee3f8;
-        }
-        .quick-tips h3 {
-            color: #2c5282;
+        /* Problems Section */
+        .problems-section h3 {
+            color: #c53030;
+            font-size: 1.2rem;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .quick-tips ul {
+
+        .problem-card {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            border-radius: 0 12px 12px 0;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .problem-symptom {
+            font-weight: 700;
+            color: #c53030;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .problem-solution {
+            color: #22543d;
+            background: #f0fff4;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #48bb78;
+        }
+        .problem-solution::before {
+            content: "✅ Решение: ";
+            font-weight: 600;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: #ebf8ff;
+            border-radius: 12px;
+        }
+        .tips-section h3 {
+            color: #2c5282;
+            margin-bottom: 15px;
+        }
+        .tips-list {
             list-style: none;
         }
-        .quick-tips li {
+        .tips-list li {
             padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
             color: #2d3748;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
         }
-        .quick-tips li::before {
+        .tips-list li::before {
             content: "💡";
+            position: absolute;
+            left: 0;
         }
 
-        /* Category sections */
-        .category-section {
-            margin-bottom: 40px;
-        }
-        .category-section.hidden { display: none; }
-
-        .category-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2d3748;
+        /* Back button */
+        .back-to-list {
+            display: inline-block;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #f5576c;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 10px 20px;
+            background: #f5576c;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        .back-to-list:hover {
+            background: #e53e3e;
         }
 
-        @media (max-width: 768px) {
-            .container { padding: 15px; }
-            h1 { font-size: 1.8rem; }
-            .problems-grid { grid-template-columns: 1fr; }
-            .category-tabs { justify-content: center; }
-            .tab-btn { padding: 10px 16px; font-size: 0.85rem; }
+        .instruction {
+            text-align: center;
+            padding: 30px;
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 600px) {
+            .plants-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .plant-header {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -280,550 +212,414 @@
 
         <header>
             <h1>🔍 Диагностика проблем</h1>
-            <p class="subtitle">Определите проблему по симптомам и найдите решение</p>
+            <p class="subtitle">Выбери растение, чтобы увидеть типичные проблемы и решения</p>
         </header>
 
-        <!-- Quick Tips -->
-        <div class="quick-tips">
-            <h3>📋 Быстрая диагностика</h3>
-            <ul>
-                <li><strong>Жёлтые листья + мокрый грунт</strong> = перелив (90% случаев)</li>
-                <li><strong>Сухие кончики</strong> = низкая влажность воздуха или жёсткая вода</li>
-                <li><strong>Вытянутые стебли</strong> = недостаток света</li>
-                <li><strong>Опадают листья</strong> = стресс (сквозняк, переезд, перепад температур)</li>
-            </ul>
+        <!-- Plant Selection -->
+        <div id="plantSelection">
+            <div class="plants-grid" id="plantsGrid"></div>
         </div>
 
-        <!-- Search -->
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Поиск по симптому... (например: жёлтые листья, пятна, гниль)">
-        </div>
+        <!-- Selected Plant Problems -->
+        <div id="selectedPlant" class="selected-plant">
+            <button class="back-to-list" onclick="showAllPlants()">← Все растения</button>
 
-        <!-- Category Tabs -->
-        <div class="category-tabs">
-            <button class="tab-btn active" data-category="all">📋 Все</button>
-            <button class="tab-btn" data-category="leaves">🍃 Листья</button>
-            <button class="tab-btn" data-category="growth">📈 Рост</button>
-            <button class="tab-btn" data-category="roots">🌱 Корни</button>
-        </div>
+            <div class="plant-header" id="plantHeader"></div>
 
-        <!-- ЛИСТЬЯ -->
-        <div class="category-section" data-section="leaves">
-            <h2 class="category-title">🍃 Проблемы с листьями</h2>
-            <div class="problems-grid">
+            <div class="problems-section">
+                <h3>⚠️ Типичные проблемы</h3>
+                <div id="problemsList"></div>
+            </div>
 
-                <!-- Желтеют листья -->
-                <div class="problem-card" data-keywords="жёлтые желтеют желтые листья пожелтели">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">💛</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Желтеют листья</div>
-                            <div class="problem-subtitle">Самая частая проблема</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-normal">
-                                <div class="symptom-condition">
-                                    Только нижние старые листья
-                                    <span class="severity-badge severity-low">норма</span>
-                                </div>
-                                <div class="symptom-cause">Естественное старение — растение сбрасывает старые листья</div>
-                                <div class="symptom-solution">Просто удалите пожелтевшие листья, это нормальный процесс</div>
-                            </div>
-                            <div class="symptom-item cause-overwater">
-                                <div class="symptom-condition">
-                                    Много листьев + мокрый грунт
-                                    <span class="severity-badge severity-high">перелив</span>
-                                </div>
-                                <div class="symptom-cause">Корни задыхаются от избытка воды, начинается гниль</div>
-                                <div class="symptom-solution">Прекратите полив! Дайте грунту просохнуть. При запахе гнили — пересадите</div>
-                            </div>
-                            <div class="symptom-item cause-light">
-                                <div class="symptom-condition">
-                                    Много листьев + сухой грунт
-                                    <span class="severity-badge severity-medium">свет/питание</span>
-                                </div>
-                                <div class="symptom-cause">Недостаток света или дефицит азота</div>
-                                <div class="symptom-solution">Переставьте ближе к свету. В сезон роста — подкормите</div>
-                            </div>
-                            <div class="symptom-item cause-nutrients">
-                                <div class="symptom-condition">
-                                    Жёлтые между жилками (жилки зелёные)
-                                    <span class="severity-badge severity-medium">хлороз</span>
-                                </div>
-                                <div class="symptom-cause">Дефицит железа или магния (часто при щелочной воде)</div>
-                                <div class="symptom-solution">Используйте подкисленную воду. Добавьте хелат железа или Cal-Mag</div>
-                            </div>
-                            <div class="symptom-item cause-light">
-                                <div class="symptom-condition">
-                                    Жёлтые пятна на листьях
-                                    <span class="severity-badge severity-medium">ожог</span>
-                                </div>
-                                <div class="symptom-cause">Солнечный ожог от прямых лучей</div>
-                                <div class="symptom-solution">Уберите от прямого солнца. Повреждённые листья не восстановятся</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Сохнут кончики -->
-                <div class="problem-card" data-keywords="сохнут кончики сухие коричневые края">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">🍂</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Сохнут кончики листьев</div>
-                            <div class="problem-subtitle">Коричневые края</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-environment">
-                                <div class="symptom-condition">
-                                    Сухие коричневые кончики
-                                    <span class="severity-badge severity-medium">влажность</span>
-                                </div>
-                                <div class="symptom-cause">Низкая влажность воздуха (особенно зимой с отоплением)</div>
-                                <div class="symptom-solution">Поставьте увлажнитель. Опрыскивайте воздух вокруг растения. Группируйте растения</div>
-                            </div>
-                            <div class="symptom-item cause-overwater">
-                                <div class="symptom-condition">
-                                    Коричневые мягкие края
-                                    <span class="severity-badge severity-high">перелив</span>
-                                </div>
-                                <div class="symptom-cause">Избыток влаги, начинающаяся гниль корней</div>
-                                <div class="symptom-solution">Сократите полив. Проверьте дренаж. Дайте грунту просохнуть</div>
-                            </div>
-                            <div class="symptom-item cause-nutrients">
-                                <div class="symptom-condition">
-                                    Только самые кончики (1-2 мм)
-                                    <span class="severity-badge severity-low">вода/соли</span>
-                                </div>
-                                <div class="symptom-cause">Соли в воде, накопление удобрений, или жёсткая вода</div>
-                                <div class="symptom-solution">Используйте фильтрованную воду. Промойте грунт. Уменьшите дозу удобрений</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Скручиваются листья -->
-                <div class="problem-card" data-keywords="скручиваются листья закручиваются сворачиваются">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">🌀</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Скручиваются листья</div>
-                            <div class="problem-subtitle">Деформация листовой пластины</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-overwater">
-                                <div class="symptom-condition">
-                                    Скручиваются вниз
-                                    <span class="severity-badge severity-high">перелив</span>
-                                </div>
-                                <div class="symptom-cause">Избыток воды, корни не дышат</div>
-                                <div class="symptom-solution">Прекратите полив до просыхания. Улучшите дренаж</div>
-                            </div>
-                            <div class="symptom-item cause-underwater">
-                                <div class="symptom-condition">
-                                    Скручиваются вверх / внутрь (трубочкой)
-                                    <span class="severity-badge severity-medium">засуха/жара</span>
-                                </div>
-                                <div class="symptom-cause">Недостаток воды или слишком жарко</div>
-                                <div class="symptom-solution">Полейте растение. Уберите от источников тепла</div>
-                            </div>
-                            <div class="symptom-item cause-pests">
-                                <div class="symptom-condition">
-                                    Скручиваются внутрь + точки/паутинка
-                                    <span class="severity-badge severity-critical">клещ!</span>
-                                </div>
-                                <div class="symptom-cause">Паутинный клещ — очень опасный вредитель</div>
-                                <div class="symptom-solution">Изолируйте! Промойте под душем. Обработайте Фитовермом 3 раза с интервалом 5-7 дней</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Пятна на листьях -->
-                <div class="problem-card" data-keywords="пятна листья коричневые чёрные белые точки налёт">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">🔘</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Пятна на листьях</div>
-                            <div class="problem-subtitle">Различные виды пятен</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-light">
-                                <div class="symptom-condition">
-                                    Коричневые сухие пятна
-                                    <span class="severity-badge severity-medium">ожог/грибок</span>
-                                </div>
-                                <div class="symptom-cause">Солнечный ожог или грибковая инфекция</div>
-                                <div class="symptom-solution">Уберите от прямого солнца. При распространении — обработайте фунгицидом</div>
-                            </div>
-                            <div class="symptom-item cause-disease">
-                                <div class="symptom-condition">
-                                    Коричневые мокрые пятна + запах
-                                    <span class="severity-badge severity-critical">бактерии!</span>
-                                </div>
-                                <div class="symptom-cause">Бактериальная инфекция — очень опасно</div>
-                                <div class="symptom-solution">Немедленно удалите поражённые листья! Изолируйте растение. Обработайте антибактериальным</div>
-                            </div>
-                            <div class="symptom-item cause-disease">
-                                <div class="symptom-condition">
-                                    Белый мучнистый налёт
-                                    <span class="severity-badge severity-high">м. роса</span>
-                                </div>
-                                <div class="symptom-cause">Мучнистая роса — грибковое заболевание</div>
-                                <div class="symptom-solution">Удалите поражённые листья. Обработайте фунгицидом. Улучшите вентиляцию</div>
-                            </div>
-                            <div class="symptom-item cause-disease">
-                                <div class="symptom-condition">
-                                    Чёрные точки / пятна
-                                    <span class="severity-badge severity-medium">грибок</span>
-                                </div>
-                                <div class="symptom-cause">Сажистый грибок или чёрная пятнистость</div>
-                                <div class="symptom-solution">Протрите листья. Проверьте на вредителей (выделяют липкое). Обработайте фунгицидом</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Опадают листья -->
-                <div class="problem-card" data-keywords="опадают листья падают сбрасывает облетают">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">🍁</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Опадают листья</div>
-                            <div class="problem-subtitle">Листопад у комнатных</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-environment">
-                                <div class="symptom-condition">
-                                    Резко много листьев сразу
-                                    <span class="severity-badge severity-high">стресс!</span>
-                                </div>
-                                <div class="symptom-cause">Сильный стресс: переезд, сквозняк, резкий перепад температур</div>
-                                <div class="symptom-solution">Обеспечьте стабильные условия. Не переставляйте. Терпение — адаптируется за 2-4 недели</div>
-                            </div>
-                            <div class="symptom-item cause-normal">
-                                <div class="symptom-condition">
-                                    Постепенно снизу
-                                    <span class="severity-badge severity-low">норма</span>
-                                </div>
-                                <div class="symptom-cause">Естественный процесс или недостаток света</div>
-                                <div class="symptom-solution">Если медленно — норма. Если быстро — добавьте света</div>
-                            </div>
-                            <div class="symptom-item cause-overwater">
-                                <div class="symptom-condition">
-                                    Молодые листья + вялость
-                                    <span class="severity-badge severity-critical">корни!</span>
-                                </div>
-                                <div class="symptom-cause">Проблемы с корнями — возможно гниль</div>
-                                <div class="symptom-solution">Срочно проверьте корни! Если гниль — обрежьте, обработайте, пересадите в сухой грунт</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="tips-section">
+                <h3>💡 Интересные факты</h3>
+                <ul class="tips-list" id="factsList"></ul>
             </div>
         </div>
-
-        <!-- РОСТ -->
-        <div class="category-section" data-section="growth">
-            <h2 class="category-title">📈 Проблемы роста</h2>
-            <div class="problems-grid">
-
-                <!-- Не растёт -->
-                <div class="problem-card" data-keywords="не растёт остановился рост стоит на месте">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">⏸️</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Не растёт</div>
-                            <div class="problem-subtitle">Остановка в росте</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-normal">
-                                <div class="symptom-condition">
-                                    Зимой (октябрь-февраль)
-                                    <span class="severity-badge severity-low">норма</span>
-                                </div>
-                                <div class="symptom-cause">Период покоя — большинство растений замедляют рост</div>
-                                <div class="symptom-solution">Это нормально! Сократите полив и не удобряйте. Рост возобновится весной</div>
-                            </div>
-                            <div class="symptom-item cause-light">
-                                <div class="symptom-condition">
-                                    Летом + тёмное место
-                                    <span class="severity-badge severity-medium">свет</span>
-                                </div>
-                                <div class="symptom-cause">Недостаток света для фотосинтеза</div>
-                                <div class="symptom-solution">Переставьте к окну или добавьте фитолампу</div>
-                            </div>
-                            <div class="symptom-item cause-environment">
-                                <div class="symptom-condition">
-                                    Корни торчат из дренажа
-                                    <span class="severity-badge severity-medium">горшок</span>
-                                </div>
-                                <div class="symptom-cause">Растению тесно, корням некуда расти</div>
-                                <div class="symptom-solution">Пересадите в горшок на 2-3 см больше</div>
-                            </div>
-                            <div class="symptom-item cause-nutrients">
-                                <div class="symptom-condition">
-                                    Давно не пересаживали
-                                    <span class="severity-badge severity-medium">питание</span>
-                                </div>
-                                <div class="symptom-cause">Истощённый грунт, нет питательных веществ</div>
-                                <div class="symptom-solution">Пересадите в свежий грунт или начните регулярные подкормки</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Вытягивается -->
-                <div class="problem-card" data-keywords="вытягивается длинные стебли тонкие междоузлия бледные">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">📏</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Вытягивается</div>
-                            <div class="problem-subtitle">Длинные тонкие стебли</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-light">
-                                <div class="symptom-condition">
-                                    Длинные междоузлия
-                                    <span class="severity-badge severity-high">мало света!</span>
-                                </div>
-                                <div class="symptom-cause">Растение тянется к свету — этиоляция</div>
-                                <div class="symptom-solution">Срочно добавьте света! Переставьте к окну или используйте фитолампу</div>
-                            </div>
-                            <div class="symptom-item cause-light">
-                                <div class="symptom-condition">
-                                    Бледные мелкие листья
-                                    <span class="severity-badge severity-critical">критично!</span>
-                                </div>
-                                <div class="symptom-cause">Сильный недостаток света — растение "голодает"</div>
-                                <div class="symptom-solution">Срочно переставьте на яркий свет. Можно обрезать вытянувшуюся часть</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Мелкие листья -->
-                <div class="problem-card" data-keywords="мелкие листья маленькие не растут новые">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">🔬</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Мелкие листья</div>
-                            <div class="problem-subtitle">Новые листья меньше старых</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-light">
-                                <div class="symptom-condition">
-                                    Мелкие + бледные
-                                    <span class="severity-badge severity-high">свет</span>
-                                </div>
-                                <div class="symptom-cause">Недостаток света для нормального развития</div>
-                                <div class="symptom-solution">Переставьте на более освещённое место</div>
-                            </div>
-                            <div class="symptom-item cause-nutrients">
-                                <div class="symptom-condition">
-                                    Мелкие, но нормального цвета
-                                    <span class="severity-badge severity-medium">питание</span>
-                                </div>
-                                <div class="symptom-cause">Недостаток питательных веществ</div>
-                                <div class="symptom-solution">Начните регулярные подкормки в период роста</div>
-                            </div>
-                            <div class="symptom-item cause-environment">
-                                <div class="symptom-condition">
-                                    Корни вылезают + давно в горшке
-                                    <span class="severity-badge severity-medium">пересадка</span>
-                                </div>
-                                <div class="symptom-cause">Растению тесно, нужна пересадка</div>
-                                <div class="symptom-solution">Пересадите весной в горшок побольше</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- КОРНИ -->
-        <div class="category-section" data-section="roots">
-            <h2 class="category-title">🌱 Проблемы с корнями</h2>
-            <div class="problems-grid">
-
-                <!-- Гниль корней -->
-                <div class="problem-card" data-keywords="гниль корней гниют чёрные корни запах вялые">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">🦠</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Гниль корней</div>
-                            <div class="problem-subtitle">Самая опасная проблема</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-overwater">
-                                <div class="symptom-condition">
-                                    Вялые листья + мокрый грунт + запах
-                                    <span class="severity-badge severity-critical">срочно!</span>
-                                </div>
-                                <div class="symptom-cause">Корневая гниль от перелива — растение умирает</div>
-                                <div class="symptom-solution">
-                                    <strong>Срочно:</strong> Выньте из горшка → Обрежьте ВСЮ гниль до здоровой ткани →
-                                    Обработайте срезы (перекись/уголь/фунгицид) → Просушите 1-2 часа →
-                                    Посадите в СУХОЙ свежий грунт → НЕ поливайте 5-7 дней
-                                </div>
-                            </div>
-                            <div class="symptom-item cause-overwater">
-                                <div class="symptom-condition">
-                                    Чёрные/коричневые мягкие корни
-                                    <span class="severity-badge severity-critical">гниль</span>
-                                </div>
-                                <div class="symptom-cause">Здоровые корни белые или светло-коричневые, упругие</div>
-                                <div class="symptom-solution">Обрежьте всё мягкое и тёмное стерильным ножом. Оставьте только твёрдые светлые корни</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Корни вылезают -->
-                <div class="problem-card" data-keywords="корни вылезают торчат снизу сверху воздушные">
-                    <div class="problem-header" onclick="toggleCard(this)">
-                        <div class="problem-icon">🪴</div>
-                        <div class="problem-title-area">
-                            <div class="problem-title">Корни вылезают</div>
-                            <div class="problem-subtitle">Из горшка или на поверхности</div>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="problem-content">
-                        <div class="symptom-group">
-                            <div class="symptom-item cause-environment">
-                                <div class="symptom-condition">
-                                    Из дренажных отверстий снизу
-                                    <span class="severity-badge severity-medium">пересадка</span>
-                                </div>
-                                <div class="symptom-cause">Растению тесно, корни ищут место</div>
-                                <div class="symptom-solution">Пора пересаживать в горшок на 2-3 см больше в диаметре</div>
-                            </div>
-                            <div class="symptom-item cause-normal">
-                                <div class="symptom-condition">
-                                    Воздушные корни сверху (монстера, филодендрон)
-                                    <span class="severity-badge severity-low">норма</span>
-                                </div>
-                                <div class="symptom-cause">Это нормально для лиан — они цепляются за опору</div>
-                                <div class="symptom-solution">Не обрезайте! Направьте на мховую опору или в грунт</div>
-                            </div>
-                            <div class="symptom-item cause-normal">
-                                <div class="symptom-condition">
-                                    Корни на поверхности (орхидеи)
-                                    <span class="severity-badge severity-low">норма</span>
-                                </div>
-                                <div class="symptom-cause">Орхидеи — эпифиты, их корни фотосинтезируют</div>
-                                <div class="symptom-solution">Не закапывайте! Опрыскивайте, если сохнут</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
     </div>
 
     <script>
-        // Toggle card expansion
-        function toggleCard(header) {
-            const card = header.parentElement;
-            card.classList.toggle('expanded');
+        // Plant data with problems and facts
+        const plantsData = {
+            "monstera_deliciosa": {
+                name: "Монстера Делициоза",
+                latin: "Monstera deliciosa",
+                image: "IMAGES/Монстера делициоза.jpg",
+                problems: [
+                    { symptom: "Жёлтые листья", solution: "Перелив или недостаток света. Дайте просохнуть, переставьте ближе к окну." },
+                    { symptom: "Нет дырок в листьях", solution: "Мало света! Молодые листья без фенестрации — нужно больше освещения." },
+                    { symptom: "Коричневые пятна", solution: "Солнечный ожог. Уберите от прямых лучей." },
+                    { symptom: "Капает вода с листьев", solution: "Гуттация — это норма! Растение выводит лишнюю влагу." }
+                ],
+                facts: [
+                    "Дырки в листьях помогают выдержать тропические ливни",
+                    "В природе плоды съедобны и пахнут ананасом",
+                    "Может вырасти до 20 метров в джунглях"
+                ]
+            },
+            "monstera_adansonii": {
+                name: "Монстера Адансона",
+                latin: "Monstera adansonii",
+                image: "IMAGES/Монстера Адансона.jpg",
+                problems: [
+                    { symptom: "Желтеют нижние листья", solution: "Естественное старение. Если массово — проверьте полив." },
+                    { symptom: "Мелкие листья без дырок", solution: "Мало света! Переставьте ближе к источнику света." },
+                    { symptom: "Коричневые края", solution: "Низкая влажность. Опрыскивайте или поставьте увлажнитель." }
+                ],
+                facts: [
+                    "Называют 'швейцарский сыр' за форму отверстий",
+                    "Быстро растёт — до 30 см в месяц летом",
+                    "Отлично смотрится в подвесных кашпо"
+                ]
+            },
+            "philodendron": {
+                name: "Филодендрон",
+                latin: "Philodendron",
+                image: "IMAGES/филодендрон imperial.jpg",
+                problems: [
+                    { symptom: "Вытянутые стебли", solution: "Недостаток света. Переставьте ближе к окну." },
+                    { symptom: "Жёлтые листья", solution: "Перелив! Дайте грунту просохнуть между поливами." },
+                    { symptom: "Мелкие листья", solution: "Нужна подкормка или опора для лазания вверх." }
+                ],
+                facts: [
+                    "Название означает 'любящий деревья' (греч.)",
+                    "Более 400 видов в семействе",
+                    "Очищает воздух от формальдегида"
+                ]
+            },
+            "epipremnum": {
+                name: "Эпипремнум",
+                latin: "Epipremnum aureum",
+                image: "IMAGES/пипремнум.jpg",
+                problems: [
+                    { symptom: "Потеря пестроты", solution: "Мало света! Вариегатным нужно больше освещения." },
+                    { symptom: "Гниль стебля", solution: "Перелив + холод. Обрежьте гниль, укорените здоровую часть." },
+                    { symptom: "Коричневые пятна", solution: "Солнечный ожог. Уберите от прямых лучей." }
+                ],
+                facts: [
+                    "Одно из самых неубиваемых растений",
+                    "Может расти в воде годами",
+                    "NASA включило в список очистителей воздуха"
+                ]
+            },
+            "aglaonema": {
+                name: "Аглаонема",
+                latin: "Aglaonema",
+                image: "IMAGES/Аглаонема.jpeg",
+                problems: [
+                    { symptom: "Скручиваются листья", solution: "Холод или сквозняк. Переставьте в тёплое место." },
+                    { symptom: "Бледнеет окраска", solution: "Слишком темно. Добавьте рассеянного света." },
+                    { symptom: "Коричневые кончики", solution: "Сухой воздух. Опрыскивайте или используйте увлажнитель." }
+                ],
+                facts: [
+                    "Считается символом удачи в Азии",
+                    "Выживает при минимальном освещении",
+                    "Существует более 100 сортов"
+                ]
+            },
+            "spathiphyllum": {
+                name: "Спатифиллум",
+                latin: "Spathiphyllum",
+                image: "IMAGES/Спатифиллум.jpg",
+                problems: [
+                    { symptom: "Не цветёт", solution: "Мало света или удобрений. Переставьте ближе к окну, начните подкармливать." },
+                    { symptom: "Коричневые кончики", solution: "Жёсткая вода с хлором. Используйте отстоянную или RO воду." },
+                    { symptom: "Жёлтые листья", solution: "Перелив или естественное старение нижних листьев." },
+                    { symptom: "Поникли листья", solution: "Хочет пить! Полейте — восстановится за пару часов." }
+                ],
+                facts: [
+                    "'Женское счастье' — популярное название",
+                    "Цветёт белыми 'парусами' круглый год",
+                    "Сигнализирует о жажде поникшими листьями"
+                ]
+            },
+            "calathea_lancifolia": {
+                name: "Калатея Лансифолия",
+                latin: "Calathea lancifolia",
+                image: "IMAGES/Калатея лансифолия.jpg",
+                problems: [
+                    { symptom: "Сохнут края листьев", solution: "Низкая влажность или жёсткая вода! Только RO вода, влажность 60%+." },
+                    { symptom: "Скручиваются листья", solution: "Мало воды или сухой воздух. Полейте и опрыскайте." },
+                    { symptom: "Бледнеют узоры", solution: "Слишком много прямого света. Нужен рассеянный свет." }
+                ],
+                facts: [
+                    "Листья складываются на ночь как в молитве",
+                    "Узоры на листьях уникальны как отпечатки",
+                    "Родом из бразильских тропиков"
+                ]
+            },
+            "calathea_ornata": {
+                name: "Калатея Орната",
+                latin: "Calathea ornata",
+                image: "IMAGES/Калатея орната.jpg",
+                problems: [
+                    { symptom: "Коричневые края", solution: "ОБЯЗАТЕЛЬНО RO вода! Калатея орната очень чувствительна к солям." },
+                    { symptom: "Тусклые листья", solution: "Нужна влажность 60%+. Поставьте увлажнитель." },
+                    { symptom: "Паутинный клещ", solution: "Частая проблема! Регулярно осматривайте, промывайте листья." }
+                ],
+                facts: [
+                    "Розовые полоски с возрастом белеют",
+                    "Листья двигаются за солнцем в течение дня",
+                    "Одна из самых красивых калатей"
+                ]
+            },
+            "alocasia_amazonica": {
+                name: "Алоказия",
+                latin: "Alocasia amazonica",
+                image: "IMAGES/Алоказия.jpg",
+                problems: [
+                    { symptom: "Опали все листья", solution: "Спячка! НЕ ВЫБРАСЫВАЙТЕ! Клубень жив, весной даст новые листья." },
+                    { symptom: "Жёлтые пятна", solution: "Перелив. Дайте просохнуть, проверьте дренаж." },
+                    { symptom: "Паутинный клещ", solution: "Главный враг алоказии! Регулярный душ и осмотр." }
+                ],
+                facts: [
+                    "'Африканская маска' — народное название",
+                    "Может уйти в спячку зимой и сбросить листья",
+                    "Клубень выживает даже без листьев"
+                ]
+            },
+            "anthurium_andraeanum": {
+                name: "Антуриум",
+                latin: "Anthurium andraeanum",
+                image: "IMAGES/Антуриум.jpg",
+                problems: [
+                    { symptom: "Не цветёт", solution: "Мало света или холодно. Нужен яркий рассеянный свет и тепло." },
+                    { symptom: "Зелёные цветы", solution: "Недостаток света. 'Цветок' теряет яркость без освещения." },
+                    { symptom: "Коричневые пятна", solution: "Бактериальная инфекция. Удалите поражённые части, изолируйте." }
+                ],
+                facts: [
+                    "'Цветок' — это на самом деле лист (покрывало)",
+                    "Цветёт почти круглый год",
+                    "Символ гостеприимства на Гавайях"
+                ]
+            },
+            "guzmania": {
+                name: "Гузмания",
+                latin: "Guzmania",
+                image: "IMAGES/Гузмания.jpg",
+                problems: [
+                    { symptom: "Материнское растение умирает", solution: "НОРМА после цветения! Отделите деток и выращивайте их." },
+                    { symptom: "Гниёт розетка", solution: "Вода попала в розетку + холод. Держите в тепле, меняйте воду в розетке." },
+                    { symptom: "Бледный цвет", solution: "Мало света. Переставьте ближе к окну." }
+                ],
+                facts: [
+                    "Цветёт один раз в жизни, затем даёт деток",
+                    "Воду наливают в розетку, не в грунт",
+                    "Относится к семейству ананасовых"
+                ]
+            },
+            "nephrolepis": {
+                name: "Папоротник",
+                latin: "Nephrolepis",
+                image: "IMAGES/ПапоротникНефролепис.jpeg",
+                problems: [
+                    { symptom: "Осыпаются листочки", solution: "Сухой воздух! Папоротнику нужна высокая влажность 60%+." },
+                    { symptom: "Жёлтые вайи", solution: "Перелив или недостаток света." },
+                    { symptom: "Коричневые споры снизу листа", solution: "Это НОРМА! Споры — способ размножения папоротника." }
+                ],
+                facts: [
+                    "Один из древнейших видов растений (300 млн лет)",
+                    "Идеальный очиститель воздуха",
+                    "Любит ванную комнату с окном"
+                ]
+            },
+            "phalaenopsis": {
+                name: "Орхидея Фаленопсис",
+                latin: "Phalaenopsis",
+                image: "IMAGES/Орхидея.jpg",
+                problems: [
+                    { symptom: "Не цветёт повторно", solution: "Нужен перепад температур день/ночь 5-7°C для закладки цветоносов." },
+                    { symptom: "Жёлтые листья снизу", solution: "Норма — 1-2 листа в год. Если больше — проверьте корни." },
+                    { symptom: "Гнилые корни", solution: "Пересадите в свежую кору! Срежьте гниль, обработайте." },
+                    { symptom: "Вялые листья", solution: "Проблемы с корнями. Проверьте — возможно гниль или пересушка." }
+                ],
+                facts: [
+                    "Может цвести 3-6 месяцев подряд",
+                    "Корни фотосинтезируют — не закапывайте!",
+                    "В природе растёт на деревьях, не в земле"
+                ]
+            },
+            "dracaena_marginata": {
+                name: "Драцена Маргината",
+                latin: "Dracaena marginata",
+                image: "IMAGES/Драцена маргината.jpg",
+                problems: [
+                    { symptom: "Сохнут кончики", solution: "Жёсткая вода с фтором! Используйте RO или отстоянную воду." },
+                    { symptom: "Опадают нижние листья", solution: "Норма с возрастом — формируется ствол." },
+                    { symptom: "Мягкий ствол", solution: "Гниль от перелива! Срочно просушите, возможно нужна обрезка." }
+                ],
+                facts: [
+                    "'Драконово дерево' — из-за красного сока",
+                    "Живёт десятилетиями",
+                    "Очищает воздух от бензола и ксилола"
+                ]
+            },
+            "dracaena_fragrans": {
+                name: "Драцена Фрагранс",
+                latin: "Dracaena fragrans",
+                image: "IMAGES/Драцена фрагранс.jpg",
+                problems: [
+                    { symptom: "Коричневые пятна", solution: "Избыток фтора в воде. Используйте очищенную воду." },
+                    { symptom: "Бледные листья", solution: "Мало света. Переставьте ближе к окну." },
+                    { symptom: "Мягкий ствол", solution: "Срочно проверьте корни! Возможна гниль от перелива." }
+                ],
+                facts: [
+                    "Цветёт очень редко, но аромат сильный",
+                    "Может вырасти до 2 метров дома",
+                    "Одна из лучших для офисов"
+                ]
+            },
+            "croton": {
+                name: "Кротон",
+                latin: "Codiaeum variegatum",
+                image: "IMAGES/Кротон.jpg",
+                problems: [
+                    { symptom: "Опадают листья", solution: "Стресс от переезда, сквозняк или пересушка. Не двигайте!" },
+                    { symptom: "Тусклые цвета", solution: "Нужно больше света! Кротону нужен яркий свет для окраски." },
+                    { symptom: "Паутинный клещ", solution: "Частая проблема! Регулярный душ и осмотр листьев." }
+                ],
+                facts: [
+                    "Чем больше света — тем ярче краски",
+                    "Млечный сок ядовит — осторожно!",
+                    "Не любит перемещений — сбрасывает листья"
+                ]
+            },
+            "sansevieria": {
+                name: "Сансевиерия",
+                latin: "Sansevieria",
+                image: "IMAGES/Сансевиерия.jpg",
+                problems: [
+                    { symptom: "Мягкие листья", solution: "ПЕРЕЛИВ! Срочно просушите. Сансевиерия гниёт от лишней воды." },
+                    { symptom: "Бледнеет окраска", solution: "Можно добавить света, но выживет и в тени." },
+                    { symptom: "Не растёт", solution: "Это нормально — очень медленное растение." }
+                ],
+                facts: [
+                    "'Тёщин язык' — выживает при любом уходе",
+                    "Выделяет кислород ночью (идеально для спальни)",
+                    "Может месяц без полива"
+                ]
+            },
+            "begonia_maculata": {
+                name: "Бегония Макулата",
+                latin: "Begonia maculata",
+                image: "IMAGES/Бегония макулата.jpg",
+                problems: [
+                    { symptom: "Опадают листья", solution: "Сквозняк или стресс. Держите в стабильных условиях." },
+                    { symptom: "Мучнистая роса", solution: "Плохая вентиляция. Улучшите циркуляцию воздуха." },
+                    { symptom: "Вытягивается", solution: "Прищипните верхушку для кустистости." }
+                ],
+                facts: [
+                    "'Крыло ангела' — за форму листьев",
+                    "Серебряные точки — естественный узор",
+                    "Цветёт розовыми гроздьями"
+                ]
+            },
+            "chamaedorea": {
+                name: "Хамедорея",
+                latin: "Chamaedorea elegans",
+                image: "IMAGES/Хамедорея.jpg",
+                problems: [
+                    { symptom: "Сохнут кончики", solution: "Сухой воздух. Опрыскивайте или поставьте увлажнитель." },
+                    { symptom: "Жёлтые листья", solution: "Перелив или холод. Проверьте условия." },
+                    { symptom: "Паутинный клещ", solution: "Осматривайте регулярно, промывайте листья." }
+                ],
+                facts: [
+                    "Одна из немногих пальм для дома",
+                    "Очень теневынослива",
+                    "Может цвести жёлтыми метёлками"
+                ]
+            },
+            "chlorophytum_comosum": {
+                name: "Хлорофитум",
+                latin: "Chlorophytum comosum",
+                image: "IMAGES/Хлорофитум.jpg",
+                problems: [
+                    { symptom: "Коричневые кончики", solution: "Жёсткая вода с фтором. Используйте очищенную воду." },
+                    { symptom: "Бледные листья", solution: "Мало света. Переставьте ближе к окну." },
+                    { symptom: "Нет деток", solution: "Растение ещё молодое или горшок слишком большой." }
+                ],
+                facts: [
+                    "Чемпион по очистке воздуха (NASA)",
+                    "Даёт 'деток' на длинных усах",
+                    "Практически неубиваем"
+                ]
+            },
+            "dionaea": {
+                name: "Дионея (Венерина мухоловка)",
+                latin: "Dionaea muscipula",
+                image: "IMAGES/Дионея.jpg",
+                problems: [
+                    { symptom: "Чернеют ловушки", solution: "Норма после еды или касания. Не трогайте ловушки!" },
+                    { symptom: "Погибает через 1-2 года", solution: "НЕ БЫЛО ЗИМОВКИ! Обязательна холодная зимовка 3-4 месяца при 0-10°C." },
+                    { symptom: "Слабые ловушки", solution: "Нужно больше прямого солнца. Минимум 4-6 часов." },
+                    { symptom: "Гниёт", solution: "Вода не RO или удобряли! Только дистиллят, никаких удобрений!" }
+                ],
+                facts: [
+                    "Ловушка срабатывает за 0.1 секунды",
+                    "Переваривает насекомых 5-12 дней",
+                    "ОБЯЗАТЕЛЬНА холодная зимовка 3-4 месяца!"
+                ]
+            }
+        };
+
+        const plantsGrid = document.getElementById('plantsGrid');
+        const selectedPlant = document.getElementById('selectedPlant');
+        const plantSelection = document.getElementById('plantSelection');
+
+        // Render plant selection grid
+        function renderPlantsGrid() {
+            Object.keys(plantsData).forEach(id => {
+                const plant = plantsData[id];
+                const card = document.createElement('div');
+                card.className = 'plant-select-card';
+                card.innerHTML = `
+                    <img src="${plant.image}" alt="${plant.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23eee%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2240%22>🌿</text></svg>'">
+                    <div class="name">${plant.name.split(' ')[0]}</div>
+                `;
+                card.onclick = () => showPlantProblems(id);
+                plantsGrid.appendChild(card);
+            });
         }
 
-        // Category filtering
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const sections = document.querySelectorAll('.category-section');
+        // Show problems for selected plant
+        function showPlantProblems(id) {
+            const plant = plantsData[id];
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const category = this.dataset.category;
+            // Update header
+            document.getElementById('plantHeader').innerHTML = `
+                <img src="${plant.image}" alt="${plant.name}">
+                <div class="plant-header-info">
+                    <h2>${plant.name}</h2>
+                    <div class="latin">${plant.latin}</div>
+                </div>
+            `;
 
-                // Update active tab
-                tabBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+            // Update problems
+            const problemsList = document.getElementById('problemsList');
+            problemsList.innerHTML = plant.problems.map(p => `
+                <div class="problem-card">
+                    <div class="problem-symptom">❌ ${p.symptom}</div>
+                    <div class="problem-solution">${p.solution}</div>
+                </div>
+            `).join('');
 
-                // Show/hide sections
-                sections.forEach(section => {
-                    if (category === 'all' || section.dataset.section === category) {
-                        section.classList.remove('hidden');
-                    } else {
-                        section.classList.add('hidden');
-                    }
-                });
-            });
-        });
+            // Update facts
+            const factsList = document.getElementById('factsList');
+            factsList.innerHTML = plant.facts.map(f => `<li>${f}</li>`).join('');
 
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        const problemCards = document.querySelectorAll('.problem-card');
+            // Show selected plant view
+            plantSelection.style.display = 'none';
+            selectedPlant.classList.add('visible');
+        }
 
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
+        // Show all plants
+        function showAllPlants() {
+            selectedPlant.classList.remove('visible');
+            plantSelection.style.display = 'block';
+        }
 
-            if (query === '') {
-                // Show all
-                problemCards.forEach(card => card.classList.remove('hidden'));
-                sections.forEach(section => section.classList.remove('hidden'));
-                return;
-            }
-
-            // Show all sections for search
-            sections.forEach(section => section.classList.remove('hidden'));
-            tabBtns.forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-category="all"]').classList.add('active');
-
-            // Filter cards
-            problemCards.forEach(card => {
-                const keywords = card.dataset.keywords || '';
-                const title = card.querySelector('.problem-title').textContent.toLowerCase();
-                const content = card.querySelector('.problem-content').textContent.toLowerCase();
-
-                if (keywords.includes(query) || title.includes(query) || content.includes(query)) {
-                    card.classList.remove('hidden');
-                    card.classList.add('expanded'); // Auto-expand matching cards
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        });
-
-        // Clear search on ESC
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                this.value = '';
-                this.dispatchEvent(new Event('input'));
-            }
-        });
+        // Initialize
+        renderPlantsGrid();
     </script>
 </body>
 </html>
