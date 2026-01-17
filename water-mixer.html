@@ -64,12 +64,15 @@
             background: linear-gradient(135deg, #ed8936, #dd6b20);
         }
 
-        /* Canisters Grid */
+        /* Canisters Grid - vertical layout */
         .canisters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 25px;
             margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Canister Card */
