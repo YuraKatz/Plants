@@ -522,6 +522,167 @@
             border-left: 3px solid #4299e1;
         }
 
+        /* Mixing Guide */
+        .mixing-guide {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .mixing-guide h2 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .mixing-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .mixing-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 2px dashed #e2e8f0;
+            position: relative;
+        }
+        .mixing-step:last-child {
+            border-bottom: none;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .step-number.check {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-content h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        .step-content p {
+            color: #718096;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        .step-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .step-badge.ppm { background: #d1fae5; color: #065f46; }
+        .step-badge.fert { background: #fef3c7; color: #92400e; }
+        .step-badge.ph { background: #fed7aa; color: #9a3412; }
+        .step-badge.ok { background: #c6f6d5; color: #22543d; }
+        .step-arrow {
+            text-align: center;
+            color: #a0aec0;
+            font-size: 1.5rem;
+            margin: -10px 0;
+        }
+        .ppm-explanation {
+            background: #ebf8ff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #4299e1;
+        }
+        .ppm-explanation h4 {
+            color: #2c5282;
+            margin-bottom: 10px;
+        }
+        .ppm-table {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+        .ppm-cell {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .ppm-cell .label {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+        .ppm-cell .value {
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 1.1rem;
+        }
+        .ppm-cell .note {
+            font-size: 0.7rem;
+            color: #48bb78;
+        }
+        .ph-explanation {
+            background: #fffaf0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #ed8936;
+        }
+        .ph-explanation h4 {
+            color: #c05621;
+            margin-bottom: 10px;
+        }
+        .ph-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .ph-item {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .ph-arrow {
+            color: #ed8936;
+        }
+        .toggle-guide {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .toggle-guide:hover {
+            opacity: 0.95;
+        }
+
         /* Print Styles */
         @media print {
             body { background: white; padding: 0; }
@@ -577,11 +738,133 @@
             <div class="tip-card order">
                 <div class="tip-icon">📋</div>
                 <div class="tip-content">
-                    <strong>Порядок: PPM → удобрение → pH</strong>
-                    <p>PPM мерь ДО удобрения (проверка CalMag). pH мерь ПОСЛЕ удобрения (оно немного снижает pH).</p>
+                    <strong>Порядок: CalMag → PPM → удобрение → pH</strong>
+                    <p>Подробнее — в гайде ниже ↓</p>
                 </div>
             </div>
         </div>
+
+        <!-- Mixing Guide -->
+        <button class="toggle-guide" onclick="toggleGuide()">
+            📖 Как правильно смешивать воду (нажми чтобы открыть)
+        </button>
+
+        <div class="mixing-guide" id="mixingGuide" style="display: none;">
+            <h2>🔬 Пошаговый гайд: как готовить воду</h2>
+
+            <div class="mixing-steps">
+                <div class="mixing-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>💧 RO вода</h4>
+                        <p>Начинаем с чистой осмос-воды. PPM должен быть близок к нулю (0-10).</p>
+                        <span class="step-badge ppm">PPM: ~0</span>
+                    </div>
+                </div>
+
+                <div class="mixing-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>🧂 Добавь CalMag</h4>
+                        <p>Доведи PPM до целевого значения группы: A=78, B=120, C=152.</p>
+                        <span class="step-badge ppm">Проверь PPM!</span>
+                    </div>
+                </div>
+
+                <div class="mixing-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>🧪 Добавь удобрение</h4>
+                        <p>PPM вырастет на 50-150 — <strong>это нормально!</strong> Удобрение = соли = PPM выше. Не надо корректировать.</p>
+                        <span class="step-badge fert">PPM вырос — OK!</span>
+                    </div>
+                </div>
+
+                <div class="mixing-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>⏱️ Подожди 2-3 минуты</h4>
+                        <p>Микроэлементы растворяются не сразу. pH может упасть на 0.2-0.4 после полного растворения.</p>
+                    </div>
+                </div>
+
+                <div class="mixing-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>📊 Измерь и скорректируй pH</h4>
+                        <p>Целевой pH: 5.8-6.5 (в зависимости от группы). Корректируй pH ПОСЛЕДНИМ — после всех добавок.</p>
+                        <span class="step-badge ph">pH в конце!</span>
+                    </div>
+                </div>
+
+                <div class="mixing-step">
+                    <div class="step-number check">✓</div>
+                    <div class="step-content">
+                        <h4>🎉 Готово!</h4>
+                        <p>Вода готова к поливу. PPM после удобрения: 130-300 — это норма.</p>
+                        <span class="step-badge ok">Можно поливать</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PPM Explanation -->
+            <div class="ppm-explanation">
+                <h4>📊 Почему PPM после удобрения выше — и это OK</h4>
+                <p style="margin-bottom: 15px; color: #4a5568;">Целевой PPM (78/120/152) — это база для CalMag. Удобрение добавляется СВЕРХУ:</p>
+                <div class="ppm-table">
+                    <div class="ppm-cell">
+                        <div class="label">RO вода</div>
+                        <div class="value">~0</div>
+                    </div>
+                    <div class="ppm-cell">
+                        <div class="label">+ CalMag</div>
+                        <div class="value">78-152</div>
+                        <div class="note">← целевой</div>
+                    </div>
+                    <div class="ppm-cell">
+                        <div class="label">+ Удобрение</div>
+                        <div class="value">+50-150</div>
+                        <div class="note">норма!</div>
+                    </div>
+                    <div class="ppm-cell">
+                        <div class="label">Итого</div>
+                        <div class="value">130-300</div>
+                        <div class="note">✓ OK</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- pH Explanation -->
+            <div class="ph-explanation">
+                <h4>🧪 Что происходит с pH</h4>
+                <div class="ph-flow">
+                    <span class="ph-item">RO вода ~7.0</span>
+                    <span class="ph-arrow">→</span>
+                    <span class="ph-item">+ CalMag ↑</span>
+                    <span class="ph-arrow">→</span>
+                    <span class="ph-item">+ Удобрение ↓</span>
+                    <span class="ph-arrow">→</span>
+                    <span class="ph-item" style="background: #fed7aa;">Корректируй!</span>
+                </div>
+                <p style="margin-top: 15px; color: #744210; font-size: 0.9rem;">
+                    CalMag поднимает pH, удобрение опускает. Поэтому мерь pH только ПОСЛЕ добавления всего — один раз в конце.
+                </p>
+            </div>
+        </div>
+
+        <script>
+            function toggleGuide() {
+                const guide = document.getElementById('mixingGuide');
+                const btn = document.querySelector('.toggle-guide');
+                if (guide.style.display === 'none') {
+                    guide.style.display = 'block';
+                    btn.textContent = '📖 Как правильно смешивать воду (нажми чтобы скрыть)';
+                } else {
+                    guide.style.display = 'none';
+                    btn.textContent = '📖 Как правильно смешивать воду (нажми чтобы открыть)';
+                }
+            }
+        </script>
 
         <!-- Canisters -->
         <div class="canisters-grid">

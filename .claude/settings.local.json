@@ -21,7 +21,10 @@
       "Bash(gh auth:*)",
       "Bash(git config:*)",
       "Bash(git remote:*)",
-      "Bash(gh repo delete:*)"
+      "Bash(gh repo delete:*)",
+      "WebFetch(domain:yurakatz.github.io)",
+      "WebFetch(domain:hydrostar.co.il)",
+      "WebFetch(domain:my-succulents.co.il)"
     ]
   }
 }
