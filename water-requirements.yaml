@@ -147,6 +147,22 @@ water_requirements:
       sensitivity: very_high
       notes: Чувствителен к качеству воды, стабильность критична
 
+    nephrolepis:
+      plant_name: Папоротник (Нефролепис)
+      ppm_range: 60-100
+      ph_range: 5.8-6.3
+      group: A
+      sensitivity: high
+      notes: Чувствителен к солям, любит мягкую воду
+
+    sansevieria:
+      plant_name: Сансевиерия
+      ppm_range: 120-200
+      ph_range: 6.0-7.0
+      group: C
+      sensitivity: very_low
+      notes: Крайне неприхотлива, переносит любую воду. Главное — не переливать
+
   water_groups:
     group_a:
       name: Очень мягкая вода
@@ -161,6 +177,7 @@ water_requirements:
         - Гузмания
         - Алоказия (Polly / Amazonica)
         - Антуриум
+        - Папоротник (Нефролепис)
       storage: Одна бутылка
       sensitivity_level: Очень высокая
       priority: ppm важнее pH
@@ -191,6 +208,7 @@ water_requirements:
         - Драцена маргината
         - Драцена фрагранс
         - Кротон
+        - Сансевиерия
       storage: Третья бутылка или Group B + чуть CalMag
       sensitivity_level: Низкая
       alternative: Можно объединить с Group B + добавка CalMag
