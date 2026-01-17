@@ -286,6 +286,65 @@
             margin-bottom: 15px;
         }
 
+        /* Filter buttons */
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            color: #4a5568;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .filter-btn:hover {
+            border-color: #56ab2f;
+        }
+
+        .filter-btn.active {
+            background: #56ab2f;
+            color: white;
+            border-color: #56ab2f;
+        }
+
+        .filter-btn.filter-easy.active {
+            background: #22543d;
+            border-color: #22543d;
+        }
+
+        .filter-btn.filter-medium.active {
+            background: #744210;
+            border-color: #744210;
+        }
+
+        .filter-btn.filter-hard.active {
+            background: #c53030;
+            border-color: #c53030;
+        }
+
+        .filter-btn.filter-expert.active {
+            background: #6b21a8;
+            border-color: #6b21a8;
+        }
+
         .nav-home {
             display: inline-block;
             padding: 10px 20px;
@@ -330,12 +389,20 @@
         </header>
 
         <div class="controls">
-            <input 
-                type="text" 
-                id="searchInput" 
+            <input
+                type="text"
+                id="searchInput"
                 placeholder="Поиск по названию, латыни или типу..."
                 autocomplete="off"
             >
+            <div class="filter-group">
+                <span class="filter-label">Сложность:</span>
+                <button class="filter-btn active" data-difficulty="all">Все</button>
+                <button class="filter-btn filter-easy" data-difficulty="easy">🟢 Легко</button>
+                <button class="filter-btn filter-medium" data-difficulty="medium">🟡 Средне</button>
+                <button class="filter-btn filter-hard" data-difficulty="hard">🔴 Сложно</button>
+                <button class="filter-btn filter-expert" data-difficulty="expert">🟣 Эксперт</button>
+            </div>
         </div>
 
         <div id="plantsGrid" class="plants-grid">
@@ -1230,6 +1297,7 @@
             card.dataset.name = plant.name;
             card.dataset.latin = plant.latin_name;
             card.dataset.type = plant.type;
+            card.dataset.difficulty = plant.difficulty || 'medium';
 
             const feedingSeason = plantsData.settings.current_season;
             const feedingGroup = plant.feeding_group || 'general_houseplants';
@@ -1369,14 +1437,21 @@
             });
         }
 
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
+        // Filter state
+        let currentDifficulty = 'all';
+
+        // Combined filter function
+        function filterPlants() {
+            const query = searchInput.value.toLowerCase().trim();
             const cards = document.querySelectorAll('.plant-card');
             let visibleCount = 0;
 
             cards.forEach(card => {
                 const searchText = `${card.dataset.name} ${card.dataset.latin} ${card.dataset.type}`.toLowerCase();
-                if (searchText.includes(query)) {
+                const matchesSearch = searchText.includes(query);
+                const matchesDifficulty = currentDifficulty === 'all' || card.dataset.difficulty === currentDifficulty;
+
+                if (matchesSearch && matchesDifficulty) {
                     card.classList.remove('hidden');
                     visibleCount++;
                 } else {
@@ -1385,6 +1460,23 @@
             });
 
             noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Search input handler
+        searchInput.addEventListener('input', filterPlants);
+
+        // Difficulty filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active state
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Update filter and apply
+                currentDifficulty = this.dataset.difficulty;
+                filterPlants();
+            });
         });
 
         // Initialize
@@ -1395,7 +1487,7 @@
         const searchQuery = urlParams.get('search');
         if (searchQuery) {
             searchInput.value = searchQuery;
-            searchInput.dispatchEvent(new Event('input'));
+            filterPlants();
         }
     </script>
 </body>
