@@ -348,6 +348,46 @@
             font-size: 0.8rem;
             color: #718096;
         }
+        .fertilizer-plants {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .fert-group {
+            margin-bottom: 20px;
+        }
+        .fert-group:last-child {
+            margin-bottom: 0;
+        }
+        .fert-group h4 {
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .fert-plant-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .fert-plant {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .fert-plant.flowering {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .fert-plant.universal {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .fert-plant.none {
+            background: #fee2e2;
+            color: #991b1b;
+        }
         .dosage-table {
             background: white;
             border-radius: 12px;
@@ -691,6 +731,45 @@
                         <div class="fertilizer-npk">NPK: 4-3-6</div>
                         <div class="fertilizer-desc">Для цветущих растений (больше калия)</div>
                         <div class="fertilizer-micro">+ микроэлементы: Fe, Mn, Zn, Cu, Co, B</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Which fertilizer for which plant -->
+            <div class="fertilizer-plants">
+                <div class="fert-group">
+                    <h4>🌸 Flowering ИЛИ Universal</h4>
+                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 10px;">Цветущие — можно чередовать или Flowering для стимуляции цветов</p>
+                    <div class="fert-plant-list">
+                        <span class="fert-plant flowering">Спатифиллум</span>
+                        <span class="fert-plant flowering">Антуриум</span>
+                        <span class="fert-plant flowering">Орхидея</span>
+                        <span class="fert-plant flowering">Бегония</span>
+                        <span class="fert-plant flowering">Гузмания</span>
+                    </div>
+                </div>
+                <div class="fert-group">
+                    <h4>🌿 Только Universal</h4>
+                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 10px;">Декоративно-лиственные — Flowering им не нужен</p>
+                    <div class="fert-plant-list">
+                        <span class="fert-plant universal">Монстеры</span>
+                        <span class="fert-plant universal">Филодендрон</span>
+                        <span class="fert-plant universal">Эпипремнум</span>
+                        <span class="fert-plant universal">Аглаонема</span>
+                        <span class="fert-plant universal">Калатеи</span>
+                        <span class="fert-plant universal">Алоказия</span>
+                        <span class="fert-plant universal">Драцены</span>
+                        <span class="fert-plant universal">Сансевиерия</span>
+                        <span class="fert-plant universal">Хлорофитум</span>
+                        <span class="fert-plant universal">Хамедорея</span>
+                        <span class="fert-plant universal">Кротон</span>
+                        <span class="fert-plant universal">Папоротник</span>
+                    </div>
+                </div>
+                <div class="fert-group">
+                    <h4>⚠️ Без удобрений</h4>
+                    <div class="fert-plant-list">
+                        <span class="fert-plant none">Дионея</span>
                     </div>
                 </div>
             </div>
