@@ -307,6 +307,51 @@ soil_mixes:
         percentage: 5-10
         notes: Если нужно больше сорбции
 
+  mix_10:
+    number: 10
+    name: Для папоротников
+    watering_type: ручной
+    suitable_for:
+      - Нефролепис
+      - Другие папоротники
+    notes:
+      - Папоротники любят постоянно влажный, но не мокрый грунт
+      - Фитильный полив не рекомендуется — риск переувлажнения
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 35
+      - component: Кокосовый субстрат
+        percentage: 25
+      - component: Перлит
+        percentage: 15
+      - component: Вермикулит
+        percentage: 10
+      - component: Сфагнум (мох)
+        percentage: 10
+      - component: Древесный уголь
+        percentage: 5
+
+  mix_11:
+    number: 11
+    name: Для суккулентов/сансевиерии
+    watering_type: ручной
+    suitable_for:
+      - Сансевиерия
+      - Суккуленты
+    notes:
+      - Очень хороший дренаж — главное требование
+      - Фитильный полив категорически не подходит
+      - Полная просушка между поливами
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 45
+      - component: Перлит
+        percentage: 40
+      - component: Древесный уголь
+        percentage: 10
+      - component: Песок/мелкий керамзит
+        percentage: 5
+
 general_principles:
   wick_watering_rule: Фитильный полив требует более воздухопроницаемого грунта. Застой воды = гниение корней
   drainage: Всегда используйте дренажный слой из керамзита на дне горшка

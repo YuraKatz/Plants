@@ -1007,6 +1007,84 @@
         "КРИТИЧНО - любые удобрения в почву убивают растение",
         "КРИТИЧНО - обычная вода из крана убивает растение"
       ]
+    },
+    "nephrolepis": {
+      "name": "Папоротник (Нефролепис)",
+      "latin_name": "Nephrolepis exaltata",
+      "type": "Папоротники",
+      "lighting": {
+        "lux_min": 1500,
+        "lux_optimal": 4000,
+        "lux_max": 8000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной",
+        "frequency": "Регулярный",
+        "notes": "Держать грунт равномерно влажным, без пересыхания"
+      },
+      "humidity": {
+        "level": "Высокая (60-80%)",
+        "spraying": "Частое опрыскивание",
+        "preferred_method": "Увлажнитель или частое опрыскивание. Любит душ"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Риск переувлажнения корней"
+      },
+      "soil": {
+        "mix_number": 10,
+        "mix_name": "для папоротников"
+      },
+      "feeding_group": "sensitive",
+      "risks": [
+        "Сухие кончики при низкой влажности",
+        "Не любит пересыхание"
+      ],
+      "care_notes": [
+        "Регулярно опрыскивать",
+        "Беречь от сквозняков и батарей"
+      ]
+    },
+    "sansevieria": {
+      "name": "Сансевиерия (Щучий хвост)",
+      "latin_name": "Sansevieria trifasciata",
+      "type": "Суккуленты",
+      "lighting": {
+        "lux_min": 1000,
+        "lux_optimal": 5000,
+        "lux_max": 15000,
+        "direct_sun": "допустимо",
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной",
+        "frequency": "Редкий",
+        "notes": "Полная просушка грунта между поливами. Зимой — минимальный полив"
+      },
+      "humidity": {
+        "level": "Низкая-средняя",
+        "spraying": "Не требуется",
+        "preferred_method": "Обычные комнатные условия"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Категорически не рекомендуется — риск гнили"
+      },
+      "soil": {
+        "mix_number": 11,
+        "mix_name": "для суккулентов/сансевиерии"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Гниль при переливе",
+        "Застой воды = гибель"
+      ],
+      "care_notes": [
+        "Крайне неприхотлива",
+        "Лучше недолить, чем перелить"
+      ]
     }
   }
 };
@@ -1030,7 +1108,9 @@
             "calathea_ornata": "IMAGES/алатея орната.jpg",
             "epipremnum": "IMAGES/пипремнум.jpg",
             "philodendron": "IMAGES/филодендрон imperial.jpg",
-            "dionaea": "IMAGES/Дионея.jpg"
+            "dionaea": "IMAGES/Дионея.jpg",
+            "nephrolepis": "IMAGES/Папоротник.jpg",
+            "sansevieria": "IMAGES/Сансевиерия.jpg"
         };
 
         const plantsGrid = document.getElementById('plantsGrid');
