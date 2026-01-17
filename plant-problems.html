@@ -572,9 +572,19 @@
                 const plant = plantsData[id];
                 const card = document.createElement('div');
                 card.className = 'plant-select-card';
+                // Shorten long names but keep unique
+                let shortName = plant.name;
+                if (plant.name.includes('Монстера')) {
+                    shortName = plant.name.replace('Монстера ', 'М. ');
+                } else if (plant.name.includes('Драцена')) {
+                    shortName = plant.name.replace('Драцена ', 'Д. ');
+                } else if (plant.name.includes('Калатея')) {
+                    shortName = plant.name.replace('Калатея ', 'К. ');
+                }
+
                 card.innerHTML = `
                     <img src="${plant.image}" alt="${plant.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23eee%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2240%22>🌿</text></svg>'">
-                    <div class="name">${plant.name.split(' ')[0]}</div>
+                    <div class="name">${shortName}</div>
                 `;
                 card.onclick = () => showPlantProblems(id);
                 plantsGrid.appendChild(card);
