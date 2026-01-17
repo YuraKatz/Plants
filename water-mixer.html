@@ -240,6 +240,52 @@
             font-size: 0.95rem;
         }
 
+        /* Pro Tips */
+        .pro-tips {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tip-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .tip-card.flush {
+            border-left: 4px solid #4299e1;
+            background: #ebf8ff;
+        }
+        .tip-card.ph {
+            border-left: 4px solid #ed8936;
+            background: #fffaf0;
+        }
+        .tip-card.ppm {
+            border-left: 4px solid #48bb78;
+            background: #f0fff4;
+        }
+        .tip-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .tip-content strong {
+            display: block;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+        .tip-content p {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin: 0;
+        }
+
         /* Fertilizer Info */
         .fertilizer-info {
             margin-top: 30px;
@@ -327,6 +373,15 @@
             font-weight: 600;
             color: #4a5568;
         }
+        .precision-tip {
+            margin-top: 15px;
+            padding: 12px;
+            background: #ebf8ff;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #2c5282;
+            border-left: 3px solid #4299e1;
+        }
 
         /* Print Styles */
         @media print {
@@ -355,6 +410,31 @@
         <!-- Info banner -->
         <div style="background: linear-gradient(135deg, #48bb78, #38a169); color: white; padding: 15px 20px; border-radius: 12px; text-align: center; margin-bottom: 25px;">
             <strong>💡 Искусственное освещение = всегда сезон роста</strong>
+        </div>
+
+        <!-- Pro Tips -->
+        <div class="pro-tips">
+            <div class="tip-card flush">
+                <div class="tip-icon">🚿</div>
+                <div class="tip-content">
+                    <strong>Каждый 4-й полив — БЕЗ удобрений!</strong>
+                    <p>Промывка от накопления солей. Та же канистра, но без добавок.</p>
+                </div>
+            </div>
+            <div class="tip-card ph">
+                <div class="tip-icon">⏱️</div>
+                <div class="tip-content">
+                    <strong>pH мерить через 2-3 минуты</strong>
+                    <p>После добавления удобрений подожди — микроэлементы растворяются не сразу, pH может упасть на 0.2-0.4.</p>
+                </div>
+            </div>
+            <div class="tip-card ppm">
+                <div class="tip-icon">📊</div>
+                <div class="tip-content">
+                    <strong>PPM ±10-15 — это норма</strong>
+                    <p>78/120/152 — ориентиры, не догма. Если растение бодрое, корни белые — всё ок.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Canisters -->
@@ -625,6 +705,11 @@
                         <td><strong>0.12 мл</strong> на литр</td>
                     </tr>
                 </table>
+                <div class="precision-tip">
+                    <strong>💉 Лайфхак для точности 1/8:</strong><br>
+                    Разведи 1 мл в 1 л воды = концентрат.<br>
+                    Из него бери 125 мл = точная доза 1/8.
+                </div>
             </div>
         </div>
     </div>
