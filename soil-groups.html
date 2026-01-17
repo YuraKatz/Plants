@@ -179,17 +179,28 @@
         }
 
         .plant-card-mini {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #48bb78;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
 
         .plant-card-mini:hover {
-            transform: translateX(5px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .plant-mini-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background: #edf2f7;
+        }
+
+        .plant-mini-info {
+            padding: 12px;
         }
 
         .plant-mini-name {
@@ -335,20 +346,32 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Монстера</div>
-                            <div class="plant-mini-latin">Monstera sp.</div>
+                            <img src="IMAGES/Монстера делициоза.jpg" class="plant-mini-image" alt="Монстера">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Монстера</div>
+                                <div class="plant-mini-latin">Monstera sp.</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Филодендрон</div>
-                            <div class="plant-mini-latin">Philodendron</div>
+                            <img src="IMAGES/филодендрон imperial.jpg" class="plant-mini-image" alt="Филодендрон">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Филодендрон</div>
+                                <div class="plant-mini-latin">Philodendron</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Эпипремнум</div>
-                            <div class="plant-mini-latin">Epipremnum aureum</div>
+                            <img src="IMAGES/пипремнум.jpg" class="plant-mini-image" alt="Эпипремнум">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Эпипремнум</div>
+                                <div class="plant-mini-latin">Epipremnum aureum</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Аглаонема</div>
-                            <div class="plant-mini-latin">Aglaonema</div>
+                            <img src="IMAGES/Аглаонема.jpeg" class="plant-mini-image" alt="Аглаонема">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Аглаонема</div>
+                                <div class="plant-mini-latin">Aglaonema</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -410,16 +433,25 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Спатифиллум</div>
-                            <div class="plant-mini-latin">Spathiphyllum</div>
+                            <img src="IMAGES/Спатифиллум.jpg" class="plant-mini-image" alt="Спатифиллум">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Спатифиллум</div>
+                                <div class="plant-mini-latin">Spathiphyllum</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Монстера (фитиль)</div>
-                            <div class="plant-mini-latin">Monstera sp.</div>
+                            <img src="IMAGES/Монстера делициоза.jpg" class="plant-mini-image" alt="Монстера">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Монстера (фитиль)</div>
+                                <div class="plant-mini-latin">Monstera sp.</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Филодендрон (фитиль)</div>
-                            <div class="plant-mini-latin">Philodendron</div>
+                            <img src="IMAGES/филодендрон imperial.jpg" class="plant-mini-image" alt="Филодендрон">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Филодендрон (фитиль)</div>
+                                <div class="plant-mini-latin">Philodendron</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -473,12 +505,18 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Калатея лансифолия</div>
-                            <div class="plant-mini-latin">Calathea lancifolia</div>
+                            <img src="IMAGES/Калатея лансифолия.jpg" class="plant-mini-image" alt="Калатея лансифолия">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Калатея лансифолия</div>
+                                <div class="plant-mini-latin">Calathea lancifolia</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Калатея орната</div>
-                            <div class="plant-mini-latin">Calathea ornata</div>
+                            <img src="IMAGES/алатея орната.jpg" class="plant-mini-image" alt="Калатея орната">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Калатея орната</div>
+                                <div class="plant-mini-latin">Calathea ornata</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -540,20 +578,32 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Драцена маргината</div>
-                            <div class="plant-mini-latin">Dracaena marginata</div>
+                            <img src="IMAGES/Драцена маргината.jpg" class="plant-mini-image" alt="Драцена маргината">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Драцена маргината</div>
+                                <div class="plant-mini-latin">Dracaena marginata</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Драцена фрагранс</div>
-                            <div class="plant-mini-latin">Dracaena fragrans</div>
+                            <img src="IMAGES/Драцена фрагранс.jpg" class="plant-mini-image" alt="Драцена фрагранс">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Драцена фрагранс</div>
+                                <div class="plant-mini-latin">Dracaena fragrans</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Кротон</div>
-                            <div class="plant-mini-latin">Codiaeum variegatum</div>
+                            <img src="IMAGES/Кротон.jpg" class="plant-mini-image" alt="Кротон">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Кротон</div>
+                                <div class="plant-mini-latin">Codiaeum variegatum</div>
+                            </div>
                         </div>
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Хлорофитум</div>
-                            <div class="plant-mini-latin">Chlorophytum comosum</div>
+                            <img src="IMAGES/Хлорофитум.jpg" class="plant-mini-image" alt="Хлорофитум">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Хлорофитум</div>
+                                <div class="plant-mini-latin">Chlorophytum comosum</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -615,8 +665,11 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Хамедорея</div>
-                            <div class="plant-mini-latin">Chamaedorea</div>
+                            <img src="IMAGES/Хамедорея.jpg" class="plant-mini-image" alt="Хамедорея">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Хамедорея</div>
+                                <div class="plant-mini-latin">Chamaedorea</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -655,8 +708,11 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Гузмания</div>
-                            <div class="plant-mini-latin">Guzmania</div>
+                            <img src="IMAGES/Гузмания.jpg" class="plant-mini-image" alt="Гузмания">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Гузмания</div>
+                                <div class="plant-mini-latin">Guzmania</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -695,8 +751,11 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Бегония макулата</div>
-                            <div class="plant-mini-latin">Begonia maculata</div>
+                            <img src="IMAGES/Бегония макулата.jpg" class="plant-mini-image" alt="Бегония макулата">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Бегония макулата</div>
+                                <div class="plant-mini-latin">Begonia maculata</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -735,8 +794,11 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Орхидея фаленопсис</div>
-                            <div class="plant-mini-latin">Phalaenopsis</div>
+                            <img src="IMAGES/Орхидея.jpg" class="plant-mini-image" alt="Орхидея фаленопсис">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Орхидея фаленопсис</div>
+                                <div class="plant-mini-latin">Phalaenopsis</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -783,8 +845,11 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Папоротник (Нефролепис)</div>
-                            <div class="plant-mini-latin">Nephrolepis exaltata</div>
+                            <img src="IMAGES/ПапоротникНефролепис.jpeg" class="plant-mini-image" alt="Папоротник">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Папоротник (Нефролепис)</div>
+                                <div class="plant-mini-latin">Nephrolepis exaltata</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -823,8 +888,11 @@
                     <h4>Подходит для:</h4>
                     <div class="plants-grid">
                         <div class="plant-card-mini">
-                            <div class="plant-mini-name">Сансевиерия</div>
-                            <div class="plant-mini-latin">Sansevieria trifasciata</div>
+                            <img src="IMAGES/Сансевиерия.jpg" class="plant-mini-image" alt="Сансевиерия">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Сансевиерия</div>
+                                <div class="plant-mini-latin">Sansevieria trifasciata</div>
+                            </div>
                         </div>
                     </div>
                 </div>
