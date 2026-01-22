@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои препараты - Plants Care</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 { color: #2d3748; font-size: 2.2rem; margin-bottom: 10px; }
+        .subtitle { color: #718096; font-size: 1rem; }
+
+        .nav-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+        }
+        .nav-back:hover { text-decoration: underline; }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .category-tab {
+            padding: 12px 24px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .category-tab:hover { border-color: #667eea; }
+        .category-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 3px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .product-card.fertilizer { border-color: #48bb78; }
+        .product-card.additive { border-color: #9f7aea; }
+        .product-card.ph-reg { border-color: #ed8936; }
+
+        .product-header {
+            padding: 20px;
+            color: white;
+        }
+        .product-card.fertilizer .product-header {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+        }
+        .product-card.additive .product-header {
+            background: linear-gradient(135deg, #9f7aea, #805ad5);
+        }
+        .product-card.ph-reg .product-header {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .product-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-section {
+            margin-bottom: 15px;
+        }
+        .product-section:last-child {
+            margin-bottom: 0;
+        }
+        .section-title {
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .info-item {
+            background: #f7fafc;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        .info-label {
+            color: #718096;
+            font-size: 0.75rem;
+        }
+        .info-value {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .composition-list {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        .composition-list ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #4a5568;
+        }
+        .composition-list li {
+            margin-bottom: 4px;
+        }
+
+        .usage-box {
+            background: #ebf8ff;
+            border-left: 4px solid #4299e1;
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #2c5282;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #c53030;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #276749;
+        }
+
+        .plants-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .plant-tag {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .plant-tag.allowed { background: #c6f6d5; color: #22543d; }
+        .plant-tag.restricted { background: #fef3c7; color: #92400e; }
+        .plant-tag.forbidden { background: #fed7e2; color: #97266d; }
+
+        /* Summary Section */
+        .summary-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 30px;
+        }
+        .summary-section h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .summary-card {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .summary-number {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        .summary-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid { grid-template-columns: 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
+            .container { padding: 15px; }
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .nav-back, .category-tabs { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-back">← На главную</a>
+
+        <header>
+            <h1>🧪 Мои препараты</h1>
+            <p class="subtitle">Полная информация о всех удобрениях и добавках</p>
+        </header>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="category-tab active" onclick="filterProducts('all')">Все (8)</button>
+            <button class="category-tab" onclick="filterProducts('fertilizer')">Удобрения (4)</button>
+            <button class="category-tab" onclick="filterProducts('additive')">Добавки (2)</button>
+            <button class="category-tab" onclick="filterProducts('ph-reg')">pH регуляторы (2)</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+
+            <!-- FLOWER Universal -->
+            <div class="product-card fertilizer" data-category="fertilizer">
+                <div class="product-header">
+                    <div class="product-name">FLOWER Universal</div>
+                    <div class="product-type">Жидкое удобрение для роста</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">📊 Состав NPK</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Азот (N)</div>
+                                <div class="info-value">5%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Фосфор (P₂O₅)</div>
+                                <div class="info-value">3%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Калий (K₂O)</div>
+                                <div class="info-value">4%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Аминокислоты</div>
+                                <div class="info-value">0.1%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🧬 Микроэлементы</div>
+                        <div class="composition-list">
+                            <ul>
+                                <li>Железо (Fe) — 0.02%</li>
+                                <li>Марганец (Mn) — 0.01%</li>
+                                <li>Цинк (Zn) — 0.0015%</li>
+                                <li>Медь (Cu) — 0.001%</li>
+                                <li>Бор (B) — 0.04%</li>
+                                <li>Молибден (Mo) — 0.0008%</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">💧 Применение</div>
+                        <div class="usage-box">
+                            <strong>Дозировка:</strong> 6 мл на 1 литр воды (6:1000)<br>
+                            <strong>Частота:</strong> раз в 1-2 недели (рост), раз в месяц (покой)<br>
+                            <strong>Когда:</strong> период активного роста листьев и корней
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🌿 Подходит для</div>
+                        <div class="plants-tags">
+                            <span class="plant-tag allowed">Монстеры</span>
+                            <span class="plant-tag allowed">Филодендрон</span>
+                            <span class="plant-tag allowed">Драцены</span>
+                            <span class="plant-tag allowed">Все лиственные</span>
+                            <span class="plant-tag restricted">Орхидеи 1/8</span>
+                            <span class="plant-tag forbidden">Хищные ❌</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLOWER Flowering -->
+            <div class="product-card fertilizer" data-category="fertilizer">
+                <div class="product-header">
+                    <div class="product-name">FLOWER Flowering</div>
+                    <div class="product-type">Жидкое удобрение для цветения</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">📊 Состав NPK</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Азот (N)</div>
+                                <div class="info-value">4%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Фосфор (P₂O₅)</div>
+                                <div class="info-value">3%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Калий (K₂O)</div>
+                                <div class="info-value">6%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Формула</div>
+                                <div class="info-value">4-3-6</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🌸 Назначение</div>
+                        <div class="tip-box">
+                            Повышенный калий стимулирует цветение и укрепляет растение. Используй когда хочешь больше цветов!
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">💧 Применение</div>
+                        <div class="usage-box">
+                            <strong>Дозировка:</strong> 6 мл на 1 литр воды<br>
+                            <strong>Частота:</strong> раз в неделю в период цветения<br>
+                            <strong>Когда:</strong> при появлении бутонов и во время цветения
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🌿 Подходит для</div>
+                        <div class="plants-tags">
+                            <span class="plant-tag allowed">Спатифиллум</span>
+                            <span class="plant-tag allowed">Антуриум</span>
+                            <span class="plant-tag allowed">Бегония</span>
+                            <span class="plant-tag allowed">Гузмания</span>
+                            <span class="plant-tag restricted">Орхидеи 1/8</span>
+                            <span class="plant-tag forbidden">Хищные ❌</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLOWER Orchids -->
+            <div class="product-card fertilizer" data-category="fertilizer">
+                <div class="product-header" style="background: linear-gradient(135deg, #9f7aea, #805ad5);">
+                    <div class="product-name">FLOWER Orchids 0-17-7</div>
+                    <div class="product-type">Специальное для орхидей (цветение)</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">📊 Состав NPK</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Азот (N)</div>
+                                <div class="info-value" style="color: #c53030;">0%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Фосфор (P₂O₅)</div>
+                                <div class="info-value" style="color: #38a169;">17%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Калий (K₂O)</div>
+                                <div class="info-value">7%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Формула</div>
+                                <div class="info-value">0-17-7</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🏭 Производитель</div>
+                        <div class="composition-list">
+                            <ul>
+                                <li>Бренд: PRODUCTOS FLOWER S.A.</li>
+                                <li>Страна: Испания</li>
+                                <li>Импортёр: Dorgan Ltd. (Израиль)</li>
+                                <li>Объём: 300 мл</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">⚠️ Важно</div>
+                        <div class="warning-box">
+                            <strong>ТОЛЬКО для фазы цветения!</strong><br>
+                            0% азота — не для роста листьев/корней.<br>
+                            Не использовать круглый год!
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🌿 Подходит для</div>
+                        <div class="plants-tags">
+                            <span class="plant-tag allowed">Орхидеи (цветение)</span>
+                            <span class="plant-tag forbidden">Рост ❌</span>
+                            <span class="plant-tag forbidden">Keiki ❌</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ecogan Multicote -->
+            <div class="product-card fertilizer" data-category="fertilizer">
+                <div class="product-header" style="background: linear-gradient(135deg, #3182ce, #2c5282);">
+                    <div class="product-name">Ecogan Multicote</div>
+                    <div class="product-type">Гранулированное пролонгированное</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">⏱️ Характеристики</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Тип</div>
+                                <div class="info-value">Гранулы</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Действие</div>
+                                <div class="info-value">3-6 месяцев</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Дозировка</div>
+                                <div class="info-value">3-5 г/л грунта</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Когда</div>
+                                <div class="info-value">При пересадке</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">💡 Применение</div>
+                        <div class="usage-box">
+                            Смешать с грунтом при пересадке или рассыпать сверху (top dressing) весной.<br>
+                            ~1 чайная ложка на горшок 15 см.
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">⚠️ Важно</div>
+                        <div class="warning-box">
+                            <strong>НЕЛЬЗЯ для фитильного полива!</strong><br>
+                            Гранулы вымываются и обжигают корни.
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🌿 Подходит для</div>
+                        <div class="plants-tags">
+                            <span class="plant-tag allowed">Монстеры</span>
+                            <span class="plant-tag allowed">Филодендрон</span>
+                            <span class="plant-tag allowed">Драцены</span>
+                            <span class="plant-tag restricted">Чувствительные (сверху)</span>
+                            <span class="plant-tag forbidden">Фитиль ❌</span>
+                            <span class="plant-tag forbidden">Орхидеи ❌</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATAMI CalMag -->
+            <div class="product-card additive" data-category="additive">
+                <div class="product-header">
+                    <div class="product-name">ATAMI CalMag</div>
+                    <div class="product-type">Кальций + Магний + Азот</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">📊 Состав</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Кальций (Ca)</div>
+                                <div class="info-value">20%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Магний (Mg)</div>
+                                <div class="info-value">12%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Азот (N)</div>
+                                <div class="info-value">6%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Форма</div>
+                                <div class="info-value">Водорастворимая</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🎯 Когда нужен</div>
+                        <div class="usage-box">
+                            <strong>Обязательно с RO водой!</strong> Осмос удаляет Ca/Mg.<br>
+                            Добавляй ПЕРВЫМ, до удобрений. Доводи PPM до целевого значения группы.
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🔍 Признаки дефицита</div>
+                        <div class="composition-list">
+                            <ul>
+                                <li><strong>Ca:</strong> деформация молодых листьев, некроз краёв</li>
+                                <li><strong>Mg:</strong> межжилковый хлороз старых листьев</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🌿 Подходит для</div>
+                        <div class="plants-tags">
+                            <span class="plant-tag allowed">Все с RO водой</span>
+                            <span class="plant-tag allowed">Кокосовый субстрат</span>
+                            <span class="plant-tag restricted">Орхидеи (мин. доза)</span>
+                            <span class="plant-tag forbidden">Хищные ❌</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DYNOMYCO Spark -->
+            <div class="product-card additive" data-category="additive">
+                <div class="product-header">
+                    <div class="product-name">🍄 DYNOMYCO Spark</div>
+                    <div class="product-type">Микориза + Бактерии + Гуминовая кислота</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">🧬 Состав</div>
+                        <div class="composition-list">
+                            <ul>
+                                <li><strong>Микоризные грибы:</strong></li>
+                                <li>• Glomus intraradices — 250 пропагул/г</li>
+                                <li>• Glomus mosseae — 750 пропагул/г</li>
+                                <li><strong>Бактерии Bacillus (10M CFU/г каждый):</strong></li>
+                                <li>• B. subtilis, B. aryabhattai, B. pumilus</li>
+                                <li>• B. velezensis, B. licheniformis</li>
+                                <li><strong>Гуминовая кислота:</strong> 90% (из леонардита)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">💧 Применение</div>
+                        <div class="usage-box">
+                            <strong>Дозировка:</strong> 1 чайная ложка (~3 г) на 4 литра воды<br>
+                            <strong>Частота:</strong> каждые 1-2 недели, до 6 применений<br>
+                            <strong>Когда:</strong> пересадка, укоренение, проращивание, вегетация
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">⚠️ Важно</div>
+                        <div class="warning-box">
+                            <strong>НЕ вносить фосфорные удобрения после!</strong><br>
+                            Высокий P подавляет развитие микоризы.
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">📦 Хранение</div>
+                        <div class="tip-box">
+                            Тёмное, сухое место • 5-25°C • Не замораживать<br>
+                            Срок годности: до 09/2027 • Партия: LTF63253
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🌿 Подходит для</div>
+                        <div class="plants-tags">
+                            <span class="plant-tag allowed">Все комнатные</span>
+                            <span class="plant-tag allowed">Пересадка</span>
+                            <span class="plant-tag allowed">Черенки</span>
+                            <span class="plant-tag restricted">Орхидеи (осторожно)</span>
+                            <span class="plant-tag forbidden">Хищные ❌</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Green Farmer pH- -->
+            <div class="product-card ph-reg" data-category="ph-reg">
+                <div class="product-header" style="background: linear-gradient(135deg, #e53e3e, #c53030);">
+                    <div class="product-name">⬇️ Green Farmer pH-</div>
+                    <div class="product-type">Минеральный понизитель pH</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">🔬 Состав</div>
+                        <div class="composition-list">
+                            <ul>
+                                <li>Кислотная смесь (неорганические кислоты)</li>
+                                <li>Вода (растворитель)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">💧 Применение</div>
+                        <div class="usage-box">
+                            <strong>Метод:</strong> по каплям до достижения нужного pH<br>
+                            <strong>Когда:</strong> pH выше целевого диапазона<br>
+                            <strong>Порядок:</strong> добавлять ПОСЛЕДНИМ, после всех удобрений
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🎯 Целевой pH</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Канистра A</div>
+                                <div class="info-value">5.8–6.3</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Канистра B</div>
+                                <div class="info-value">6.0–6.5</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Канистра C</div>
+                                <div class="info-value">6.2–6.7</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Общий</div>
+                                <div class="info-value">5.5–6.5</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">⚠️ Безопасность</div>
+                        <div class="warning-box">
+                            Использовать с осторожностью!<br>
+                            Не допускать попадания на кожу и в глаза.<br>
+                            Добавлять постепенно, контролируя pH.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BioBizz Bio·Up -->
+            <div class="product-card ph-reg" data-category="ph-reg">
+                <div class="product-header" style="background: linear-gradient(135deg, #38a169, #276749);">
+                    <div class="product-name">⬆️ BioBizz Bio·Up</div>
+                    <div class="product-type">Органический повыситель pH</div>
+                </div>
+                <div class="product-content">
+                    <div class="product-section">
+                        <div class="section-title">🏭 Производитель</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Бренд</div>
+                                <div class="info-value">BioBizz</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Страна</div>
+                                <div class="info-value">Нидерланды</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Объём</div>
+                                <div class="info-value">500 мл</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Сертификат</div>
+                                <div class="info-value">OMRI</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🔬 Состав</div>
+                        <div class="composition-list">
+                            <ul>
+                                <li>Гуминовые кислоты (Humic Acids)</li>
+                                <li>100% органический</li>
+                                <li>NPK: 0-0-0 (не влияет на питание)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">💧 Применение</div>
+                        <div class="usage-box">
+                            <strong>Дозировка:</strong> 0.1 мл на 1 литр = повышает pH на ~0.1<br>
+                            <strong>Метод:</strong> добавить → перемешать 10 сек → измерить → повторить<br>
+                            <strong>Когда:</strong> вегетация, цветение, каждый полив
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">✅ Преимущества</div>
+                        <div class="tip-box">
+                            <strong>Не убивает микоризу и бактерии!</strong><br>
+                            Идеален при работе с DYNOMYCO, живыми почвами, органикой.
+                        </div>
+                    </div>
+                    <div class="product-section">
+                        <div class="section-title">🎯 Целевой pH</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Почва</div>
+                                <div class="info-value">6.2–6.5</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Вегетация</div>
+                                <div class="info-value">5.8–6.0</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Цветение</div>
+                                <div class="info-value">6.0–6.5</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Lockout</div>
+                                <div class="info-value" style="color: #c53030;">&lt;5 или &gt;7</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2>📊 Итого в арсенале</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-number">4</div>
+                    <div class="summary-label">Удобрения</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">2</div>
+                    <div class="summary-label">Добавки</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">2</div>
+                    <div class="summary-label">pH регуляторы</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">8</div>
+                    <div class="summary-label">Всего препаратов</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function filterProducts(category) {
+            const cards = document.querySelectorAll('.product-card');
+            const tabs = document.querySelectorAll('.category-tab');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

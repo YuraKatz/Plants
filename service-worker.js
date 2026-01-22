@@ -12,6 +12,7 @@ const STATIC_FILES = [
   '/soil-groups.html',
   '/feeding-guide.html',
   '/water-mixer.html',
+  '/my-products.html',
   '/plant-problems.html',
   '/seasonal-care.html',
   '/propagation.html',
