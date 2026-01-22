@@ -67,6 +67,53 @@ fertilizers:
         - Стимуляция цветения
         - Поддержка бутонообразования
 
+    flower_orchids:
+      name: FLOWER - ORCHIDS FERTILIZER
+      local_name: דשן לסחלבים
+      brand: PRODUCTOS FLOWER S.A. (Испания)
+      importer: Dorgan Ltd. (דורגן בע״מ)
+      volume: 300 мл
+      standard: ENVE 1099 B
+      type: Жидкое удобрение для орхидей (фаза цветения)
+      purpose: Закладка цветоносов, поддержание бутонов, продление цветения
+      phase: BLOOM / FLOWER (только репродуктивная фаза)
+      composition:
+        npk:
+          nitrogen_n: 0%
+          phosphorus_p2o5: 17%
+          potassium_k2o: 7%
+        npk_note: "0-17-7 — без азота, высокий фосфор для цветения"
+        microelements:
+          iron_fe: присутствует
+          manganese_mn: присутствует
+          boron_b: присутствует
+          copper_cu: присутствует
+          zinc_zn: присутствует
+      application:
+        timing: Только в период цветения
+        method: Полив с разбавлением
+        frequency: С перерывами между подкормками
+        notes:
+          - Не превышать концентрацию
+          - Не использовать круглый год
+      suitable_for:
+        - Орхидеи в фазе цветения
+      not_suitable_for:
+        - Активный рост листьев
+        - Восстановление корней
+        - Детки (keiki)
+        - Вегетативная фаза
+      warnings:
+        - НЕ универсальное удобрение
+        - НЕ для фазы роста
+        - НЕ заменяет базовое питание
+        - НЕ использовать как единственный источник питания
+      effects:
+        - Закладка цветоносов
+        - Поддержка бутонов
+        - Продление цветения
+        - Усиление цветения
+
   granulated:
     ecogan_multicote:
       name: Экоген (Ecogan) Multicote
@@ -106,6 +153,62 @@ fertilizers:
         - Не допускать попадания на кожу и в глаза
         - Добавлять постепенно, контролируя pH
 
+    biobizz_bio_up:
+      name: BioBizz Bio·Up
+      previous_name: Bio·pH+
+      brand: BioBizz
+      origin: Нидерланды
+      volume: 500 мл
+      type: Органический регулятор pH (pH Up)
+      organic: true
+      certification: OMRI
+      since: 1992
+      purpose: Мягкое повышение pH без вреда для микрофлоры
+      description: |
+        100% органический регулятор на основе гуминовых кислот.
+        В отличие от минеральных pH-Up:
+        - Не убивает полезные бактерии и грибы
+        - Не разрушает микоризу
+        - Сохраняет живую экосистему субстрата
+      composition:
+        active_components:
+          - Гуминовые кислоты (Humic Acids)
+        npk: "0-0-0 (не влияет на схему питания)"
+      application:
+        method: Добавлять по 0.1 мл на 1 л воды (повышает pH на ~0.1)
+        steps:
+          - Смешать все удобрения в воде
+          - Измерить pH
+          - Добавить 0.1 мл Bio·Up на литр
+          - Перемешать 10 секунд
+          - Измерить pH повторно
+          - Повторять до нужного значения
+        timing:
+          - Вегетация
+          - Цветение
+          - Каждый полив (при необходимости)
+      target_ph:
+        soil: 6.2-6.5
+        vegetation: 5.8-6.0
+        flowering: 6.0-6.5
+      compatible_with:
+        - Все удобрения BioBizz
+        - Микориза (DYNOMYCO и др.)
+        - Бактериальные добавки
+        - Живые почвы
+      especially_useful:
+        - Мягкая вода
+        - Органические субстраты
+        - Живые почвы
+        - Работа с микоризой
+      important_notes:
+        - Не содержит NPK
+        - Не разрушает микрофлору
+        - Безопасен для ежедневного использования
+        - Требует контроля pH-метром
+      warnings:
+        - "pH < 5.0 или > 7.0 = nutrient lockout"
+
     atami_calmag:
       name: ATAMI CALMAG
       brand: ATAMI
@@ -139,6 +242,72 @@ fertilizers:
         - Растения в кокосовом субстрате
         - При использовании осмотической воды
 
+    dynomyco_spark:
+      name: DYNOMYCO® Spark
+      brand: DYNOMYCO (Groundwork BioAg Ltd.)
+      origin: Израиль
+      type: Микоризный инокулянт + полезные бактерии
+      format: Смачиваемый порошок (Wettable Powder)
+      weight: 170 г (6 oz)
+      lot: LTF63253
+      expiry: 2027-09-03
+      purpose: Усиление роста растений через симбиоз с почвенной микрофлорой
+      description: |
+        3-в-1 микробиологический инокулянт:
+        - Эндомикоризные грибы
+        - Комплекс полезных бактерий
+        - Гуминовые соединения
+      composition:
+        mycorrhizal_fungi:
+          glomus_intraradices: 250 пропагул/г
+          glomus_mosseae: 750 пропагул/г
+        beneficial_bacteria:
+          bacillus_subtilis: 10,000,000 CFU/г
+          bacillus_aryabhattai: 10,000,000 CFU/г
+          bacillus_pumilus: 10,000,000 CFU/г
+          bacillus_velezensis: 10,000,000 CFU/г
+          bacillus_licheniformis: 10,000,000 CFU/г
+        humic_acid:
+          source: Леонардит
+          concentration: 90%
+        other_ingredients: 10%
+      effects:
+        - Развитие корневой системы
+        - Усвоение питательных веществ
+        - Общая жизнеспособность растений
+      application:
+        dilution:
+          ratio: "1 ч.л. (~3 г) на 4 л воды"
+          examples:
+            - "1 чайная ложка (≈3 г) на 1 галлон (≈4 л)"
+        frequency: Каждые 1-2 недели
+        max_applications: До 6 применений на растение
+        timing:
+          - При пересадке
+          - При проращивании семян
+          - При укоренении черенков
+          - На протяжении вегетативной стадии
+        method: Полив приготовленным раствором
+      storage:
+        location: Тёмное, сухое, прохладное место
+        temperature: 5-25°C (40-77°F)
+        warnings:
+          - Не охлаждать
+          - Не замораживать
+          - Держать контейнер плотно закрытым
+      important_notes:
+        - НЕ является удобрением
+        - После применения избегать внесения стартовых фосфорных удобрений (для максимального эффекта микоризы)
+        - Только для садоводства и питомников
+      suitable_for:
+        - Садовые культуры
+        - Питомники
+        - Рассада
+        - Пересадка растений
+        - Все комнатные растения (кроме хищных)
+      not_suitable_for:
+        - Хищные растения (Dionaea, Drosera, Sarracenia)
+
 general_guidelines:
   application_rule: Применяйте удобрения согласно инструкции производителя
   dosage_warning: Не превышайте рекомендованную дозировку - избыток удобрений вреднее недостатка
@@ -166,61 +335,76 @@ feeding_matrix:
       flower_flowering: "allowed (for blooming)"
       ecogan_multicote: allowed
       atami_calmag: "allowed (water additive)"
+      dynomyco_spark: "allowed (at transplant, every 1-2 weeks)"
     slow:
       flower_universal: "restricted (1/2 dose)"
       flower_flowering: forbidden
       ecogan_multicote: forbidden
       atami_calmag: "allowed (water additive)"
-  
+      dynomyco_spark: "restricted (reduce frequency)"
+
   sensitive:
     growth:
       flower_universal: "restricted (1/4 dose)"
       flower_flowering: forbidden
       ecogan_multicote: "restricted (top layer only)"
       atami_calmag: "allowed (critical for RO)"
+      dynomyco_spark: "allowed (beneficial for roots)"
     slow:
       flower_universal: forbidden
       flower_flowering: forbidden
       ecogan_multicote: forbidden
       atami_calmag: "allowed (water additive)"
-  
+      dynomyco_spark: "restricted (reduce frequency)"
+
   orchids:
     growth:
       flower_universal: "restricted (1/8 dose)"
       flower_flowering: "restricted (1/8 dose)"
+      flower_orchids: "allowed (only during blooming!)"
       ecogan_multicote: forbidden
       atami_calmag: "allowed (minimal dose)"
+      dynomyco_spark: "restricted (orchids have own mycorrhiza)"
     slow:
       flower_universal: forbidden
       flower_flowering: forbidden
+      flower_orchids: forbidden
       ecogan_multicote: forbidden
       atami_calmag: "allowed (water additive)"
-  
+      dynomyco_spark: forbidden
+
   carnivorous:
     growth:
       flower_universal: forbidden
       flower_flowering: forbidden
       ecogan_multicote: forbidden
       atami_calmag: forbidden
+      dynomyco_spark: forbidden
       note: "RO-only / keep TDS very low"
     slow:
       flower_universal: forbidden
       flower_flowering: forbidden
       ecogan_multicote: forbidden
       atami_calmag: forbidden
+      dynomyco_spark: forbidden
       note: "RO-only / keep TDS very low"
-  
+
   general_houseplants:
     growth:
       flower_universal: allowed
       flower_flowering: allowed
       ecogan_multicote: allowed
       atami_calmag: "allowed (water additive)"
+      dynomyco_spark: "allowed (at transplant, every 1-2 weeks)"
     slow:
       flower_universal: "restricted (1/2 dose)"
       flower_flowering: forbidden
       ecogan_multicote: forbidden
       atami_calmag: "allowed (water additive)"
+      dynomyco_spark: "restricted (reduce frequency)"
 
 water_hints:
-  green_farmer_ph_down: "Water: pH adjust (5.8-6.2) if needed"
+  green_farmer_ph_down: "pH-: понижает pH (минеральный)"
+  biobizz_bio_up: "Bio·Up: повышает pH (органика, 0.1 мл/л = +0.1 pH)"
+  dynomyco_spark: "DYNOMYCO: 1 ч.л. на 4 л, при пересадке/укоренении, НЕ с фосфором!"
+  flower_orchids: "Orchids 0-17-7: только для орхидей в цветении"
