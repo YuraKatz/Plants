@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Журнал полива - Plants Care</title>
+    <title>Дневник полива - Plants Care</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -14,14 +14,13 @@
             color: #333;
         }
         .container {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
             padding: 25px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
         .nav-back {
             display: inline-block;
             margin-bottom: 15px;
@@ -29,195 +28,13 @@
             color: #667eea;
             font-weight: 600;
         }
-
         header {
             text-align: center;
             margin-bottom: 25px;
         }
         h1 { color: #2d3748; font-size: 1.8rem; margin-bottom: 5px; }
         .subtitle { color: #718096; font-size: 0.9rem; }
-
-        /* Log Form */
-        .log-form {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-
-        .form-row label {
-            font-size: 0.95rem;
-            min-width: 50px;
-        }
-
-        .form-row input[type="date"] {
-            flex: 1;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: rgba(255,255,255,0.95);
-            color: #2d3748;
-        }
-
-        /* Checkboxes */
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .option-btn {
-            padding: 10px 15px;
-            border-radius: 20px;
-            border: 2px solid rgba(255,255,255,0.4);
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .option-btn.active {
-            background: rgba(255,255,255,0.95);
-            border-color: white;
-            color: #667eea;
-        }
-
-        .option-btn:hover {
-            border-color: rgba(255,255,255,0.8);
-        }
-
-        /* Submit Button */
-        .btn-log {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            background: white;
-            color: #48bb78;
-            transition: all 0.3s;
-        }
-        .btn-log:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Stats */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .stat-item {
-            text-align: center;
-            padding: 15px 10px;
-            background: #f7fafc;
-            border-radius: 12px;
-        }
-        .stat-num {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #2d3748;
-        }
-        .stat-label {
-            font-size: 0.75rem;
-            color: #718096;
-        }
-
-        /* History */
-        .history {
-            background: #f7fafc;
-            border-radius: 16px;
-            padding: 20px;
-        }
-        .history h3 {
-            margin-bottom: 15px;
-            color: #2d3748;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1rem;
-        }
-
-        .history-list {
-            max-height: 350px;
-            overflow-y: auto;
-        }
-
-        .log-entry {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            border-left: 4px solid #48bb78;
-        }
-        .log-entry.flush {
-            border-left-color: #ed8936;
-        }
-
-        .log-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .log-date {
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .log-tags {
-            display: flex;
-            gap: 5px;
-        }
-
-        .log-tag {
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .log-tag.feed { background: #c6f6d5; color: #22543d; }
-        .log-tag.flush { background: #feebc8; color: #744210; }
-        .log-tag.dyno { background: #e9d8fd; color: #553c9a; }
-
-        .log-num {
-            color: #a0aec0;
-            font-size: 0.8rem;
-        }
-
-        .clear-btn {
-            padding: 5px 10px;
-            background: #fed7d7;
-            color: #c53030;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-
-        .empty {
-            color: #a0aec0;
-            text-align: center;
-            padding: 30px;
-        }
+        h2 { color: #2d3748; font-size: 1.2rem; margin: 25px 0 15px; }
 
         /* Cheatsheet */
         .cheatsheet {
@@ -225,7 +42,7 @@
             border: 2px solid #48bb78;
             border-radius: 16px;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .cheatsheet h3 {
             color: #22543d;
@@ -273,9 +90,62 @@
             color: #22543d;
         }
 
-        @media (max-width: 400px) {
-            .container { padding: 15px; }
-            .stats { grid-template-columns: 1fr 1fr; }
+        /* Log Table */
+        .log-section {
+            background: #f7fafc;
+            border-radius: 16px;
+            padding: 20px;
+        }
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .log-table th {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.8rem;
+        }
+        .log-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .log-table tr:last-child td {
+            border-bottom: none;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .tag-feed { background: #c6f6d5; color: #22543d; }
+        .tag-flush { background: #feebc8; color: #744210; }
+        .tag-dyno { background: #e9d8fd; color: #553c9a; }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .stat {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+        }
+        .stat-num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: #718096;
         }
     </style>
 </head>
@@ -284,13 +154,13 @@
         <a href="index.html" class="nav-back">← На главную</a>
 
         <header>
-            <h1>📝 Журнал полива</h1>
-            <p class="subtitle">Записывай каждый полив</p>
+            <h1>📝 Дневник полива</h1>
+            <p class="subtitle">История всех поливов</p>
         </header>
 
-        <!-- Recipe Cheatsheet -->
+        <!-- Cheatsheet -->
         <div class="cheatsheet">
-            <h3>📋 Рецепт</h3>
+            <h3>📋 Шпаргалка</h3>
             <table>
                 <tr>
                     <th>Группа</th>
@@ -320,162 +190,37 @@
             <div class="order">RO → CalMag (PPM) → DYNOMYCO? → Universal → pH</div>
         </div>
 
-        <!-- Log Form -->
-        <div class="log-form">
-            <div class="form-row">
-                <label>📅</label>
-                <input type="date" id="logDate">
+        <!-- Log -->
+        <div class="log-section">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-num">1</div>
+                    <div class="stat-label">Всего</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">1</div>
+                    <div class="stat-label">Удобрений</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">0</div>
+                    <div class="stat-label">Промывок</div>
+                </div>
             </div>
 
-            <div class="options">
-                <button class="option-btn active" id="btnFeed" onclick="setType('feed')">🌿 Удобрение</button>
-                <button class="option-btn" id="btnFlush" onclick="setType('flush')">🚿 Промывка</button>
-                <button class="option-btn" id="btnDyno" onclick="toggleDyno()">🍄 DYNOMYCO</button>
-            </div>
-
-            <button class="btn-log" onclick="addEntry()">✓ Записать</button>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-num" id="statTotal">0</div>
-                <div class="stat-label">Всего</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num" id="statFeed">0</div>
-                <div class="stat-label">Удобрений</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num" id="statFlush">0</div>
-                <div class="stat-label">Промывок</div>
-            </div>
-        </div>
-
-        <!-- History -->
-        <div class="history">
-            <h3>
-                📜 История
-                <button class="clear-btn" onclick="clearAll()">Очистить</button>
-            </h3>
-            <div class="history-list" id="historyList">
-                <div class="empty">Пока пусто</div>
-            </div>
+            <h2>Январь 2025</h2>
+            <table class="log-table">
+                <tr>
+                    <th>Дата</th>
+                    <th>Тип</th>
+                    <th>Заметки</th>
+                </tr>
+                <tr>
+                    <td>23.01</td>
+                    <td><span class="tag tag-feed">Удобр.</span> <span class="tag tag-dyno">🍄</span></td>
+                    <td>Первый полив</td>
+                </tr>
+            </table>
         </div>
     </div>
-
-    <script>
-        let entries = [];
-        let currentType = 'feed';
-        let useDyno = false;
-
-        // Init
-        function init() {
-            const saved = localStorage.getItem('wateringLog');
-            if (saved) entries = JSON.parse(saved);
-
-            document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
-            render();
-        }
-
-        // Save
-        function save() {
-            localStorage.setItem('wateringLog', JSON.stringify(entries));
-        }
-
-        // Set type
-        function setType(type) {
-            currentType = type;
-            document.getElementById('btnFeed').classList.toggle('active', type === 'feed');
-            document.getElementById('btnFlush').classList.toggle('active', type === 'flush');
-        }
-
-        // Toggle DYNOMYCO
-        function toggleDyno() {
-            useDyno = !useDyno;
-            document.getElementById('btnDyno').classList.toggle('active', useDyno);
-        }
-
-        // Add entry
-        function addEntry() {
-            const date = document.getElementById('logDate').value;
-            if (!date) return;
-
-            entries.unshift({
-                date: date,
-                type: currentType,
-                dyno: useDyno,
-                id: Date.now()
-            });
-
-            // Reset dyno
-            useDyno = false;
-            document.getElementById('btnDyno').classList.remove('active');
-
-            save();
-            render();
-        }
-
-        // Clear all
-        function clearAll() {
-            if (confirm('Очистить всю историю?')) {
-                entries = [];
-                save();
-                render();
-            }
-        }
-
-        // Format date
-        function formatDate(dateStr) {
-            const d = new Date(dateStr + 'T00:00:00');
-            const today = new Date();
-            today.setHours(0,0,0,0);
-
-            const entryDate = new Date(dateStr + 'T00:00:00');
-            entryDate.setHours(0,0,0,0);
-
-            const diff = Math.floor((today - entryDate) / (1000 * 60 * 60 * 24));
-
-            if (diff === 0) return 'Сегодня';
-            if (diff === 1) return 'Вчера';
-            if (diff < 7) return diff + ' дн. назад';
-
-            return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
-        }
-
-        // Render
-        function render() {
-            // Stats
-            const total = entries.length;
-            const feeds = entries.filter(e => e.type === 'feed').length;
-            const flushes = entries.filter(e => e.type === 'flush').length;
-
-            document.getElementById('statTotal').textContent = total;
-            document.getElementById('statFeed').textContent = feeds;
-            document.getElementById('statFlush').textContent = flushes;
-
-            // History
-            const list = document.getElementById('historyList');
-            if (entries.length === 0) {
-                list.innerHTML = '<div class="empty">Пока пусто</div>';
-                return;
-            }
-
-            list.innerHTML = entries.map((e, i) => `
-                <div class="log-entry ${e.type}">
-                    <div class="log-left">
-                        <span class="log-date">${formatDate(e.date)}</span>
-                        <div class="log-tags">
-                            <span class="log-tag ${e.type}">${e.type === 'flush' ? 'Промывка' : 'Удобр.'}</span>
-                            ${e.dyno ? '<span class="log-tag dyno">🍄</span>' : ''}
-                        </div>
-                    </div>
-                    <span class="log-num">#${entries.length - i}</span>
-                </div>
-            `).join('');
-        }
-
-        init();
-    </script>
 </body>
 </html>
