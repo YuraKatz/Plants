@@ -219,6 +219,60 @@
             padding: 30px;
         }
 
+        /* Cheatsheet */
+        .cheatsheet {
+            background: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .cheatsheet h3 {
+            color: #22543d;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        .cheatsheet table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .cheatsheet th {
+            color: #718096;
+            font-size: 0.75rem;
+            padding: 6px;
+            text-align: center;
+        }
+        .cheatsheet td {
+            padding: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .g {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            line-height: 24px;
+        }
+        .g-a { background: #4299e1; }
+        .g-b { background: #48bb78; }
+        .g-c { background: #a0aec0; }
+        .order {
+            margin-top: 10px;
+            padding: 10px;
+            background: #c6f6d5;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #22543d;
+        }
+
         @media (max-width: 400px) {
             .container { padding: 15px; }
             .stats { grid-template-columns: 1fr 1fr; }
@@ -233,6 +287,38 @@
             <h1>📝 Журнал полива</h1>
             <p class="subtitle">Записывай каждый полив</p>
         </header>
+
+        <!-- Recipe Cheatsheet -->
+        <div class="cheatsheet">
+            <h3>📋 Рецепт</h3>
+            <table>
+                <tr>
+                    <th>Группа</th>
+                    <th>PPM</th>
+                    <th>Universal</th>
+                    <th>pH</th>
+                </tr>
+                <tr>
+                    <td><span class="g g-a">A</span></td>
+                    <td>80</td>
+                    <td>1.5 мл/л</td>
+                    <td>5.8-6.3</td>
+                </tr>
+                <tr>
+                    <td><span class="g g-b">B</span></td>
+                    <td>120</td>
+                    <td>6 мл/л</td>
+                    <td>6.0-6.5</td>
+                </tr>
+                <tr>
+                    <td><span class="g g-c">C</span></td>
+                    <td>150</td>
+                    <td>6 мл/л</td>
+                    <td>6.2-6.7</td>
+                </tr>
+            </table>
+            <div class="order">RO → CalMag (PPM) → DYNOMYCO? → Universal → pH</div>
+        </div>
 
         <!-- Log Form -->
         <div class="log-form">
