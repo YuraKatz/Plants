@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Трекер полива - Plants Care</title>
+    <title>Журнал полива - Plants Care</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -14,363 +14,214 @@
             color: #333;
         }
         .container {
-            max-width: 800px;
+            max-width: 500px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        h1 { color: #2d3748; font-size: 2rem; margin-bottom: 10px; }
-        .subtitle { color: #718096; font-size: 1rem; }
 
         .nav-back {
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-decoration: none;
             color: #667eea;
             font-weight: 600;
         }
-        .nav-back:hover { text-decoration: underline; }
 
-        /* Canister Cards */
-        .canisters {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .canister-tracker {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 3px solid #e2e8f0;
-        }
-        .canister-tracker.a { border-color: #4299e1; }
-        .canister-tracker.b { border-color: #48bb78; }
-        .canister-tracker.c { border-color: #a0aec0; }
-
-        .canister-header {
-            padding: 15px 20px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .canister-tracker.a .canister-header { background: linear-gradient(135deg, #4299e1, #3182ce); }
-        .canister-tracker.b .canister-header { background: linear-gradient(135deg, #48bb78, #38a169); }
-        .canister-tracker.c .canister-header { background: linear-gradient(135deg, #a0aec0, #718096); }
-
-        .canister-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        .canister-subtitle {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-
-        .canister-body {
-            padding: 20px;
-        }
-
-        /* Watering Counter */
-        .watering-counter {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .watering-dot {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 3px solid #e2e8f0;
-            background: white;
-            color: #718096;
-        }
-        .watering-dot.completed {
-            background: #48bb78;
-            border-color: #38a169;
-            color: white;
-        }
-        .watering-dot.current {
-            background: #4299e1;
-            border-color: #3182ce;
-            color: white;
-            transform: scale(1.15);
-            box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
-        }
-        .watering-dot.flush {
-            background: #ed8936;
-            border-color: #dd6b20;
-            color: white;
-        }
-        .watering-dot.flush.current {
-            background: #ed8936;
-            border-color: #dd6b20;
-            transform: scale(1.15);
-            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.4);
-        }
-
-        /* Status */
-        .watering-status {
+        header {
             text-align: center;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            font-weight: 600;
+            margin-bottom: 25px;
         }
-        .status-feed {
-            background: #c6f6d5;
-            color: #22543d;
-        }
-        .status-flush {
-            background: #feebc8;
-            color: #744210;
+        h1 { color: #2d3748; font-size: 1.8rem; margin-bottom: 5px; }
+        .subtitle { color: #718096; font-size: 0.9rem; }
+
+        /* Log Form */
+        .log-form {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            color: white;
         }
 
-        /* Last Watered */
-        .last-watered {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: #f7fafc;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-        .last-watered-label {
-            color: #718096;
-            font-size: 0.9rem;
-        }
-        .last-watered-date {
-            font-weight: 600;
-            color: #2d3748;
-        }
-        .days-ago {
-            font-size: 0.85rem;
-            color: #718096;
-        }
-
-        /* Buttons */
-        .action-buttons {
+        .form-row {
             display: flex;
             gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
         }
-        .btn {
+
+        .form-row label {
+            font-size: 0.95rem;
+            min-width: 50px;
+        }
+
+        .form-row input[type="date"] {
             flex: 1;
-            padding: 12px 20px;
+            padding: 12px 15px;
             border: none;
             border-radius: 10px;
             font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-water {
-            background: linear-gradient(135deg, #48bb78, #38a169);
-            color: white;
-        }
-        .btn-water:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
-        }
-        .btn-water.flush {
-            background: linear-gradient(135deg, #ed8936, #dd6b20);
-        }
-        .btn-water.flush:hover {
-            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.4);
-        }
-        .btn-reset {
-            background: #edf2f7;
-            color: #718096;
-            flex: 0.3;
-        }
-        .btn-reset:hover {
-            background: #e2e8f0;
-        }
-
-        /* Recipe Reminder */
-        .recipe-reminder {
-            margin-top: 15px;
-            padding: 15px;
-            background: #ebf8ff;
-            border-radius: 10px;
-            border-left: 4px solid #4299e1;
-            font-size: 0.9rem;
-        }
-        .recipe-reminder.flush {
-            background: #fffaf0;
-            border-left-color: #ed8936;
-        }
-        .recipe-reminder strong {
-            display: block;
-            margin-bottom: 5px;
-            color: #2c5282;
-        }
-        .recipe-reminder.flush strong {
-            color: #c05621;
-        }
-
-        /* DYNOMYCO Toggle */
-        .dynomyco-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 15px;
-            background: #faf5ff;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border: 2px solid #e9d8fd;
-        }
-        .dynomyco-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: #553c9a;
-        }
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #cbd5e0;
-            transition: 0.3s;
-            border-radius: 26px;
-        }
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.3s;
-            border-radius: 50%;
-        }
-        input:checked + .toggle-slider {
-            background-color: #9f7aea;
-        }
-        input:checked + .toggle-slider:before {
-            transform: translateX(24px);
-        }
-
-        /* History */
-        .history-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f7fafc;
-            border-radius: 16px;
-        }
-        .history-section h3 {
-            margin-bottom: 15px;
+            background: rgba(255,255,255,0.95);
             color: #2d3748;
         }
-        .history-list {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .history-item {
+
+        /* Checkboxes */
+        .options {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        .history-canister {
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 15px;
+
+        .option-btn {
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.1);
             color: white;
-        }
-        .history-canister.a { background: #4299e1; }
-        .history-canister.b { background: #48bb78; }
-        .history-canister.c { background: #a0aec0; }
-        .history-type {
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-        }
-        .history-type.feed { background: #c6f6d5; color: #22543d; }
-        .history-type.flush { background: #feebc8; color: #744210; }
-        .history-date {
-            color: #718096;
-        }
-
-        .clear-history {
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: #fed7d7;
-            color: #c53030;
-            border: none;
-            border-radius: 8px;
+            font-size: 0.9rem;
             cursor: pointer;
-            font-size: 0.85rem;
-        }
-        .clear-history:hover {
-            background: #feb2b2;
+            transition: all 0.2s;
         }
 
-        /* Summary */
-        .summary-bar {
+        .option-btn.active {
+            background: rgba(255,255,255,0.95);
+            border-color: white;
+            color: #667eea;
+        }
+
+        .option-btn:hover {
+            border-color: rgba(255,255,255,0.8);
+        }
+
+        /* Submit Button */
+        .btn-log {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            background: white;
+            color: #48bb78;
+            transition: all 0.3s;
+        }
+        .btn-log:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Stats */
+        .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        .summary-item {
+        .stat-item {
             text-align: center;
-            padding: 15px;
+            padding: 15px 10px;
             background: #f7fafc;
             border-radius: 12px;
         }
-        .summary-number {
-            font-size: 2rem;
+        .stat-num {
+            font-size: 1.8rem;
             font-weight: 800;
             color: #2d3748;
         }
-        .summary-label {
-            font-size: 0.85rem;
+        .stat-label {
+            font-size: 0.75rem;
             color: #718096;
         }
 
-        @media (max-width: 600px) {
+        /* History */
+        .history {
+            background: #f7fafc;
+            border-radius: 16px;
+            padding: 20px;
+        }
+        .history h3 {
+            margin-bottom: 15px;
+            color: #2d3748;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .history-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border-left: 4px solid #48bb78;
+        }
+        .log-entry.flush {
+            border-left-color: #ed8936;
+        }
+
+        .log-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .log-date {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .log-tags {
+            display: flex;
+            gap: 5px;
+        }
+
+        .log-tag {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .log-tag.feed { background: #c6f6d5; color: #22543d; }
+        .log-tag.flush { background: #feebc8; color: #744210; }
+        .log-tag.dyno { background: #e9d8fd; color: #553c9a; }
+
+        .log-num {
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+
+        .clear-btn {
+            padding: 5px 10px;
+            background: #fed7d7;
+            color: #c53030;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .empty {
+            color: #a0aec0;
+            text-align: center;
+            padding: 30px;
+        }
+
+        @media (max-width: 400px) {
             .container { padding: 15px; }
-            .watering-dot { width: 40px; height: 40px; font-size: 1rem; }
-            .action-buttons { flex-direction: column; }
-            .btn-reset { flex: 1; }
-            .summary-bar { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -379,367 +230,166 @@
         <a href="index.html" class="nav-back">← На главную</a>
 
         <header>
-            <h1>💧 Трекер полива</h1>
-            <p class="subtitle">Отслеживай поливы и не забывай про промывку!</p>
+            <h1>📝 Журнал полива</h1>
+            <p class="subtitle">Записывай каждый полив</p>
         </header>
 
-        <!-- Summary -->
-        <div class="summary-bar">
-            <div class="summary-item">
-                <div class="summary-number" id="totalWaterings">0</div>
-                <div class="summary-label">Всего поливов</div>
+        <!-- Log Form -->
+        <div class="log-form">
+            <div class="form-row">
+                <label>📅</label>
+                <input type="date" id="logDate">
             </div>
-            <div class="summary-item">
-                <div class="summary-number" id="totalFlushes">0</div>
-                <div class="summary-label">Промывок</div>
+
+            <div class="options">
+                <button class="option-btn active" id="btnFeed" onclick="setType('feed')">🌿 Удобрение</button>
+                <button class="option-btn" id="btnFlush" onclick="setType('flush')">🚿 Промывка</button>
+                <button class="option-btn" id="btnDyno" onclick="toggleDyno()">🍄 DYNOMYCO</button>
             </div>
-            <div class="summary-item">
-                <div class="summary-number" id="dynoCount">0</div>
-                <div class="summary-label">DYNOMYCO</div>
-            </div>
+
+            <button class="btn-log" onclick="addEntry()">✓ Записать</button>
         </div>
 
-        <!-- Canisters -->
-        <div class="canisters">
-            <!-- Canister A -->
-            <div class="canister-tracker a" id="canisterA">
-                <div class="canister-header">
-                    <div>
-                        <div class="canister-title">Канистра A</div>
-                        <div class="canister-subtitle">Чувствительные • PPM 80 • pH 5.8-6.3</div>
-                    </div>
-                </div>
-                <div class="canister-body">
-                    <div class="watering-counter" id="counterA">
-                        <div class="watering-dot" data-num="1">1</div>
-                        <div class="watering-dot" data-num="2">2</div>
-                        <div class="watering-dot" data-num="3">3</div>
-                        <div class="watering-dot flush" data-num="4">4</div>
-                    </div>
-                    <div class="watering-status status-feed" id="statusA">
-                        🌿 Следующий: полив с удобрениями
-                    </div>
-                    <div class="last-watered">
-                        <span class="last-watered-label">Последний полив:</span>
-                        <span>
-                            <span class="last-watered-date" id="lastDateA">—</span>
-                            <span class="days-ago" id="daysAgoA"></span>
-                        </span>
-                    </div>
-                    <div class="dynomyco-toggle">
-                        <span class="dynomyco-label">🍄 Добавить DYNOMYCO</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="dynoA">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-water" id="btnA" onclick="logWatering('A')">
-                            💧 Полил!
-                        </button>
-                        <button class="btn btn-reset" onclick="resetCanister('A')">↺</button>
-                    </div>
-                    <div class="recipe-reminder" id="recipeA">
-                        <strong>📋 Рецепт:</strong>
-                        CalMag → PPM 80 → Universal 1.5 мл/л → pH 5.8-6.3
-                    </div>
-                </div>
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-num" id="statTotal">0</div>
+                <div class="stat-label">Всего</div>
             </div>
-
-            <!-- Canister B -->
-            <div class="canister-tracker b" id="canisterB">
-                <div class="canister-header">
-                    <div>
-                        <div class="canister-title">Канистра B</div>
-                        <div class="canister-subtitle">Ароидные • PPM 120 • pH 6.0-6.5</div>
-                    </div>
-                </div>
-                <div class="canister-body">
-                    <div class="watering-counter" id="counterB">
-                        <div class="watering-dot" data-num="1">1</div>
-                        <div class="watering-dot" data-num="2">2</div>
-                        <div class="watering-dot" data-num="3">3</div>
-                        <div class="watering-dot flush" data-num="4">4</div>
-                    </div>
-                    <div class="watering-status status-feed" id="statusB">
-                        🌿 Следующий: полив с удобрениями
-                    </div>
-                    <div class="last-watered">
-                        <span class="last-watered-label">Последний полив:</span>
-                        <span>
-                            <span class="last-watered-date" id="lastDateB">—</span>
-                            <span class="days-ago" id="daysAgoB"></span>
-                        </span>
-                    </div>
-                    <div class="dynomyco-toggle">
-                        <span class="dynomyco-label">🍄 Добавить DYNOMYCO</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="dynoB">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-water" id="btnB" onclick="logWatering('B')">
-                            💧 Полил!
-                        </button>
-                        <button class="btn btn-reset" onclick="resetCanister('B')">↺</button>
-                    </div>
-                    <div class="recipe-reminder" id="recipeB">
-                        <strong>📋 Рецепт:</strong>
-                        CalMag → PPM 120 → Universal 6 мл/л → pH 6.0-6.5
-                    </div>
-                </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statFeed">0</div>
+                <div class="stat-label">Удобрений</div>
             </div>
-
-            <!-- Canister C -->
-            <div class="canister-tracker c" id="canisterC">
-                <div class="canister-header">
-                    <div>
-                        <div class="canister-title">Канистра C</div>
-                        <div class="canister-subtitle">Неприхотливые • PPM 150 • pH 6.2-6.7</div>
-                    </div>
-                </div>
-                <div class="canister-body">
-                    <div class="watering-counter" id="counterC">
-                        <div class="watering-dot" data-num="1">1</div>
-                        <div class="watering-dot" data-num="2">2</div>
-                        <div class="watering-dot" data-num="3">3</div>
-                        <div class="watering-dot flush" data-num="4">4</div>
-                    </div>
-                    <div class="watering-status status-feed" id="statusC">
-                        🌿 Следующий: полив с удобрениями
-                    </div>
-                    <div class="last-watered">
-                        <span class="last-watered-label">Последний полив:</span>
-                        <span>
-                            <span class="last-watered-date" id="lastDateC">—</span>
-                            <span class="days-ago" id="daysAgoC"></span>
-                        </span>
-                    </div>
-                    <div class="dynomyco-toggle">
-                        <span class="dynomyco-label">🍄 Добавить DYNOMYCO</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="dynoC">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-water" id="btnC" onclick="logWatering('C')">
-                            💧 Полил!
-                        </button>
-                        <button class="btn btn-reset" onclick="resetCanister('C')">↺</button>
-                    </div>
-                    <div class="recipe-reminder" id="recipeC">
-                        <strong>📋 Рецепт:</strong>
-                        CalMag → PPM 150 → Universal 6 мл/л → pH 6.2-6.7
-                    </div>
-                </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statFlush">0</div>
+                <div class="stat-label">Промывок</div>
             </div>
         </div>
 
         <!-- History -->
-        <div class="history-section">
-            <h3>📜 История поливов</h3>
+        <div class="history">
+            <h3>
+                📜 История
+                <button class="clear-btn" onclick="clearAll()">Очистить</button>
+            </h3>
             <div class="history-list" id="historyList">
-                <div style="color: #718096; text-align: center; padding: 20px;">
-                    История пуста. Начни поливать!
-                </div>
+                <div class="empty">Пока пусто</div>
             </div>
-            <button class="clear-history" onclick="clearHistory()">🗑️ Очистить историю</button>
         </div>
     </div>
 
     <script>
-        // Data structure
-        let data = {
-            canisters: {
-                A: { count: 0, lastDate: null, dynoCount: 0 },
-                B: { count: 0, lastDate: null, dynoCount: 0 },
-                C: { count: 0, lastDate: null, dynoCount: 0 }
-            },
-            history: [],
-            totalWaterings: 0,
-            totalFlushes: 0,
-            totalDyno: 0
-        };
+        let entries = [];
+        let currentType = 'feed';
+        let useDyno = false;
 
-        // Load from localStorage
-        function loadData() {
-            const saved = localStorage.getItem('wateringTracker');
-            if (saved) {
-                data = JSON.parse(saved);
-            }
-            updateAllUI();
+        // Init
+        function init() {
+            const saved = localStorage.getItem('wateringLog');
+            if (saved) entries = JSON.parse(saved);
+
+            document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+            render();
         }
 
-        // Save to localStorage
-        function saveData() {
-            localStorage.setItem('wateringTracker', JSON.stringify(data));
+        // Save
+        function save() {
+            localStorage.setItem('wateringLog', JSON.stringify(entries));
         }
 
-        // Log watering
-        function logWatering(canister) {
-            const c = data.canisters[canister];
-            const isFlush = c.count === 3;
-            const hasDyno = document.getElementById('dyno' + canister).checked;
+        // Set type
+        function setType(type) {
+            currentType = type;
+            document.getElementById('btnFeed').classList.toggle('active', type === 'feed');
+            document.getElementById('btnFlush').classList.toggle('active', type === 'flush');
+        }
 
-            c.count = (c.count + 1) % 4;
-            c.lastDate = new Date().toISOString();
+        // Toggle DYNOMYCO
+        function toggleDyno() {
+            useDyno = !useDyno;
+            document.getElementById('btnDyno').classList.toggle('active', useDyno);
+        }
 
-            if (hasDyno) {
-                c.dynoCount++;
-                data.totalDyno++;
-            }
+        // Add entry
+        function addEntry() {
+            const date = document.getElementById('logDate').value;
+            if (!date) return;
 
-            data.totalWaterings++;
-            if (isFlush) {
-                data.totalFlushes++;
-            }
-
-            // Add to history
-            data.history.unshift({
-                canister: canister,
-                type: isFlush ? 'flush' : 'feed',
-                dyno: hasDyno,
-                date: new Date().toISOString()
+            entries.unshift({
+                date: date,
+                type: currentType,
+                dyno: useDyno,
+                id: Date.now()
             });
 
-            // Keep only last 50 entries
-            if (data.history.length > 50) {
-                data.history = data.history.slice(0, 50);
-            }
+            // Reset dyno
+            useDyno = false;
+            document.getElementById('btnDyno').classList.remove('active');
 
-            // Reset dyno checkbox
-            document.getElementById('dyno' + canister).checked = false;
-
-            saveData();
-            updateAllUI();
+            save();
+            render();
         }
 
-        // Reset canister
-        function resetCanister(canister) {
-            if (confirm('Сбросить счётчик канистры ' + canister + '?')) {
-                data.canisters[canister].count = 0;
-                saveData();
-                updateAllUI();
-            }
-        }
-
-        // Clear history
-        function clearHistory() {
+        // Clear all
+        function clearAll() {
             if (confirm('Очистить всю историю?')) {
-                data.history = [];
-                data.totalWaterings = 0;
-                data.totalFlushes = 0;
-                data.totalDyno = 0;
-                saveData();
-                updateAllUI();
+                entries = [];
+                save();
+                render();
             }
         }
 
-        // Update UI for one canister
-        function updateCanisterUI(canister) {
-            const c = data.canisters[canister];
-            const counter = document.getElementById('counter' + canister);
-            const status = document.getElementById('status' + canister);
-            const btn = document.getElementById('btn' + canister);
-            const recipe = document.getElementById('recipe' + canister);
-            const lastDate = document.getElementById('lastDate' + canister);
-            const daysAgo = document.getElementById('daysAgo' + canister);
+        // Format date
+        function formatDate(dateStr) {
+            const d = new Date(dateStr + 'T00:00:00');
+            const today = new Date();
+            today.setHours(0,0,0,0);
 
-            // Update dots
-            const dots = counter.querySelectorAll('.watering-dot');
-            dots.forEach((dot, i) => {
-                dot.classList.remove('completed', 'current');
-                if (i < c.count) {
-                    dot.classList.add('completed');
-                } else if (i === c.count) {
-                    dot.classList.add('current');
-                }
-            });
+            const entryDate = new Date(dateStr + 'T00:00:00');
+            entryDate.setHours(0,0,0,0);
 
-            // Update status
-            const isFlush = c.count === 3;
-            if (isFlush) {
-                status.className = 'watering-status status-flush';
-                status.innerHTML = '🚿 Следующий: ПРОМЫВКА (без удобрений)';
-                btn.className = 'btn btn-water flush';
-                btn.innerHTML = '🚿 Промыл!';
-                recipe.className = 'recipe-reminder flush';
-                recipe.innerHTML = '<strong>📋 Рецепт промывки:</strong>CalMag → PPM ' +
-                    (canister === 'A' ? '80' : canister === 'B' ? '120' : '150') +
-                    ' → БЕЗ удобрений → pH';
-            } else {
-                status.className = 'watering-status status-feed';
-                status.innerHTML = '🌿 Следующий: полив с удобрениями';
-                btn.className = 'btn btn-water';
-                btn.innerHTML = '💧 Полил!';
-                recipe.className = 'recipe-reminder';
-                const dose = canister === 'A' ? '1.5' : '6';
-                const ppm = canister === 'A' ? '80' : canister === 'B' ? '120' : '150';
-                const ph = canister === 'A' ? '5.8-6.3' : canister === 'B' ? '6.0-6.5' : '6.2-6.7';
-                recipe.innerHTML = '<strong>📋 Рецепт:</strong>CalMag → PPM ' + ppm +
-                    ' → Universal ' + dose + ' мл/л → pH ' + ph;
-            }
+            const diff = Math.floor((today - entryDate) / (1000 * 60 * 60 * 24));
 
-            // Update last date
-            if (c.lastDate) {
-                const date = new Date(c.lastDate);
-                lastDate.textContent = date.toLocaleDateString('ru-RU');
-                const days = Math.floor((new Date() - date) / (1000 * 60 * 60 * 24));
-                if (days === 0) {
-                    daysAgo.textContent = '(сегодня)';
-                } else if (days === 1) {
-                    daysAgo.textContent = '(вчера)';
-                } else {
-                    daysAgo.textContent = '(' + days + ' дн. назад)';
-                }
-            } else {
-                lastDate.textContent = '—';
-                daysAgo.textContent = '';
-            }
+            if (diff === 0) return 'Сегодня';
+            if (diff === 1) return 'Вчера';
+            if (diff < 7) return diff + ' дн. назад';
+
+            return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
         }
 
-        // Update history list
-        function updateHistory() {
+        // Render
+        function render() {
+            // Stats
+            const total = entries.length;
+            const feeds = entries.filter(e => e.type === 'feed').length;
+            const flushes = entries.filter(e => e.type === 'flush').length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statFeed').textContent = feeds;
+            document.getElementById('statFlush').textContent = flushes;
+
+            // History
             const list = document.getElementById('historyList');
-            if (data.history.length === 0) {
-                list.innerHTML = '<div style="color: #718096; text-align: center; padding: 20px;">История пуста. Начни поливать!</div>';
+            if (entries.length === 0) {
+                list.innerHTML = '<div class="empty">Пока пусто</div>';
                 return;
             }
 
-            list.innerHTML = data.history.map(h => {
-                const date = new Date(h.date);
-                const dateStr = date.toLocaleDateString('ru-RU') + ' ' +
-                    date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
-                return `
-                    <div class="history-item">
-                        <span class="history-canister ${h.canister.toLowerCase()}">${h.canister}</span>
-                        <span class="history-type ${h.type}">${h.type === 'flush' ? '🚿 Промывка' : '🌿 Удобрение'}${h.dyno ? ' +🍄' : ''}</span>
-                        <span class="history-date">${dateStr}</span>
+            list.innerHTML = entries.map((e, i) => `
+                <div class="log-entry ${e.type}">
+                    <div class="log-left">
+                        <span class="log-date">${formatDate(e.date)}</span>
+                        <div class="log-tags">
+                            <span class="log-tag ${e.type}">${e.type === 'flush' ? 'Промывка' : 'Удобр.'}</span>
+                            ${e.dyno ? '<span class="log-tag dyno">🍄</span>' : ''}
+                        </div>
                     </div>
-                `;
-            }).join('');
+                    <span class="log-num">#${entries.length - i}</span>
+                </div>
+            `).join('');
         }
 
-        // Update summary
-        function updateSummary() {
-            document.getElementById('totalWaterings').textContent = data.totalWaterings;
-            document.getElementById('totalFlushes').textContent = data.totalFlushes;
-            document.getElementById('dynoCount').textContent = data.totalDyno;
-        }
-
-        // Update all UI
-        function updateAllUI() {
-            updateCanisterUI('A');
-            updateCanisterUI('B');
-            updateCanisterUI('C');
-            updateHistory();
-            updateSummary();
-        }
-
-        // Init
-        loadData();
+        init();
     </script>
 </body>
 </html>
