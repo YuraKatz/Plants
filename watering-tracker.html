@@ -189,6 +189,45 @@
             color: #666;
         }
 
+        /* Plants Reference */
+        .plants-reference {
+            margin-bottom: 20px;
+        }
+        .ref-group {
+            border: 1px solid #ccc;
+            margin-bottom: 8px;
+        }
+        .ref-header {
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .ref-a { background: #e8e0f0; }
+        .ref-b { background: #f0e0e8; }
+        .ref-c { background: #e0f0f8; }
+        .ref-special { background: #e0f8e8; }
+        .ref-list {
+            list-style: none;
+            margin: 0;
+            padding: 10px 12px;
+            background: #fafafa;
+            font-size: 0.85rem;
+        }
+        .ref-list li {
+            padding: 4px 0;
+            border-bottom: 1px dotted #ddd;
+        }
+        .ref-list li:last-child {
+            border-bottom: none;
+        }
+        .latin {
+            color: #888;
+            font-style: italic;
+            font-size: 0.8rem;
+        }
+
         /* Footer */
         .doc-footer {
             margin-top: 30px;
@@ -241,7 +280,49 @@
             </tr>
         </table>
 
-        <h2>2. Добавки</h2>
+        <h2>2. Справочник растений по группам</h2>
+        <div class="plants-reference">
+            <div class="ref-group">
+                <div class="ref-header ref-a">A — Чувствительные (PPM 80)</div>
+                <ul class="ref-list">
+                    <li><strong>Калатея</strong> <span class="latin">Calathea</span> — полосатые листья</li>
+                    <li><strong>Спатифиллум</strong> <span class="latin">Spathiphyllum</span> — белые цветы</li>
+                    <li><strong>Орхидея</strong> <span class="latin">Phalaenopsis</span> — воздушные корни</li>
+                    <li><strong>Гузмания</strong> <span class="latin">Guzmania</span> — красная розетка</li>
+                    <li><strong>Алоказия</strong> <span class="latin">Alocasia</span> — стрелки-листья</li>
+                    <li><strong>Антуриум</strong> <span class="latin">Anthurium</span> — глянцевые красные</li>
+                    <li><strong>Папоротник</strong> <span class="latin">Nephrolepis</span> — перистые листья</li>
+                </ul>
+            </div>
+            <div class="ref-group">
+                <div class="ref-header ref-b">B — Ароидные (PPM 120)</div>
+                <ul class="ref-list">
+                    <li><strong>Монстера</strong> <span class="latin">Monstera</span> — дырчатые листья</li>
+                    <li><strong>Филодендрон</strong> <span class="latin">Philodendron</span> — сердцевидные</li>
+                    <li><strong>Эпипремнум</strong> <span class="latin">Epipremnum</span> — лиана, пятнистые</li>
+                    <li><strong>Аглаонема</strong> <span class="latin">Aglaonema</span> — пёстрые листья</li>
+                    <li><strong>Бегония</strong> <span class="latin">Begonia</span> — в горошек</li>
+                    <li><strong>Хамедорея</strong> <span class="latin">Chamaedorea</span> — пальма</li>
+                    <li><strong>Хлорофитум</strong> <span class="latin">Chlorophytum</span> — паучок</li>
+                </ul>
+            </div>
+            <div class="ref-group">
+                <div class="ref-header ref-c">C — Неприхотливые (PPM 150)</div>
+                <ul class="ref-list">
+                    <li><strong>Драцена</strong> <span class="latin">Dracaena</span> — пальма с полосками</li>
+                    <li><strong>Кротон</strong> <span class="latin">Codiaeum</span> — яркие разноцветные</li>
+                    <li><strong>Сансевиерия</strong> <span class="latin">Sansevieria</span> — тёщин язык</li>
+                </ul>
+            </div>
+            <div class="ref-group">
+                <div class="ref-header ref-special">Хищные — ТОЛЬКО чистый RO</div>
+                <ul class="ref-list">
+                    <li><strong>Дионея</strong> <span class="latin">Dionaea</span> — мухоловка (PPM &lt; 10, БЕЗ добавок!)</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>3. Добавки</h2>
         <div class="additive-box">
             <span class="additive-name">DYNOMYCO Spark (микориза)</span>
             <span class="additive-dose">1 ч.л. (~3 г) / 4 л</span>
@@ -251,7 +332,7 @@
             <span class="additive-dose">до целевого PPM</span>
         </div>
 
-        <h2>3. Порядок приготовления</h2>
+        <h2>4. Порядок приготовления</h2>
         <div class="procedure">
             <div class="procedure-title">Стандартный полив (удобрение)</div>
             <ol>
@@ -274,7 +355,7 @@
             </ol>
         </div>
 
-        <h2>4. Журнал поливов</h2>
+        <h2>5. Журнал поливов</h2>
         <div class="log-section">
             <div class="stats-row">
                 <div class="stat-item">
