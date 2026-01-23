@@ -228,6 +228,47 @@
             font-size: 0.8rem;
         }
 
+        /* Calculator */
+        .calculator {
+            background: #1a1a1a;
+            color: white;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .calc-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .calc-row label {
+            width: 70px;
+            font-size: 0.85rem;
+        }
+        .calc-row select,
+        .calc-row input {
+            padding: 8px 12px;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            border: none;
+            background: white;
+            width: 100px;
+        }
+        .calc-result {
+            background: #333;
+            padding: 12px;
+            margin-top: 10px;
+        }
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.9rem;
+        }
+        .result-line strong {
+            color: #4ade80;
+        }
+
         /* Footer */
         .doc-footer {
             margin-top: 30px;
@@ -282,6 +323,27 @@
             </tr>
         </table>
         <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* Промывка — без Universal</p>
+
+        <div class="calculator">
+            <div class="calc-row">
+                <label>Группа:</label>
+                <select id="calcGroup">
+                    <option value="A">A</option>
+                    <option value="A+">A+</option>
+                    <option value="B" selected>B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="calc-row">
+                <label>Литры:</label>
+                <input type="number" id="calcLiters" value="2" min="0.5" max="20" step="0.5">
+            </div>
+            <div class="calc-result" id="calcResult">
+                <div class="result-line"><span>Universal:</span> <strong id="resultUniversal">12 мл</strong></div>
+                <div class="result-line"><span>CalMag →</span> <strong id="resultPPM">PPM 120</strong></div>
+                <div class="result-line"><span>pH:</span> <strong id="resultPH">6.0–6.5</strong></div>
+            </div>
+        </div>
 
         <h2>2. Справочник растений по группам</h2>
         <div class="plants-reference">
@@ -382,5 +444,30 @@
             Plants Care Protocol — github.com/YuraKatz/Plants
         </div>
     </div>
+
+    <script>
+        const groups = {
+            'A':  { ppm: 80,  universal: 1.5, ph: '5.8–6.3' },
+            'A+': { ppm: 80,  universal: 6,   ph: '5.8–6.3' },
+            'B':  { ppm: 120, universal: 6,   ph: '6.0–6.5' },
+            'C':  { ppm: 150, universal: 6,   ph: '6.2–6.7' }
+        };
+
+        function calculate() {
+            const group = document.getElementById('calcGroup').value;
+            const liters = parseFloat(document.getElementById('calcLiters').value) || 0;
+            const g = groups[group];
+
+            const universal = (g.universal * liters).toFixed(1).replace('.0', '');
+
+            document.getElementById('resultUniversal').textContent = universal + ' мл';
+            document.getElementById('resultPPM').textContent = 'PPM ' + g.ppm;
+            document.getElementById('resultPH').textContent = g.ph;
+        }
+
+        document.getElementById('calcGroup').addEventListener('change', calculate);
+        document.getElementById('calcLiters').addEventListener('input', calculate);
+        calculate();
+    </script>
 </body>
 </html>
