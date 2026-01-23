@@ -3,233 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Дневник полива - Plants Care</title>
+    <title>Протокол полива - Plants Care</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            color: #1a1a1a;
         }
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 1px solid #ccc;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .nav-back {
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-decoration: none;
-            color: #667eea;
-            font-weight: 600;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        h1 { color: #2d3748; font-size: 1.8rem; margin-bottom: 5px; }
-        .subtitle { color: #718096; font-size: 0.9rem; }
-        h2 { color: #2d3748; font-size: 1.2rem; margin: 25px 0 15px; }
-
-        /* Cheatsheet */
-        .cheatsheet {
-            background: #f0fff4;
-            border: 2px solid #48bb78;
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 25px;
-        }
-        .cheatsheet h3 {
-            color: #22543d;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-        .cheatsheet table {
-            width: 100%;
-            border-collapse: collapse;
+            color: #666;
             font-size: 0.9rem;
         }
-        .cheatsheet th {
-            color: #718096;
-            font-size: 0.75rem;
-            padding: 6px;
-            text-align: center;
+        .nav-back:hover { text-decoration: underline; }
+
+        header {
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
-        .cheatsheet td {
-            padding: 8px;
-            text-align: center;
-            font-weight: 600;
-            color: #2d3748;
+        h1 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        .g {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            color: white;
-            font-weight: 700;
+        .doc-info {
             font-size: 0.8rem;
-            line-height: 24px;
-        }
-        .g-a { background: #4299e1; }
-        .g-b { background: #48bb78; }
-        .g-c { background: #a0aec0; }
-        .order {
-            margin-top: 10px;
-            padding: 10px;
-            background: #c6f6d5;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #22543d;
-        }
-        .dyno-note {
-            margin-top: 8px;
-            padding: 10px;
-            background: #e9d8fd;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #553c9a;
+            color: #666;
+            margin-top: 5px;
         }
 
-        /* Log Table */
+        h2 {
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 25px 0 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        /* Protocol Table */
+        .protocol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .protocol-table th,
+        .protocol-table td {
+            border: 1px solid #1a1a1a;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        .protocol-table th {
+            background: #f0f0f0;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        .protocol-table td {
+            font-family: 'Courier New', monospace;
+        }
+        .protocol-table .group-cell {
+            font-weight: bold;
+            text-align: center;
+            width: 60px;
+        }
+        .protocol-table .value {
+            font-weight: bold;
+        }
+
+        /* Procedure */
+        .procedure {
+            background: #fafafa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .procedure-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        .procedure ol {
+            margin-left: 20px;
+        }
+        .procedure li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .procedure .dose {
+            background: #e8e8e8;
+            padding: 2px 6px;
+            font-weight: bold;
+        }
+
+        /* Additives */
+        .additive-box {
+            border: 1px solid #1a1a1a;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .additive-name {
+            font-weight: bold;
+        }
+        .additive-dose {
+            background: #1a1a1a;
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+        }
+
+        /* Log Section */
         .log-section {
-            background: #f7fafc;
-            border-radius: 16px;
-            padding: 20px;
+            margin-top: 30px;
         }
         .log-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+        }
+        .log-table th,
+        .log-table td {
+            border: 1px solid #1a1a1a;
+            padding: 8px 10px;
+            text-align: left;
         }
         .log-table th {
-            background: #edf2f7;
-            color: #4a5568;
-            padding: 10px;
-            text-align: left;
-            font-size: 0.8rem;
+            background: #f0f0f0;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.7rem;
         }
-        .log-table td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .log-table tr:last-child td {
-            border-bottom: none;
-        }
-        .tag {
+        .log-table .tag {
             display: inline-block;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
         }
-        .tag-feed { background: #c6f6d5; color: #22543d; }
-        .tag-flush { background: #feebc8; color: #744210; }
-        .tag-dyno { background: #e9d8fd; color: #553c9a; }
+        .tag-feed { background: #d4edda; }
+        .tag-flush { background: #fff3cd; }
+        .tag-dyno { background: #e2d6f5; }
 
-        .stats {
+        /* Stats */
+        .stats-row {
             display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #ddd;
         }
-        .stat {
-            flex: 1;
+        .stat-item {
             text-align: center;
-            padding: 12px;
-            background: white;
-            border-radius: 10px;
         }
         .stat-num {
             font-size: 1.5rem;
-            font-weight: 800;
-            color: #2d3748;
+            font-weight: bold;
         }
         .stat-label {
             font-size: 0.7rem;
-            color: #718096;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        /* Footer */
+        .doc-footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ccc;
+            font-size: 0.75rem;
+            color: #666;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="nav-back">← На главную</a>
+        <a href="index.html" class="nav-back">← Главная</a>
 
         <header>
-            <h1>📝 Дневник полива</h1>
-            <p class="subtitle">История всех поливов</p>
+            <h1>Протокол полива</h1>
+            <div class="doc-info">Версия 1.0 | Последнее обновление: 23.01.2025</div>
         </header>
 
-        <!-- Cheatsheet -->
-        <div class="cheatsheet">
-            <h3>📋 Шпаргалка</h3>
-            <table>
-                <tr>
-                    <th>Группа</th>
-                    <th>PPM</th>
-                    <th>Universal</th>
-                    <th>pH</th>
-                </tr>
-                <tr>
-                    <td><span class="g g-a">A</span></td>
-                    <td>80</td>
-                    <td>1.5 мл/л</td>
-                    <td>5.8-6.3</td>
-                </tr>
-                <tr>
-                    <td><span class="g g-b">B</span></td>
-                    <td>120</td>
-                    <td>6 мл/л</td>
-                    <td>6.0-6.5</td>
-                </tr>
-                <tr>
-                    <td><span class="g g-c">C</span></td>
-                    <td>150</td>
-                    <td>6 мл/л</td>
-                    <td>6.2-6.7</td>
-                </tr>
-            </table>
-            <div class="order">RO → CalMag (PPM) → DYNOMYCO → Universal → pH</div>
-            <div class="dyno-note">🍄 <strong>DYNOMYCO:</strong> 1 ч.л. (~3 г) на 4 л воды</div>
+        <h2>1. Параметры раствора по группам</h2>
+        <table class="protocol-table">
+            <tr>
+                <th>Группа</th>
+                <th>Тип растений</th>
+                <th>PPM (CalMag)</th>
+                <th>Universal</th>
+                <th>pH</th>
+            </tr>
+            <tr>
+                <td class="group-cell">A</td>
+                <td>Чувствительные</td>
+                <td class="value">80</td>
+                <td class="value">1.5 мл/л</td>
+                <td class="value">5.8–6.3</td>
+            </tr>
+            <tr>
+                <td class="group-cell">B</td>
+                <td>Ароидные</td>
+                <td class="value">120</td>
+                <td class="value">6 мл/л</td>
+                <td class="value">6.0–6.5</td>
+            </tr>
+            <tr>
+                <td class="group-cell">C</td>
+                <td>Неприхотливые</td>
+                <td class="value">150</td>
+                <td class="value">6 мл/л</td>
+                <td class="value">6.2–6.7</td>
+            </tr>
+        </table>
+
+        <h2>2. Добавки</h2>
+        <div class="additive-box">
+            <span class="additive-name">DYNOMYCO Spark (микориза)</span>
+            <span class="additive-dose">1 ч.л. (~3 г) / 4 л</span>
+        </div>
+        <div class="additive-box">
+            <span class="additive-name">ATAMI CalMag</span>
+            <span class="additive-dose">до целевого PPM</span>
         </div>
 
-        <!-- Log -->
+        <h2>3. Порядок приготовления</h2>
+        <div class="procedure">
+            <div class="procedure-title">Стандартный полив (удобрение)</div>
+            <ol>
+                <li>Набрать <span class="dose">RO воду</span> (PPM ≈ 0)</li>
+                <li>Добавить <span class="dose">CalMag</span> до целевого PPM группы</li>
+                <li>Добавить <span class="dose">DYNOMYCO</span> — 1 ч.л. на 4 л, размешать</li>
+                <li>Добавить <span class="dose">Universal</span> — доза по группе</li>
+                <li>Подождать 2–3 минуты</li>
+                <li>Измерить <span class="dose">pH</span>, скорректировать при необходимости</li>
+                <li>Полить растения</li>
+            </ol>
+        </div>
+        <div class="procedure">
+            <div class="procedure-title">Промывка (каждый 4-й полив)</div>
+            <ol>
+                <li>Набрать <span class="dose">RO воду</span></li>
+                <li>Добавить <span class="dose">CalMag</span> до целевого PPM группы</li>
+                <li>Измерить <span class="dose">pH</span>, скорректировать</li>
+                <li>Полить растения — <strong>БЕЗ удобрений</strong></li>
+            </ol>
+        </div>
+
+        <h2>4. Журнал поливов</h2>
         <div class="log-section">
-            <div class="stats">
-                <div class="stat">
+            <div class="stats-row">
+                <div class="stat-item">
                     <div class="stat-num">1</div>
                     <div class="stat-label">Всего</div>
                 </div>
-                <div class="stat">
+                <div class="stat-item">
                     <div class="stat-num">1</div>
                     <div class="stat-label">Удобрений</div>
                 </div>
-                <div class="stat">
+                <div class="stat-item">
                     <div class="stat-num">0</div>
                     <div class="stat-label">Промывок</div>
                 </div>
+                <div class="stat-item">
+                    <div class="stat-num">1</div>
+                    <div class="stat-label">DYNOMYCO</div>
+                </div>
             </div>
 
-            <h2>Январь 2025</h2>
             <table class="log-table">
                 <tr>
+                    <th>№</th>
                     <th>Дата</th>
                     <th>Тип</th>
-                    <th>Заметки</th>
+                    <th>Примечания</th>
                 </tr>
                 <tr>
-                    <td>23.01</td>
-                    <td><span class="tag tag-feed">Удобр.</span> <span class="tag tag-dyno">🍄</span></td>
-                    <td>Первый полив</td>
+                    <td>1</td>
+                    <td>23.01.2025</td>
+                    <td><span class="tag tag-feed">Удобр.</span> <span class="tag tag-dyno">DYNO</span></td>
+                    <td>Первый полив с удобрениями</td>
                 </tr>
             </table>
+        </div>
+
+        <div class="doc-footer">
+            Plants Care Protocol — github.com/YuraKatz/Plants
         </div>
     </div>
 </body>
