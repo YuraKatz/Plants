@@ -1,0 +1,27 @@
+# Plants Care Database
+
+> Structured Russian-language knowledge base for indoor houseplant care.
+> Contains care data for 20 plant species, 11 soil mix recipes, fertilizer protocols,
+> RO water preparation guides, lighting theory, and a troubleshooting diagnostic system.
+> All data files are in YAML (machine-readable) and Markdown (human+AI readable).
+> Language: Russian (data content), English (keys and structure).
+
+## Core Data (YAML)
+
+- [Plants catalog](plants.yaml): 20 plant species — lighting (lux), watering, humidity, soil mix reference, feeding group, wick watering compatibility, risks
+- [Soil mixes](soil-mixes.yaml): 11 soil recipes with variants, each with component percentages, suitable plants, and watering type (manual/wick)
+- [Fertilizers & additives](fertilizers.yaml): Complete feeding system — liquid fertilizers (universal, flowering, orchid), granulated slow-release (Multicote), pH regulators (Green Farmer pH Down, BioBizz Bio·Up organic pH Up), CalMag (ATAMI), mycorrhizal inoculant (DYNOMYCO Spark with beneficial bacteria). Includes feeding matrix per plant group (aroids/sensitive/orchids/carnivorous/general) and season (growth/slow), plus water preparation hints
+- [Water requirements](water-requirements.yaml): RO water + CalMag protocol — PPM/pH targets per plant (20 species), water groups (A: very soft 80ppm, B: medium 120ppm, C: enriched 150ppm), CalMag dosing strategy, practical bottle setup, measurement tools (TDS/pH meters), troubleshooting for salt buildup and pH problems
+- [Troubleshooting](troubleshooting.yaml): Diagnostic system — symptoms, possible causes with probability, indicators, and step-by-step solutions
+
+## Reference Guides (Markdown)
+
+- [Plants quick reference](plants.md): Summary tables — watering, soil mix numbers, humidity, spraying, risks per plant
+- [Lighting guide](lighting.md): Theory of indoor lighting in Lux — why Lux, how to measure, distance rules, seasonal adjustments
+- [Lamps guide](lamps.md): Practical guide to grow lights — when needed, fixture types, placement, timers, installation
+
+## Optional
+
+- [Soil components](components.yaml): Detailed descriptions of individual soil components — substrates, drainage, additives, properties
+- [Quick start](QUICK-START.md): How to use the database — audit script, diagnostics workflow, watering protocol
+- [Full documentation](README.md): Complete project documentation with file descriptions, data structure examples, and usage guides
