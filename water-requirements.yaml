@@ -188,6 +188,14 @@ water_requirements:
       sensitivity: medium
       notes: Предпочитает мягкую воду. Вода не должна попадать на листья!
 
+    actinidia_kiwi:
+      plant_name: Киви (Actinidia)
+      ppm_range: 90-140
+      ph_range: 5.5-6.5
+      group: B
+      sensitivity: medium
+      notes: Предпочитает слабокислую воду, чувствительна к хлору
+
   water_groups:
     group_a:
       name: Очень мягкая вода
@@ -222,6 +230,7 @@ water_requirements:
         - Хамедорея
         - Хлорофитум
         - Сенполия (Узамбарская фиалка)
+        - Киви (Actinidia)
       storage: Вторая стандартная вода
       sensitivity_level: Средняя
 

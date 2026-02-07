@@ -726,3 +726,38 @@ plants:
       - Не опрыскивать! Вода на листьях вызывает пятна
       - Идеальна для фитильного полива
       - Цветёт круглый год при хорошем освещении
+
+  actinidia_kiwi:
+    name: Киви (на реанимации)
+    latin_name: Actinidia deliciosa
+    type: Плодовые лианы
+    lighting:
+      lux_min: 5000
+      lux_optimal: 15000
+      lux_max: 40000
+      direct_sun: true
+      photoperiod_hours: 12-14
+    watering:
+      method: Ручной
+      frequency: Регулярный
+      notes: Держать грунт равномерно влажным, без пересыхания и застоя
+    humidity:
+      level: Высокая (60-70%)
+      spraying: Регулярное опрыскивание
+      preferred_method: Увлажнитель или частое опрыскивание
+    wick_watering:
+      recommended: false
+      notes: Не подходит — слишком крупное растение
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+    feeding_group: general_houseplants
+    risks:
+      - Чувствительна к хлору в воде
+      - Не любит щелочные почвы
+      - Нуждается в очень ярком освещении
+    care_notes:
+      - Нужна опора — это лиана
+      - Предпочитает кислую почву (pH 5.5-6.5)
+      - Для плодоношения нужны мужское и женское растения
+      - НА РЕАНИМАЦИИ — щадящий режим ухода
