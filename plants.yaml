@@ -628,3 +628,101 @@ plants:
     care_notes:
       - Крайне неприхотлива
       - Лучше недолить, чем перелить
+
+  zamioculcas:
+    name: Замиокулькас (Долларовое дерево)
+    latin_name: Zamioculcas zamiifolia
+    type: Ароидные (суккулентные)
+    lighting:
+      lux_min: 1000
+      lux_optimal: 5000
+      lux_max: 15000
+      direct_sun: допустимо
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Редкий
+      notes: Полная просушка грунта между поливами. Зимой — минимальный полив
+    humidity:
+      level: Низкая-средняя
+      spraying: Не требуется
+      preferred_method: Обычные комнатные условия. Можно протирать листья от пыли
+    wick_watering:
+      recommended: false
+      notes: Категорически не рекомендуется — риск гнили клубня
+    soil:
+      mix_number: 11
+      mix_name: для суккулентов/сансевиерии
+    feeding_group: general_houseplants
+    risks:
+      - Гниль клубня при переливе
+      - Застой воды = гибель
+    care_notes:
+      - Крайне неприхотлив
+      - Лучше недолить, чем перелить
+      - Толстые клубни запасают воду
+
+  schlumbergera:
+    name: Шлюмбергера (Декабрист)
+    latin_name: Schlumbergera
+    type: Эпифитные кактусы
+    lighting:
+      lux_min: 2000
+      lux_optimal: 5000
+      lux_max: 10000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Умеренный
+      notes: Просушка верхнего слоя между поливами. Перед цветением — период сухости
+    humidity:
+      level: Средняя
+      spraying: По необходимости
+      preferred_method: Обычные комнатные условия
+    wick_watering:
+      recommended: false
+      notes: Не рекомендуется — риск загнивания корней
+    soil:
+      mix_number: 8
+      mix_name: для бегоний
+    feeding_group: general_houseplants
+    risks:
+      - Опадание бутонов при перестановке или сквозняке
+      - Гниль при переливе
+    care_notes:
+      - Для цветения нужен короткий световой день (8-10 часов) осенью
+      - Не переставлять во время бутонизации
+
+  saintpaulia:
+    name: Сенполия (Узамбарская фиалка)
+    latin_name: Saintpaulia ionantha
+    type: Геснериевые
+    lighting:
+      lux_min: 2000
+      lux_optimal: 5000
+      lux_max: 10000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной/Фитиль
+      frequency: Регулярный
+      notes: Поливать только в поддон или через фитиль. Вода не должна попадать на листья!
+    humidity:
+      level: Средняя-высокая
+      spraying: НЕ ОПРЫСКИВАТЬ листья!
+      preferred_method: Только повышение влажности воздуха (поддоны, увлажнитель)
+    wick_watering:
+      recommended: true
+      notes: Идеальный кандидат для фитиля
+    soil:
+      mix_number: 8
+      mix_name: для бегоний
+    feeding_group: general_houseplants
+    risks:
+      - Гниль при попадании воды на листья
+      - Чувствительна к переливу
+    care_notes:
+      - Не опрыскивать! Вода на листьях вызывает пятна
+      - Идеальна для фитильного полива
+      - Цветёт круглый год при хорошем освещении

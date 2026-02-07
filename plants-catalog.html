@@ -1365,6 +1365,132 @@
         "Крайне неприхотлива",
         "Лучше недолить, чем перелить"
       ]
+    },
+    "zamioculcas": {
+      "name": "Замиокулькас (Долларовое дерево)",
+      "latin_name": "Zamioculcas zamiifolia",
+      "type": "Ароидные (суккулентные)",
+      "difficulty": "easy",
+      "moss_pole": "none",
+      "lighting": {
+        "lux_min": 1000,
+        "lux_optimal": 5000,
+        "lux_max": 15000,
+        "direct_sun": "допустимо",
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной",
+        "frequency": "Редкий",
+        "notes": "Полная просушка грунта между поливами. Зимой — минимальный полив"
+      },
+      "humidity": {
+        "level": "Низкая-средняя",
+        "spraying": "Не требуется",
+        "preferred_method": "Обычные комнатные условия. Протирать листья от пыли"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Категорически не рекомендуется — риск гнили клубня"
+      },
+      "soil": {
+        "mix_number": 11,
+        "mix_name": "для суккулентов/сансевиерии"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Гниль клубня при переливе",
+        "Застой воды = гибель"
+      ],
+      "care_notes": [
+        "Крайне неприхотлив",
+        "Лучше недолить, чем перелить",
+        "Толстые клубни запасают воду"
+      ]
+    },
+    "schlumbergera": {
+      "name": "Шлюмбергера (Декабрист)",
+      "latin_name": "Schlumbergera",
+      "type": "Эпифитные кактусы",
+      "difficulty": "medium",
+      "moss_pole": "none",
+      "lighting": {
+        "lux_min": 2000,
+        "lux_optimal": 5000,
+        "lux_max": 10000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной",
+        "frequency": "Умеренный",
+        "notes": "Просушка верхнего слоя между поливами"
+      },
+      "humidity": {
+        "level": "Средняя",
+        "spraying": "По необходимости",
+        "preferred_method": "Обычные комнатные условия"
+      },
+      "wick_watering": {
+        "recommended": false,
+        "notes": "Не рекомендуется — риск загнивания корней"
+      },
+      "soil": {
+        "mix_number": 8,
+        "mix_name": "для бегоний"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Опадание бутонов при перестановке или сквозняке",
+        "Гниль при переливе"
+      ],
+      "care_notes": [
+        "Для цветения нужен короткий световой день осенью",
+        "Не переставлять во время бутонизации"
+      ]
+    },
+    "saintpaulia": {
+      "name": "Сенполия (Узамбарская фиалка)",
+      "latin_name": "Saintpaulia ionantha",
+      "type": "Геснериевые",
+      "difficulty": "medium",
+      "moss_pole": "none",
+      "lighting": {
+        "lux_min": 2000,
+        "lux_optimal": 5000,
+        "lux_max": 10000,
+        "direct_sun": false,
+        "photoperiod_hours": "10-12"
+      },
+      "watering": {
+        "method": "Ручной/Фитиль",
+        "frequency": "Регулярный",
+        "notes": "Только в поддон или через фитиль. Вода не должна попадать на листья!"
+      },
+      "humidity": {
+        "level": "Средняя/Высокая",
+        "spraying": "НЕ ОПРЫСКИВАТЬ листья!",
+        "preferred_method": "Только увлажнитель или поддоны"
+      },
+      "wick_watering": {
+        "recommended": true,
+        "notes": "Идеальный кандидат для фитиля",
+        "conditions": "Лёгкий рыхлый субстрат"
+      },
+      "soil": {
+        "mix_number": 8,
+        "mix_name": "для бегоний"
+      },
+      "feeding_group": "general_houseplants",
+      "risks": [
+        "Гниль при попадании воды на листья",
+        "Чувствительна к переливу"
+      ],
+      "care_notes": [
+        "Не опрыскивать! Вода на листьях вызывает пятна",
+        "Идеальна для фитильного полива",
+        "Цветёт круглый год при хорошем освещении"
+      ]
     }
   }
 };
@@ -1394,7 +1520,11 @@
             "dracaena_fragrans": "C",
             "chlorophytum_comosum": "C",
             "croton": "C",
-            "chamaedorea": "C"
+            "chamaedorea": "C",
+            // Новые растения
+            "zamioculcas": "C",
+            "schlumbergera": "C",
+            "saintpaulia": "B"
         };
 
         // Интересные факты и типичные проблемы для каждого растения
@@ -1650,6 +1780,42 @@
                     "Погибает через 1-2 года → не было зимовки!",
                     "Слабые ловушки → нужно больше солнца"
                 ]
+            },
+            "zamioculcas": {
+                facts: [
+                    "'Долларовое дерево' — считается символом богатства",
+                    "Может месяцами обходиться без полива",
+                    "Растёт очень медленно, но живёт десятилетиями"
+                ],
+                problems: [
+                    "Жёлтые листья → перелив! Просушите грунт",
+                    "Не растёт → это нормально, ZZ очень медленный",
+                    "Мягкий стебель → гниль от переувлажнения"
+                ]
+            },
+            "schlumbergera": {
+                facts: [
+                    "Цветёт зимой, за что получил имя 'Декабрист'",
+                    "Эпифит из бразильских тропических лесов",
+                    "Может жить более 30 лет и передаваться по наследству"
+                ],
+                problems: [
+                    "Не цветёт → нужен период покоя с коротким днём",
+                    "Опадают бутоны → не переставляйте!",
+                    "Вялые сегменты → перелив или недолив"
+                ]
+            },
+            "saintpaulia": {
+                facts: [
+                    "Названа в честь барона Вальтера фон Сен-Поля",
+                    "Может цвести круглый год без перерыва",
+                    "Идеальное растение для фитильного полива"
+                ],
+                problems: [
+                    "Пятна на листьях → попала вода!",
+                    "Не цветёт → мало света или нужна подкормка",
+                    "Гниёт середина → вода в точке роста"
+                ]
             }
         };
 
@@ -1674,7 +1840,10 @@
             "philodendron": "IMAGES/филодендрон imperial.jpg",
             "dionaea": "IMAGES/Дионея.jpg",
             "nephrolepis": "IMAGES/ПапоротникНефролепис.jpeg",
-            "sansevieria": "IMAGES/Сансевиерия.jpg"
+            "sansevieria": "IMAGES/Сансевиерия.jpg",
+            "zamioculcas": "IMAGES/Замиокулькас.jpg",
+            "schlumbergera": "IMAGES/Шлюмбергера.jpg",
+            "saintpaulia": "IMAGES/Сенполия.jpg"
         };
 
         const plantsGrid = document.getElementById('plantsGrid');
@@ -1761,7 +1930,7 @@
             const diff = difficultyMap[plant.difficulty] || difficultyMap['medium'];
 
             // Flowering badge - check if plant can use flowering fertilizer
-            const floweringPlants = ['spathiphyllum', 'anthurium_andraeanum', 'phalaenopsis', 'begonia_maculata', 'guzmania'];
+            const floweringPlants = ['spathiphyllum', 'anthurium_andraeanum', 'phalaenopsis', 'begonia_maculata', 'guzmania', 'schlumbergera', 'saintpaulia'];
             const isFlowering = floweringPlants.includes(id);
 
             // Moss pole badge

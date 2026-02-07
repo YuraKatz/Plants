@@ -164,6 +164,30 @@ water_requirements:
       notes: Крайне неприхотлива, переносит любую воду. Главное — не переливать
       special_note: Можно поливать любой водой из имеющихся (A, B или C) — качество воды не критично
 
+    zamioculcas:
+      plant_name: Замиокулькас (ZZ plant)
+      ppm_range: 120-200
+      ph_range: 6.0-7.0
+      group: C
+      sensitivity: very_low
+      notes: Крайне неприхотлив к качеству воды. Главное — не переливать
+
+    schlumbergera:
+      plant_name: Шлюмбергера (Декабрист)
+      ppm_range: 120-170
+      ph_range: 6.0-6.5
+      group: C
+      sensitivity: low
+      notes: Не требователен к качеству воды
+
+    saintpaulia:
+      plant_name: Сенполия (Узамбарская фиалка)
+      ppm_range: 90-140
+      ph_range: 6.0-6.5
+      group: B
+      sensitivity: medium
+      notes: Предпочитает мягкую воду. Вода не должна попадать на листья!
+
   water_groups:
     group_a:
       name: Очень мягкая вода
@@ -197,6 +221,7 @@ water_requirements:
         - Бегония макулата
         - Хамедорея
         - Хлорофитум
+        - Сенполия (Узамбарская фиалка)
       storage: Вторая стандартная вода
       sensitivity_level: Средняя
 
@@ -210,6 +235,8 @@ water_requirements:
         - Драцена фрагранс
         - Кротон
         - Сансевиерия
+        - Замиокулькас (ZZ plant)
+        - Шлюмбергера (Декабрист)
       storage: Третья бутылка или Group B + чуть CalMag
       sensitivity_level: Низкая
       alternative: Можно объединить с Group B + добавка CalMag
