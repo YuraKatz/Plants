@@ -96,7 +96,7 @@ plants:
       direct_sun: осторожно
       photoperiod_hours: 10-12
     watering:
-      method: Ручной/Фитиль
+      method: Ручной
       frequency: Регулярный
       notes: Не допускать пересыхания
     humidity:
@@ -104,13 +104,11 @@ plants:
       spraying: По необходимости, ориентируясь на сухость воздуха
       preferred_method: Предпочтительнее увлажнитель/поддоны. Регулярно протирать листья
     wick_watering:
-      recommended: true
-      notes: Допустим при лёгкой смеси
-      conditions: Требует лёгкой смеси
+      recommended: false
+      notes: Чувствителен к переливу — высокий риск корневой гнили
     soil:
       mix_number: 5
-      mix_name: для драцен и кротона (ручной полив)
-      alternative_mix: 5-Ф (фитильный вариант)
+      mix_name: для драцен и кротона
     feeding_group: general_houseplants
     risks:
       - Не любит пересыхание
@@ -244,26 +242,24 @@ plants:
       direct_sun: false
       photoperiod_hours: 10-12
     watering:
-      method: Ручной/Фитиль*
+      method: Фитиль
       frequency: Регулярный
-      notes: Держать грунт слегка влажным без полного пересыхания
+      notes: Любит стабильную влажность грунта
     humidity:
       level: Высокая (60-70%)
       spraying: По ситуации
       preferred_method: Лучше увлажнитель/поддон с водой
     wick_watering:
-      recommended: false
-      notes: Допустим при очень воздухопроницаемом грунте (риск застоя воды!)
-      conditions: Для начала лучше использовать ручной полив
+      recommended: true
+      notes: Рекомендован — калатеи любят стабильную влажность
     soil:
-      mix_number: 3
-      mix_name: марантовые (ручной)
-      alternative_mix: 4 (марантовые, фитильный)
+      mix_number: 4
+      mix_name: марантовые (фитильный)
     feeding_group: sensitive
     risks:
-      - Гниль при застое воды
+      - Сухие кончики при низкой влажности
     care_notes:
-      - Фитиль только при очень лёгкой смеси и внимательном контроле
+      - Фитильный грунт обеспечивает стабильную влажность
 
   calathea_ornata:
     name: Калатея орната
@@ -276,26 +272,24 @@ plants:
       direct_sun: false
       photoperiod_hours: 10-12
     watering:
-      method: Ручной/Фитиль*
+      method: Фитиль
       frequency: Регулярный
-      notes: Держать грунт слегка влажным без полного пересыхания
+      notes: Любит стабильную влажность грунта
     humidity:
       level: Высокая (60-70%)
       spraying: По ситуации
       preferred_method: Лучше увлажнитель/поддон с водой
     wick_watering:
-      recommended: false
-      notes: Допустим при очень воздухопроницаемом грунте (риск застоя воды!)
-      conditions: Для начала лучше использовать ручной полив
+      recommended: true
+      notes: Рекомендован — калатеи любят стабильную влажность
     soil:
-      mix_number: 3
-      mix_name: марантовые (ручной)
-      alternative_mix: 4 (марантовые, фитильный)
+      mix_number: 4
+      mix_name: марантовые (фитильный)
     feeding_group: sensitive
     risks:
-      - Гниль при застое воды
+      - Сухие кончики при низкой влажности
     care_notes:
-      - Фитиль только при очень лёгкой смеси и внимательном контроле
+      - Фитильный грунт обеспечивает стабильную влажность
 
   monstera_deliciosa:
     name: Монстера молодая
@@ -643,7 +637,7 @@ plants:
       direct_sun: false
       photoperiod_hours: 10-12
     watering:
-      method: Ручной
+      method: Ручной/Фитиль
       frequency: Регулярный
       notes: Держать грунт равномерно влажным, без пересыхания
     humidity:
@@ -651,8 +645,8 @@ plants:
       spraying: Частое опрыскивание
       preferred_method: Увлажнитель или частое опрыскивание. Любит душ
     wick_watering:
-      recommended: false
-      notes: Риск переувлажнения корней
+      recommended: true
+      notes: Рекомендован — папоротники любят стабильную влажность
     soil:
       mix_number: 10
       mix_name: для папоротников
@@ -751,13 +745,14 @@ plants:
       recommended: false
       notes: Не рекомендуется — риск загнивания корней
     soil:
-      mix_number: 8
-      mix_name: для бегоний
+      mix_number: 7
+      mix_name: для бромелиевых
     feeding_group: general_houseplants
     risks:
       - Опадание бутонов при перестановке или сквозняке
       - Гниль при переливе
     care_notes:
+      - Эпифитный кактус — нужен рыхлый субстрат как для бромелиевых
       - Для цветения нужен короткий световой день (8-10 часов) осенью
       - Не переставлять во время бутонизации
 
