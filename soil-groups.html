@@ -160,6 +160,52 @@
             font-size: 1rem;
         }
 
+        .component-parts {
+            font-weight: 600;
+            color: #805ad5;
+            font-size: 0.9rem;
+            margin-left: 8px;
+            display: none;
+        }
+
+        .show-parts .component-parts {
+            display: inline;
+        }
+
+        .parts-ratio {
+            display: none;
+            background: #f0e6ff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #553c9a;
+            font-size: 0.95rem;
+        }
+
+        .show-parts .parts-ratio {
+            display: block;
+        }
+
+        .btn-parts {
+            padding: 12px 30px;
+            background: #805ad5;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-parts:hover {
+            background: #6b46c1;
+        }
+
+        .btn-parts.active {
+            background: #553c9a;
+        }
+
         .plants-list {
             background: white;
             padding: 20px;
@@ -284,6 +330,7 @@
                 placeholder="Поиск по названию смеси или растению..."
                 autocomplete="off"
             >
+            <button class="btn-parts" id="btnParts" onclick="toggleParts()">📐 Части</button>
             <button class="btn-print" onclick="window.print()">🖨️ Print</button>
         </div>
 
@@ -357,6 +404,13 @@
                             <div class="plant-mini-info">
                                 <div class="plant-mini-name">Филодендрон</div>
                                 <div class="plant-mini-latin">Philodendron</div>
+                            </div>
+                        </div>
+                        <div class="plant-card-mini">
+                            <img src="IMAGES/Филодендрон Селлоу.jpg" class="plant-mini-image" alt="Филодендрон Селлоу">
+                            <div class="plant-mini-info">
+                                <div class="plant-mini-name">Ф. Селлоу</div>
+                                <div class="plant-mini-latin">Ph. bipinnatifidum</div>
                             </div>
                         </div>
                         <div class="plant-card-mini">
@@ -1038,6 +1092,74 @@
                 searchInput.focus();
             }
         });
+
+        // Parts calculation
+        function gcd(a, b) {
+            while (b) { [a, b] = [b, a % b]; }
+            return a;
+        }
+
+        function gcdArray(arr) {
+            return arr.reduce((a, b) => gcd(a, b));
+        }
+
+        function calcParts() {
+            document.querySelectorAll('.composition').forEach(comp => {
+                const percentEls = comp.querySelectorAll('.component-percentage');
+                const percents = Array.from(percentEls).map(el => parseInt(el.textContent));
+
+                if (percents.some(isNaN) || percents.length === 0) return;
+
+                const g = gcdArray(percents);
+                const parts = percents.map(p => p / g);
+
+                percentEls.forEach((el, i) => {
+                    if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('component-parts')) {
+                        const span = document.createElement('span');
+                        span.className = 'component-parts';
+                        span.textContent = `(${parts[i]} ч.)`;
+                        el.after(span);
+                    }
+                });
+
+                // Add ratio summary before the first component
+                const h4 = comp.querySelector('h4');
+                if (h4 && !h4.nextElementSibling?.classList?.contains('parts-ratio')) {
+                    const names = Array.from(comp.querySelectorAll('.component-name')).map(el => {
+                        const name = el.textContent;
+                        // Shorten names for the ratio line
+                        if (name.includes('Универсальный грунт')) return 'Грунт';
+                        if (name.includes('Кокос-перлит')) return 'Кокос-перлит';
+                        if (name.includes('Кокосовый субстрат')) return 'Кокос';
+                        if (name.includes('орхидей') || name.includes('Кора')) return 'Кора';
+                        if (name.includes('уголь')) return 'Уголь';
+                        if (name.includes('Сфагнум')) return 'Мох';
+                        if (name.includes('Верховой торф')) return 'Торф';
+                        if (name.includes('Листовой')) return 'Перегной';
+                        if (name.includes('Песок')) return 'Песок';
+                        return name;
+                    });
+                    const ratioDiv = document.createElement('div');
+                    ratioDiv.className = 'parts-ratio';
+                    ratioDiv.textContent = '📐 ' + names.map((n, i) => `${n}: ${parts[i]}`).join(' : ');
+                    h4.after(ratioDiv);
+                }
+            });
+        }
+
+        function toggleParts() {
+            const container = document.querySelector('.container');
+            const btn = document.getElementById('btnParts');
+            container.classList.toggle('show-parts');
+            btn.classList.toggle('active');
+
+            if (container.classList.contains('show-parts')) {
+                calcParts();
+                btn.textContent = '📐 Проценты';
+            } else {
+                btn.textContent = '📐 Части';
+            }
+        }
     </script>
 </body>
 </html>

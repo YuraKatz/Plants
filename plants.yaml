@@ -172,6 +172,39 @@ plants:
     risks:
       - Устойчив
 
+  philodendron_selloum:
+    name: Филодендрон Селлоу
+    latin_name: Philodendron bipinnatifidum (Thaumatophyllum bipinnatifidum)
+    type: Ароидные (древовидные)
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 15000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Регулярный
+      notes: Просушка верхнего слоя на 2-3 см между поливами
+    humidity:
+      level: Средняя-высокая (50-70%)
+      spraying: По сезону (чаще летом)
+      preferred_method: Протирать крупные листья влажной тканью
+    wick_watering:
+      recommended: false
+      notes: Крупное растение, лучше контролировать вручную
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+    feeding_group: aroids
+    risks:
+      - Желтеющие нижние листья при переливе
+      - Нужна опора при высоком росте
+    care_notes:
+      - Спасён с работы — требует реабилитации
+      - Обрезать жёлтые листья у основания
+      - Крупные рассечённые листья собирают пыль — протирать
+
   chamaedorea:
     name: Хамедорея / пальма комнатная
     latin_name: Chamaedorea
