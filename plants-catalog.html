@@ -792,7 +792,8 @@
       },
       "soil": {
         "mix_number": 1,
-        "mix_name": "ароидная (ручной)"
+        "mix_name": "ароидная (ручной)",
+        "wick_mix_number": 2
       },
       "feeding_group": "aroids",
       "care_notes": [
@@ -829,7 +830,8 @@
       },
       "soil": {
         "mix_number": 1,
-        "mix_name": "ароидная (ручной)"
+        "mix_name": "ароидная (ручной)",
+        "wick_mix_number": 2
       },
       "feeding_group": "aroids",
       "care_notes": [
@@ -866,7 +868,8 @@
       },
       "soil": {
         "mix_number": 1,
-        "mix_name": "ароидная (ручной)"
+        "mix_name": "ароидная (ручной)",
+        "wick_mix_number": 2
       },
       "feeding_group": "aroids"
     },
@@ -933,7 +936,8 @@
       },
       "soil": {
         "mix_number": 1,
-        "mix_name": "ароидная (ручной)"
+        "mix_name": "ароидная (ручной)",
+        "wick_mix_number": 2
       },
       "feeding_group": "aroids"
     },
@@ -967,7 +971,8 @@
       },
       "soil": {
         "mix_number": 1,
-        "mix_name": "ароидная (ручной)"
+        "mix_name": "ароидная (ручной)",
+        "wick_mix_number": 2
       },
       "feeding_group": "aroids",
       "risks": [
@@ -988,7 +993,7 @@
         "photoperiod_hours": "12-14"
       },
       "watering": {
-        "method": "Фитиль",
+        "method": "Ручной/Фитиль",
         "frequency": "Регулярный",
         "notes": "Любит стабильную влажность грунта"
       },
@@ -1002,8 +1007,9 @@
         "notes": "Рекомендован — калатеи любят стабильную влажность"
       },
       "soil": {
-        "mix_number": 4,
-        "mix_name": "марантовые (фитильный)"
+        "mix_number": 3,
+        "mix_name": "марантовые (ручной)",
+        "wick_mix_number": 4
       },
       "feeding_group": "sensitive",
       "risks": [
@@ -1024,7 +1030,7 @@
         "photoperiod_hours": "12-14"
       },
       "watering": {
-        "method": "Фитиль",
+        "method": "Ручной/Фитиль",
         "frequency": "Регулярный",
         "notes": "Любит стабильную влажность грунта"
       },
@@ -1038,8 +1044,9 @@
         "notes": "Рекомендован — калатеи любят стабильную влажность"
       },
       "soil": {
-        "mix_number": 4,
-        "mix_name": "марантовые (фитильный)"
+        "mix_number": 3,
+        "mix_name": "марантовые (ручной)",
+        "wick_mix_number": 4
       },
       "feeding_group": "sensitive",
       "risks": [
@@ -2235,7 +2242,7 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">Почва</span>
-                            <span class="info-value"><a href="soil-groups.html" style="color:inherit;text-decoration:none;border-bottom:1px dashed #aaa">№${plant.soil.mix_number || '-'}</a></span>
+                            <span class="info-value"><a href="soil-groups.html" style="color:inherit;text-decoration:none;border-bottom:1px dashed #aaa">${plant.soil.wick_mix_number ? '№' + plant.soil.mix_number + ' (ручной) / №' + plant.soil.wick_mix_number + ' (фитиль)' : '№' + (plant.soil.mix_number || '-')}</a></span>
                         </div>
                     </div>
                     <div style="margin-bottom: 15px; padding: 12px; background: #f0f4f8; border-left: 4px solid #56ab2f; border-radius: 4px; font-size: 0.95rem; line-height: 1.4;">

@@ -242,7 +242,7 @@ plants:
       direct_sun: false
       photoperiod_hours: 10-12
     watering:
-      method: Фитиль
+      method: Ручной/Фитиль
       frequency: Регулярный
       notes: Любит стабильную влажность грунта
     humidity:
@@ -253,13 +253,14 @@ plants:
       recommended: true
       notes: Рекомендован — калатеи любят стабильную влажность
     soil:
-      mix_number: 4
-      mix_name: марантовые (фитильный)
+      mix_number: 3
+      mix_name: марантовые (ручной)
+      alternative_mix: 4 (марантовые, фитильный)
     feeding_group: sensitive
     risks:
       - Сухие кончики при низкой влажности
     care_notes:
-      - Фитильный грунт обеспечивает стабильную влажность
+      - Фитиль обеспечивает стабильную влажность
 
   calathea_ornata:
     name: Калатея орната
@@ -272,7 +273,7 @@ plants:
       direct_sun: false
       photoperiod_hours: 10-12
     watering:
-      method: Фитиль
+      method: Ручной/Фитиль
       frequency: Регулярный
       notes: Любит стабильную влажность грунта
     humidity:
@@ -283,13 +284,14 @@ plants:
       recommended: true
       notes: Рекомендован — калатеи любят стабильную влажность
     soil:
-      mix_number: 4
-      mix_name: марантовые (фитильный)
+      mix_number: 3
+      mix_name: марантовые (ручной)
+      alternative_mix: 4 (марантовые, фитильный)
     feeding_group: sensitive
     risks:
       - Сухие кончики при низкой влажности
     care_notes:
-      - Фитильный грунт обеспечивает стабильную влажность
+      - Фитиль обеспечивает стабильную влажность
 
   monstera_deliciosa:
     name: Монстера молодая
