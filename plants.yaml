@@ -501,6 +501,40 @@ plants:
       - Использовать только RO воду (группа A)
       - Контролировать влажность грунта
 
+  alocasia_frydek:
+    name: Алоказия Фрайдек
+    latin_name: Alocasia micholitziana 'Frydek'
+    type: Ароидные (бархатные)
+    lighting:
+      lux_min: 3000
+      lux_optimal: 8000
+      lux_max: 12000
+      direct_sun: false
+      photoperiod_hours: 10-12
+    watering:
+      method: Ручной
+      frequency: Регулярный
+      notes: Держать грунт слегка влажным, но без застоя воды. Просушка верхнего слоя
+    humidity:
+      level: Высокая (60-80%)
+      spraying: Не опрыскивать бархатные листья напрямую
+      preferred_method: Увлажнитель или поддон с влажным керамзитом
+    wick_watering:
+      recommended: false
+      notes: Высокий риск гнили клубня
+    soil:
+      mix_number: 1
+      mix_name: ароидная (ручной)
+    feeding_group: sensitive
+    risks:
+      - КРИТИЧНО - гниль клубня при переливе
+      - Чувствительна к солям в воде
+      - Может уйти в спячку зимой
+    care_notes:
+      - Использовать только RO воду (группа A)
+      - Бархатные листья НЕ опрыскивать напрямую
+      - Если сбросила все листья — НЕ выбрасывать, клубень жив
+
   anthurium_andraeanum:
     name: Антуриум
     latin_name: Anthurium andraeanum

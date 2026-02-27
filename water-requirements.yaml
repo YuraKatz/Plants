@@ -139,6 +139,14 @@ water_requirements:
       sensitivity: very_high
       notes: Очень чувствительна к солям и переливу
 
+    alocasia_frydek:
+      plant_name: Алоказия Фрайдек
+      ppm_range: 60-90
+      ph_range: 5.8-6.2
+      group: A
+      sensitivity: very_high
+      notes: Бархатная алоказия — очень чувствительна к солям, аналогично Polly
+
     anthurium_andraeanum:
       plant_name: Антуриум
       ppm_range: 60-90
@@ -217,6 +225,7 @@ water_requirements:
         - Орхидея (Phalaenopsis)
         - Гузмания
         - Алоказия (Polly / Amazonica)
+        - Алоказия Фрайдек
         - Антуриум
         - Антуриум кларинервиум
         - Папоротник (Нефролепис)
