@@ -327,6 +327,26 @@
             color: #4a5568;
         }
 
+        .wick-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .wick-yes {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .wick-no {
+            background: #fed7d7;
+            color: #9b2c2c;
+        }
+
         /* Facts and Problems */
         .facts-problems {
             margin-top: 15px;
@@ -2202,6 +2222,7 @@
                         <span class="difficulty-badge ${diff.class}">${diff.icon} ${diff.label}</span>
                         ${mossPole ? `<span class="moss-pole-badge ${mossPole.class}">${mossPole.icon} ${mossPole.label}</span>` : ''}
                         ${canisterInfo ? `<a href="water-groups.html" class="canister-badge ${canisterInfo.class}" title="${canisterInfo.title}">💧 ${canisterInfo.label}</a>` : ''}
+                        ${plant.wick_watering.recommended ? '<span class="wick-badge wick-yes">🧵 Фитиль ОК</span>' : '<span class="wick-badge wick-no">🚫 Без фитиля</span>'}
                     </div>
                     <div class="info-grid">
                         <div class="info-item">
