@@ -188,6 +188,14 @@ water_requirements:
       sensitivity: medium
       notes: Предпочитает мягкую воду. Вода не должна попадать на листья!
 
+    anthurium_clarinervium:
+      plant_name: Антуриум кларинервиум
+      ppm_range: 60-90
+      ph_range: 5.8-6.3
+      group: A
+      sensitivity: very_high
+      notes: Бархатный антуриум — очень чувствителен к солям и качеству воды
+
     actinidia_kiwi:
       plant_name: Киви (Actinidia)
       ppm_range: 90-140
@@ -210,6 +218,7 @@ water_requirements:
         - Гузмания
         - Алоказия (Polly / Amazonica)
         - Антуриум
+        - Антуриум кларинервиум
         - Папоротник (Нефролепис)
       storage: Одна бутылка
       sensitivity_level: Очень высокая

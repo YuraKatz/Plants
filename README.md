@@ -539,4 +539,4 @@ console.log(plants.plants.monstera_deliciosa.lighting);
 **Групп воды:** 3 (A, B, C для RO-системы)
 **Диагностируемых проблем:** 8 симптомов, 20+ причин, 12 решений
 **Освещение:** Полное руководство по Lux для всех растений
-**Веб-сайт:** https://yurikatzl.github.io/Plants/
+**Веб-сайт:** https://yurakatz.github.io/Plants/

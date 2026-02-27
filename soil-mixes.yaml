@@ -356,6 +356,28 @@ soil_mixes:
       - component: Песок/мелкий керамзит
         percentage: 5
 
+  mix_12:
+    number: 12
+    name: Для бархатных антуриумов
+    watering_type: ручной
+    suitable_for:
+      - Антуриум кларинервиум
+    notes:
+      - Очень воздушный, крупнофракционный субстрат — ключевое требование
+      - Фитильный полив категорически не подходит — риск гнили клубня
+      - Горшок с крупными дренажными отверстиями обязателен
+    composition:
+      - component: Смесь для орхидей (кора)
+        percentage: 35
+      - component: Перлит
+        percentage: 25
+      - component: Универсальный грунт Premium
+        percentage: 20
+      - component: Древесный уголь
+        percentage: 10
+      - component: Сфагнум (мох)
+        percentage: 10
+
 general_principles:
   wick_watering_rule: Фитильный полив требует более воздухопроницаемого грунта. Застой воды = гниение корней
   drainage: Всегда используйте дренажный слой из керамзита на дне горшка
