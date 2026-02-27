@@ -2147,12 +2147,18 @@
             };
             const mossPole = mossPoleMap[plant.moss_pole];
 
-            // Canister info
+            // Water group info
             const canister = canisterMap[id];
+            const waterGroupDetails = {
+                'A': { label: 'A — PPM 60-90, pH 5.8-6.3', subtitle: 'Чувствительные' },
+                'B': { label: 'B — PPM 90-140, pH 6.0-6.5', subtitle: 'Ароидные' },
+                'C': { label: 'C — PPM 120-170, pH 6.2-6.7', subtitle: 'Неприхотливые' }
+            };
             const canisterInfo = canister ? {
                 letter: canister,
                 class: `canister-${canister.toLowerCase()}`,
-                title: canister === 'A' ? 'Чувствительные' : canister === 'B' ? 'Ароидные' : 'Неприхотливые'
+                title: waterGroupDetails[canister].subtitle,
+                label: waterGroupDetails[canister].label
             } : null;
 
             // Facts and problems
@@ -2195,7 +2201,7 @@
                     <div class="badges-row">
                         <span class="difficulty-badge ${diff.class}">${diff.icon} ${diff.label}</span>
                         ${mossPole ? `<span class="moss-pole-badge ${mossPole.class}">${mossPole.icon} ${mossPole.label}</span>` : ''}
-                        ${canisterInfo ? `<a href="water-mixer.html" class="canister-badge ${canisterInfo.class}" title="${canisterInfo.title}">💧 Канистра ${canisterInfo.letter}</a>` : ''}
+                        ${canisterInfo ? `<a href="water-groups.html" class="canister-badge ${canisterInfo.class}" title="${canisterInfo.title}">💧 ${canisterInfo.label}</a>` : ''}
                     </div>
                     <div class="info-grid">
                         <div class="info-item">
