@@ -95,6 +95,7 @@ class SiteBuilder:
         self.i18n = {}
         self._current_lang = 'ru'
         self._current_t = {}
+        self._current_plants = {}
 
     def load(self):
         self.plants = load_yaml('plants.yaml').get('plants', {})
@@ -124,9 +125,54 @@ class SiteBuilder:
             with open(lang_file, encoding='utf-8') as f:
                 self.i18n[lang] = yaml.safe_load(f) or {}
 
+    def _translate_plants(self):
+        """Translate plant data fields for current language."""
+        if self._current_lang == 'ru':
+            return self.plants
+        t = self._current_t
+        maps = {
+            'name': t.get('plant_names') or {},
+            'type': t.get('plant_types') or {},
+            'humidity_level': t.get('humidity_levels') or {},
+            'watering_freq': t.get('watering_frequencies') or {},
+            'watering_method': t.get('watering_methods') or {},
+            'care_note': t.get('care_notes') or {},
+            'risk': t.get('risks') or {},
+        }
+        result = {}
+        for pid, p in self.plants.items():
+            e = dict(p)
+            name = e.get('name', '')
+            if name in maps['name']:
+                e['name'] = maps['name'][name]
+            ptype = e.get('type', '')
+            if ptype in maps['type']:
+                e['type'] = maps['type'][ptype]
+            hum = dict(e.get('humidity') or {})
+            lvl = hum.get('level', '')
+            if lvl in maps['humidity_level']:
+                hum['level'] = maps['humidity_level'][lvl]
+            e['humidity'] = hum
+            wat = dict(e.get('watering') or {})
+            meth = wat.get('method', '')
+            if meth in maps['watering_method']:
+                wat['method'] = maps['watering_method'][meth]
+            freq = wat.get('frequency', '')
+            if freq in maps['watering_freq']:
+                wat['frequency'] = maps['watering_freq'][freq]
+            e['watering'] = wat
+            notes = e.get('care_notes')
+            if notes:
+                e['care_notes'] = [maps['care_note'].get(n, n) for n in notes]
+            risks = e.get('risks')
+            if risks:
+                e['risks'] = [maps['risk'].get(r, r) for r in risks]
+            result[pid] = e
+        return result
+
     def _index_plants_by_mix(self):
         by_mix = {}
-        for pid, p in self.plants.items():
+        for pid, p in self._current_plants.items():
             mix_num = p.get('soil', {}).get('mix_number')
             if mix_num is None:
                 continue
@@ -148,8 +194,8 @@ class SiteBuilder:
         """Get plant cards for a mix: by mix_number, then by explicit plant_ids."""
         plants = list(self._plants_by_mix.get(mix.get('number'), []))
         for pid in mix.get('plant_ids', []):
-            if pid in self.plants and not any(p['id'] == pid for p in plants):
-                plants.append(self._plant_entry(pid, self.plants[pid]))
+            if pid in self._current_plants and not any(p['id'] == pid for p in plants):
+                plants.append(self._plant_entry(pid, self._current_plants[pid]))
         return plants
 
     def _search_keywords(self, mix, plants):
@@ -202,6 +248,7 @@ class SiteBuilder:
         for current_lang in languages:
             self._current_lang = current_lang
             self._current_t = self.i18n.get(current_lang, self.i18n.get('ru', {}))
+            self._current_plants = self._translate_plants()
             # Re-index plants with correct image paths for this language
             self._index_plants_by_mix()
 
@@ -252,7 +299,7 @@ class SiteBuilder:
             plants = []
             for pid, preq in individual.items():
                 if preq.get('group') == letter:
-                    plants.append(self._plant_entry(pid, self.plants.get(pid, {})))
+                    plants.append(self._plant_entry(pid, self._current_plants.get(pid, {})))
             groups.append({
                 'key': gkey,
                 'letter': letter,
@@ -263,7 +310,7 @@ class SiteBuilder:
                 'plants': plants,
             })
 
-        dionaea = self.plants.get('dionaea')
+        dionaea = self._current_plants.get('dionaea')
         if dionaea:
             groups.append({
                 'key': 'special',
@@ -283,7 +330,7 @@ class SiteBuilder:
     def _build_lighting_groups(self):
         groups = [dict(g, plants=[]) for g in LIGHTING_THRESHOLDS]
 
-        for pid, p in self.plants.items():
+        for pid, p in self._current_plants.items():
             lux_opt = p.get('lighting', {}).get('lux_optimal', 0)
             entry = self._plant_entry(pid, p)
             entry['lux_optimal'] = lux_opt
@@ -310,7 +357,7 @@ class SiteBuilder:
         ctx['plants_json'] = json.dumps({
             'settings': self.fert_settings,
             'feeding_matrix': self.feeding_matrix,
-            'plants': self.plants,
+            'plants': self._current_plants,
         }, ensure_ascii=False, indent=2)
         ctx['images_json'] = json.dumps(self._images_for_lang(), ensure_ascii=False, indent=2)
         ctx['canister_json'] = json.dumps(canister_map, ensure_ascii=False, indent=2)
@@ -319,7 +366,7 @@ class SiteBuilder:
 
     def _build_feeding_guide(self):
         plants_feeding = {}
-        for pid, p in self.plants.items():
+        for pid, p in self._current_plants.items():
             plants_feeding[pid] = {
                 'name': p.get('name', pid),
                 'latin': p.get('latin_name', ''),
