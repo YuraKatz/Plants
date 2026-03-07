@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -370,22 +370,22 @@
 </head>
 <body>
 <div class="lang-switcher">
-    <a href="watering-tracker.html" class="active">RU</a>
-    <a href="en/watering-tracker.html" >EN</a>
-    <a href="he/watering-tracker.html" >HE</a>
+    <a href="../watering-tracker.html" >RU</a>
+    <a href="../en/watering-tracker.html" class="active">EN</a>
+    <a href="../he/watering-tracker.html" >HE</a>
 </div>
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">← Home</a>
 
         <header>
-            <h1>Протокол полива</h1>
-            <div class="doc-info">RO + CalMag + Удобрения</div>
+            <h1>Watering Protocol</h1>
+            <div class="doc-info">RO + CalMag + Fertilizers</div>
         </header>
 
-        <h2>1. Рецепт на 1 литр</h2>
+        <h2>1. Recipe per 1 liter</h2>
         <table class="protocol-table">
             <tr>
-                <th>Группа</th>
+                <th>Group</th>
                 <th>CalMag → PPM</th>
                 <th>Universal</th>
                 <th>pH</th>
@@ -415,11 +415,11 @@
                 <td class="value">6.2–6.7</td>
             </tr>
         </table>
-        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* Промывка — без Universal</p>
+        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* Flush — without Universal</p>
 
         <div class="calculator">
             <div class="calc-row">
-                <label>Группа:</label>
+                <label>Group:</label>
                 <select id="calcGroup">
                     <option value="A">A</option>
                     <option value="A+">A+</option>
@@ -428,7 +428,7 @@
                 </select>
             </div>
             <div class="calc-row">
-                <label>Литры:</label>
+                <label>Liters:</label>
                 <input type="number" id="calcLiters" value="2" min="0.5" max="20" step="0.5">
             </div>
             <div class="calc-result" id="calcResult">
@@ -438,7 +438,7 @@
             </div>
         </div>
 
-        <h2>2. Справочник растений по группам</h2>
+        <h2>2. Plant Reference by Groups</h2>
         <div class="plants-reference">
             <div class="ref-group">
                 <div class="ref-header ref-a">A — PPM 80, Universal 1.5 мл/л (7 шт)</div>
@@ -479,7 +479,7 @@
             </div>
         </div>
 
-        <h2>3. Добавки</h2>
+        <h2>3. Additives</h2>
         <div class="additive-box">
             <span class="additive-name">ATAMI CalMag</span>
             <span class="additive-dose">до целевого PPM</span>
@@ -489,7 +489,7 @@
             <span class="additive-dose">по каплям (понизить pH)</span>
         </div>
 
-        <h2>4. Порядок приготовления</h2>
+        <h2>4. Preparation Procedure</h2>
         <div class="procedure">
             <ol>
                 <li>Набрать <span class="dose">RO воду</span> (PPM ≈ 0)</li>
@@ -501,29 +501,29 @@
             </ol>
         </div>
 
-        <h2>5. Журнал поливов</h2>
+        <h2>5. Watering Log</h2>
         <div class="log-section">
             <div class="stats-row">
                 <div class="stat-item">
                     <div class="stat-num">1</div>
-                    <div class="stat-label">Всего</div>
+                    <div class="stat-label">Total</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">1</div>
-                    <div class="stat-label">Удобрений</div>
+                    <div class="stat-label">Feedings</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">0</div>
-                    <div class="stat-label">Промывок</div>
+                    <div class="stat-label">Flushes</div>
                 </div>
             </div>
 
             <table class="log-table">
                 <tr>
                     <th>№</th>
-                    <th>Дата</th>
-                    <th>Тип</th>
-                    <th>Примечания</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Notes</th>
                 </tr>
                 <tr>
                     <td>1</td>

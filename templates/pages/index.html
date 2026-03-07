@@ -1,127 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plants Care Database</title>
-    <style>
-        /* === Common design system === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f0;
-            min-height: 100vh;
-            padding: 16px;
-            color: #333;
-            line-height: 1.5;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 6px;
-            padding: 24px 28px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid #e5e5e0;
-        }
-        header {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e5e5e0;
-        }
-        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
-        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
-        .subtitle { color: #666; font-size: 0.9rem; }
-        a { color: #2d6a4f; }
-        .nav-back, .nav-home {
-            display: inline-block;
-            margin-bottom: 12px;
-            text-decoration: none;
-            color: #2d6a4f;
-            font-size: 0.9rem;
-        }
-        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
-        .controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        #searchInput {
-            flex: 1;
-            min-width: 200px;
-            padding: 7px 12px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        #searchInput:focus {
-            border-color: #2d6a4f;
-            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
-        }
-        .btn-print, .btn-parts {
-            padding: 7px 16px;
-            background: #2d6a4f;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
-        .btn-parts.active { background: #1b4332; }
-        .no-results {
-            text-align: center;
-            padding: 32px;
-            color: #888;
-            font-size: 1rem;
-            display: none;
-        }
-        footer {
-            margin-top: 32px;
-            padding-top: 16px;
-            border-top: 1px solid #e5e5e0;
-            color: #888;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-        @media (max-width: 768px) {
-            .container { padding: 16px; }
-            h1 { font-size: 1.3rem; }
-        }
-        @media print {
-            body { background: #fff; padding: 0; }
-            .container { box-shadow: none; border: none; }
-            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
-        }
+{% extends "base.html" %}
 
-        /* Lang switcher */
-        .lang-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 9999;
-            display: flex;
-            gap: 2px;
-            background: rgba(255,255,255,0.92);
-            padding: 3px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        .lang-switcher a {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #555;
-        }
-        .lang-switcher a:hover { background: #eee; }
-        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
-    </style>
+{% block title %}Plants Care Database{% endblock %}
+
+{% block head %}
     <meta name="description" content="Comprehensive plant care system - watering, lighting, feeding, diagnostics">
     <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -185,24 +66,20 @@
             .cards-grid { grid-template-columns: 1fr; }
         }
     </style>
-</head>
-<body>
-<div class="lang-switcher">
-    <a href="index.html" class="active">RU</a>
-    <a href="en/index.html" >EN</a>
-    <a href="he/index.html" >HE</a>
-</div>
+{% endblock %}
+
+{% block body %}
     <div class="container">
         <header>
-            <h1>🌿 Plants Care Database</h1>
-            <p class="subtitle">Комплексная система ухода за растениями</p>
+            <h1>{{ t.index_title }}</h1>
+            <p class="subtitle">{{ t.index_subtitle }}</p>
         </header>
 
         <div class="search-container">
             <input
                 type="text"
                 id="searchInput"
-                placeholder="🔍 Поиск растения (название, латынь или тип)..."
+                placeholder="{{ t.index_search }}"
                 autocomplete="off"
             >
         </div>
@@ -210,223 +87,223 @@
         <div class="cards-grid">
             <a href="plants-catalog.html" class="nav-card" style="grid-column: 1 / -1; border-left-color: #52b788;">
                 <div class="card-icon">🌿</div>
-                <div class="card-title">Каталог растений</div>
+                <div class="card-title">{{ t.card_catalog }}</div>
                 <div class="card-description">
-                    Подробные карточки ухода для каждого растения с фотографиями и рекомендациями.
+                    {{ t.card_catalog_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
-                        <div class="stat-value">28</div>
-                        <div class="stat-label">Растений</div>
+                        <div class="stat-value">{{ plant_count }}</div>
+                        <div class="stat-label">{{ t.stat_plants }}</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">YAML</div>
-                        <div class="stat-label">Источник</div>
+                        <div class="stat-label">{{ t.stat_source }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="water-groups.html" class="nav-card water">
                 <div class="card-icon">💧</div>
-                <div class="card-title">Группы воды</div>
+                <div class="card-title">{{ t.card_water }}</div>
                 <div class="card-description">
-                    RO Water + CalMag система. Группы растений по требованиям к PPM и pH воды.
+                    {{ t.card_water_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
-                        <div class="stat-value">4</div>
-                        <div class="stat-label">Групп</div>
+                        <div class="stat-value">{{ water_group_count }}</div>
+                        <div class="stat-label">{{ t.stat_groups }}</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">28</div>
-                        <div class="stat-label">Растений</div>
+                        <div class="stat-value">{{ plant_count }}</div>
+                        <div class="stat-label">{{ t.stat_plants }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="lighting-groups.html" class="nav-card light">
                 <div class="card-icon">☀️</div>
-                <div class="card-title">Группы освещения</div>
+                <div class="card-title">{{ t.card_lighting }}</div>
                 <div class="card-description">
-                    Lux-based группировка. Группы растений по требованиям к уровню света.
+                    {{ t.card_lighting_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">3</div>
-                        <div class="stat-label">Групп</div>
+                        <div class="stat-label">{{ t.stat_groups }}</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">28</div>
-                        <div class="stat-label">Растений</div>
+                        <div class="stat-value">{{ plant_count }}</div>
+                        <div class="stat-label">{{ t.stat_plants }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="soil-groups.html" class="nav-card soil">
                 <div class="card-icon">🌱</div>
-                <div class="card-title">Грунтовые смеси</div>
+                <div class="card-title">{{ t.card_soil }}</div>
                 <div class="card-description">
-                    Рецепты грунтовых смесей для разных типов растений и методов полива.
+                    {{ t.card_soil_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
-                        <div class="stat-value">14</div>
-                        <div class="stat-label">Смесей</div>
+                        <div class="stat-value">{{ soil_mix_count }}</div>
+                        <div class="stat-label">{{ t.stat_mixes }}</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">28</div>
-                        <div class="stat-label">Растений</div>
+                        <div class="stat-value">{{ plant_count }}</div>
+                        <div class="stat-label">{{ t.stat_plants }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="feeding-guide.html" class="nav-card" style="border-left-color: #d4a843;">
                 <div class="card-icon">🧪</div>
-                <div class="card-title">Подкормки</div>
+                <div class="card-title">{{ t.card_feeding }}</div>
                 <div class="card-description">
-                    Что делать сегодня: вода + удобрения по сезону.
+                    {{ t.card_feeding_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">5</div>
-                        <div class="stat-label">Групп</div>
+                        <div class="stat-label">{{ t.stat_groups }}</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">2</div>
-                        <div class="stat-label">Сезона</div>
+                        <div class="stat-label">{{ t.stat_seasons }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="water-mixer.html" class="nav-card" style="border-left-color: #4a90d9;">
                 <div class="card-icon">💧</div>
-                <div class="card-title">Миксер воды</div>
+                <div class="card-title">{{ t.card_mixer }}</div>
                 <div class="card-description">
-                    Канистры A/B/C: PPM, pH и рецепты удобрений.
+                    {{ t.card_mixer_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">3</div>
-                        <div class="stat-label">Канистры</div>
+                        <div class="stat-label">{{ t.stat_canisters }}</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">28</div>
-                        <div class="stat-label">Растений</div>
+                        <div class="stat-value">{{ plant_count }}</div>
+                        <div class="stat-label">{{ t.stat_plants }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="watering-tracker.html" class="nav-card" style="border-left-color: #4a90d9;">
                 <div class="card-icon">📊</div>
-                <div class="card-title">Трекер полива</div>
+                <div class="card-title">{{ t.card_tracker }}</div>
                 <div class="card-description">
-                    Отслеживай поливы и промывки.
+                    {{ t.card_tracker_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">3</div>
-                        <div class="stat-label">Канистры</div>
+                        <div class="stat-label">{{ t.stat_canisters }}</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">4</div>
-                        <div class="stat-label">Цикл</div>
+                        <div class="stat-label">{{ t.stat_cycle }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="my-products.html" class="nav-card" style="border-left-color: #7c5cbf;">
                 <div class="card-icon">🧪</div>
-                <div class="card-title">Мои препараты</div>
+                <div class="card-title">{{ t.card_products }}</div>
                 <div class="card-description">
-                    Удобрения, добавки и pH регуляторы.
+                    {{ t.card_products_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">8</div>
-                        <div class="stat-label">Препаратов</div>
+                        <div class="stat-label">{{ t.stat_products }}</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">3</div>
-                        <div class="stat-label">Категории</div>
+                        <div class="stat-label">{{ t.stat_categories }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="plant-problems.html" class="nav-card" style="border-left-color: #c94050;">
                 <div class="card-icon">🔍</div>
-                <div class="card-title">Диагностика</div>
+                <div class="card-title">{{ t.card_diagnostics }}</div>
                 <div class="card-description">
-                    Проблемы и решения для каждого растения.
+                    {{ t.card_diagnostics_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
-                        <div class="stat-value">28</div>
-                        <div class="stat-label">Растений</div>
+                        <div class="stat-value">{{ plant_count }}</div>
+                        <div class="stat-label">{{ t.stat_plants }}</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">60+</div>
-                        <div class="stat-label">Решений</div>
+                        <div class="stat-label">{{ t.stat_solutions }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="seasonal-care.html" class="nav-card" style="border-left-color: #52b788;">
                 <div class="card-icon">📅</div>
-                <div class="card-title">Сезонный уход</div>
+                <div class="card-title">{{ t.card_seasonal }}</div>
                 <div class="card-description">
-                    Как ухаживать за растениями в разное время года.
+                    {{ t.card_seasonal_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">4</div>
-                        <div class="stat-label">Сезона</div>
+                        <div class="stat-label">{{ t.stat_seasons }}</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">28</div>
-                        <div class="stat-label">Совета</div>
+                        <div class="stat-value">{{ plant_count }}</div>
+                        <div class="stat-label">{{ t.stat_tips }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="propagation.html" class="nav-card" style="border-left-color: #7c5cbf;">
                 <div class="card-icon">🌱</div>
-                <div class="card-title">Размножение</div>
+                <div class="card-title">{{ t.card_propagation }}</div>
                 <div class="card-description">
-                    Методы размножения для каждого растения.
+                    {{ t.card_propagation_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">5</div>
-                        <div class="stat-label">Методов</div>
+                        <div class="stat-label">{{ t.stat_methods }}</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">15</div>
-                        <div class="stat-label">Растений</div>
+                        <div class="stat-label">{{ t.stat_plants }}</div>
                     </div>
                 </div>
             </a>
 
             <a href="pests-diseases.html" class="nav-card" style="border-left-color: #c94050;">
                 <div class="card-icon">🐛</div>
-                <div class="card-title">Вредители и болезни</div>
+                <div class="card-title">{{ t.card_pests }}</div>
                 <div class="card-description">
-                    Определение, лечение и профилактика.
+                    {{ t.card_pests_desc }}
                 </div>
                 <div class="card-stats">
                     <div class="stat">
                         <div class="stat-value">6</div>
-                        <div class="stat-label">Вредителей</div>
+                        <div class="stat-label">{{ t.stat_pests_count }}</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">4</div>
-                        <div class="stat-label">Болезни</div>
+                        <div class="stat-label">{{ t.stat_diseases }}</div>
                     </div>
                 </div>
             </a>
         </div>
 
         <footer>
-            <p>Plants Database v3.0 | PWA Ready</p>
+            <p>{{ t.footer_text }}</p>
             <div class="visitor-badge">
                 <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fyurakatz.github.io%2FPlants&count_bg=%232d6a4f&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=true" alt="Visitor Count">
             </div>
@@ -438,6 +315,9 @@
             </div>
         </footer>
     </div>
+{% endblock %}
+
+{% block scripts %}
     <script>
         var searchInput = document.getElementById('searchInput');
 
@@ -478,5 +358,4 @@
             });
         }
     </script>
-</body>
-</html>
+{% endblock %}

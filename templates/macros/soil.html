@@ -1,0 +1,70 @@
+{% macro mix_group(mix, t=none) %}
+<div class="soil-group" data-search="{{ mix.search_keywords }}">
+    <div class="group-header">
+        <div class="group-title">
+            {%- if mix.number %}Mix #{{ mix.number }} - {% endif %}{{ mix.name }}
+        </div>
+        {% if mix.subtitle %}
+        <div class="group-subtitle">{{ mix.subtitle }}</div>
+        {% endif %}
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            {% if mix.variants %}
+            {% for vkey, variant in mix.variants.items() %}
+            <div class="composition">
+                <h4>{{ t.soil_variant if t else 'Вариант' }} {{ loop.cycle('A', 'B') }} - {{ variant.name }}</h4>
+                {% for c in variant.composition %}
+                <div class="component">
+                    <span class="component-name">{{ c.component }}</span>
+                    <span class="component-percentage">{{ c.percentage }}%</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% elif mix.composition %}
+            <div class="composition">
+                <h4>{{ t.soil_composition if t else 'Состав' }}</h4>
+                {% for c in mix.composition %}
+                <div class="component">
+                    <span class="component-name">{{ c.component }}</span>
+                    <span class="component-percentage">{{ c.percentage }}%</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if mix.plants %}
+        <div class="plants-list">
+            <h4>{{ t.soil_suitable_for if t else 'Подходит для:' }}</h4>
+            <div class="plants-grid">
+                {% for plant in mix.plants %}
+                <div class="plant-card-mini">
+                    <img src="{{ plant.image }}" class="plant-mini-image" alt="{{ plant.name }}" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">{{ plant.name }}</div>
+                        <div class="plant-mini-latin">{{ plant.latin_name }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if mix.notes or mix.warnings or mix.critical_requirements %}
+        <div class="mix-notes">
+            {% if mix.critical_requirements %}
+            <div class="note warning">{{ mix.critical_requirements.pot_type }}</div>
+            {% endif %}
+            {% for w in mix.warnings | default([]) %}
+            <div class="note warning">{{ w }}</div>
+            {% endfor %}
+            {% for n in mix.notes | default([]) %}
+            <div class="note">{{ n }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endmacro %}

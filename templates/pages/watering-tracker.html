@@ -1,127 +1,6 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Протокол полива - Plants Care</title>
-    <style>
-        /* === Common design system === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f0;
-            min-height: 100vh;
-            padding: 16px;
-            color: #333;
-            line-height: 1.5;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 6px;
-            padding: 24px 28px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid #e5e5e0;
-        }
-        header {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e5e5e0;
-        }
-        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
-        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
-        .subtitle { color: #666; font-size: 0.9rem; }
-        a { color: #2d6a4f; }
-        .nav-back, .nav-home {
-            display: inline-block;
-            margin-bottom: 12px;
-            text-decoration: none;
-            color: #2d6a4f;
-            font-size: 0.9rem;
-        }
-        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
-        .controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        #searchInput {
-            flex: 1;
-            min-width: 200px;
-            padding: 7px 12px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        #searchInput:focus {
-            border-color: #2d6a4f;
-            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
-        }
-        .btn-print, .btn-parts {
-            padding: 7px 16px;
-            background: #2d6a4f;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
-        .btn-parts.active { background: #1b4332; }
-        .no-results {
-            text-align: center;
-            padding: 32px;
-            color: #888;
-            font-size: 1rem;
-            display: none;
-        }
-        footer {
-            margin-top: 32px;
-            padding-top: 16px;
-            border-top: 1px solid #e5e5e0;
-            color: #888;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-        @media (max-width: 768px) {
-            .container { padding: 16px; }
-            h1 { font-size: 1.3rem; }
-        }
-        @media print {
-            body { background: #fff; padding: 0; }
-            .container { box-shadow: none; border: none; }
-            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
-        }
-
-        /* Lang switcher */
-        .lang-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 9999;
-            display: flex;
-            gap: 2px;
-            background: rgba(255,255,255,0.92);
-            padding: 3px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        .lang-switcher a {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #555;
-        }
-        .lang-switcher a:hover { background: #eee; }
-        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
-    </style>
+{% extends "base.html" %}
+{% block title %}Протокол полива - Plants Care{% endblock %}
+{% block head %}
     <style>
         body { font-family: 'Courier New', monospace; }
         .container { max-width: 700px; border-radius: 0; box-shadow: none; border: 1px solid #ccc; }
@@ -367,25 +246,20 @@
             text-align: center;
         }
     </style>
-</head>
-<body>
-<div class="lang-switcher">
-    <a href="watering-tracker.html" class="active">RU</a>
-    <a href="en/watering-tracker.html" >EN</a>
-    <a href="he/watering-tracker.html" >HE</a>
-</div>
+{% endblock %}
+{% block body %}
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">{{ t.nav_home }}</a>
 
         <header>
-            <h1>Протокол полива</h1>
-            <div class="doc-info">RO + CalMag + Удобрения</div>
+            <h1>{{ t.tracker_title }}</h1>
+            <div class="doc-info">{{ t.tracker_subtitle }}</div>
         </header>
 
-        <h2>1. Рецепт на 1 литр</h2>
+        <h2>{{ t.tracker_recipe }}</h2>
         <table class="protocol-table">
             <tr>
-                <th>Группа</th>
+                <th>{{ t.tracker_col_group }}</th>
                 <th>CalMag → PPM</th>
                 <th>Universal</th>
                 <th>pH</th>
@@ -415,11 +289,11 @@
                 <td class="value">6.2–6.7</td>
             </tr>
         </table>
-        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* Промывка — без Universal</p>
+        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">{{ t.tracker_flush_note }}</p>
 
         <div class="calculator">
             <div class="calc-row">
-                <label>Группа:</label>
+                <label>{{ t.tracker_calc_group }}</label>
                 <select id="calcGroup">
                     <option value="A">A</option>
                     <option value="A+">A+</option>
@@ -428,7 +302,7 @@
                 </select>
             </div>
             <div class="calc-row">
-                <label>Литры:</label>
+                <label>{{ t.tracker_calc_liters }}</label>
                 <input type="number" id="calcLiters" value="2" min="0.5" max="20" step="0.5">
             </div>
             <div class="calc-result" id="calcResult">
@@ -438,7 +312,7 @@
             </div>
         </div>
 
-        <h2>2. Справочник растений по группам</h2>
+        <h2>{{ t.tracker_reference }}</h2>
         <div class="plants-reference">
             <div class="ref-group">
                 <div class="ref-header ref-a">A — PPM 80, Universal 1.5 мл/л (7 шт)</div>
@@ -479,7 +353,7 @@
             </div>
         </div>
 
-        <h2>3. Добавки</h2>
+        <h2>{{ t.tracker_additives }}</h2>
         <div class="additive-box">
             <span class="additive-name">ATAMI CalMag</span>
             <span class="additive-dose">до целевого PPM</span>
@@ -489,7 +363,7 @@
             <span class="additive-dose">по каплям (понизить pH)</span>
         </div>
 
-        <h2>4. Порядок приготовления</h2>
+        <h2>{{ t.tracker_procedure }}</h2>
         <div class="procedure">
             <ol>
                 <li>Набрать <span class="dose">RO воду</span> (PPM ≈ 0)</li>
@@ -501,29 +375,29 @@
             </ol>
         </div>
 
-        <h2>5. Журнал поливов</h2>
+        <h2>{{ t.tracker_log }}</h2>
         <div class="log-section">
             <div class="stats-row">
                 <div class="stat-item">
                     <div class="stat-num">1</div>
-                    <div class="stat-label">Всего</div>
+                    <div class="stat-label">{{ t.tracker_stat_total }}</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">1</div>
-                    <div class="stat-label">Удобрений</div>
+                    <div class="stat-label">{{ t.tracker_stat_feeds }}</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">0</div>
-                    <div class="stat-label">Промывок</div>
+                    <div class="stat-label">{{ t.tracker_stat_flushes }}</div>
                 </div>
             </div>
 
             <table class="log-table">
                 <tr>
                     <th>№</th>
-                    <th>Дата</th>
-                    <th>Тип</th>
-                    <th>Примечания</th>
+                    <th>{{ t.tracker_col_date }}</th>
+                    <th>{{ t.tracker_col_type }}</th>
+                    <th>{{ t.tracker_col_notes }}</th>
                 </tr>
                 <tr>
                     <td>1</td>
@@ -538,6 +412,8 @@
             Plants Care Protocol — github.com/YuraKatz/Plants
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
     <script>
         var groups = {
             'A':  { ppm: 80,  universal: 1.5, ph: '5.8–6.3' },
@@ -562,5 +438,4 @@
         document.getElementById('calcLiters').addEventListener('input', calculate);
         calculate();
     </script>
-</body>
-</html>
+{% endblock %}

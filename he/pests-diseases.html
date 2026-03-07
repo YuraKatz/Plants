@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,6 +110,7 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .lang-switcher { right: auto; left: 10px; }
         .lang-switcher a {
             display: inline-block;
             padding: 3px 8px;
@@ -121,6 +122,7 @@
         }
         .lang-switcher a:hover { background: #eee; }
         .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
     </style>
     <style>
         header { text-align: center; }
@@ -415,27 +417,27 @@
 </head>
 <body>
 <div class="lang-switcher">
-    <a href="pests-diseases.html" class="active">RU</a>
-    <a href="en/pests-diseases.html" >EN</a>
-    <a href="he/pests-diseases.html" >HE</a>
+    <a href="../pests-diseases.html" >RU</a>
+    <a href="../en/pests-diseases.html" >EN</a>
+    <a href="../he/pests-diseases.html" class="active">HE</a>
 </div>
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">→ ראשי</a>
 
         <header>
-            <h1>🐛 Вредители и болезни</h1>
-            <p class="subtitle">Определение, лечение и профилактика</p>
+            <h1>🐛 מזיקים ומחלות</h1>
+            <p class="subtitle">זיהוי, טיפול ומניעה</p>
         </header>
 
         <!-- Emergency Banner -->
         <div class="emergency-banner">
-            <h3>🚨 При обнаружении вредителей</h3>
+            <h3>🚨 כשמגלים מזיקים</h3>
             <p><strong>ИЗОЛИРУЙТЕ</strong> растение немедленно! Осмотрите соседние растения. Не откладывайте лечение.</p>
         </div>
 
         <!-- Quick ID Table -->
         <div class="quick-id">
-            <h3>🔍 Быстрое определение по симптомам</h3>
+            <h3>🔍 זיהוי מהיר לפי תסמינים</h3>
             <table>
                 <thead>
                     <tr>

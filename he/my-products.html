@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,6 +110,7 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .lang-switcher { right: auto; left: 10px; }
         .lang-switcher a {
             display: inline-block;
             padding: 3px 8px;
@@ -121,6 +122,7 @@
         }
         .lang-switcher a:hover { background: #eee; }
         .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
     </style>
     <style>
         header { text-align: center; }
@@ -333,24 +335,24 @@
 </head>
 <body>
 <div class="lang-switcher">
-    <a href="my-products.html" class="active">RU</a>
-    <a href="en/my-products.html" >EN</a>
-    <a href="he/my-products.html" >HE</a>
+    <a href="../my-products.html" >RU</a>
+    <a href="../en/my-products.html" >EN</a>
+    <a href="../he/my-products.html" class="active">HE</a>
 </div>
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">→ ראשי</a>
 
         <header>
-            <h1>🧪 Мои препараты</h1>
-            <p class="subtitle">Полная информация о всех удобрениях и добавках</p>
+            <h1>🧪 המוצרים שלי</h1>
+            <p class="subtitle">מידע מלא על כל הדשנים והתוספים</p>
         </header>
 
         <!-- Category Tabs -->
         <div class="category-tabs">
-            <button class="category-tab active" onclick="filterProducts('all')">Все (8)</button>
-            <button class="category-tab" onclick="filterProducts('fertilizer')">Удобрения (4)</button>
-            <button class="category-tab" onclick="filterProducts('additive')">Добавки (2)</button>
-            <button class="category-tab" onclick="filterProducts('ph-reg')">pH регуляторы (2)</button>
+            <button class="category-tab active" onclick="filterProducts('all')">הכל (8)</button>
+            <button class="category-tab" onclick="filterProducts('fertilizer')">דשנים (4)</button>
+            <button class="category-tab" onclick="filterProducts('additive')">תוספים (2)</button>
+            <button class="category-tab" onclick="filterProducts('ph-reg')">מווסתי pH (2)</button>
         </div>
 
         <!-- Products Grid -->
@@ -838,23 +840,23 @@
 
         <!-- Summary Section -->
         <div class="summary-section">
-            <h2>📊 Итого в арсенале</h2>
+            <h2>📊 סה״כ בארסנל</h2>
             <div class="summary-grid">
                 <div class="summary-card">
                     <div class="summary-number">4</div>
-                    <div class="summary-label">Удобрения</div>
+                    <div class="summary-label">דשנים</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">2</div>
-                    <div class="summary-label">Добавки</div>
+                    <div class="summary-label">תוספים</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">2</div>
-                    <div class="summary-label">pH регуляторы</div>
+                    <div class="summary-label">מווסתי pH</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">8</div>
-                    <div class="summary-label">Всего препаратов</div>
+                    <div class="summary-label">סה״כ מוצרים</div>
                 </div>
             </div>
         </div>

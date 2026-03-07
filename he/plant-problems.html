@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,6 +110,7 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .lang-switcher { right: auto; left: 10px; }
         .lang-switcher a {
             display: inline-block;
             padding: 3px 8px;
@@ -121,6 +122,7 @@
         }
         .lang-switcher a:hover { background: #eee; }
         .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
     </style>
     <style>
         .container { max-width: 900px; }
@@ -306,16 +308,16 @@
 </head>
 <body>
 <div class="lang-switcher">
-    <a href="plant-problems.html" class="active">RU</a>
-    <a href="en/plant-problems.html" >EN</a>
-    <a href="he/plant-problems.html" >HE</a>
+    <a href="../plant-problems.html" >RU</a>
+    <a href="../en/plant-problems.html" >EN</a>
+    <a href="../he/plant-problems.html" class="active">HE</a>
 </div>
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">→ ראשי</a>
 
         <header>
-            <h1>Диагностика растений</h1>
-            <p class="subtitle">Выберите растение для диагностики проблем</p>
+            <h1>אבחון צמחים</h1>
+            <p class="subtitle">בחר צמח לאבחון בעיות</p>
         </header>
 
         <!-- Plant Selection -->

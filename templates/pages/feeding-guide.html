@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+{% block title %}Руководство по подкормкам - Plants Care{% endblock %}
+{% block head %}
+    <style>
+        .container { max-width: 1400px; }
+        header { text-align: center; }
+        .nav-row {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+        }
+        .nav-mixer {
+            padding: 7px 16px; background: #2d6a4f; color: #fff;
+            border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 14px;
+        }
+        .nav-mixer:hover { background: #1b4332; }
+        .season-indicator {
+            display: inline-block; padding: 6px 16px; border-radius: 4px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+            font-size: 0.95rem; margin-top: 8px;
+        }
+        .season-growth { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+        .season-slow { background: #fef3c7; color: #78350f; border: 1px solid #fbbf24; }
+        .legend {
+            background: #f5f5f0; padding: 16px; border: 1px solid #e5e5e0;
+            border-radius: 4px; margin-bottom: 20px;
+        }
+        .legend h3 { margin-bottom: 10px; color: #333; font-size: 0.95rem; }
+        .legend-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+        .dose-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 42px; padding: 3px 8px; border-radius: 3px;
+            font-weight: 700; font-size: 0.8rem;
+        }
+        .dose-full { background: #d1fae5; color: #065f46; }
+        .dose-half { background: #fef3c7; color: #78350f; }
+        .dose-quarter { background: #ffedd5; color: #9a3412; }
+        .dose-eighth { background: #fee2e2; color: #991b1b; }
+        .dose-forbidden { background: #fee2e2; color: #991b1b; }
+        .dose-top { background: #e0e7ff; color: #3730a3; }
+        .matrix-container { overflow-x: auto; margin-bottom: 28px; }
+        .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .matrix-table th {
+            background: #333; color: #fff; padding: 8px 6px;
+            text-align: center; font-weight: 600; font-size: 0.8rem;
+        }
+        .matrix-table th:first-child { text-align: left; min-width: 180px; }
+        .matrix-table td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #e5e5e0; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .matrix-table tr:hover { background: #fafaf8; }
+        .matrix-table .plant-cell { display: flex; align-items: center; gap: 8px; }
+        .matrix-table .plant-thumb { width: 36px; height: 36px; border-radius: 4px; object-fit: cover; }
+        .matrix-table .plant-info { display: flex; flex-direction: column; }
+        .matrix-table .plant-name { font-weight: 600; color: #333; font-size: 0.85rem; }
+        .matrix-table .plant-latin { font-size: 0.72rem; color: #888; font-style: italic; }
+        .water-rules {
+            margin-top: 28px; padding: 20px; background: #eff6ff;
+            border-radius: 4px; border-left: 4px solid #3b82f6;
+        }
+        .water-rules h2 { color: #1e40af; margin: 0 0 12px 0; font-size: 1.1rem; }
+        .water-rules ul { list-style: none; }
+        .water-rules li { margin-bottom: 8px; font-size: 0.9rem; }
+        .water-rules li b { color: #1e40af; }
+        .fertilizer-info {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px; margin-top: 16px;
+        }
+        .fertilizer-card {
+            background: #f5f5f0; padding: 16px; border-radius: 4px;
+            border-left: 3px solid #2d6a4f;
+        }
+        .fertilizer-card h4 { color: #333; margin-bottom: 6px; font-size: 0.95rem; }
+        .fertilizer-card p { font-size: 0.85rem; color: #555; }
+        @media (max-width: 768px) {
+            .legend-grid { flex-direction: column; }
+            .matrix-table { font-size: 0.78rem; }
+            .matrix-table .plant-thumb { width: 28px; height: 28px; }
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="nav-row">
+            <a href="index.html" class="nav-back">{{ t.nav_home }}</a>
+            <a href="water-mixer.html" class="nav-mixer">{{ t.feeding_btn_mixer }}</a>
+        </div>
+        <header>
+            <h1>{{ t.feeding_title }}</h1>
+            <div id="seasonIndicator" class="season-indicator" data-season-growth="{{ t.feeding_season_growth }}" data-season-slow="{{ t.feeding_season_slow }}">{{ t.feeding_season_loading }}</div>
+        </header>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h3>{{ t.feeding_legend_title }}</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <span class="dose-badge dose-full">100%</span>
+                    <span>{{ t.feeding_dose_full }}</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-half">1/2</span>
+                    <span>{{ t.feeding_dose_half }}</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-quarter">1/4</span>
+                    <span>{{ t.feeding_dose_quarter }}</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-eighth">1/8</span>
+                    <span>{{ t.feeding_dose_min }}</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-top">top</span>
+                    <span>{{ t.feeding_dose_top }}</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-forbidden">—</span>
+                    <span>{{ t.feeding_dose_forbidden }}</span>
+                </div>
+            </div>
+            <div style="margin-top: 15px; padding: 12px; background: #ebf8ff; border-radius: 8px; text-align: center;">
+                <a href="water-mixer.html" style="color: #2b6cb0; text-decoration: none; font-weight: 500;">
+                    {{ t.feeding_mixer_link }}
+                </a>
+            </div>
+        </div>
+
+        <!-- Matrix Table -->
+        <h2>{{ t.feeding_table_title }}</h2>
+        <div class="matrix-container">
+            <table class="matrix-table" id="matrixTable">
+                <thead>
+                    <tr>
+                        <th>{{ t.feeding_col_plant }}</th>
+                        <th>Universal</th>
+                        <th>Flowering</th>
+                        <th>Multicote</th>
+                    </tr>
+                </thead>
+                <tbody id="matrixBody">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Fertilizer Info -->
+        <h2>{{ t.feeding_section_fertilizers }}</h2>
+        <div class="fertilizer-info">
+            <div class="fertilizer-card">
+                <h4>Flower Universal</h4>
+                <p>Универсальное жидкое удобрение NPK 5-5-7. Подходит для большинства растений в период активного роста.</p>
+            </div>
+            <div class="fertilizer-card">
+                <h4>Flower Flowering</h4>
+                <p>Удобрение для цветущих растений с повышенным содержанием фосфора и калия. Стимулирует цветение.</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #805ad5;">
+                <h4>Ecogan Multicote</h4>
+                <p>Гранулированное удобрение пролонгированного действия. НЕ использовать на фитильном поливе!</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #9f7aea;">
+                <h4>Flower Orchids 0-17-7</h4>
+                <p>Специальное удобрение для орхидей в фазе цветения. 0% азота, 17% фосфора — только для цветения!</p>
+            </div>
+        </div>
+
+        <!-- Additives -->
+        <h2>{{ t.feeding_section_additives }}</h2>
+        <div class="fertilizer-info">
+            <div class="fertilizer-card" style="border-left-color: #9f7aea;">
+                <h4>🍄 DYNOMYCO Spark</h4>
+                <p>Микориза + бактерии Bacillus + гуминовая кислота. 1 ч.л. на 4 л, каждые 1-2 недели. Для укоренения и пересадки.</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #68d391;">
+                <h4>⬆️ BioBizz Bio·Up</h4>
+                <p>Органический pH Up на гуминовых кислотах. 0.1 мл/л = +0.1 pH. Не вредит микоризе!</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #fc8181;">
+                <h4>⬇️ Green Farmer pH-</h4>
+                <p>Минеральный pH Down. По каплям до нужного значения. Использовать с осторожностью.</p>
+            </div>
+        </div>
+
+        <!-- Water Rules -->
+        <div class="water-rules">
+            <h2>{{ t.feeding_section_rules }}</h2>
+            <ul>
+                <li><b>Cal-Mag:</b> Используйте только с RO (осмос) водой для предотвращения дефицита минералов.</li>
+                <li><b>pH:</b> Регулируйте в конце, после всех добавок. Bio·Up для повышения (органика), pH- для понижения.</li>
+                <li><b>DYNOMYCO:</b> После применения НЕ вносить фосфорные удобрения — высокий P подавляет микоризу.</li>
+                <li><b>Хищники:</b> ТОЛЬКО чистый RO (TDS < 10), никаких добавок и удобрений.</li>
+                <li><b>Multicote:</b> Запрещён для растений на фитильном поливе — вымывается и вызывает ожог корней.</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var t = {{ t_json|safe }};
+        var plantsData = {{ plants_json|safe }};
+
+        var imageMap = {{ images_json|safe }};
+
+        // Season indicator
+        var season = plantsData.settings.current_season;
+        var indicator = document.getElementById('seasonIndicator');
+        if (season === 'growth') {
+            indicator.textContent = indicator.getAttribute('data-season-growth');
+            indicator.className = 'season-indicator season-growth';
+        } else {
+            indicator.textContent = indicator.getAttribute('data-season-slow');
+            indicator.className = 'season-indicator season-slow';
+        }
+
+        // Build matrix table
+        function getDoseBadge(status, isWick, fertType) {
+            // Multicote forbidden for wick watering plants
+            if (fertType === 'ecogan_multicote' && isWick) {
+                return '<span class="dose-badge dose-forbidden" title="' + t.feeding_wick_forbidden + '">—</span>';
+            }
+
+            if (status === 'forbidden') {
+                return '<span class="dose-badge dose-forbidden">—</span>';
+            } else if (status === 'allowed') {
+                return '<span class="dose-badge dose-full">100%</span>';
+            } else if (status === '1/2') {
+                return '<span class="dose-badge dose-half">1/2</span>';
+            } else if (status === '1/4') {
+                return '<span class="dose-badge dose-quarter">1/4</span>';
+            } else if (status === '1/8') {
+                return '<span class="dose-badge dose-eighth">1/8</span>';
+            } else if (status === 'top') {
+                return '<span class="dose-badge dose-top">top</span>';
+            }
+            return '<span class="dose-badge dose-full">100%</span>';
+        }
+
+        var tbody = document.getElementById('matrixBody');
+
+        // Sort plants by group for better organization
+        var groupOrder = ['aroids', 'sensitive', 'orchids', 'general_houseplants', 'carnivorous'];
+        var sortedPlants = Object.entries(plantsData.plants).sort(function(a, b) {
+            return groupOrder.indexOf(a[1].group) - groupOrder.indexOf(b[1].group);
+        });
+
+        var currentGroup = '';
+        sortedPlants.forEach(function(entry) {
+            var id = entry[0];
+            var plant = entry[1];
+            var matrix = plantsData.feeding_matrix[plant.group][season];
+            var img = imageMap[id] || '';
+
+            // Add group separator
+            if (plant.group !== currentGroup) {
+                currentGroup = plant.group;
+                var groupNames = {
+                    aroids: t.feeding_group_aroids,
+                    sensitive: t.feeding_group_sensitive,
+                    orchids: t.feeding_group_orchids,
+                    general_houseplants: t.feeding_group_general,
+                    carnivorous: t.feeding_group_carnivorous
+                };
+                var groupRow = document.createElement('tr');
+                groupRow.innerHTML = '<td colspan="4" style="background: #edf2f7; font-weight: 700; color: #4a5568; padding: 8px 12px;">' + groupNames[currentGroup] + '</td>';
+                tbody.appendChild(groupRow);
+            }
+
+            var row = document.createElement('tr');
+            row.innerHTML = '<td>' +
+                    '<div class="plant-cell">' +
+                        '<img src="' + img + '" class="plant-thumb" alt="' + plant.name + '" onerror="this.style.display=\'none\'">' +
+                        '<div class="plant-info">' +
+                            '<span class="plant-name">' + plant.name + '</span>' +
+                            '<span class="plant-latin">' + plant.latin + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</td>' +
+                '<td>' + getDoseBadge(matrix.flower_universal, plant.wick, 'flower_universal') + '</td>' +
+                '<td>' + getDoseBadge(matrix.flower_flowering, plant.wick, 'flower_flowering') + '</td>' +
+                '<td>' + getDoseBadge(matrix.ecogan_multicote, plant.wick, 'ecogan_multicote') + '</td>';
+            tbody.appendChild(row);
+        });
+    </script>
+{% endblock %}

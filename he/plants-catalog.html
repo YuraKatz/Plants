@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,6 +110,7 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .lang-switcher { right: auto; left: 10px; }
         .lang-switcher a {
             display: inline-block;
             padding: 3px 8px;
@@ -121,6 +122,7 @@
         }
         .lang-switcher a:hover { background: #eee; }
         .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
     </style>
     <style>
         .container { max-width: 1400px; }
@@ -221,41 +223,41 @@
 </head>
 <body>
 <div class="lang-switcher">
-    <a href="plants-catalog.html" class="active">RU</a>
-    <a href="en/plants-catalog.html" >EN</a>
-    <a href="he/plants-catalog.html" >HE</a>
+    <a href="../plants-catalog.html" >RU</a>
+    <a href="../en/plants-catalog.html" >EN</a>
+    <a href="../he/plants-catalog.html" class="active">HE</a>
 </div>
     <div class="container">
         <header>
-            <a href="index.html" class="nav-home">← Главная</a>
-            <h1>Каталог растений</h1>
-            <p class="subtitle">Полный справочник по уходу за комнатными растениями</p>
+            <a href="index.html" class="nav-home">→ ראשי</a>
+            <h1>קטלוג צמחים</h1>
+            <p class="subtitle">מדריך מלא לטיפול בצמחי בית</p>
         </header>
 
         <div class="controls">
             <input
                 type="text"
                 id="searchInput"
-                placeholder="Поиск по названию, латыни или типу..."
+                placeholder="חיפוש לפי שם, לטינית או סוג..."
                 autocomplete="off"
             >
             <div class="filter-group">
-                <span class="filter-label">Сложность:</span>
-                <button class="filter-btn active" data-difficulty="all">Все</button>
-                <button class="filter-btn filter-easy" data-difficulty="easy">🟢 Легко</button>
-                <button class="filter-btn filter-medium" data-difficulty="medium">🟡 Средне</button>
-                <button class="filter-btn filter-hard" data-difficulty="hard">🔴 Сложно</button>
-                <button class="filter-btn filter-expert" data-difficulty="expert">🟣 Эксперт</button>
+                <span class="filter-label">רמת קושי:</span>
+                <button class="filter-btn active" data-difficulty="all">הכל</button>
+                <button class="filter-btn filter-easy" data-difficulty="easy">🟢 קל</button>
+                <button class="filter-btn filter-medium" data-difficulty="medium">🟡 בינוני</button>
+                <button class="filter-btn filter-hard" data-difficulty="hard">🔴 קשה</button>
+                <button class="filter-btn filter-expert" data-difficulty="expert">🟣 מומחה</button>
             </div>
         </div>
 
         <div id="plantsGrid" class="plants-grid">
         </div>
 
-        <div id="noResults" class="no-results">Растения не найдены</div>
+        <div id="noResults" class="no-results">לא נמצאו צמחים</div>
     </div>
     <script>
-        var t = {"nav_home": "← Главная", "btn_print": "🖨️ Печать", "btn_parts": "📐 Части", "btn_percentages": "📐 Проценты", "no_image": "Нет изображения", "index_title": "🌿 Plants Care Database", "index_subtitle": "Комплексная система ухода за растениями", "index_search": "🔍 Поиск растения (название, латынь или тип)...", "card_catalog": "Каталог растений", "card_catalog_desc": "Подробные карточки ухода для каждого растения с фотографиями и рекомендациями.", "card_water": "Группы воды", "card_water_desc": "RO Water + CalMag система. Группы растений по требованиям к PPM и pH воды.", "card_lighting": "Группы освещения", "card_lighting_desc": "Lux-based группировка. Группы растений по требованиям к уровню света.", "card_soil": "Грунтовые смеси", "card_soil_desc": "Рецепты грунтовых смесей для разных типов растений и методов полива.", "card_feeding": "Подкормки", "card_feeding_desc": "Что делать сегодня: вода + удобрения по сезону.", "card_mixer": "Миксер воды", "card_mixer_desc": "Канистры A/B/C: PPM, pH и рецепты удобрений.", "card_tracker": "Трекер полива", "card_tracker_desc": "Отслеживай поливы и промывки.", "card_products": "Мои препараты", "card_products_desc": "Удобрения, добавки и pH регуляторы.", "card_diagnostics": "Диагностика", "card_diagnostics_desc": "Проблемы и решения для каждого растения.", "card_seasonal": "Сезонный уход", "card_seasonal_desc": "Как ухаживать за растениями в разное время года.", "card_propagation": "Размножение", "card_propagation_desc": "Методы размножения для каждого растения.", "card_pests": "Вредители и болезни", "card_pests_desc": "Определение, лечение и профилактика.", "footer_text": "Plants Database v3.0 | PWA Ready", "stat_plants": "Растений", "stat_source": "Источник", "stat_groups": "Групп", "stat_mixes": "Смесей", "stat_seasons": "Сезона", "stat_canisters": "Канистры", "stat_cycle": "Цикл", "stat_products": "Препаратов", "stat_categories": "Категории", "stat_solutions": "Решений", "stat_tips": "Совета", "stat_methods": "Методов", "stat_pests_count": "Вредителей", "stat_diseases": "Болезни", "soil_title": "🌱 Грунтовые смеси", "soil_subtitle": "Рецепты грунтовых смесей для комнатных растений", "soil_search": "Поиск по названию смеси или растению...", "soil_no_results": "Смеси не найдены", "soil_variant": "Вариант", "soil_composition": "Состав", "soil_suitable_for": "Подходит для:", "water_title": "💧 Группы воды", "water_subtitle": "RO Water + CalMag System for Indoor Plants", "water_search": "Поиск по названию или plant_id...", "water_no_results": "Растения не найдены", "water_btn_mixer": "🧪 Миксер удобрений", "water_pure_ro": "ТОЛЬКО чистый RO", "water_no_additives": "Без добавок!", "water_carnivorous": "Хищные", "lighting_title": "☀️ Группы освещения", "lighting_subtitle": "Lux-Based Light Requirements for Indoor Plants", "lighting_search": "Поиск по названию или plant_id...", "lighting_no_results": "Растения не найдены", "lighting_legend_title": "Группы по освещению", "lighting_low": "Low Light", "lighting_low_desc": "теневыносливые", "lighting_medium": "Medium Light", "lighting_medium_desc": "средний свет", "lighting_bright": "Bright Light", "lighting_bright_desc": "яркий свет", "feeding_title": "Руководство по подкормкам", "feeding_legend_title": "Обозначения дозировок", "feeding_dose_full": "Полная доза", "feeding_dose_half": "Половина дозы", "feeding_dose_quarter": "Четверть дозы", "feeding_dose_min": "Минимальная доза", "feeding_dose_top": "Только сверху", "feeding_dose_forbidden": "Запрещено", "feeding_mixer_link": "💧 Точные дозировки в мл/л → Миксер воды", "feeding_table_title": "Таблица подкормок", "feeding_col_plant": "Растение", "feeding_season_growth": "Режим: РОСТ (Весна/Лето)", "feeding_season_slow": "Режим: ПОКОЙ (Осень/Зима)", "feeding_season_loading": "Режим: ЗАГРУЗКА...", "feeding_btn_mixer": "🧪 Миксер канистр", "mixer_title": "Миксер воды и удобрений", "mixer_subtitle": "Смешивай правильно — по PPM и сезону", "products_title": "🧪 Мои препараты", "products_subtitle": "Полная информация о всех удобрениях и добавках", "products_tab_all": "Все", "products_tab_fertilizers": "Удобрения", "products_tab_additives": "Добавки", "products_tab_ph": "pH регуляторы", "products_summary_title": "📊 Итого в арсенале", "products_total": "Всего препаратов", "problems_title": "Диагностика растений", "problems_subtitle": "Выберите растение для диагностики проблем", "seasonal_title": "📅 Сезонный уход", "seasonal_subtitle": "Календарь ухода за комнатными растениями", "propagation_title": "🌱 Размножение растений", "propagation_subtitle": "Методы и инструкции по размножению", "tracker_title": "Протокол полива", "tracker_subtitle": "RO + CalMag + Удобрения", "pests_title": "🐛 Вредители и болезни", "pests_subtitle": "Определение, лечение и профилактика", "catalog_title": "Каталог растений", "catalog_subtitle": "Полный справочник по уходу за комнатными растениями", "catalog_search": "Поиск по названию, латыни или типу...", "catalog_filter_label": "Сложность:", "catalog_filter_all": "Все", "catalog_filter_easy": "Легко", "catalog_filter_medium": "Средне", "catalog_filter_hard": "Сложно", "catalog_filter_expert": "Эксперт", "catalog_no_results": "Растения не найдены", "catalog_no_photo": "Нет фото", "catalog_facts_title": "Интересные факты", "catalog_problems_title": "Типичные проблемы", "catalog_wick_ok": "Фитиль ОК", "catalog_wick_no": "Без фитиля", "catalog_label_lighting": "Освещение (Lux)", "catalog_label_humidity": "Влажность", "catalog_label_watering": "Полив", "catalog_label_soil": "Почва", "catalog_label_method": "Метод:", "catalog_wick_suitable": "Подходит для фитиля", "catalog_wick_not": "Не для фитиля", "catalog_moss_needed": "Нужна опора", "catalog_moss_optional": "Опора опционально", "catalog_flowering_title": "Можно Flowering удобрение", "feeding_section_fertilizers": "Удобрения", "feeding_section_additives": "Добавки", "feeding_section_rules": "Правила полива (всегда)", "feeding_group_aroids": "Ароидные", "feeding_group_sensitive": "Чувствительные", "feeding_group_orchids": "Орхидеи", "feeding_group_general": "Общие комнатные", "feeding_group_carnivorous": "Хищные", "feeding_wick_forbidden": "Запрещено на фитиле", "tracker_recipe": "1. Рецепт на 1 литр", "tracker_col_group": "Группа", "tracker_flush_note": "* Промывка — без Universal", "tracker_calc_group": "Группа:", "tracker_calc_liters": "Литры:", "tracker_reference": "2. Справочник растений по группам", "tracker_additives": "3. Добавки", "tracker_procedure": "4. Порядок приготовления", "tracker_log": "5. Журнал поливов", "tracker_stat_total": "Всего", "tracker_stat_feeds": "Удобрений", "tracker_stat_flushes": "Промывок", "tracker_col_date": "Дата", "tracker_col_type": "Тип", "tracker_col_notes": "Примечания", "seasonal_spring": "🌸 Весна", "seasonal_summer": "☀️ Лето", "seasonal_autumn": "🍂 Осень", "seasonal_winter": "❄️ Зима", "seasonal_loading": "Загрузка...", "propagation_best_time": "🌸 Лучшее время для размножения: Весна — Начало лета", "propagation_tab_water": "💧 В воде", "propagation_tab_soil": "🌱 В грунте", "propagation_tab_division": "✂️ Деление", "propagation_tab_airlayer": "🌿 Воздушные отводки", "propagation_tab_offsets": "👶 Детки", "pests_emergency_title": "🚨 При обнаружении вредителей", "pests_symptoms_title": "🔍 Быстрое определение по симптомам", "group_sensitive": "Чувствительные", "group_aroids": "Ароидные", "group_undemanding": "Неприхотливые", "lang_ru": "RU", "lang_en": "EN", "lang_he": "HE"};
+        var t = {"nav_home": "→ ראשי", "btn_print": "🖨️ הדפסה", "btn_parts": "📐 חלקים", "btn_percentages": "📐 אחוזים", "no_image": "אין תמונה", "index_title": "🌿 Plants Care Database", "index_subtitle": "מערכת מקיפה לטיפול בצמחים", "index_search": "🔍 חיפוש צמח (שם, לטינית או סוג)...", "card_catalog": "קטלוג צמחים", "card_catalog_desc": "כרטיסי טיפול מפורטים לכל צמח עם תמונות והמלצות.", "card_water": "קבוצות מים", "card_water_desc": "מערכת RO Water + CalMag. קבוצות צמחים לפי דרישות PPM ו-pH.", "card_lighting": "קבוצות תאורה", "card_lighting_desc": "קיבוץ מבוסס Lux. קבוצות צמחים לפי דרישות רמת אור.", "card_soil": "תערובות אדמה", "card_soil_desc": "מתכונים לתערובות אדמה לסוגי צמחים ושיטות השקיה שונים.", "card_feeding": "דישון", "card_feeding_desc": "מה לעשות היום: מים + דשנים לפי עונה.", "card_mixer": "מיקסר מים", "card_mixer_desc": "מיכלים A/B/C: PPM, pH ומתכוני דשנים.", "card_tracker": "מעקב השקיה", "card_tracker_desc": "מעקב אחר השקיות ושטיפות.", "card_products": "המוצרים שלי", "card_products_desc": "דשנים, תוספים ומווסתי pH.", "card_diagnostics": "אבחון", "card_diagnostics_desc": "בעיות ופתרונות לכל צמח.", "card_seasonal": "טיפול עונתי", "card_seasonal_desc": "איך לטפל בצמחים בעונות שונות.", "card_propagation": "ריבוי", "card_propagation_desc": "שיטות ריבוי לכל צמח.", "card_pests": "מזיקים ומחלות", "card_pests_desc": "זיהוי, טיפול ומניעה.", "footer_text": "Plants Database v3.0 | PWA Ready", "stat_plants": "צמחים", "stat_source": "מקור", "stat_groups": "קבוצות", "stat_mixes": "תערובות", "stat_seasons": "עונות", "stat_canisters": "מיכלים", "stat_cycle": "מחזור", "stat_products": "מוצרים", "stat_categories": "קטגוריות", "stat_solutions": "פתרונות", "stat_tips": "טיפים", "stat_methods": "שיטות", "stat_pests_count": "מזיקים", "stat_diseases": "מחלות", "soil_title": "🌱 תערובות אדמה", "soil_subtitle": "מתכוני תערובות אדמה לצמחי בית", "soil_search": "חיפוש לפי שם תערובת או צמח...", "soil_no_results": "לא נמצאו תערובות", "soil_variant": "גרסה", "soil_composition": "הרכב", "soil_suitable_for": "מתאים ל:", "water_title": "💧 קבוצות מים", "water_subtitle": "RO Water + CalMag System for Indoor Plants", "water_search": "חיפוש לפי שם או plant_id...", "water_no_results": "לא נמצאו צמחים", "water_btn_mixer": "🧪 מיקסר דשנים", "water_pure_ro": "RO טהור בלבד", "water_no_additives": "ללא תוספים!", "water_carnivorous": "טורפניים", "lighting_title": "☀️ קבוצות תאורה", "lighting_subtitle": "Lux-Based Light Requirements for Indoor Plants", "lighting_search": "חיפוש לפי שם או plant_id...", "lighting_no_results": "לא נמצאו צמחים", "lighting_legend_title": "קבוצות לפי תאורה", "lighting_low": "Low Light", "lighting_low_desc": "עמידים בצל", "lighting_medium": "Medium Light", "lighting_medium_desc": "אור בינוני", "lighting_bright": "Bright Light", "lighting_bright_desc": "אור חזק", "feeding_title": "מדריך דישון", "feeding_legend_title": "מקרא מינונים", "feeding_dose_full": "מינון מלא", "feeding_dose_half": "חצי מינון", "feeding_dose_quarter": "רבע מינון", "feeding_dose_min": "מינון מינימלי", "feeding_dose_top": "דישון עליון בלבד", "feeding_dose_forbidden": "אסור", "feeding_mixer_link": "💧 מינונים מדויקים ב-מל/ל → מיקסר מים", "feeding_table_title": "טבלת דישון", "feeding_col_plant": "צמח", "feeding_season_growth": "מצב: צמיחה (אביב/קיץ)", "feeding_season_slow": "מצב: מנוחה (סתיו/חורף)", "feeding_season_loading": "מצב: טוען...", "feeding_btn_mixer": "🧪 מיקסר מיכלים", "mixer_title": "מיקסר מים ודשנים", "mixer_subtitle": "ערבב נכון — לפי PPM ועונה", "products_title": "🧪 המוצרים שלי", "products_subtitle": "מידע מלא על כל הדשנים והתוספים", "products_tab_all": "הכל", "products_tab_fertilizers": "דשנים", "products_tab_additives": "תוספים", "products_tab_ph": "מווסתי pH", "products_summary_title": "📊 סה״כ בארסנל", "products_total": "סה״כ מוצרים", "problems_title": "אבחון צמחים", "problems_subtitle": "בחר צמח לאבחון בעיות", "seasonal_title": "📅 טיפול עונתי", "seasonal_subtitle": "לוח שנה לטיפול בצמחי בית", "propagation_title": "🌱 ריבוי צמחים", "propagation_subtitle": "שיטות והוראות לריבוי", "tracker_title": "פרוטוקול השקיה", "tracker_subtitle": "RO + CalMag + דשנים", "pests_title": "🐛 מזיקים ומחלות", "pests_subtitle": "זיהוי, טיפול ומניעה", "catalog_title": "קטלוג צמחים", "catalog_subtitle": "מדריך מלא לטיפול בצמחי בית", "catalog_search": "חיפוש לפי שם, לטינית או סוג...", "catalog_filter_label": "רמת קושי:", "catalog_filter_all": "הכל", "catalog_filter_easy": "קל", "catalog_filter_medium": "בינוני", "catalog_filter_hard": "קשה", "catalog_filter_expert": "מומחה", "catalog_no_results": "לא נמצאו צמחים", "catalog_no_photo": "אין תמונה", "catalog_facts_title": "עובדות מעניינות", "catalog_problems_title": "בעיות נפוצות", "catalog_wick_ok": "פתילה OK", "catalog_wick_no": "ללא פתילה", "catalog_label_lighting": "תאורה (Lux)", "catalog_label_humidity": "לחות", "catalog_label_watering": "השקיה", "catalog_label_soil": "אדמה", "catalog_label_method": "שיטה:", "catalog_wick_suitable": "מתאים לפתילה", "catalog_wick_not": "לא לפתילה", "catalog_moss_needed": "צריך תמיכה", "catalog_moss_optional": "תמיכה אופציונלית", "catalog_flowering_title": "ניתן לתת דשן פריחה", "feeding_section_fertilizers": "דשנים", "feeding_section_additives": "תוספים", "feeding_section_rules": "כללי השקיה (תמיד)", "feeding_group_aroids": "ארואידים", "feeding_group_sensitive": "רגישים", "feeding_group_orchids": "סחלבים", "feeding_group_general": "צמחי בית כלליים", "feeding_group_carnivorous": "טורפניים", "feeding_wick_forbidden": "אסור בפתילה", "tracker_recipe": "1. מתכון ל-1 ליטר", "tracker_col_group": "קבוצה", "tracker_flush_note": "* שטיפה — ללא Universal", "tracker_calc_group": "קבוצה:", "tracker_calc_liters": "ליטרים:", "tracker_reference": "2. מדריך צמחים לפי קבוצות", "tracker_additives": "3. תוספים", "tracker_procedure": "4. סדר הכנה", "tracker_log": "5. יומן השקיה", "tracker_stat_total": "סה״כ", "tracker_stat_feeds": "דישונים", "tracker_stat_flushes": "שטיפות", "tracker_col_date": "תאריך", "tracker_col_type": "סוג", "tracker_col_notes": "הערות", "seasonal_spring": "🌸 אביב", "seasonal_summer": "☀️ קיץ", "seasonal_autumn": "🍂 סתיו", "seasonal_winter": "❄️ חורף", "seasonal_loading": "...טוען", "propagation_best_time": "🌸 הזמן הטוב ביותר לריבוי: אביב — תחילת קיץ", "propagation_tab_water": "💧 במים", "propagation_tab_soil": "🌱 באדמה", "propagation_tab_division": "✂️ חלוקה", "propagation_tab_airlayer": "🌿 הברכה אווירית", "propagation_tab_offsets": "👶 ייחורים", "pests_emergency_title": "🚨 כשמגלים מזיקים", "pests_symptoms_title": "🔍 זיהוי מהיר לפי תסמינים", "group_sensitive": "רגישים", "group_aroids": "ארואידים", "group_undemanding": "עמידים", "lang_ru": "RU", "lang_en": "EN", "lang_he": "HE"};
         var plantsData = {
   "settings": {
     "current_season": "growth"
@@ -1767,34 +1769,34 @@
         };
 
         var imageMap = {
-  "aglaonema": "IMAGES/Аглаонема.jpeg",
-  "alocasia_amazonica": "IMAGES/Алоказия.jpg",
-  "alocasia_frydek": "IMAGES/Алоказия Фрайдек.jpg",
-  "anthurium_andraeanum": "IMAGES/Антуриум.jpg",
-  "anthurium_clarinervium": "IMAGES/Антуриум кларинервиум.jpg",
-  "begonia_maculata": "IMAGES/Бегония макулата.jpg",
-  "guzmania": "IMAGES/Гузмания.jpg",
-  "dracaena_marginata": "IMAGES/Драцена маргината.jpg",
-  "dracaena_fragrans": "IMAGES/Драцена фрагранс.jpg",
-  "calathea_lancifolia": "IMAGES/Калатея лансифолия.jpg",
-  "calathea_ornata": "IMAGES/алатея орната.jpg",
-  "croton": "IMAGES/Кротон.jpg",
-  "monstera_adansonii": "IMAGES/Монстера адансони.jpeg",
-  "monstera_deliciosa": "IMAGES/Монстера делициоза.jpg",
-  "phalaenopsis": "IMAGES/Орхидея.jpg",
-  "spathiphyllum": "IMAGES/Спатифиллум.jpg",
-  "chamaedorea": "IMAGES/Хамедорея.jpg",
-  "chlorophytum_comosum": "IMAGES/Хлорофитум.jpg",
-  "epipremnum": "IMAGES/пипремнум.jpg",
-  "philodendron": "IMAGES/филодендрон imperial.jpg",
-  "philodendron_selloum": "IMAGES/Филодендрон Селлоу.jpg",
-  "dionaea": "IMAGES/Дионея.jpg",
-  "nephrolepis": "IMAGES/ПапоротникНефролепис.jpeg",
-  "sansevieria": "IMAGES/Сансевиерия.jpg",
-  "zamioculcas": "IMAGES/Замиокулькас.jpg",
-  "schlumbergera": "IMAGES/Шлюмбергера.jpg",
-  "saintpaulia": "IMAGES/Сенполия.jpg",
-  "actinidia_kiwi": "IMAGES/Киви.jpg"
+  "aglaonema": "../IMAGES/Аглаонема.jpeg",
+  "alocasia_amazonica": "../IMAGES/Алоказия.jpg",
+  "alocasia_frydek": "../IMAGES/Алоказия Фрайдек.jpg",
+  "anthurium_andraeanum": "../IMAGES/Антуриум.jpg",
+  "anthurium_clarinervium": "../IMAGES/Антуриум кларинервиум.jpg",
+  "begonia_maculata": "../IMAGES/Бегония макулата.jpg",
+  "guzmania": "../IMAGES/Гузмания.jpg",
+  "dracaena_marginata": "../IMAGES/Драцена маргината.jpg",
+  "dracaena_fragrans": "../IMAGES/Драцена фрагранс.jpg",
+  "calathea_lancifolia": "../IMAGES/Калатея лансифолия.jpg",
+  "calathea_ornata": "../IMAGES/алатея орната.jpg",
+  "croton": "../IMAGES/Кротон.jpg",
+  "monstera_adansonii": "../IMAGES/Монстера адансони.jpeg",
+  "monstera_deliciosa": "../IMAGES/Монстера делициоза.jpg",
+  "phalaenopsis": "../IMAGES/Орхидея.jpg",
+  "spathiphyllum": "../IMAGES/Спатифиллум.jpg",
+  "chamaedorea": "../IMAGES/Хамедорея.jpg",
+  "chlorophytum_comosum": "../IMAGES/Хлорофитум.jpg",
+  "epipremnum": "../IMAGES/пипремнум.jpg",
+  "philodendron": "../IMAGES/филодендрон imperial.jpg",
+  "philodendron_selloum": "../IMAGES/Филодендрон Селлоу.jpg",
+  "dionaea": "../IMAGES/Дионея.jpg",
+  "nephrolepis": "../IMAGES/ПапоротникНефролепис.jpeg",
+  "sansevieria": "../IMAGES/Сансевиерия.jpg",
+  "zamioculcas": "../IMAGES/Замиокулькас.jpg",
+  "schlumbergera": "../IMAGES/Шлюмбергера.jpg",
+  "saintpaulia": "../IMAGES/Сенполия.jpg",
+  "actinidia_kiwi": "../IMAGES/Киви.jpg"
 };
 
         var plantsGrid = document.getElementById('plantsGrid');

@@ -1,127 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Миксер воды и удобрений - Plants Care</title>
-    <style>
-        /* === Common design system === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f0;
-            min-height: 100vh;
-            padding: 16px;
-            color: #333;
-            line-height: 1.5;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 6px;
-            padding: 24px 28px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid #e5e5e0;
-        }
-        header {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e5e5e0;
-        }
-        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
-        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
-        .subtitle { color: #666; font-size: 0.9rem; }
-        a { color: #2d6a4f; }
-        .nav-back, .nav-home {
-            display: inline-block;
-            margin-bottom: 12px;
-            text-decoration: none;
-            color: #2d6a4f;
-            font-size: 0.9rem;
-        }
-        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
-        .controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        #searchInput {
-            flex: 1;
-            min-width: 200px;
-            padding: 7px 12px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        #searchInput:focus {
-            border-color: #2d6a4f;
-            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
-        }
-        .btn-print, .btn-parts {
-            padding: 7px 16px;
-            background: #2d6a4f;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
-        .btn-parts.active { background: #1b4332; }
-        .no-results {
-            text-align: center;
-            padding: 32px;
-            color: #888;
-            font-size: 1rem;
-            display: none;
-        }
-        footer {
-            margin-top: 32px;
-            padding-top: 16px;
-            border-top: 1px solid #e5e5e0;
-            color: #888;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-        @media (max-width: 768px) {
-            .container { padding: 16px; }
-            h1 { font-size: 1.3rem; }
-        }
-        @media print {
-            body { background: #fff; padding: 0; }
-            .container { box-shadow: none; border: none; }
-            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
-        }
+{% extends "base.html" %}
 
-        /* Lang switcher */
-        .lang-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 9999;
-            display: flex;
-            gap: 2px;
-            background: rgba(255,255,255,0.92);
-            padding: 3px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        .lang-switcher a {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #555;
-        }
-        .lang-switcher a:hover { background: #eee; }
-        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
-    </style>
+{% block title %}Миксер воды и удобрений - Plants Care{% endblock %}
+
+{% block head %}
     <style>
         header { text-align: center; }
         .season-toggle {
@@ -342,19 +223,15 @@
             .canisters-grid { gap: 12px; }
         }
     </style>
-</head>
-<body>
-<div class="lang-switcher">
-    <a href="water-mixer.html" class="active">RU</a>
-    <a href="en/water-mixer.html" >EN</a>
-    <a href="he/water-mixer.html" >HE</a>
-</div>
+{% endblock %}
+
+{% block body %}
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">{{ t.nav_home }}</a>
 
         <header>
-            <h1>Миксер воды и удобрений</h1>
-            <p class="subtitle">Смешивай правильно — по PPM и сезону</p>
+            <h1>{{ t.mixer_title }}</h1>
+            <p class="subtitle">{{ t.mixer_subtitle }}</p>
         </header>
 
         <!-- Info banner -->
@@ -560,37 +437,37 @@
                         </div>
                         <div class="plants-grid">
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Калатея лансифолия.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.calathea_lancifolia }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Калатея Л.</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/алатея орната.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.calathea_ornata }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Калатея О.</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/ПапоротникНефролепис.jpeg" class="plant-mini-image" alt="">
+                                <img src="{{ images.nephrolepis }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Папоротник</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Алоказия.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.alocasia_amazonica }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Алоказия</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Алоказия Фрайдек.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.alocasia_frydek }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">А. Фрайдек</div>
                             </div>
                             <div class="plant-card-mini">
                                 <span class="fert-badge">🌸</span>
-                                <img src="IMAGES/Антуриум.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.anthurium_andraeanum }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Антуриум</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Антуриум кларинервиум.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.anthurium_clarinervium }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">А. кларинервиум</div>
                             </div>
                             <div class="plant-card-mini">
                                 <span class="fert-badge">🌸</span>
-                                <img src="IMAGES/Гузмания.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.guzmania }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Гузмания</div>
                             </div>
                         </div>
@@ -605,7 +482,7 @@
                         <div class="plants-grid">
                             <div class="plant-card-mini">
                                 <span class="fert-badge">🌸</span>
-                                <img src="IMAGES/Орхидея.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.phalaenopsis }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Орхидея</div>
                             </div>
                         </div>
@@ -618,7 +495,7 @@
                         </div>
                         <div class="plants-grid">
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Дионея.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.dionaea }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Дионея</div>
                             </div>
                         </div>
@@ -654,36 +531,36 @@
                         </div>
                         <div class="plants-grid">
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Монстера делициоза.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.monstera_deliciosa }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Монстера Д.</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Монстера адансони.jpeg" class="plant-mini-image" alt="">
+                                <img src="{{ images.monstera_adansonii }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Монстера А.</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/филодендрон imperial.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.philodendron }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Филодендрон</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Филодендрон Селлоу.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.philodendron_selloum }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Ф. Селлоу</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/пипремнум.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.epipremnum }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Эпипремнум</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Аглаонема.jpeg" class="plant-mini-image" alt="">
+                                <img src="{{ images.aglaonema }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Аглаонема</div>
                             </div>
                             <div class="plant-card-mini">
                                 <span class="fert-badge">🌸</span>
-                                <img src="IMAGES/Бегония макулата.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.begonia_maculata }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Бегония</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Киви.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.actinidia_kiwi }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Киви</div>
                             </div>
                         </div>
@@ -698,12 +575,12 @@
                         <div class="plants-grid">
                             <div class="plant-card-mini">
                                 <span class="fert-badge">🌸</span>
-                                <img src="IMAGES/Спатифиллум.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.spathiphyllum }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Спатифиллум</div>
                             </div>
                             <div class="plant-card-mini">
                                 <span class="fert-badge">🌸</span>
-                                <img src="IMAGES/Сенполия.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.saintpaulia }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Сенполия</div>
                             </div>
                         </div>
@@ -742,31 +619,31 @@
                         </div>
                         <div class="plants-grid">
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Сансевиерия.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.sansevieria }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Сансевиерия</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Драцена маргината.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.dracaena_marginata }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Драцена М.</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Драцена фрагранс.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.dracaena_fragrans }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Драцена Ф.</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Хлорофитум.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.chlorophytum_comosum }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Хлорофитум</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Кротон.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.croton }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Кротон</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Хамедорея.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.chamaedorea }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Хамедорея</div>
                             </div>
                             <div class="plant-card-mini">
-                                <img src="IMAGES/Замиокулькас.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.zamioculcas }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Замиокулькас</div>
                             </div>
                         </div>
@@ -781,7 +658,7 @@
                         <div class="plants-grid">
                             <div class="plant-card-mini">
                                 <span class="fert-badge">🌸</span>
-                                <img src="IMAGES/Шлюмбергера.jpg" class="plant-mini-image" alt="">
+                                <img src="{{ images.schlumbergera }}" class="plant-mini-image" alt="">
                                 <div class="plant-mini-name">Декабрист</div>
                             </div>
                         </div>
@@ -1137,5 +1014,6 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
+
+{% block scripts %}{% endblock %}

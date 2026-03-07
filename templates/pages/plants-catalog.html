@@ -1,0 +1,721 @@
+{% extends "base.html" %}
+
+{% block title %}Каталог растений - Plants Care{% endblock %}
+
+{% block head %}
+    <style>
+        .container { max-width: 1400px; }
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 16px;
+        }
+        .plant-card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+        .plant-card:hover { border-color: #2d6a4f; }
+        .plant-card.hidden { display: none; }
+        .plant-image-container { position: relative; width: 100%; height: 220px; background: #eee; }
+        .flowering-badge {
+            position: absolute; top: 8px; left: 8px; font-size: 1.2rem;
+            background: rgba(255,255,255,0.9); border-radius: 50%;
+            width: 28px; height: 28px; display: flex; align-items: center;
+            justify-content: center; z-index: 5;
+        }
+        .plant-image { width: 100%; height: 100%; object-fit: cover; }
+        .plant-image-placeholder {
+            width: 100%; height: 100%; display: none;
+            align-items: center; justify-content: center; flex-direction: column;
+            color: #aaa; background: #f0f0ec;
+        }
+        .placeholder-icon { font-size: 2.5rem; margin-bottom: 8px; opacity: 0.4; }
+        .plant-type-badge {
+            position: absolute; top: 8px; right: 8px;
+            background: rgba(255,255,255,0.88); padding: 3px 8px;
+            border-radius: 3px; font-size: 0.75rem; font-weight: 600; color: #333;
+        }
+        .plant-content { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; }
+        .plant-header { margin-bottom: 12px; }
+        .plant-name { font-size: 1.15rem; font-weight: 600; color: #1a1a1a; margin-bottom: 2px; }
+        .plant-latin { font-size: 0.85rem; color: #888; font-style: italic; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        .info-item { display: flex; flex-direction: column; }
+        .info-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 2px; }
+        .info-value { font-size: 0.85rem; font-weight: 500; color: #444; }
+        .care-section { margin-top: auto; border-top: 1px solid #eee; padding-top: 12px; }
+        .notes-list { list-style: none; font-size: 0.82rem; color: #555; }
+        .notes-list li { position: relative; padding-left: 16px; margin-bottom: 4px; }
+        .notes-list li::before { content: "\2022"; position: absolute; left: 0; color: #2d6a4f; font-weight: bold; }
+        .risk-item { color: #b91c1c; font-weight: 500; }
+        .risk-item::before { color: #b91c1c !important; }
+        .moss-pole-badge, .difficulty-badge, .wick-badge, .canister-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 2px 8px; border-radius: 3px; font-size: 0.75rem; font-weight: 600;
+        }
+        .moss-pole-yes { background: #d1fae5; color: #065f46; }
+        .moss-pole-optional { background: #fef3c7; color: #78350f; }
+        .moss-pole-no { background: #f0f0ec; color: #555; }
+        .difficulty-easy { background: #d1fae5; color: #065f46; }
+        .difficulty-medium { background: #fef3c7; color: #78350f; }
+        .difficulty-hard { background: #fee2e2; color: #991b1b; }
+        .difficulty-expert { background: #ede9fe; color: #5b21b6; }
+        .canister-badge { text-decoration: none; margin-right: 4px; }
+        .canister-a { background: #dbeafe; color: #1e40af; }
+        .canister-b { background: #d1fae5; color: #065f46; }
+        .canister-c { background: #f0f0ec; color: #555; }
+        .wick-yes { background: #d1fae5; color: #065f46; }
+        .wick-no { background: #fee2e2; color: #991b1b; }
+        .facts-problems { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #e5e5e0; }
+        .facts-section, .problems-section { margin-bottom: 10px; }
+        .section-title { font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+        .facts-title { color: #1e40af; }
+        .problems-title { color: #991b1b; }
+        .facts-list, .problems-list { list-style: none; font-size: 0.82rem; line-height: 1.5; }
+        .facts-list li { padding: 3px 0 3px 16px; color: #555; position: relative; }
+        .facts-list li::before { content: "\2022"; position: absolute; left: 0; color: #1e40af; }
+        .problems-list li {
+            color: #78350f; background: #fffbeb; padding: 5px 8px;
+            border-radius: 3px; margin-bottom: 3px; border-left: 3px solid #d97706;
+        }
+        .badges-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+        .filter-label { font-size: 0.85rem; color: #555; font-weight: 500; margin-right: 4px; }
+        .filter-btn {
+            padding: 5px 12px; border: 1px solid #ccc; background: #fff;
+            border-radius: 4px; cursor: pointer; font-size: 0.82rem; font-weight: 500;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .filter-btn:hover { border-color: #2d6a4f; }
+        .filter-btn.active { background: #2d6a4f; color: #fff; border-color: #2d6a4f; }
+        .filter-btn.filter-easy.active { background: #065f46; border-color: #065f46; }
+        .filter-btn.filter-medium.active { background: #78350f; border-color: #78350f; }
+        .filter-btn.filter-hard.active { background: #991b1b; border-color: #991b1b; }
+        .filter-btn.filter-expert.active { background: #5b21b6; border-color: #5b21b6; }
+        .no-results { grid-column: 1 / -1; }
+        @media (max-width: 768px) { .plants-grid { grid-template-columns: 1fr; } }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-home">{{ t.nav_home }}</a>
+            <h1>{{ t.catalog_title }}</h1>
+            <p class="subtitle">{{ t.catalog_subtitle }}</p>
+        </header>
+
+        <div class="controls">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="{{ t.catalog_search }}"
+                autocomplete="off"
+            >
+            <div class="filter-group">
+                <span class="filter-label">{{ t.catalog_filter_label }}</span>
+                <button class="filter-btn active" data-difficulty="all">{{ t.catalog_filter_all }}</button>
+                <button class="filter-btn filter-easy" data-difficulty="easy">🟢 {{ t.catalog_filter_easy }}</button>
+                <button class="filter-btn filter-medium" data-difficulty="medium">🟡 {{ t.catalog_filter_medium }}</button>
+                <button class="filter-btn filter-hard" data-difficulty="hard">🔴 {{ t.catalog_filter_hard }}</button>
+                <button class="filter-btn filter-expert" data-difficulty="expert">🟣 {{ t.catalog_filter_expert }}</button>
+            </div>
+        </div>
+
+        <div id="plantsGrid" class="plants-grid">
+        </div>
+
+        <div id="noResults" class="no-results">{{ t.catalog_no_results }}</div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var t = {{ t_json|safe }};
+        var plantsData = {{ plants_json|safe }};
+
+        var canisterMap = {{ canister_json|safe }};
+
+        var factsAndProblems = {
+            "monstera_deliciosa": {
+                facts: [
+                    "Дырки в листьях помогают выдержать тропические ливни",
+                    "В природе плоды съедобны и пахнут ананасом",
+                    "Может вырасти до 20 метров в джунглях"
+                ],
+                problems: [
+                    "Жёлтые листья → перелив или недостаток света",
+                    "Нет дырок в листьях → мало света",
+                    "Коричневые пятна → солнечный ожог"
+                ]
+            },
+            "monstera_adansonii": {
+                facts: [
+                    "Называют 'швейцарский сыр' за форму отверстий",
+                    "Быстро растёт — до 30 см в месяц летом",
+                    "Отлично смотрится в подвесных кашпо"
+                ],
+                problems: [
+                    "Желтеют нижние листья → естественное старение",
+                    "Мелкие листья без дырок → мало света",
+                    "Коричневые края → низкая влажность"
+                ]
+            },
+            "philodendron": {
+                facts: [
+                    "Название означает 'любящий деревья' (греч.)",
+                    "Более 400 видов в семействе",
+                    "Очищает воздух от формальдегида"
+                ],
+                problems: [
+                    "Вытянутые стебли → недостаток света",
+                    "Жёлтые листья → перелив",
+                    "Мелкие листья → нужна подкормка"
+                ]
+            },
+            "philodendron_selloum": {
+                facts: [
+                    "В природе вырастает до 3-5 метров в ширину",
+                    "Листья глубоко рассечённые — до 40-50 см длиной",
+                    "Переклассифицирован в род Thaumatophyllum"
+                ],
+                problems: [
+                    "Много жёлтых листьев → перелив или тесный горшок",
+                    "Листья поникли → недолив или мало света",
+                    "Коричневые края → сухой воздух или ожог"
+                ]
+            },
+            "epipremnum": {
+                facts: [
+                    "Одно из самых неубиваемых растений",
+                    "Может расти в воде годами",
+                    "NASA включило в список очистителей воздуха"
+                ],
+                problems: [
+                    "Потеря пестроты → мало света",
+                    "Гниль стебля → перелив + холод",
+                    "Коричневые пятна → солнечный ожог"
+                ]
+            },
+            "aglaonema": {
+                facts: [
+                    "Считается символом удачи в Азии",
+                    "Выживает при минимальном освещении",
+                    "Существует более 100 сортов"
+                ],
+                problems: [
+                    "Скручиваются листья → холод или сквозняк",
+                    "Бледнеет окраска → слишком темно",
+                    "Коричневые кончики → сухой воздух"
+                ]
+            },
+            "spathiphyllum": {
+                facts: [
+                    "'Женское счастье' — популярное название",
+                    "Цветёт белыми 'парусами' круглый год",
+                    "Сигнализирует о жажде поникшими листьями"
+                ],
+                problems: [
+                    "Не цветёт → мало света или удобрений",
+                    "Коричневые кончики → жёсткая вода",
+                    "Жёлтые листья → перелив"
+                ]
+            },
+            "calathea_lancifolia": {
+                facts: [
+                    "Листья складываются на ночь как в молитве",
+                    "Узоры на листьях уникальны как отпечатки",
+                    "Родом из бразильских тропиков"
+                ],
+                problems: [
+                    "Сохнут края → низкая влажность или жёсткая вода",
+                    "Скручиваются листья → мало воды",
+                    "Бледнеют узоры → слишком много света"
+                ]
+            },
+            "calathea_ornata": {
+                facts: [
+                    "Розовые полоски с возрастом белеют",
+                    "Листья двигаются за солнцем в течение дня",
+                    "Одна из самых красивых калатей"
+                ],
+                problems: [
+                    "Коричневые края → обязательно RO вода!",
+                    "Тусклые листья → нужна влажность 60%+",
+                    "Паутинный клещ → частая проблема"
+                ]
+            },
+            "alocasia_amazonica": {
+                facts: [
+                    "'Африканская маска' — народное название",
+                    "Может уйти в спячку зимой и сбросить листья",
+                    "Клубень выживает даже без листьев"
+                ],
+                problems: [
+                    "Опали все листья → спячка, не выбрасывайте!",
+                    "Жёлтые пятна → перелив",
+                    "Паутинный клещ → главный враг"
+                ]
+            },
+            "alocasia_frydek": {
+                facts: [
+                    "Бархатные стреловидные листья с белыми жилками",
+                    "Родом из Филиппин",
+                    "Имеет клубень — может пережить полную потерю листьев"
+                ],
+                problems: [
+                    "Опали все листья → спячка, не выбрасывайте!",
+                    "Жёлтые пятна → перелив или плотный грунт",
+                    "Паутинный клещ → главный враг бархатных листьев"
+                ]
+            },
+            "anthurium_andraeanum": {
+                facts: [
+                    "'Цветок' — это на самом деле лист (покрывало)",
+                    "Цветёт почти круглый год",
+                    "Символ гостеприимства на Гавайях"
+                ],
+                problems: [
+                    "Не цветёт → мало света или холодно",
+                    "Зелёные цветы → недостаток света",
+                    "Коричневые пятна → бактериальная инфекция"
+                ]
+            },
+            "anthurium_clarinervium": {
+                facts: [
+                    "Бархатные листья с контрастными белыми жилками",
+                    "Растёт на скалах в Мексике (литофит)",
+                    "Имеет толстый клубень для запаса влаги"
+                ],
+                problems: [
+                    "Жёлтые листья → перелив или плотный грунт",
+                    "Сухие края → низкая влажность воздуха",
+                    "Гниль клубня → срочно просушить и пересадить"
+                ]
+            },
+            "guzmania": {
+                facts: [
+                    "Цветёт один раз в жизни, затем даёт деток",
+                    "Воду наливают в розетку, не в грунт",
+                    "Относится к семейству ананасовых"
+                ],
+                problems: [
+                    "Материнское растение умирает → норма после цветения!",
+                    "Гниёт розетка → вода попала + холод",
+                    "Бледный цвет → мало света"
+                ]
+            },
+            "nephrolepis": {
+                facts: [
+                    "Один из древнейших видов растений (300 млн лет)",
+                    "Идеальный очиститель воздуха",
+                    "Любит ванную комнату с окном"
+                ],
+                problems: [
+                    "Осыпаются листочки → сухой воздух!",
+                    "Жёлтые вайи → перелив",
+                    "Коричневые споры снизу листа → это норма!"
+                ]
+            },
+            "phalaenopsis": {
+                facts: [
+                    "Может цвести 3-6 месяцев подряд",
+                    "Корни фотосинтезируют — не закапывайте!",
+                    "В природе растёт на деревьях, не в земле"
+                ],
+                problems: [
+                    "Не цветёт → нужен перепад температур",
+                    "Жёлтые листья снизу → норма (1-2 в год)",
+                    "Гнилые корни → пересадите в кору!"
+                ]
+            },
+            "dracaena_marginata": {
+                facts: [
+                    "'Драконово дерево' — из-за красного сока",
+                    "Живёт десятилетиями",
+                    "Очищает воздух от бензола и ксилола"
+                ],
+                problems: [
+                    "Сохнут кончики → жёсткая вода с фтором",
+                    "Опадают нижние листья → норма с возрастом",
+                    "Мягкий ствол → гниль от перелива"
+                ]
+            },
+            "dracaena_fragrans": {
+                facts: [
+                    "Цветёт очень редко, но аромат сильный",
+                    "Может вырасти до 2 метров дома",
+                    "Одна из лучших для офисов"
+                ],
+                problems: [
+                    "Коричневые пятна → избыток фтора в воде",
+                    "Бледные листья → мало света",
+                    "Мягкий ствол → срочно проверьте корни!"
+                ]
+            },
+            "croton": {
+                facts: [
+                    "Чем больше света — тем ярче краски",
+                    "Млечный сок ядовит — осторожно!",
+                    "Не любит перемещений — сбрасывает листья"
+                ],
+                problems: [
+                    "Опадают листья → стресс от переезда",
+                    "Тусклые цвета → нужно больше света",
+                    "Паутинный клещ → частая проблема"
+                ]
+            },
+            "sansevieria": {
+                facts: [
+                    "'Тёщин язык' — выживает при любом уходе",
+                    "Выделяет кислород ночью (идеально для спальни)",
+                    "Может месяц без полива"
+                ],
+                problems: [
+                    "Мягкие листья → перелив! Срочно просушите",
+                    "Бледнеет → можно добавить света",
+                    "Не растёт → это нормально, она медленная"
+                ]
+            },
+            "begonia_maculata": {
+                facts: [
+                    "'Крыло ангела' — за форму листьев",
+                    "Серебряные точки — естественный узор",
+                    "Цветёт розовыми гроздьями"
+                ],
+                problems: [
+                    "Опадают листья → сквозняк или стресс",
+                    "Мучнистая роса → улучшите вентиляцию",
+                    "Вытягивается → прищипните для кустистости"
+                ]
+            },
+            "chamaedorea": {
+                facts: [
+                    "Одна из немногих пальм для дома",
+                    "Очень теневынослива",
+                    "Может цвести жёлтыми метёлками"
+                ],
+                problems: [
+                    "Сохнут кончики → сухой воздух",
+                    "Жёлтые листья → перелив или холод",
+                    "Паутинный клещ → осматривайте регулярно"
+                ]
+            },
+            "chlorophytum_comosum": {
+                facts: [
+                    "Чемпион по очистке воздуха (NASA)",
+                    "Даёт 'деток' на длинных усах",
+                    "Практически неубиваем"
+                ],
+                problems: [
+                    "Коричневые кончики → жёсткая вода",
+                    "Бледные листья → мало света",
+                    "Нет деток → растение ещё молодое"
+                ]
+            },
+            "dionaea": {
+                facts: [
+                    "Ловушка срабатывает за 0.1 секунды",
+                    "Переваривает насекомых 5-12 дней",
+                    "ОБЯЗАТЕЛЬНА холодная зимовка 3-4 месяца!"
+                ],
+                problems: [
+                    "Чернеют ловушки → норма после еды",
+                    "Погибает через 1-2 года → не было зимовки!",
+                    "Слабые ловушки → нужно больше солнца"
+                ]
+            },
+            "zamioculcas": {
+                facts: [
+                    "'Долларовое дерево' — считается символом богатства",
+                    "Может месяцами обходиться без полива",
+                    "Растёт очень медленно, но живёт десятилетиями"
+                ],
+                problems: [
+                    "Жёлтые листья → перелив! Просушите грунт",
+                    "Не растёт → это нормально, ZZ очень медленный",
+                    "Мягкий стебель → гниль от переувлажнения"
+                ]
+            },
+            "schlumbergera": {
+                facts: [
+                    "Цветёт зимой, за что получил имя 'Декабрист'",
+                    "Эпифит из бразильских тропических лесов",
+                    "Может жить более 30 лет и передаваться по наследству"
+                ],
+                problems: [
+                    "Не цветёт → нужен период покоя с коротким днём",
+                    "Опадают бутоны → не переставляйте!",
+                    "Вялые сегменты → перелив или недолив"
+                ]
+            },
+            "saintpaulia": {
+                facts: [
+                    "Названа в честь барона Вальтера фон Сен-Поля",
+                    "Может цвести круглый год без перерыва",
+                    "Идеальное растение для фитильного полива"
+                ],
+                problems: [
+                    "Пятна на листьях → попала вода!",
+                    "Не цветёт → мало света или нужна подкормка",
+                    "Гниёт середина → вода в точке роста"
+                ]
+            },
+            "actinidia_kiwi": {
+                facts: [
+                    "Киви — это ягода, а не фрукт",
+                    "Лиана может вырасти до 9 метров в природе",
+                    "Содержит больше витамина С, чем апельсин"
+                ],
+                problems: [
+                    "Сохнут листья → мало влажности или света",
+                    "Не растёт → нужно больше солнца",
+                    "Бледные листья → хлороз, проверьте pH почвы"
+                ]
+            }
+        };
+
+        var imageMap = {{ images_json|safe }};
+
+        var plantsGrid = document.getElementById('plantsGrid');
+        var searchInput = document.getElementById('searchInput');
+        var noResults = document.getElementById('noResults');
+
+        function createPlantCard(id, plant) {
+            var card = document.createElement('div');
+            card.className = 'plant-card';
+            card.dataset.name = plant.name;
+            card.dataset.latin = plant.latin_name;
+            card.dataset.type = plant.type;
+            card.dataset.difficulty = plant.difficulty || 'medium';
+
+            var feedingSeason = plantsData.settings.current_season;
+            var feedingGroup = plant.feeding_group || 'general_houseplants';
+            var matrix = plantsData.feeding_matrix[feedingGroup][feedingSeason];
+
+            var feedingAction = '';
+            var waterAction = 'Cal-Mag (RO) + pH adjust if needed';
+
+            if (feedingGroup === 'carnivorous') {
+                feedingAction = '<span style="color: #e53e3e; font-weight: bold;">FORBIDDEN</span>';
+                waterAction = 'RO only (TDS < 10)';
+            } else {
+                var items = [];
+                var nameMap = {
+                    'flower_universal': 'Universal',
+                    'flower_flowering': 'Flowering',
+                    'ecogan_multicote': 'Multicote'
+                };
+
+                ['flower_universal', 'flower_flowering', 'ecogan_multicote'].forEach(function(key) {
+                    var status = matrix[key];
+                    if (status && status !== 'forbidden') {
+                        if (key === 'ecogan_multicote' && plant.wick_watering && plant.wick_watering.recommended) {
+                            return;
+                        }
+
+                        var shortName = nameMap[key];
+                        if (status.indexOf('restricted') !== -1) {
+                            var doseMatch = status.match(/\((.*?)\)/);
+                            var dose = doseMatch ? doseMatch[1].replace(' dose', '') : 'weak';
+                            items.push(shortName + ' (' + dose + ')');
+                        } else {
+                            items.push(shortName);
+                        }
+                    }
+                });
+
+                if (items.length === 0) {
+                    feedingAction = 'NO fertilizers';
+                } else {
+                    feedingAction = items.join(' / ') + ' — OK';
+                }
+            }
+
+            var feedingLine = 'Feeding (' + feedingSeason + '): ' + feedingAction + '. Water: ' + waterAction + '.';
+
+            var imagePath = imageMap[id] || ('IMAGES/' + plant.name + '.jpg');
+
+            var notesHtml = '';
+            if (plant.care_notes && plant.care_notes.length > 0) {
+                plant.care_notes.forEach(function(note) {
+                    notesHtml += '<li>' + note + '</li>';
+                });
+            }
+
+            if (plant.risks && plant.risks.length > 0) {
+                plant.risks.forEach(function(risk) {
+                    notesHtml += '<li class="risk-item">\u26A0\uFE0F ' + risk + '</li>';
+                });
+            }
+
+            var difficultyMap = {
+                'easy': { label: t.catalog_filter_easy, cls: 'difficulty-easy', icon: '\uD83D\uDFE2' },
+                'medium': { label: t.catalog_filter_medium, cls: 'difficulty-medium', icon: '\uD83D\uDFE1' },
+                'hard': { label: t.catalog_filter_hard, cls: 'difficulty-hard', icon: '\uD83D\uDD34' },
+                'expert': { label: t.catalog_filter_expert, cls: 'difficulty-expert', icon: '\uD83D\uDFE3' }
+            };
+            var diff = difficultyMap[plant.difficulty] || difficultyMap['medium'];
+
+            var floweringPlants = ['spathiphyllum', 'anthurium_andraeanum', 'phalaenopsis', 'begonia_maculata', 'guzmania', 'schlumbergera', 'saintpaulia'];
+            var isFlowering = floweringPlants.indexOf(id) !== -1;
+
+            var mossPoleMap = {
+                'recommended': { label: t.catalog_moss_needed, cls: 'moss-pole-yes', icon: '\uD83C\uDF3F' },
+                'optional': { label: t.catalog_moss_optional, cls: 'moss-pole-optional', icon: '\uD83C\uDF31' },
+                'none': null
+            };
+            var mossPole = mossPoleMap[plant.moss_pole];
+
+            var canister = canisterMap[id];
+            var waterGroupDetails = {
+                'A': { label: 'A \u2014 PPM 60-90, pH 5.8-6.3', subtitle: t.group_sensitive },
+                'B': { label: 'B \u2014 PPM 90-140, pH 6.0-6.5', subtitle: t.group_aroids },
+                'C': { label: 'C \u2014 PPM 120-170, pH 6.2-6.7', subtitle: t.group_undemanding }
+            };
+            var canisterInfo = canister ? {
+                letter: canister,
+                cls: 'canister-' + canister.toLowerCase(),
+                title: waterGroupDetails[canister].subtitle,
+                label: waterGroupDetails[canister].label
+            } : null;
+
+            var plantFacts = factsAndProblems[id];
+            var factsHtml = '';
+            if (plantFacts) {
+                var factsListHtml = '';
+                plantFacts.facts.forEach(function(f) { factsListHtml += '<li>' + f + '</li>'; });
+                var problemsListHtml = '';
+                plantFacts.problems.forEach(function(p) { problemsListHtml += '<li>' + p + '</li>'; });
+
+                factsHtml = '<div class="facts-problems">' +
+                    '<div class="facts-section">' +
+                    '<div class="section-title facts-title">\u2728 ' + t.catalog_facts_title + '</div>' +
+                    '<ul class="facts-list">' + factsListHtml + '</ul>' +
+                    '</div>' +
+                    '<div class="problems-section">' +
+                    '<div class="section-title problems-title">\u26A0\uFE0F ' + t.catalog_problems_title + '</div>' +
+                    '<ul class="problems-list">' + problemsListHtml + '</ul>' +
+                    '</div>' +
+                    '</div>';
+            }
+
+            var wickHtml = plant.wick_watering.recommended
+                ? '<span class="wick-badge wick-yes">\uD83E\uDDF5 ' + t.catalog_wick_ok + '</span>'
+                : '<span class="wick-badge wick-no">\uD83D\uDEAB ' + t.catalog_wick_no + '</span>';
+
+            var soilText = plant.soil.wick_mix_number
+                ? '\u2116' + plant.soil.mix_number + ' (ручной) / \u2116' + plant.soil.wick_mix_number + ' (фитиль)'
+                : '\u2116' + (plant.soil.mix_number || '-');
+
+            card.innerHTML =
+                '<div class="plant-image-container">' +
+                    (isFlowering ? '<div class="flowering-badge" title="' + t.catalog_flowering_title + '">\uD83C\uDF38</div>' : '') +
+                    '<img src="' + imagePath + '" alt="' + plant.name + '" class="plant-image" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\'">' +
+                    '<div class="plant-image-placeholder">' +
+                        '<div class="placeholder-icon">\uD83C\uDF3F</div>' +
+                        '<div>' + t.catalog_no_photo + '</div>' +
+                    '</div>' +
+                    '<div class="plant-type-badge">' + plant.type + '</div>' +
+                '</div>' +
+                '<div class="plant-content">' +
+                    '<div class="plant-header">' +
+                        '<div class="plant-name">' + plant.name + '</div>' +
+                        '<div class="plant-latin">' + plant.latin_name + '</div>' +
+                    '</div>' +
+                    '<div class="badges-row">' +
+                        '<span class="difficulty-badge ' + diff.cls + '">' + diff.icon + ' ' + diff.label + '</span>' +
+                        (mossPole ? '<span class="moss-pole-badge ' + mossPole.cls + '">' + mossPole.icon + ' ' + mossPole.label + '</span>' : '') +
+                        (canisterInfo ? '<a href="water-groups.html" class="canister-badge ' + canisterInfo.cls + '" title="' + canisterInfo.title + '">\uD83D\uDCA7 ' + canisterInfo.label + '</a>' : '') +
+                        wickHtml +
+                    '</div>' +
+                    '<div class="info-grid">' +
+                        '<div class="info-item">' +
+                            '<span class="info-label">' + t.catalog_label_lighting + '</span>' +
+                            '<span class="info-value">' + plant.lighting.lux_min + ' - ' + plant.lighting.lux_optimal + '</span>' +
+                        '</div>' +
+                        '<div class="info-item">' +
+                            '<span class="info-label">' + t.catalog_label_humidity + '</span>' +
+                            '<span class="info-value">' + plant.humidity.level + '</span>' +
+                        '</div>' +
+                        '<div class="info-item">' +
+                            '<span class="info-label">' + t.catalog_label_watering + '</span>' +
+                            '<span class="info-value">' + plant.watering.frequency + '</span>' +
+                        '</div>' +
+                        '<div class="info-item">' +
+                            '<span class="info-label">' + t.catalog_label_soil + '</span>' +
+                            '<span class="info-value"><a href="soil-groups.html" style="color:inherit;text-decoration:none;border-bottom:1px dashed #aaa">' + soilText + '</a></span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div style="margin-bottom: 15px; padding: 12px; background: #f0f4f8; border-left: 4px solid #56ab2f; border-radius: 4px; font-size: 0.95rem; line-height: 1.4;">' +
+                        '<strong>' + feedingLine + '</strong>' +
+                    '</div>' +
+                    '<div class="care-section">' +
+                        '<ul class="notes-list">' +
+                            '<li><strong>' + t.catalog_label_method + '</strong> ' + plant.watering.method + '</li>' +
+                            (plant.wick_watering.recommended ? '<li>\u2705 ' + t.catalog_wick_suitable + '</li>' : '<li>\u274C ' + t.catalog_wick_not + '</li>') +
+                            notesHtml +
+                        '</ul>' +
+                    '</div>' +
+                    factsHtml +
+                '</div>';
+            return card;
+        }
+
+        function renderPlants() {
+            var plants = plantsData.plants;
+            Object.keys(plants).forEach(function(id) {
+                var card = createPlantCard(id, plants[id]);
+                plantsGrid.appendChild(card);
+            });
+        }
+
+        var currentDifficulty = 'all';
+
+        function filterPlants() {
+            var query = searchInput.value.toLowerCase().trim();
+            var cards = document.querySelectorAll('.plant-card');
+            var visibleCount = 0;
+
+            cards.forEach(function(card) {
+                var searchText = (card.dataset.name + ' ' + card.dataset.latin + ' ' + card.dataset.type).toLowerCase();
+                var matchesSearch = searchText.indexOf(query) !== -1;
+                var matchesDifficulty = currentDifficulty === 'all' || card.dataset.difficulty === currentDifficulty;
+
+                if (matchesSearch && matchesDifficulty) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        searchInput.addEventListener('input', filterPlants);
+
+        var filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                filterButtons.forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+                currentDifficulty = this.dataset.difficulty;
+                filterPlants();
+            });
+        });
+
+        renderPlants();
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var searchQuery = urlParams.get('search');
+        if (searchQuery) {
+            searchInput.value = searchQuery;
+            filterPlants();
+        }
+    </script>
+{% endblock %}

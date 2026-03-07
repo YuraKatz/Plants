@@ -378,6 +378,22 @@ soil_mixes:
       - component: Сфагнум (мох)
         percentage: 10
 
+  mix_carnivorous:
+    name: Для хищных растений
+    watering_type: поддон
+    plant_ids:
+      - dionaea
+    suitable_for:
+      - Дионея (Венерина мухоловка)
+    warnings:
+      - КРИТИЧНО — любые удобрения убивают растение
+      - Использовать ТОЛЬКО дистиллят или чистый RO (TDS < 10)
+    composition:
+      - component: Верховой торф (без удобрений!)
+        percentage: 70
+      - component: Перлит
+        percentage: 30
+
 general_principles:
   wick_watering_rule: Фитильный полив требует более воздухопроницаемого грунта. Застой воды = гниение корней
   drainage: Всегда используйте дренажный слой из керамзита на дне горшка

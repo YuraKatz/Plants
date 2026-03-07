@@ -1,0 +1,17 @@
+{% macro plant_card(plant, show_lux=false, t=none) %}
+<div class="plant-card" data-name="{{ plant.name }}" data-id="{{ plant.id }}">
+    <img src="{{ plant.image }}" alt="{{ plant.name }}" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>{{ t.no_image if t else 'Нет изображения' }}</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">{{ plant.name }}</div>
+        <div class="plant-name-en">{{ plant.latin_name }}</div>
+        {% if show_lux %}
+        <div class="plant-lux">Optimal: <span class="lux-value">{{ plant.lux_optimal }} lux</span></div>
+        {% endif %}
+        <div class="plant-id">{{ plant.id }}</div>
+    </div>
+</div>
+{% endmacro %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,6 +110,7 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .lang-switcher { right: auto; left: 10px; }
         .lang-switcher a {
             display: inline-block;
             padding: 3px 8px;
@@ -121,6 +122,7 @@
         }
         .lang-switcher a:hover { background: #eee; }
         .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
     </style>
     <style>
         body { font-family: 'Courier New', monospace; }
@@ -370,22 +372,22 @@
 </head>
 <body>
 <div class="lang-switcher">
-    <a href="watering-tracker.html" class="active">RU</a>
-    <a href="en/watering-tracker.html" >EN</a>
-    <a href="he/watering-tracker.html" >HE</a>
+    <a href="../watering-tracker.html" >RU</a>
+    <a href="../en/watering-tracker.html" >EN</a>
+    <a href="../he/watering-tracker.html" class="active">HE</a>
 </div>
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">→ ראשי</a>
 
         <header>
-            <h1>Протокол полива</h1>
-            <div class="doc-info">RO + CalMag + Удобрения</div>
+            <h1>פרוטוקול השקיה</h1>
+            <div class="doc-info">RO + CalMag + דשנים</div>
         </header>
 
-        <h2>1. Рецепт на 1 литр</h2>
+        <h2>1. מתכון ל-1 ליטר</h2>
         <table class="protocol-table">
             <tr>
-                <th>Группа</th>
+                <th>קבוצה</th>
                 <th>CalMag → PPM</th>
                 <th>Universal</th>
                 <th>pH</th>
@@ -415,11 +417,11 @@
                 <td class="value">6.2–6.7</td>
             </tr>
         </table>
-        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* Промывка — без Universal</p>
+        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* שטיפה — ללא Universal</p>
 
         <div class="calculator">
             <div class="calc-row">
-                <label>Группа:</label>
+                <label>קבוצה:</label>
                 <select id="calcGroup">
                     <option value="A">A</option>
                     <option value="A+">A+</option>
@@ -428,7 +430,7 @@
                 </select>
             </div>
             <div class="calc-row">
-                <label>Литры:</label>
+                <label>ליטרים:</label>
                 <input type="number" id="calcLiters" value="2" min="0.5" max="20" step="0.5">
             </div>
             <div class="calc-result" id="calcResult">
@@ -438,7 +440,7 @@
             </div>
         </div>
 
-        <h2>2. Справочник растений по группам</h2>
+        <h2>2. מדריך צמחים לפי קבוצות</h2>
         <div class="plants-reference">
             <div class="ref-group">
                 <div class="ref-header ref-a">A — PPM 80, Universal 1.5 мл/л (7 шт)</div>
@@ -479,7 +481,7 @@
             </div>
         </div>
 
-        <h2>3. Добавки</h2>
+        <h2>3. תוספים</h2>
         <div class="additive-box">
             <span class="additive-name">ATAMI CalMag</span>
             <span class="additive-dose">до целевого PPM</span>
@@ -489,7 +491,7 @@
             <span class="additive-dose">по каплям (понизить pH)</span>
         </div>
 
-        <h2>4. Порядок приготовления</h2>
+        <h2>4. סדר הכנה</h2>
         <div class="procedure">
             <ol>
                 <li>Набрать <span class="dose">RO воду</span> (PPM ≈ 0)</li>
@@ -501,29 +503,29 @@
             </ol>
         </div>
 
-        <h2>5. Журнал поливов</h2>
+        <h2>5. יומן השקיה</h2>
         <div class="log-section">
             <div class="stats-row">
                 <div class="stat-item">
                     <div class="stat-num">1</div>
-                    <div class="stat-label">Всего</div>
+                    <div class="stat-label">סה״כ</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">1</div>
-                    <div class="stat-label">Удобрений</div>
+                    <div class="stat-label">דישונים</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">0</div>
-                    <div class="stat-label">Промывок</div>
+                    <div class="stat-label">שטיפות</div>
                 </div>
             </div>
 
             <table class="log-table">
                 <tr>
                     <th>№</th>
-                    <th>Дата</th>
-                    <th>Тип</th>
-                    <th>Примечания</th>
+                    <th>תאריך</th>
+                    <th>סוג</th>
+                    <th>הערות</th>
                 </tr>
                 <tr>
                     <td>1</td>

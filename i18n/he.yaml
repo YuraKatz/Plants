@@ -1,0 +1,222 @@
+# UI strings for Plants Care site
+# Language: Hebrew (RTL)
+
+# Common navigation
+nav_home: "→ ראשי"
+btn_print: "🖨️ הדפסה"
+btn_parts: "📐 חלקים"
+btn_percentages: "📐 אחוזים"
+no_image: "אין תמונה"
+
+# Index page
+index_title: "🌿 Plants Care Database"
+index_subtitle: "מערכת מקיפה לטיפול בצמחים"
+index_search: "🔍 חיפוש צמח (שם, לטינית או סוג)..."
+card_catalog: "קטלוג צמחים"
+card_catalog_desc: "כרטיסי טיפול מפורטים לכל צמח עם תמונות והמלצות."
+card_water: "קבוצות מים"
+card_water_desc: "מערכת RO Water + CalMag. קבוצות צמחים לפי דרישות PPM ו-pH."
+card_lighting: "קבוצות תאורה"
+card_lighting_desc: "קיבוץ מבוסס Lux. קבוצות צמחים לפי דרישות רמת אור."
+card_soil: "תערובות אדמה"
+card_soil_desc: "מתכונים לתערובות אדמה לסוגי צמחים ושיטות השקיה שונים."
+card_feeding: "דישון"
+card_feeding_desc: "מה לעשות היום: מים + דשנים לפי עונה."
+card_mixer: "מיקסר מים"
+card_mixer_desc: "מיכלים A/B/C: PPM, pH ומתכוני דשנים."
+card_tracker: "מעקב השקיה"
+card_tracker_desc: "מעקב אחר השקיות ושטיפות."
+card_products: "המוצרים שלי"
+card_products_desc: "דשנים, תוספים ומווסתי pH."
+card_diagnostics: "אבחון"
+card_diagnostics_desc: "בעיות ופתרונות לכל צמח."
+card_seasonal: "טיפול עונתי"
+card_seasonal_desc: "איך לטפל בצמחים בעונות שונות."
+card_propagation: "ריבוי"
+card_propagation_desc: "שיטות ריבוי לכל צמח."
+card_pests: "מזיקים ומחלות"
+card_pests_desc: "זיהוי, טיפול ומניעה."
+footer_text: "Plants Database v3.0 | PWA Ready"
+
+# Stat labels
+stat_plants: "צמחים"
+stat_source: "מקור"
+stat_groups: "קבוצות"
+stat_mixes: "תערובות"
+stat_seasons: "עונות"
+stat_canisters: "מיכלים"
+stat_cycle: "מחזור"
+stat_products: "מוצרים"
+stat_categories: "קטגוריות"
+stat_solutions: "פתרונות"
+stat_tips: "טיפים"
+stat_methods: "שיטות"
+stat_pests_count: "מזיקים"
+stat_diseases: "מחלות"
+
+# Soil groups page
+soil_title: "🌱 תערובות אדמה"
+soil_subtitle: "מתכוני תערובות אדמה לצמחי בית"
+soil_search: "חיפוש לפי שם תערובת או צמח..."
+soil_no_results: "לא נמצאו תערובות"
+soil_variant: "גרסה"
+soil_composition: "הרכב"
+soil_suitable_for: "מתאים ל:"
+
+# Water groups page
+water_title: "💧 קבוצות מים"
+water_subtitle: "RO Water + CalMag System for Indoor Plants"
+water_search: "חיפוש לפי שם או plant_id..."
+water_no_results: "לא נמצאו צמחים"
+water_btn_mixer: "🧪 מיקסר דשנים"
+water_pure_ro: "RO טהור בלבד"
+water_no_additives: "ללא תוספים!"
+water_carnivorous: "טורפניים"
+
+# Lighting groups page
+lighting_title: "☀️ קבוצות תאורה"
+lighting_subtitle: "Lux-Based Light Requirements for Indoor Plants"
+lighting_search: "חיפוש לפי שם או plant_id..."
+lighting_no_results: "לא נמצאו צמחים"
+lighting_legend_title: "קבוצות לפי תאורה"
+lighting_low: "Low Light"
+lighting_low_desc: "עמידים בצל"
+lighting_medium: "Medium Light"
+lighting_medium_desc: "אור בינוני"
+lighting_bright: "Bright Light"
+lighting_bright_desc: "אור חזק"
+
+# Feeding guide page
+feeding_title: "מדריך דישון"
+feeding_legend_title: "מקרא מינונים"
+feeding_dose_full: "מינון מלא"
+feeding_dose_half: "חצי מינון"
+feeding_dose_quarter: "רבע מינון"
+feeding_dose_min: "מינון מינימלי"
+feeding_dose_top: "דישון עליון בלבד"
+feeding_dose_forbidden: "אסור"
+feeding_mixer_link: "💧 מינונים מדויקים ב-מל/ל → מיקסר מים"
+feeding_table_title: "טבלת דישון"
+feeding_col_plant: "צמח"
+feeding_season_growth: "מצב: צמיחה (אביב/קיץ)"
+feeding_season_slow: "מצב: מנוחה (סתיו/חורף)"
+feeding_season_loading: "מצב: טוען..."
+feeding_btn_mixer: "🧪 מיקסר מיכלים"
+
+# Water mixer page
+mixer_title: "מיקסר מים ודשנים"
+mixer_subtitle: "ערבב נכון — לפי PPM ועונה"
+
+# My products page
+products_title: "🧪 המוצרים שלי"
+products_subtitle: "מידע מלא על כל הדשנים והתוספים"
+products_tab_all: "הכל"
+products_tab_fertilizers: "דשנים"
+products_tab_additives: "תוספים"
+products_tab_ph: "מווסתי pH"
+products_summary_title: "📊 סה״כ בארסנל"
+products_total: "סה״כ מוצרים"
+
+# Plant problems page
+problems_title: "אבחון צמחים"
+problems_subtitle: "בחר צמח לאבחון בעיות"
+
+# Seasonal care page
+seasonal_title: "📅 טיפול עונתי"
+seasonal_subtitle: "לוח שנה לטיפול בצמחי בית"
+
+# Propagation page
+propagation_title: "🌱 ריבוי צמחים"
+propagation_subtitle: "שיטות והוראות לריבוי"
+
+# Watering tracker page
+tracker_title: "פרוטוקול השקיה"
+tracker_subtitle: "RO + CalMag + דשנים"
+
+# Pests & diseases page
+pests_title: "🐛 מזיקים ומחלות"
+pests_subtitle: "זיהוי, טיפול ומניעה"
+
+# Plants catalog page
+catalog_title: "קטלוג צמחים"
+catalog_subtitle: "מדריך מלא לטיפול בצמחי בית"
+catalog_search: "חיפוש לפי שם, לטינית או סוג..."
+catalog_filter_label: "רמת קושי:"
+catalog_filter_all: "הכל"
+catalog_filter_easy: "קל"
+catalog_filter_medium: "בינוני"
+catalog_filter_hard: "קשה"
+catalog_filter_expert: "מומחה"
+catalog_no_results: "לא נמצאו צמחים"
+catalog_no_photo: "אין תמונה"
+catalog_facts_title: "עובדות מעניינות"
+catalog_problems_title: "בעיות נפוצות"
+catalog_wick_ok: "פתילה OK"
+catalog_wick_no: "ללא פתילה"
+catalog_label_lighting: "תאורה (Lux)"
+catalog_label_humidity: "לחות"
+catalog_label_watering: "השקיה"
+catalog_label_soil: "אדמה"
+catalog_label_method: "שיטה:"
+catalog_wick_suitable: "מתאים לפתילה"
+catalog_wick_not: "לא לפתילה"
+catalog_moss_needed: "צריך תמיכה"
+catalog_moss_optional: "תמיכה אופציונלית"
+catalog_flowering_title: "ניתן לתת דשן פריחה"
+
+# Feeding guide — sections & JS
+feeding_section_fertilizers: "דשנים"
+feeding_section_additives: "תוספים"
+feeding_section_rules: "כללי השקיה (תמיד)"
+feeding_group_aroids: "ארואידים"
+feeding_group_sensitive: "רגישים"
+feeding_group_orchids: "סחלבים"
+feeding_group_general: "צמחי בית כלליים"
+feeding_group_carnivorous: "טורפניים"
+feeding_wick_forbidden: "אסור בפתילה"
+
+# Watering tracker — UI
+tracker_recipe: "1. מתכון ל-1 ליטר"
+tracker_col_group: "קבוצה"
+tracker_flush_note: "* שטיפה — ללא Universal"
+tracker_calc_group: "קבוצה:"
+tracker_calc_liters: "ליטרים:"
+tracker_reference: "2. מדריך צמחים לפי קבוצות"
+tracker_additives: "3. תוספים"
+tracker_procedure: "4. סדר הכנה"
+tracker_log: "5. יומן השקיה"
+tracker_stat_total: "סה״כ"
+tracker_stat_feeds: "דישונים"
+tracker_stat_flushes: "שטיפות"
+tracker_col_date: "תאריך"
+tracker_col_type: "סוג"
+tracker_col_notes: "הערות"
+
+# Seasonal care — tabs
+seasonal_spring: "🌸 אביב"
+seasonal_summer: "☀️ קיץ"
+seasonal_autumn: "🍂 סתיו"
+seasonal_winter: "❄️ חורף"
+seasonal_loading: "...טוען"
+
+# Propagation — tabs & banner
+propagation_best_time: "🌸 הזמן הטוב ביותר לריבוי: אביב — תחילת קיץ"
+propagation_tab_water: "💧 במים"
+propagation_tab_soil: "🌱 באדמה"
+propagation_tab_division: "✂️ חלוקה"
+propagation_tab_airlayer: "🌿 הברכה אווירית"
+propagation_tab_offsets: "👶 ייחורים"
+
+# Pests — UI
+pests_emergency_title: "🚨 כשמגלים מזיקים"
+pests_symptoms_title: "🔍 זיהוי מהיר לפי תסמינים"
+
+# Water group labels
+group_sensitive: "רגישים"
+group_aroids: "ארואידים"
+group_undemanding: "עמידים"
+
+# Language names
+lang_ru: "RU"
+lang_en: "EN"
+lang_he: "HE"

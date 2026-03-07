@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,6 +110,7 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .lang-switcher { right: auto; left: 10px; }
         .lang-switcher a {
             display: inline-block;
             padding: 3px 8px;
@@ -121,6 +122,7 @@
         }
         .lang-switcher a:hover { background: #eee; }
         .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
     </style>
     <style>
         header { text-align: center; }
@@ -370,21 +372,21 @@
 </head>
 <body>
 <div class="lang-switcher">
-    <a href="seasonal-care.html" class="active">RU</a>
-    <a href="en/seasonal-care.html" >EN</a>
-    <a href="he/seasonal-care.html" >HE</a>
+    <a href="../seasonal-care.html" >RU</a>
+    <a href="../en/seasonal-care.html" >EN</a>
+    <a href="../he/seasonal-care.html" class="active">HE</a>
 </div>
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">→ ראשי</a>
 
         <header>
-            <h1>📅 Сезонный уход</h1>
-            <p class="subtitle">Календарь ухода за комнатными растениями</p>
+            <h1>📅 טיפול עונתי</h1>
+            <p class="subtitle">לוח שנה לטיפול בצמחי בית</p>
         </header>
 
         <!-- Current Season -->
         <div class="current-season" id="currentSeason">
-            <div class="season-name">Загрузка...</div>
+            <div class="season-name">...טוען</div>
             <div class="season-dates"></div>
         </div>
 
@@ -412,16 +414,16 @@
 
         <!-- Season Tabs -->
         <div class="season-tabs">
-            <button class="season-tab spring" data-season="spring">🌸 Весна</button>
-            <button class="season-tab summer" data-season="summer">☀️ Лето</button>
-            <button class="season-tab autumn" data-season="autumn">🍂 Осень</button>
-            <button class="season-tab winter" data-season="winter">❄️ Зима</button>
+            <button class="season-tab spring" data-season="spring">🌸 אביב</button>
+            <button class="season-tab summer" data-season="summer">☀️ קיץ</button>
+            <button class="season-tab autumn" data-season="autumn">🍂 סתיו</button>
+            <button class="season-tab winter" data-season="winter">❄️ חורף</button>
         </div>
 
         <!-- SPRING -->
         <div class="season-content" data-season="spring">
             <div class="season-header spring">
-                <h2>🌸 Весна</h2>
+                <h2>🌸 אביב</h2>
                 <div class="dates">Март — Май</div>
             </div>
 
@@ -535,7 +537,7 @@
         <!-- SUMMER -->
         <div class="season-content" data-season="summer">
             <div class="season-header summer">
-                <h2>☀️ Лето</h2>
+                <h2>☀️ קיץ</h2>
                 <div class="dates">Июнь — Август</div>
             </div>
 
@@ -653,7 +655,7 @@
         <!-- AUTUMN -->
         <div class="season-content" data-season="autumn">
             <div class="season-header autumn">
-                <h2>🍂 Осень</h2>
+                <h2>🍂 סתיו</h2>
                 <div class="dates">Сентябрь — Ноябрь</div>
             </div>
 
@@ -769,7 +771,7 @@
         <!-- WINTER -->
         <div class="season-content" data-season="winter">
             <div class="season-header winter">
-                <h2>❄️ Зима</h2>
+                <h2>❄️ חורף</h2>
                 <div class="dates">Декабрь — Февраль</div>
             </div>
 

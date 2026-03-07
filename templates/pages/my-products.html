@@ -1,127 +1,6 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои препараты - Plants Care</title>
-    <style>
-        /* === Common design system === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f0;
-            min-height: 100vh;
-            padding: 16px;
-            color: #333;
-            line-height: 1.5;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 6px;
-            padding: 24px 28px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid #e5e5e0;
-        }
-        header {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e5e5e0;
-        }
-        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
-        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
-        .subtitle { color: #666; font-size: 0.9rem; }
-        a { color: #2d6a4f; }
-        .nav-back, .nav-home {
-            display: inline-block;
-            margin-bottom: 12px;
-            text-decoration: none;
-            color: #2d6a4f;
-            font-size: 0.9rem;
-        }
-        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
-        .controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        #searchInput {
-            flex: 1;
-            min-width: 200px;
-            padding: 7px 12px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        #searchInput:focus {
-            border-color: #2d6a4f;
-            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
-        }
-        .btn-print, .btn-parts {
-            padding: 7px 16px;
-            background: #2d6a4f;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
-        .btn-parts.active { background: #1b4332; }
-        .no-results {
-            text-align: center;
-            padding: 32px;
-            color: #888;
-            font-size: 1rem;
-            display: none;
-        }
-        footer {
-            margin-top: 32px;
-            padding-top: 16px;
-            border-top: 1px solid #e5e5e0;
-            color: #888;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-        @media (max-width: 768px) {
-            .container { padding: 16px; }
-            h1 { font-size: 1.3rem; }
-        }
-        @media print {
-            body { background: #fff; padding: 0; }
-            .container { box-shadow: none; border: none; }
-            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
-        }
-
-        /* Lang switcher */
-        .lang-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 9999;
-            display: flex;
-            gap: 2px;
-            background: rgba(255,255,255,0.92);
-            padding: 3px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        .lang-switcher a {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #555;
-        }
-        .lang-switcher a:hover { background: #eee; }
-        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
-    </style>
+{% extends "base.html" %}
+{% block title %}Мои препараты - Plants Care{% endblock %}
+{% block head %}
     <style>
         header { text-align: center; }
 
@@ -330,27 +209,22 @@
             .nav-back, .category-tabs { display: none; }
         }
     </style>
-</head>
-<body>
-<div class="lang-switcher">
-    <a href="my-products.html" class="active">RU</a>
-    <a href="en/my-products.html" >EN</a>
-    <a href="he/my-products.html" >HE</a>
-</div>
+{% endblock %}
+{% block body %}
     <div class="container">
-        <a href="index.html" class="nav-back">← Главная</a>
+        <a href="index.html" class="nav-back">{{ t.nav_home }}</a>
 
         <header>
-            <h1>🧪 Мои препараты</h1>
-            <p class="subtitle">Полная информация о всех удобрениях и добавках</p>
+            <h1>{{ t.products_title }}</h1>
+            <p class="subtitle">{{ t.products_subtitle }}</p>
         </header>
 
         <!-- Category Tabs -->
         <div class="category-tabs">
-            <button class="category-tab active" onclick="filterProducts('all')">Все (8)</button>
-            <button class="category-tab" onclick="filterProducts('fertilizer')">Удобрения (4)</button>
-            <button class="category-tab" onclick="filterProducts('additive')">Добавки (2)</button>
-            <button class="category-tab" onclick="filterProducts('ph-reg')">pH регуляторы (2)</button>
+            <button class="category-tab active" onclick="filterProducts('all')">{{ t.products_tab_all }} (8)</button>
+            <button class="category-tab" onclick="filterProducts('fertilizer')">{{ t.products_tab_fertilizers }} (4)</button>
+            <button class="category-tab" onclick="filterProducts('additive')">{{ t.products_tab_additives }} (2)</button>
+            <button class="category-tab" onclick="filterProducts('ph-reg')">{{ t.products_tab_ph }} (2)</button>
         </div>
 
         <!-- Products Grid -->
@@ -838,28 +712,30 @@
 
         <!-- Summary Section -->
         <div class="summary-section">
-            <h2>📊 Итого в арсенале</h2>
+            <h2>{{ t.products_summary_title }}</h2>
             <div class="summary-grid">
                 <div class="summary-card">
                     <div class="summary-number">4</div>
-                    <div class="summary-label">Удобрения</div>
+                    <div class="summary-label">{{ t.products_tab_fertilizers }}</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">2</div>
-                    <div class="summary-label">Добавки</div>
+                    <div class="summary-label">{{ t.products_tab_additives }}</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">2</div>
-                    <div class="summary-label">pH регуляторы</div>
+                    <div class="summary-label">{{ t.products_tab_ph }}</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">8</div>
-                    <div class="summary-label">Всего препаратов</div>
+                    <div class="summary-label">{{ t.products_total }}</div>
                 </div>
             </div>
         </div>
 
     </div>
+{% endblock %}
+{% block scripts %}
     <script>
         function filterProducts(category) {
             var cards = document.querySelectorAll('.product-card');
@@ -877,5 +753,4 @@
             });
         }
     </script>
-</body>
-</html>
+{% endblock %}
