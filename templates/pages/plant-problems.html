@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Диагностика проблем - Plants Care{% endblock %}
+{% block title %}{{ t.title_problems }}{% endblock %}
 {% block head %}
     <style>
         .container { max-width: 900px; }
@@ -117,7 +117,7 @@
             border-left: 4px solid #48bb78;
         }
         .problem-solution::before {
-            content: "✅ Решение: ";
+            content: "✅ {{ t.stat_solutions }}: ";
             font-weight: 600;
         }
 
@@ -199,17 +199,17 @@
 
         <!-- Selected Plant Problems -->
         <div id="selectedPlant" class="selected-plant">
-            <button class="back-to-list" onclick="showAllPlants()">&larr; Все растения</button>
+            <button class="back-to-list" onclick="showAllPlants()">{{ t.btn_all_plants }}</button>
 
             <div class="plant-header" id="plantHeader"></div>
 
             <div class="problems-section">
-                <h3>⚠️ Типичные проблемы</h3>
+                <h3>⚠️ {{ t.problems_subtitle }}</h3>
                 <div id="problemsList"></div>
             </div>
 
             <div class="tips-section">
-                <h3>💡 Интересные факты</h3>
+                <h3>💡 {{ t.stat_tips }}</h3>
                 <ul class="tips-list" id="factsList"></ul>
             </div>
         </div>

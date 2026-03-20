@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "macros/plant_cards.html" import plant_card %}
 
-{% block title %}Water Groups - Plants Care{% endblock %}
+{% block title %}{{ t.title_water }}{% endblock %}
 
 {% block head %}
     <style>
@@ -113,18 +113,14 @@
         <div class="water-group group-{{ group.letter | lower }}">
             <div class="group-header">
                 <div class="group-title">
-                    {% if group.letter == 'special' %}
-                    {{ t.water_carnivorous }} - {{ group.name }}
-                    {% else %}
-                    Group {{ group.letter }} - {{ group.name }}
-                    {% endif %}
+                    {{ group.name }}
                 </div>
                 <div class="group-params">
                     {% if group.letter == 'special' %}
                     <div class="param">PPM: {{ group.ppm_range }}</div>
                     <div class="param">{{ t.water_no_additives }}</div>
                     {% else %}
-                    <div class="param">PPM: {{ group.ppm_range }} (target {{ group.ppm_target }})</div>
+                    <div class="param">PPM: {{ group.ppm_range }} ({{ t.water_target }} {{ group.ppm_target }})</div>
                     <div class="param">pH: {{ group.ph_range }}</div>
                     {% endif %}
                 </div>

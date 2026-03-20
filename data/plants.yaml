@@ -1,0 +1,865 @@
+plants:
+  aglaonema:
+    water_group: group_b
+    feeding_group: aroids
+    humidity:
+      level: Средняя
+      preferred_method: Протирать листья от пыли
+      spraying: 1-2 раза в неделю
+    latin_name: Aglaonema
+    lighting:
+      direct_sun: false
+      lux_max: 10000
+      lux_min: 2000
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Аглаонема пестролистная
+    risks:
+    - Устойчива
+    soil:
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные
+    watering:
+      frequency: Умеренный
+      method: Ручной/Фитиль
+    wick_watering:
+      notes: Допустим
+      recommended: true
+  alocasia_amazonica:
+    water_group: group_a
+    care_notes:
+    - Использовать только RO воду (группа A)
+    - Контролировать влажность грунта
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-70%)
+      preferred_method: Лучше увлажнитель/поддон с водой
+      spraying: По ситуации
+    latin_name: Alocasia amazonica
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Алоказия (Polly / Amazonica)
+    risks:
+    - КРИТИЧНО - чувствительна к переливу
+    - Чувствительна к солям в воде
+    soil:
+      mix_name: для клубневых ароидных
+      mix_number: 13
+    type: Ароидные
+    watering:
+      frequency: Регулярный
+      method: Ручной
+      notes: Держать грунт слегка влажным, но без застоя воды
+    wick_watering:
+      notes: Высокий риск гнили корней
+      recommended: false
+  alocasia_frydek:
+    water_group: group_a
+    care_notes:
+    - Использовать только RO воду (группа A)
+    - Бархатные листья НЕ опрыскивать напрямую
+    - Если сбросила все листья — НЕ выбрасывать, клубень жив
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-80%)
+      preferred_method: Увлажнитель или поддон с влажным керамзитом
+      spraying: Не опрыскивать бархатные листья напрямую
+    latin_name: Alocasia micholitziana 'Frydek'
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Алоказия Фрайдек
+    risks:
+    - КРИТИЧНО - гниль клубня при переливе
+    - Чувствительна к солям в воде
+    - Может уйти в спячку зимой
+    soil:
+      mix_name: для клубневых ароидных
+      mix_number: 13
+    type: Ароидные (бархатные)
+    watering:
+      frequency: Регулярный
+      method: Ручной
+      notes: Держать грунт слегка влажным, но без застоя воды. Просушка верхнего слоя
+    wick_watering:
+      notes: Высокий риск гнили клубня
+      recommended: false
+  anthurium_andraeanum:
+    water_group: group_a
+    care_notes:
+    - Использовать только RO воду (группа A)
+    - Стабильность важнее частоты полива
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-70%)
+      preferred_method: Лучше увлажнитель/поддон с водой. Протирать листья
+      spraying: По ситуации
+    latin_name: Anthurium andraeanum
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Антуриум
+    risks:
+    - Чувствителен к качеству воды
+    - Гниль корней при застое воды
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+      preferred_variant: variant_light
+    type: Ароидные цветущие
+    watering:
+      frequency: Регулярный
+      method: Ручной/Фитиль*
+      notes: С лёгкой просушкой верхнего слоя
+    wick_watering:
+      conditions: Требует лёгкой ароидной смеси и контроля
+      notes: Допустим только при очень воздухопроницаемом грунте
+      recommended: false
+  anthurium_clarinervium:
+    water_group: group_a
+    care_notes:
+    - Требует очень рыхлый, воздушный субстрат с большим количеством коры
+    - Использовать только RO воду (группа A)
+    - Бархатные листья НЕ опрыскивать напрямую
+    - Горшок с хорошим дренажом обязателен
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-80%)
+      preferred_method: Увлажнитель или поддон с влажным керамзитом. Протирать листья
+      spraying: По ситуации
+    latin_name: Anthurium clarinervium
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Антуриум кларинервиум
+    risks:
+    - КРИТИЧНО - гниль клубня при переливе
+    - Чувствителен к качеству воды
+    - Не переносит плотный субстрат
+    soil:
+      mix_name: для бархатных антуриумов
+      mix_number: 12
+    type: Ароидные (бархатные)
+    watering:
+      frequency: С просушкой верхнего слоя
+      method: Ручной
+      notes: Полив после просушки верхних 2-3 см. Не допускать застой воды
+    wick_watering:
+      notes: Не рекомендуется — высокий риск гнили клубня
+      recommended: false
+  begonia_maculata:
+    water_group: group_b
+    care_notes:
+    - Не опрыскивать!
+    feeding_group: general_houseplants
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Только повышение влажности воздуха (поддоны, увлажнитель)
+      spraying: НЕ ОПРЫСКИВАТЬ листья!
+    latin_name: Begonia maculata
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 4000
+      lux_optimal: 9000
+      photoperiod_hours: 10-12
+    name: Бегония макулата
+    risks:
+    - КРИТИЧНО - гниль при переливе
+    soil:
+      mix_name: для бегоний
+      mix_number: 8
+    type: Декоративно-цветущие
+    watering:
+      frequency: С просушкой верхнего слоя
+      method: Ручной
+      notes: Очень не любит переувлажнение!
+    wick_watering:
+      notes: Критичный риск гнили
+      recommended: false
+  calathea_lancifolia:
+    water_group: group_a
+    care_notes:
+    - Фитиль обеспечивает стабильную влажность
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-70%)
+      preferred_method: Лучше увлажнитель/поддон с водой
+      spraying: По ситуации
+    latin_name: Calathea lancifolia
+    lighting:
+      direct_sun: false
+      lux_max: 9000
+      lux_min: 2500
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Калатея лансифолия
+    risks:
+    - Сухие кончики при низкой влажности
+    soil:
+      alternative_mix: 4 (марантовые, фитильный)
+      mix_name: марантовые (ручной)
+      mix_number: 3
+    type: Марантовые
+    watering:
+      frequency: Регулярный
+      method: Ручной/Фитиль
+      notes: Любит стабильную влажность грунта
+    wick_watering:
+      notes: Рекомендован — калатеи любят стабильную влажность
+      recommended: true
+  calathea_ornata:
+    water_group: group_a
+    care_notes:
+    - Фитиль обеспечивает стабильную влажность
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-70%)
+      preferred_method: Лучше увлажнитель/поддон с водой
+      spraying: По ситуации
+    latin_name: Calathea ornata
+    lighting:
+      direct_sun: false
+      lux_max: 9000
+      lux_min: 2500
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Калатея орната
+    risks:
+    - Сухие кончики при низкой влажности
+    soil:
+      alternative_mix: 4 (марантовые, фитильный)
+      mix_name: марантовые (ручной)
+      mix_number: 3
+    type: Марантовые
+    watering:
+      frequency: Регулярный
+      method: Ручной/Фитиль
+      notes: Любит стабильную влажность грунта
+    wick_watering:
+      notes: Рекомендован — калатеи любят стабильную влажность
+      recommended: true
+  chamaedorea:
+    water_group: group_b
+    feeding_group: general_houseplants
+    humidity:
+      level: Высокая
+      preferred_method: Предпочтительнее увлажнитель/поддоны. Можно устраивать душ
+      spraying: По необходимости, ориентируясь на сухость воздуха
+    latin_name: Chamaedorea
+    lighting:
+      direct_sun: false
+      lux_max: 9000
+      lux_min: 2000
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Хамедорея / пальма комнатная
+    risks:
+    - Чувствительна к переливу
+    soil:
+      mix_name: для пальм
+      mix_number: 6
+    type: Пальмы
+    watering:
+      frequency: Регулярный
+      method: Ручной
+      notes: Без застоя воды
+    wick_watering:
+      notes: Чувствительна к переливу
+      recommended: false
+  chlorophytum_comosum:
+    water_group: group_b
+    feeding_group: general_houseplants
+    humidity:
+      level: Средняя
+      preferred_method: Протирать листья от пыли
+      spraying: 1-2 раза в неделю
+    latin_name: Chlorophytum comosum
+    lighting:
+      direct_sun: false
+      lux_max: 10000
+      lux_min: 2000
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Хлорофитум
+    risks:
+    - Устойчив к ошибкам в уходе
+    soil:
+      alternative_mix: 5-Ф (фитильный вариант)
+      mix_name: универсальная лёгкая (ручной)
+      mix_number: 5
+    type: Декоративнолистные
+    watering:
+      frequency: Умеренный
+      method: Ручной/Фитиль
+      notes: Переносит просушку верхнего слоя
+    wick_watering:
+      notes: Хорошо переносит фитиль
+      recommended: true
+  croton:
+    water_group: group_c
+    feeding_group: general_houseplants
+    humidity:
+      level: Высокая
+      preferred_method: Предпочтительнее увлажнитель/поддоны. Регулярно протирать
+        листья
+      spraying: По необходимости, ориентируясь на сухость воздуха
+    latin_name: Codiaeum variegatum
+    lighting:
+      direct_sun: осторожно
+      lux_max: 18000
+      lux_min: 4000
+      lux_optimal: 10000
+      photoperiod_hours: 10-12
+    name: Кротон
+    risks:
+    - Не любит пересыхание
+    - Следить за переливом
+    soil:
+      mix_name: универсальная лёгкая (ручной)
+      mix_number: 5
+    type: Пестролистные
+    watering:
+      frequency: Регулярный
+      method: Ручной
+      notes: Не допускать пересыхания
+    wick_watering:
+      notes: Чувствителен к переливу — высокий риск корневой гнили
+      recommended: false
+  dionaea:
+    water_group: special
+    care_notes:
+    - Только дистиллят или чистый RO
+    - Питание только через ловушки (живые насекомые)
+    feeding_group: carnivorous
+    humidity:
+      level: Высокая
+      spraying: Не обязательно при влажном поддоне
+    latin_name: Dionaea muscipula
+    lighting:
+      direct_sun: true
+      lux_max: 50000
+      lux_min: 10000
+      lux_optimal: 30000
+      photoperiod_hours: 12-14
+    name: Дионея (Венерина мухоловка)
+    risks:
+    - КРИТИЧНО - любые удобрения в почву убивают растение
+    - КРИТИЧНО - обычная вода из крана убивает растение
+    soil:
+      mix_name: Торф + перлит (без удобрений)
+    type: Хищные
+    watering:
+      frequency: Постоянная влажность
+      method: Поддон (постоянно)
+      notes: Использовать ТОЛЬКО RO воду (TDS < 10)
+    wick_watering:
+      notes: Сидит в болоте в поддоне
+      recommended: false
+  dracaena_fragrans:
+    water_group: group_c
+    feeding_group: general_houseplants
+    humidity:
+      level: Средняя
+      preferred_method: Протирать листья от пыли
+      spraying: 1-2 раза в неделю
+    latin_name: Dracaena fragrans / deremensis
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 2500
+      lux_optimal: 6000
+      photoperiod_hours: 10-12
+    name: Драцена фрагранс / деременсис
+    risks:
+    - Чувствительна к переливу
+    soil:
+      mix_name: универсальная лёгкая (ручной)
+      mix_number: 5
+    type: Ложные пальмы
+    watering:
+      frequency: Умеренный
+      method: Ручной
+      notes: С лёгкой просушкой верхнего слоя
+    wick_watering:
+      notes: Лучше контролировать вручную
+      recommended: false
+  dracaena_marginata:
+    water_group: group_c
+    feeding_group: general_houseplants
+    humidity:
+      level: Средняя
+      preferred_method: Протирать листья от пыли
+      spraying: 1-2 раза в неделю
+    latin_name: Dracaena marginata
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 2500
+      lux_optimal: 6000
+      photoperiod_hours: 10-12
+    name: Драцена маргината
+    risks:
+    - Чувствительна к переливу
+    soil:
+      mix_name: универсальная лёгкая (ручной)
+      mix_number: 5
+    type: Ложные пальмы
+    watering:
+      frequency: Умеренный
+      method: Ручной
+      notes: С лёгкой просушкой верхнего слоя
+    wick_watering:
+      notes: Лучше контролировать вручную
+      recommended: false
+  epipremnum:
+    water_group: group_b
+    feeding_group: aroids
+    humidity:
+      level: Средняя
+      preferred_method: Протирать листья от пыли
+      spraying: 1-2 раза в неделю
+    latin_name: Epipremnum aureum / Scindapsus
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 2000
+      lux_optimal: 6000
+      photoperiod_hours: 10-12
+    name: Эпипремнум / сциндапсус
+    risks:
+    - Устойчив
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Лианы
+    watering:
+      frequency: Умеренный
+      method: Ручной/Фитиль
+    wick_watering:
+      notes: Допустим
+      recommended: true
+  guzmania:
+    water_group: group_a
+    care_notes:
+    - Субстрат лишь для опоры
+    feeding_group: sensitive
+    humidity:
+      level: Высокая
+      preferred_method: Увлажнитель предпочтительнее
+      spraying: По необходимости, ориентируясь на сухость воздуха
+    latin_name: Guzmania
+    lighting:
+      direct_sun: false
+      lux_max: 18000
+      lux_min: 5000
+      lux_optimal: 10000
+      photoperiod_hours: 10-12
+    name: Гузмания
+    risks:
+    - Поливать только в розетку
+    soil:
+      mix_name: для эпифитов
+      mix_number: 7
+    type: Бромелиевые
+    watering:
+      frequency: Регулярный
+      method: В розетку
+      notes: Поливать только в розетку
+    wick_watering:
+      notes: Основной полив - в розетку
+      recommended: false
+  monstera_adansonii:
+    water_group: group_b
+    feeding_group: aroids
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Предпочтительнее увлажнитель/поддоны
+      spraying: По необходимости, ориентируясь на сухость воздуха
+    latin_name: Monstera adansonii
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Монстера адансони
+    risks:
+    - Устойчива
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные
+    watering:
+      frequency: Умеренный
+      method: Ручной/Фитиль
+    wick_watering:
+      notes: Рекомендован
+      recommended: true
+  monstera_deliciosa:
+    water_group: group_b
+    feeding_group: aroids
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Протирать крупные листья
+      spraying: По сезону (чаще летом)
+    latin_name: Monstera deliciosa (juvenile)
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Монстера молодая
+    risks:
+    - Устойчива
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные
+    watering:
+      frequency: Умеренный
+      method: Ручной/Фитиль
+    wick_watering:
+      notes: Допустим
+      recommended: true
+  nephrolepis:
+    water_group: group_a
+    care_notes:
+    - Регулярно опрыскивать
+    - Беречь от сквозняков и батарей
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-80%)
+      preferred_method: Увлажнитель или частое опрыскивание. Любит душ
+      spraying: Частое опрыскивание
+    latin_name: Nephrolepis exaltata
+    lighting:
+      direct_sun: false
+      lux_max: 8000
+      lux_min: 1500
+      lux_optimal: 4000
+      photoperiod_hours: 10-12
+    name: Папоротник (Нефролепис)
+    risks:
+    - Сухие кончики при низкой влажности
+    - Не любит пересыхание
+    soil:
+      mix_name: для папоротников
+      mix_number: 10
+    type: Папоротники
+    watering:
+      frequency: Регулярный
+      method: Ручной/Фитиль
+      notes: Держать грунт равномерно влажным, без пересыхания
+    wick_watering:
+      notes: Рекомендован — папоротники любят стабильную влажность
+      recommended: true
+  phalaenopsis:
+    water_group: group_a
+    care_notes:
+    - Обязательно прозрачный горшок
+    - Субстрат должен быстро просыхать
+    - Корни должны дышать
+    feeding_group: orchids
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Можно опрыскивать воздух вокруг
+      spraying: НЕ ОПРЫСКИВАТЬ листья и цветы!
+    latin_name: Phalaenopsis
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Орхидея фаленопсис
+    pot_requirements:
+      critical: true
+      reason: Корни участвуют в фотосинтезе, контроль состояния корней и влажности
+      type: Прозрачный
+    risks:
+    - КРИТИЧНО - гниль корней
+    soil:
+      mix_name: для орхидей
+      mix_number: 9
+    type: Эпифитные орхидеи
+    watering:
+      frequency: С полной просушкой субстрата между поливами
+      method: Ручной
+      notes: Замачивание или пролив по краю
+    wick_watering:
+      notes: Критичный риск гнили корней
+      recommended: false
+  philodendron:
+    water_group: group_b
+    feeding_group: aroids
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Протирать крупные листья
+      spraying: По сезону (чаще летом)
+    latin_name: Philodendron (типа Imperial Green)
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Филодендрон крупнолистный
+    risks:
+    - Устойчив
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные
+    watering:
+      frequency: Регулярный
+      method: Ручной/Фитиль
+    wick_watering:
+      notes: Рекомендован
+      recommended: true
+  philodendron_selloum:
+    water_group: group_b
+    care_notes:
+    - Спасён с работы — требует реабилитации
+    - Обрезать жёлтые листья у основания
+    - Крупные рассечённые листья собирают пыль — протирать
+    feeding_group: aroids
+    humidity:
+      level: Средняя-высокая (50-70%)
+      preferred_method: Протирать крупные листья влажной тканью
+      spraying: По сезону (чаще летом)
+    latin_name: Philodendron bipinnatifidum (Thaumatophyllum bipinnatifidum)
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Филодендрон Селлоу
+    risks:
+    - Желтеющие нижние листья при переливе
+    - Нужна опора при высоком росте
+    soil:
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные (древовидные)
+    watering:
+      frequency: Регулярный
+      method: Ручной
+      notes: Просушка верхнего слоя на 2-3 см между поливами
+    wick_watering:
+      notes: Крупное растение, лучше контролировать вручную
+      recommended: false
+  philodendron_xanadu:
+    water_group: group_b
+    care_notes:
+    - Компактный древовидный филодендрон — не лиана
+    - Обрезать жёлтые нижние листья у основания
+    - Протирать листья от пыли
+    feeding_group: aroids
+    humidity:
+      level: Средняя-высокая (50-70%)
+      preferred_method: Протирать листья влажной тканью
+      spraying: По сезону
+    latin_name: Thaumatophyllum xanadu
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    name: Филодендрон Ксанаду
+    risks:
+    - Желтеющие листья при переливе
+    - Чувствителен к застою воды
+    soil:
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные (древовидные)
+    watering:
+      frequency: Умеренный
+      method: Ручной
+      notes: Просушка верхнего слоя на 2-3 см между поливами
+    wick_watering:
+      notes: Не рекомендуется — корневая чувствительна к переливу
+      recommended: false
+  saintpaulia:
+    water_group: group_b
+    care_notes:
+    - Не опрыскивать! Вода на листьях вызывает пятна
+    - Идеальна для фитильного полива
+    - Цветёт круглый год при хорошем освещении
+    feeding_group: general_houseplants
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Только повышение влажности воздуха (поддоны, увлажнитель)
+      spraying: НЕ ОПРЫСКИВАТЬ листья!
+    latin_name: Saintpaulia ionantha
+    lighting:
+      direct_sun: false
+      lux_max: 10000
+      lux_min: 2000
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Сенполия (Узамбарская фиалка)
+    risks:
+    - Гниль при попадании воды на листья
+    - Чувствительна к переливу
+    soil:
+      mix_name: для сенполий (фитильный)
+      mix_number: 14
+    type: Геснериевые
+    watering:
+      frequency: Регулярный
+      method: Фитиль/Поддон
+      notes: Поливать только в поддон или через фитиль. Вода не должна попадать на
+        листья!
+    wick_watering:
+      notes: Идеальный кандидат для фитиля
+      recommended: true
+  sansevieria:
+    water_group: group_c
+    care_notes:
+    - Крайне неприхотлива
+    - Лучше недолить, чем перелить
+    feeding_group: general_houseplants
+    humidity:
+      level: Низкая-средняя
+      preferred_method: Обычные комнатные условия
+      spraying: Не требуется
+    latin_name: Sansevieria trifasciata
+    lighting:
+      direct_sun: допустимо
+      lux_max: 15000
+      lux_min: 1000
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Сансевиерия (Щучий хвост)
+    risks:
+    - Гниль при переливе
+    - Застой воды = гибель
+    soil:
+      mix_name: для суккулентов/сансевиерии
+      mix_number: 11
+    type: Суккуленты
+    watering:
+      frequency: Редкий
+      method: Ручной
+      notes: Полная просушка грунта между поливами. Зимой — минимальный полив
+    wick_watering:
+      notes: Категорически не рекомендуется — риск гнили
+      recommended: false
+  schlumbergera:
+    water_group: group_c
+    care_notes:
+    - Эпифитный кактус — нужен рыхлый субстрат как для бромелиевых
+    - Для цветения нужен короткий световой день (8-10 часов) осенью
+    - Не переставлять во время бутонизации
+    feeding_group: general_houseplants
+    humidity:
+      level: Средняя
+      preferred_method: Обычные комнатные условия
+      spraying: По необходимости
+    latin_name: Schlumbergera
+    lighting:
+      direct_sun: false
+      lux_max: 10000
+      lux_min: 2000
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Шлюмбергера (Декабрист)
+    risks:
+    - Опадание бутонов при перестановке или сквозняке
+    - Гниль при переливе
+    soil:
+      mix_name: для эпифитов
+      mix_number: 7
+    type: Эпифитные кактусы
+    watering:
+      frequency: Умеренный
+      method: Ручной
+      notes: Просушка верхнего слоя между поливами. Перед цветением — период сухости
+    wick_watering:
+      notes: Не рекомендуется — риск загнивания корней
+      recommended: false
+  spathiphyllum:
+    water_group: group_a
+    feeding_group: aroids
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Предпочтительнее увлажнитель/поддоны. Избегать опрыскивания
+        цветков
+      spraying: По необходимости, ориентируясь на сухость воздуха
+    latin_name: Spathiphyllum
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 2500
+      lux_optimal: 6000
+      photoperiod_hours: 10-12
+    name: Спатифиллум
+    risks:
+    - Любит стабильную влажность
+    soil:
+      mix_name: ароидная (фитильный)
+      mix_number: 2
+    type: Ароидные цветущие
+    watering:
+      frequency: Регулярный
+      method: Фитиль
+    wick_watering:
+      notes: Рекомендован (любит стабильную влажность)
+      recommended: true
+  zamioculcas:
+    water_group: group_c
+    care_notes:
+    - Крайне неприхотлив
+    - Лучше недолить, чем перелить
+    - Толстые клубни запасают воду
+    feeding_group: general_houseplants
+    humidity:
+      level: Низкая-средняя
+      preferred_method: Обычные комнатные условия. Можно протирать листья от пыли
+      spraying: Не требуется
+    latin_name: Zamioculcas zamiifolia
+    lighting:
+      direct_sun: допустимо
+      lux_max: 15000
+      lux_min: 1000
+      lux_optimal: 5000
+      photoperiod_hours: 10-12
+    name: Замиокулькас (Долларовое дерево)
+    risks:
+    - Гниль клубня при переливе
+    - Застой воды = гибель
+    soil:
+      mix_name: для суккулентов/сансевиерии
+      mix_number: 11
+    type: Ароидные (суккулентные)
+    watering:
+      frequency: Редкий
+      method: Ручной
+      notes: Полная просушка грунта между поливами. Зимой — минимальный полив
+    wick_watering:
+      notes: Категорически не рекомендуется — риск гнили клубня
+      recommended: false

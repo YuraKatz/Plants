@@ -1,0 +1,102 @@
+seasonal_care:
+  spring:
+    months: "seasonal_spring_months"
+    cards:
+      - icon: "💧"
+        title: "seasonal_label_watering"
+        desc: "seasonal_spring_watering_desc"
+        tips: ["seasonal_spring_watering_1", "seasonal_spring_watering_2"]
+      - icon: "🧪"
+        title: "seasonal_label_feeding"
+        desc: "seasonal_spring_feeding_desc"
+        tips: ["seasonal_spring_feeding_1", "seasonal_spring_feeding_2"]
+      - icon: "🪴"
+        title: "seasonal_label_tasks"
+        desc: "seasonal_spring_tasks_desc"
+        tips: ["seasonal_spring_tasks_1", "seasonal_spring_tasks_2", "seasonal_spring_tasks_3"]
+  summer:
+    months: "seasonal_summer_months"
+    cards:
+      - icon: "💧"
+        title: "seasonal_label_watering"
+        desc: "seasonal_summer_watering_desc"
+        tips: ["seasonal_summer_watering_1", "seasonal_summer_watering_2"]
+      - icon: "🧪"
+        title: "seasonal_label_feeding"
+        desc: "seasonal_summer_feeding_desc"
+        tips: ["seasonal_summer_feeding_1", "seasonal_summer_feeding_2"]
+      - icon: "☀️"
+        title: "seasonal_label_lighting"
+        desc: "seasonal_summer_lighting_desc"
+        tips: ["seasonal_summer_lighting_1", "seasonal_summer_lighting_2"]
+      - icon: "🌡️"
+        title: "seasonal_label_temperature"
+        desc: "seasonal_summer_temp_desc"
+        tips: ["seasonal_summer_temp_1", "seasonal_summer_temp_2"]
+  autumn:
+    months: "seasonal_autumn_months"
+    cards:
+      - icon: "💧"
+        title: "seasonal_label_watering"
+        desc: "seasonal_autumn_watering_desc"
+        tips: ["seasonal_autumn_watering_1", "seasonal_autumn_watering_2"]
+      - icon: "🧪"
+        title: "seasonal_label_feeding"
+        desc: "seasonal_autumn_feeding_desc"
+        tips: ["seasonal_autumn_feeding_1", "seasonal_autumn_feeding_2"]
+      - icon: "🛠️"
+        title: "seasonal_label_tasks"
+        desc: "seasonal_autumn_tasks_desc"
+        tips: ["seasonal_autumn_tasks_1", "seasonal_autumn_tasks_2", "seasonal_autumn_tasks_3"]
+  winter:
+    months: "seasonal_winter_months"
+    cards:
+      - icon: "💧"
+        title: "seasonal_label_watering"
+        desc: "seasonal_winter_watering_desc"
+        tips: ["seasonal_winter_watering_1", "seasonal_winter_watering_2"]
+      - icon: "☀️"
+        title: "seasonal_label_lighting"
+        desc: "seasonal_winter_lighting_desc"
+        tips: ["seasonal_winter_lighting_1", "seasonal_winter_lighting_2"]
+      - icon: "🌡️"
+        title: "seasonal_label_temperature"
+        desc: "seasonal_winter_temp_desc"
+        tips: ["seasonal_winter_temp_1", "seasonal_winter_temp_2"]
+
+propagation_methods:
+  water:
+    tab: "propagation_tab_water"
+    icon: "💧"
+    desc: "propagation_water_desc"
+    steps: ["propagation_water_step_1", "propagation_water_step_2", "propagation_water_step_3", "propagation_water_step_4"]
+    tips: ["propagation_water_tip_1", "propagation_water_tip_2"]
+    plants: ["monstera_deliciosa", "epipremnum", "philodendron", "aglaonema"]
+  soil:
+    tab: "propagation_tab_soil"
+    icon: "🌱"
+    desc: "propagation_soil_desc"
+    steps: ["propagation_soil_step_1", "propagation_soil_step_2", "propagation_soil_step_3", "propagation_soil_step_4"]
+    tips: ["propagation_soil_tip_1", "propagation_soil_tip_2"]
+    plants: ["saintpaulia", "begonia_maculata", "dracaena_marginata"]
+  division:
+    tab: "propagation_tab_division"
+    icon: "✂️"
+    desc: "propagation_division_desc"
+    steps: ["propagation_division_step_1", "propagation_division_step_2", "propagation_division_step_3", "propagation_division_step_4"]
+    tips: ["propagation_division_tip_1", "propagation_division_tip_2"]
+    plants: ["spathiphyllum", "calathea_lancifolia", "anthurium_andraeanum", "sansevieria"]
+  airlayer:
+    tab: "propagation_tab_airlayer"
+    icon: "🌿"
+    desc: "propagation_airlayer_desc"
+    steps: ["propagation_airlayer_step_1", "propagation_airlayer_step_2", "propagation_airlayer_step_3", "propagation_airlayer_step_4"]
+    tips: ["propagation_airlayer_tip_1", "propagation_airlayer_tip_2"]
+    plants: ["monstera_deliciosa", "philodendron_selloum"]
+  offsets:
+    tab: "propagation_tab_offsets"
+    icon: "👶"
+    desc: "propagation_offsets_desc"
+    steps: ["propagation_offsets_step_1", "propagation_offsets_step_2", "propagation_offsets_step_3", "propagation_offsets_step_4"]
+    tips: ["propagation_offsets_tip_1", "propagation_offsets_tip_2"]
+    plants: ["chlorophytum_comosum", "sansevieria", "guzmania"]

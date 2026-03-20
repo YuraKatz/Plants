@@ -1,0 +1,303 @@
+water_requirements:
+  base_principle: RO (осмос) + CalMag
+
+  operational_mode:
+    goal: стабильность
+    rule_1: Использовать фиксированные target_ppm, не диапазоны
+    rule_2: Не менять настройки без причины
+    rule_3: Стабильность важнее точности
+    system_stability: Не менять target_ppm и группы без явной проблемы у растения
+
+  daily_usage:
+    step_1: Определить группу растения (A / B / C)
+    step_2: Взять соответствующую канистру
+    step_3: Не смешивать группы
+    step_4: Не менять ppm вручную между поливами
+
+  individual_requirements:
+    calathea_lancifolia:
+      plant_name: Калатея лансифолия
+      group: A
+      sensitivity: very_high
+      notes: Очень чувствительна к солям
+
+    calathea_ornata:
+      plant_name: Калатея орната
+      group: A
+      sensitivity: very_high
+      notes: Очень чувствительна к солям
+
+    spathiphyllum:
+      plant_name: Спатифиллум
+      group: A
+      sensitivity: very_high
+      notes: Не терпит жёсткую воду
+
+    phalaenopsis:
+      plant_name: Орхидея (Phalaenopsis)
+      group: A
+      sensitivity: very_high
+      notes: Для макания, без накопления солей
+
+    guzmania:
+      plant_name: Гузмания
+      group: A
+      sensitivity: very_high
+      notes: Особенно для воды в розетке
+
+    begonia_maculata:
+      plant_name: Бегония макулата
+      group: B
+      sensitivity: medium
+      notes: Важнее не перелить, чем ppm
+
+    monstera_deliciosa:
+      plant_name: Монстера делициоза
+      group: B
+      sensitivity: low
+      notes: Стабильность важнее точного значения
+
+    monstera_adansonii:
+      plant_name: Монстера адансони
+      group: B
+      sensitivity: low
+      notes: Стабильность важнее точного значения
+
+    philodendron:
+      plant_name: Филодендрон
+      group: B
+      sensitivity: low
+      notes: Аналогично монстере
+
+    epipremnum:
+      plant_name: Эпипремнум
+      group: B
+      sensitivity: low
+      notes: Прощает ошибки
+
+    aglaonema:
+      plant_name: Аглаонема
+      group: B
+      sensitivity: medium
+      notes: Лучше ближе к нижней границе
+
+    chamaedorea:
+      plant_name: Хамедорея
+      group: B
+      sensitivity: medium
+      notes: Не любит накопление солей
+
+    dracaena_marginata:
+      plant_name: Драцена маргината
+      group: C
+      sensitivity: low
+      notes: Выносливая, но не переливать
+
+    dracaena_fragrans:
+      plant_name: Драцена фрагранс
+      group: C
+      sensitivity: low
+      notes: Выносливая, но не переливать
+
+    croton:
+      plant_name: Кротон
+      group: C
+      sensitivity: medium
+      notes: Любит питание, но без фанатизма
+
+    chlorophytum_comosum:
+      plant_name: Хлорофитум
+      group: B
+      sensitivity: low
+      notes: Неприхотлив, прощает ошибки
+
+    alocasia_amazonica:
+      plant_name: Алоказия (Polly / Amazonica)
+      group: A
+      sensitivity: very_high
+      notes: Очень чувствительна к солям и переливу
+
+    alocasia_frydek:
+      plant_name: Алоказия Фрайдек
+      group: A
+      sensitivity: very_high
+      notes: Бархатная алоказия — очень чувствительна к солям
+
+    anthurium_andraeanum:
+      plant_name: Антуриум
+      group: A
+      sensitivity: very_high
+      notes: Чувствителен к качеству воды, стабильность критична
+
+    nephrolepis:
+      plant_name: Папоротник (Нефролепис)
+      group: A
+      sensitivity: high
+      notes: Чувствителен к солям, любит мягкую воду
+
+    sansevieria:
+      plant_name: Сансевиерия
+      group: C
+      sensitivity: very_low
+      notes: Лучше использовать C, но допустимы A/B при необходимости
+
+    zamioculcas:
+      plant_name: Замиокулькас (ZZ plant)
+      group: C
+      sensitivity: very_low
+      notes: Крайне неприхотлив к качеству воды
+
+    schlumbergera:
+      plant_name: Шлюмбергера (Декабрист)
+      group: C
+      sensitivity: low
+      notes: Не требователен к качеству воды
+
+    saintpaulia:
+      plant_name: Сенполия (Узамбарская фиалка)
+      group: B
+      sensitivity: medium
+      notes: Предпочитает мягкую воду. Вода не должна попадать на листья!
+
+    anthurium_clarinervium:
+      plant_name: Антуриум кларинервиум
+      group: A
+      sensitivity: very_high
+      notes: Бархатный антуриум — очень чувствителен к солям
+
+  water_groups:
+    group_a:
+      name: Очень мягкая вода
+      target_ppm: 80
+      allowed_deviation: 5
+      ph_range: 5.8-6.3
+      plants:
+        - Калатея лансифолия
+        - Калатея орната
+        - Спатифиллум
+        - Орхидея (Phalaenopsis)
+        - Гузмания
+        - Алоказия (Polly / Amazonica)
+        - Алоказия Фрайдек
+        - Антуриум
+        - Антуриум кларинервиум
+        - Папоротник (Нефролепис)
+      sensitivity_level: Очень высокая
+
+    group_b:
+      name: Средняя минерализация
+      target_ppm: 120
+      allowed_deviation: 10
+      ph_range: 6.0-6.5
+      plants:
+        - Монстера делициоза
+        - Монстера адансони
+        - Филодендрон
+        - Эпипремнум
+        - Аглаонема
+        - Бегония макулата
+        - Хамедорея
+        - Хлорофитум
+        - Сенполия (Узамбарская фиалка)
+      sensitivity_level: Средняя
+
+    group_c:
+      name: Чуть более насыщенная
+      target_ppm: 150
+      allowed_deviation: 10
+      ph_range: 6.2-6.7
+      plants:
+        - Драцена маргината
+        - Драцена фрагранс
+        - Кротон
+        - Сансевиерия
+        - Замиокулькас (ZZ plant)
+        - Шлюмбергера (Декабрист)
+      sensitivity_level: Низкая
+      alternative: Если используешь B вместо C — обязательно измерить ppm после добавки CalMag
+
+  practical_setup:
+    bottle_a:
+      label: "A — sensitive"
+      color: red
+      target_ppm: 80
+      group: A
+      description: Для самых чувствительных
+
+    bottle_b:
+      label: "B — standard"
+      color: blue
+      target_ppm: 120
+      group: B
+      description: Основная вода для большинства растений
+
+    bottle_c:
+      label: "C — rich"
+      color: green
+      target_ppm: 150
+      group: C
+      description: Опционально, можно использовать B + CalMag
+      optional: true
+
+  calmag_protocol:
+    step_1: Налить RO воду
+    step_2: Добавить минимальную дозу CalMag (ATAMI CALMAG)
+    step_3: Измерить ppm
+    step_4: Довести до target_ppm группы
+    step_5: Проверить pH, скорректировать при необходимости (pH Down по каплям)
+
+  common_mistakes:
+    - mistake: Смешивание групп
+      rule: Нельзя поливать растение группы A водой группы C
+    - mistake: CalMag на глаз
+      rule: Всегда измерять ppm после добавления
+    - mistake: Ежедневная смена ppm
+      rule: Не менять концентрацию каждый полив — стабильность важнее
+    - mistake: Чистый RO без CalMag
+      rule: Нельзя использовать (кроме экстренных случаев)
+
+  watering_frequency_rule:
+    airy_soil: Поливать чаще — субстрат просыхает быстрее
+    dense_soil: Поливать реже — субстрат удерживает влагу дольше
+    note: Состав воды (ppm) не меняется в зависимости от частоты полива
+
+  ph_policy:
+    priority: secondary
+    default_action: Не трогать если нет симптомов
+    note: ppm важнее pH для большинства растений
+
+  measurement_tools:
+    tds_meter:
+      measures: PPM (Total Dissolved Solids)
+      importance: Критично для RO воды
+      calibration: Регулярная калибровка обязательна
+
+    ph_meter:
+      measures: Кислотность (pH)
+      importance: Важно, но менее критично чем PPM
+      calibration: Регулярная калибровка обязательна
+      adjustment: Использовать pH Down (Green Farmer) по каплям
+
+  troubleshooting:
+    salt_buildup:
+      signs:
+        - Белый налёт на поверхности грунта
+        - Коричневые кончики листьев
+        - Общее угнетение роста
+      solution:
+        - Промыть грунт чистой RO водой с CalMag
+        - Снизить PPM в следующих поливах
+        - Проверить дренаж
+
+    ph_problems:
+      high_ph:
+        signs:
+          - Пожелтение листьев (хлороз)
+          - Плохое усвоение микроэлементов
+        solution: Добавить pH Down по каплям
+
+      low_ph:
+        signs:
+          - Некроз краёв листьев
+          - Токсичность алюминия и марганца
+        solution: Уменьшить дозу pH Down или разбавить водой

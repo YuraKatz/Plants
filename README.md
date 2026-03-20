@@ -20,6 +20,17 @@ Plants/
 └── plants.md              # Детальная документация (оригинал)
 ```
 
+## 🚀 Деплой (GitHub Pages)
+
+Проект автоматически собирается и публикуется на GitHub Pages при каждом пуше в ветку `main`.
+
+1.  Убедитесь, что в настройках репозитория (**Settings > Pages**) выбрано:
+    - **Source**: Deploy from a branch.
+    - **Branch**: `gh-pages` / `(root)`.
+2.  Дождитесь завершения GitHub Action "Deploy to GitHub Pages".
+
+---
+
 ## 🌿 Описание файлов
 
 ### `plants.yaml`

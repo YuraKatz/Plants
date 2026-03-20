@@ -1,0 +1,9 @@
+# Generated site output (HTML is built by scripts/build.py)
+site/
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.idea/

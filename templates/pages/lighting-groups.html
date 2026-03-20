@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "macros/plant_cards.html" import plant_card %}
 
-{% block title %}Lighting Groups - Plants Care{% endblock %}
+{% block title %}{{ t.title_lighting }}{% endblock %}
 
 {% block head %}
     <style>
@@ -137,7 +137,7 @@
                 <div class="group-params">
                     <div class="param">Optimal: {{ group.optimal_range }}</div>
                     <div class="param">Min: {{ group.min_range }}</div>
-                    <div class="param">Фотопериод: {{ group.photoperiod }}</div>
+                    <div class="param">{{ t.lighting_photoperiod }}: {{ group.photoperiod }}</div>
                 </div>
             </div>
             <div class="plants-grid">

@@ -1,1019 +1,169 @@
 {% extends "base.html" %}
-
-{% block title %}Миксер воды и удобрений - Plants Care{% endblock %}
-
+{% block title %}{{ t.mixer_title }} - Plants Care{% endblock %}
 {% block head %}
     <style>
         header { text-align: center; }
-        .season-toggle {
-            display: flex; justify-content: center; gap: 8px; margin-bottom: 20px;
-        }
-        .season-btn {
-            padding: 7px 20px; border: 1px solid #ccc; background: #fff;
-            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: 600;
-        }
-        .season-btn:hover { border-color: #2d6a4f; }
-        .season-btn.active { background: #2d6a4f; color: #fff; border-color: #2d6a4f; }
-        .season-btn.active.dormant { background: #b45309; border-color: #b45309; }
-
-        .canisters-grid {
-            display: flex; flex-direction: column; gap: 16px;
-            margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto;
-        }
-        .canister-card {
-            border: 1px solid #ddd; border-radius: 6px; overflow: hidden; background: #fff;
-        }
-        .canister-card.canister-a { border-left: 4px solid #4a90d9; }
-        .canister-card.canister-b { border-left: 4px solid #2d6a4f; }
-        .canister-card.canister-c { border-left: 4px solid #888; }
+        .canisters-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .canister-card { border: 1px solid #ddd; border-radius: 6px; overflow: hidden; background: #fff; border-left: 4px solid #ddd; }
+        .canister-card.canister-a { border-left-color: #4a90d9; }
+        .canister-card.canister-b { border-left-color: #2d6a4f; }
+        .canister-card.canister-c { border-left-color: #888; }
         .canister-header { padding: 14px; color: #fff; text-align: center; }
         .canister-a .canister-header { background: #4a6fa5; }
         .canister-b .canister-header { background: #2d6a4f; }
         .canister-c .canister-header { background: #666; }
         .canister-letter { font-size: 2rem; font-weight: 800; margin-bottom: 2px; }
         .canister-title { font-size: 0.95rem; font-weight: 600; opacity: 0.9; }
-        .canister-params {
-            display: flex; justify-content: center; gap: 16px;
-            padding: 10px; background: #fafaf8; border-bottom: 1px solid #e5e5e0;
-        }
+        .canister-params { display: flex; justify-content: center; gap: 16px; padding: 10px; background: #fafaf8; border-bottom: 1px solid #e5e5e0; }
         .param { text-align: center; }
         .param-value { font-size: 1.2rem; font-weight: 700; color: #333; }
         .param-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
-        .canister-content { padding: 16px; }
-        .recipe-group {
-            background: #fafaf8; border-radius: 4px; padding: 12px;
-            margin-bottom: 10px; border: 1px solid #e5e5e0;
-        }
-        .recipe-header {
-            display: flex; align-items: center; gap: 8px;
-            margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd;
-        }
-        .recipe-hint { font-size: 0.82rem; color: #888; }
+        .recipe-group { background: #fafaf8; border-radius: 4px; padding: 12px; margin-bottom: 10px; border: 1px solid #e5e5e0; }
+        .recipe-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd; }
         .recipe-dose { font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 0.82rem; }
         .dose-full { background: #d1fae5; color: #065f46; }
         .dose-half { background: #fef3c7; color: #78350f; }
         .dose-quarter { background: #ffedd5; color: #9a3412; }
         .dose-eighth { background: #fee2e2; color: #991b1b; }
         .dose-none { background: #fee2e2; color: #991b1b; }
-        .plants-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px;
-        }
-        .plant-card-mini {
-            border: 1px solid #ddd; border-radius: 4px; overflow: hidden;
-            background: #fff; position: relative;
-        }
-        .plant-card-mini:hover { border-color: #2d6a4f; }
-        .fert-badge {
-            position: absolute; top: 3px; right: 3px; font-size: 0.8rem;
-            background: rgba(255,255,255,0.88); border-radius: 50%;
-            width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
-        }
-        .plant-mini-image { width: 100%; height: 80px; object-fit: cover; background: #eee; }
-        .plant-mini-name { padding: 6px; font-size: 0.75rem; font-weight: 600; color: #333; text-align: center; }
-        .print-btn {
-            display: block; width: 100%; padding: 8px; margin-top: 10px;
-            background: #f5f5f0; border: 1px solid #ddd; border-radius: 4px;
-            cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #555;
-        }
-        .print-btn:hover { background: #eee; }
-        .warning-box {
-            background: #fef2f2; border: 1px solid #ef4444; border-radius: 4px;
-            padding: 16px; margin-top: 20px; text-align: center;
-        }
-        .warning-box h3 { color: #b91c1c; margin-bottom: 8px; font-size: 1rem; }
-        .warning-box p { color: #7f1d1d; font-size: 0.88rem; }
-        .pro-tips {
-            display: flex; flex-direction: column; gap: 8px;
-            margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto;
-        }
-        .tip-card {
-            display: flex; align-items: flex-start; gap: 10px;
-            padding: 12px; border-radius: 4px; background: #fff;
-            border: 1px solid #e5e5e0;
-        }
+        .plants-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+        .plant-card-mini { border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: #fff; position: relative; text-align: center; }
+        .plant-mini-image { width: 100%; height: 80px; object-fit: cover; }
+        .plant-mini-name { padding: 6px; font-size: 0.75rem; font-weight: 600; }
+        .tip-card { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 4px; background: #fff; border: 1px solid #e5e5e0; margin-bottom: 8px; }
         .tip-card.flush { border-left: 3px solid #3b82f6; background: #eff6ff; }
         .tip-card.ph { border-left: 3px solid #d97706; background: #fffbeb; }
         .tip-card.ppm { border-left: 3px solid #2d6a4f; background: #ecfdf5; }
         .tip-card.order { border-left: 3px solid #7c3aed; background: #f5f3ff; }
-        .tip-icon { font-size: 1.2rem; flex-shrink: 0; }
-        .tip-content strong { display: block; color: #333; margin-bottom: 3px; font-size: 0.9rem; }
-        .tip-content p { font-size: 0.85rem; color: #555; margin: 0; }
-        .fertilizer-info {
-            margin-top: 20px; padding: 20px; background: #f5f5f0;
-            border: 1px solid #e5e5e0; border-radius: 4px;
-            max-width: 700px; margin-left: auto; margin-right: auto;
-        }
-        .fertilizer-info h2 { text-align: center; color: #333; margin-bottom: 16px; }
-        .fertilizer-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 12px; margin-bottom: 20px;
-        }
-        .fertilizer-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
-        .fertilizer-header { padding: 10px; color: #fff; font-weight: 700; font-size: 0.95rem; text-align: center; }
-        .fertilizer-header.universal { background: #2d6a4f; }
-        .fertilizer-header.flowering { background: #b85c78; }
-        .fertilizer-content { padding: 12px; }
-        .fertilizer-npk { font-size: 1rem; font-weight: 700; color: #333; margin-bottom: 6px; }
-        .fertilizer-desc { font-size: 0.85rem; color: #555; margin-bottom: 6px; }
-        .fertilizer-micro, .fertilizer-amino { font-size: 0.78rem; color: #888; }
-        .fertilizer-plants {
-            background: #fff; border: 1px solid #ddd; border-radius: 4px;
-            padding: 16px; margin-bottom: 20px;
-        }
-        .fert-group { margin-bottom: 14px; }
-        .fert-group:last-child { margin-bottom: 0; }
-        .fert-group h4 { color: #333; margin-bottom: 6px; font-size: 0.95rem; }
-        .fert-plant-list { display: flex; flex-wrap: wrap; gap: 6px; }
-        .fert-plant { padding: 4px 10px; border-radius: 3px; font-size: 0.82rem; font-weight: 500; }
-        .fert-plant.flowering { background: #fef3c7; color: #78350f; }
-        .fert-plant.universal { background: #d1fae5; color: #065f46; }
-        .fert-plant.none { background: #fee2e2; color: #991b1b; }
-        .multicote-section {
-            background: #fff; border: 1px solid #ddd; border-radius: 4px;
-            padding: 16px; margin-top: 16px; border-left: 3px solid #3b82f6;
-        }
-        .multicote-section h3 { color: #333; margin-bottom: 8px; font-size: 1rem; }
-        .multicote-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px; margin-bottom: 14px;
-        }
-        .multicote-card { background: #eff6ff; border-radius: 4px; padding: 12px; text-align: center; }
-        .multicote-icon { font-size: 1.2rem; margin-bottom: 4px; }
-        .multicote-title { font-size: 0.78rem; color: #888; margin-bottom: 4px; }
-        .multicote-value { font-weight: 700; color: #1e40af; font-size: 0.9rem; }
-        .multicote-hint { font-size: 0.72rem; color: #888; margin-top: 4px; }
-        .multicote-warning {
-            background: #fef2f2; border: 1px solid #ef4444; border-radius: 4px;
-            padding: 12px; margin-bottom: 10px;
-        }
-        .multicote-warning strong { color: #b91c1c; }
-        .multicote-warning p { color: #7f1d1d; margin-top: 4px; font-size: 0.85rem; }
-        .multicote-combo { background: #ecfdf5; border-radius: 4px; padding: 12px; margin-bottom: 10px; }
-        .multicote-combo h4 { color: #065f46; margin-bottom: 8px; font-size: 0.95rem; }
-        .multicote-combo ul { list-style: none; padding: 0; }
-        .multicote-combo li { padding: 4px 0; color: #2d6a4f; font-size: 0.88rem; }
-        .multicote-plants h4 { color: #333; margin-bottom: 8px; font-size: 0.95rem; }
-        .dosage-table { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 16px; }
-        .dosage-table h3 { color: #333; margin-bottom: 8px; font-size: 1rem; }
-        .dosage-note { font-size: 0.85rem; color: #888; margin-bottom: 10px; }
-        .dosage-table table { width: 100%; border-collapse: collapse; }
-        .dosage-table th, .dosage-table td { padding: 8px; text-align: center; border-bottom: 1px solid #e5e5e0; }
-        .dosage-table th { background: #f5f5f0; font-weight: 600; color: #555; font-size: 0.85rem; }
-        .precision-tip {
-            margin-top: 12px; padding: 10px; background: #eff6ff;
-            border-radius: 4px; font-size: 0.82rem; color: #1e40af; border-left: 3px solid #3b82f6;
-        }
-        .mixing-guide {
-            background: #fff; border: 1px solid #ddd; border-radius: 6px;
-            padding: 20px; margin-bottom: 20px;
-            max-width: 700px; margin-left: auto; margin-right: auto;
-        }
-        .mixing-guide h2 { text-align: center; color: #333; margin-bottom: 16px; }
-        .mixing-steps { display: flex; flex-direction: column; gap: 0; }
-        .mixing-step {
-            display: flex; align-items: flex-start; gap: 12px;
-            padding: 14px 0; border-bottom: 1px dashed #ddd; position: relative;
-        }
-        .mixing-step:last-child { border-bottom: none; }
-        .step-number {
-            width: 32px; height: 32px; background: #2d6a4f; color: #fff;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.95rem; flex-shrink: 0;
-        }
+        .toggle-guide { display: block; width: 100%; padding: 10px; background: #2d6a4f; color: #fff; border: none; border-radius: 4px; font-size: 0.9rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .mixing-guide { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 20px; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .step-number { width: 32px; height: 32px; background: #2d6a4f; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
         .step-number.check { background: #059669; }
-        .step-content { flex: 1; }
-        .step-content h4 { color: #333; margin-bottom: 3px; font-size: 0.95rem; }
-        .step-content p { color: #666; font-size: 0.88rem; margin: 0; }
-        .step-badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 0.75rem; font-weight: 600; margin-top: 6px; }
-        .step-badge.ppm { background: #d1fae5; color: #065f46; }
-        .step-badge.fert { background: #fef3c7; color: #78350f; }
-        .step-badge.ph { background: #ffedd5; color: #9a3412; }
-        .step-badge.ok { background: #d1fae5; color: #065f46; }
-        .step-arrow { text-align: center; color: #bbb; font-size: 1.2rem; margin: -6px 0; }
-        .ppm-explanation {
-            background: #eff6ff; border-radius: 4px; padding: 12px;
-            margin-top: 14px; border-left: 3px solid #3b82f6;
-        }
-        .ppm-explanation h4 { color: #1e40af; margin-bottom: 8px; font-size: 0.95rem; }
+        .multicote-section { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 16px; margin-top: 16px; border-left: 3px solid #3b82f6; max-width: 700px; margin-left: auto; margin-right: auto; }
         .ppm-table { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; }
         .ppm-cell { background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e5e5e0; }
         .ppm-cell .label { font-size: 0.72rem; color: #888; }
-        .ppm-cell .value { font-weight: 700; color: #333; font-size: 1rem; }
+        .ppm-cell .value { font-weight: 700; }
         .ppm-cell .note { font-size: 0.68rem; color: #2d6a4f; }
-        .ph-explanation {
-            background: #fffbeb; border-radius: 4px; padding: 12px;
-            margin-top: 12px; border-left: 3px solid #d97706;
-        }
-        .ph-explanation h4 { color: #92400e; margin-bottom: 8px; font-size: 0.95rem; }
-        .ph-flow { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        .ph-item { background: #fff; padding: 6px 12px; border-radius: 4px; font-weight: 600; border: 1px solid #e5e5e0; }
-        .ph-arrow { color: #d97706; }
-        .toggle-guide {
-            display: block; width: 100%; padding: 10px; background: #2d6a4f;
-            color: #fff; border: none; border-radius: 4px; font-size: 0.9rem;
-            font-weight: 600; cursor: pointer; margin-bottom: 16px;
-            max-width: 700px; margin-left: auto; margin-right: auto;
-        }
-        .toggle-guide:hover { background: #1b4332; }
-        @media print {
-            .nav-back, .season-toggle, .print-btn { display: none; }
-            .canister-card { break-inside: avoid; }
-        }
-        @media (max-width: 768px) {
-            .canisters-grid { gap: 12px; }
-        }
+        @media (max-width: 768px) { .ppm-table { grid-template-columns: 1fr 1fr; } }
     </style>
 {% endblock %}
-
 {% block body %}
     <div class="container">
         <a href="index.html" class="nav-back">{{ t.nav_home }}</a>
-
         <header>
             <h1>{{ t.mixer_title }}</h1>
             <p class="subtitle">{{ t.mixer_subtitle }}</p>
         </header>
 
-        <!-- Info banner -->
         <div style="background: #2d6a4f; color: #fff; padding: 10px 16px; border-radius: 4px; text-align: center; margin-bottom: 16px;">
-            <strong>💡 Искусственное освещение = всегда сезон роста</strong>
+            <strong>{{ t.mixer_banner_light }}</strong>
         </div>
 
-        <!-- Pro Tips -->
-        <div class="pro-tips">
+        <div class="pro-tips" style="max-width: 700px; margin: 0 auto 20px;">
             <div class="tip-card flush">
-                <div class="tip-icon">🚿</div>
-                <div class="tip-content">
-                    <strong>Каждый 4-й полив — БЕЗ удобрений!</strong>
-                    <p>Промывка от накопления солей. Та же канистра, но без добавок.</p>
-                </div>
+                <span>🚿</span>
+                <div><strong>{{ t.mixer_tip_flush_title }}</strong><p>{{ t.mixer_tip_flush_desc }}</p></div>
             </div>
             <div class="tip-card ph">
-                <div class="tip-icon">⏱️</div>
-                <div class="tip-content">
-                    <strong>pH мерить через 2-3 минуты</strong>
-                    <p>После добавления удобрений подожди — микроэлементы растворяются не сразу, pH может упасть на 0.2-0.4.</p>
-                </div>
+                <span>⏱️</span>
+                <div><strong>{{ t.mixer_tip_ph_title }}</strong><p>{{ t.mixer_tip_ph_desc }}</p></div>
             </div>
             <div class="tip-card ppm">
-                <div class="tip-icon">📊</div>
-                <div class="tip-content">
-                    <strong>PPM ±10-15 — это норма</strong>
-                    <p>78/120/152 — ориентиры, не догма. Если растение бодрое, корни белые — всё ок.</p>
-                </div>
+                <span>📊</span>
+                <div><strong>{{ t.mixer_tip_ppm_title }}</strong><p>{{ t.mixer_tip_ppm_desc }}</p></div>
             </div>
             <div class="tip-card order">
-                <div class="tip-icon">📋</div>
-                <div class="tip-content">
-                    <strong>Порядок: CalMag → PPM → удобрение → pH</strong>
-                    <p>Подробнее — в гайде ниже ↓</p>
-                </div>
+                <span>📋</span>
+                <div><strong>{{ t.mixer_tip_order_title }}</strong><p>{{ t.mixer_tip_order_desc }}</p></div>
             </div>
         </div>
 
-        <!-- Mixing Guide -->
-        <button class="toggle-guide" onclick="toggleGuide()">
-            📖 Как правильно смешивать воду (нажми чтобы открыть)
-        </button>
+        <button class="toggle-guide" id="toggleGuideBtn" onclick="toggleGuide()">{{ t.mixer_guide_btn_open }}</button>
 
         <div class="mixing-guide" id="mixingGuide" style="display: none;">
-            <h2>🔬 Пошаговый гайд: как готовить воду</h2>
-
-            <div class="mixing-steps">
-                <div class="mixing-step">
+            <h2>{{ t.mixer_guide_title }}</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; gap: 15px;">
                     <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>💧 RO вода</h4>
-                        <p>Начинаем с чистой осмос-воды. PPM должен быть близок к нулю (0-10).</p>
-                        <span class="step-badge ppm">PPM: ~0</span>
-                    </div>
+                    <div><h4>{{ t.mixer_step_1_title }}</h4><p>{{ t.mixer_step_1_desc }}</p></div>
                 </div>
-
-                <div class="mixing-step">
+                <div style="display: flex; gap: 15px;">
                     <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>🧂 Добавь CalMag</h4>
-                        <p>Доведи PPM до целевого значения группы: A≈80, B≈120, C≈150.</p>
-                        <p style="margin-top: 5px; font-size: 0.85rem; color: #48bb78;">💡 Эта база одинаковая для промывки и подкормки!</p>
-                        <span class="step-badge ppm">Проверь PPM!</span>
-                    </div>
+                    <div><h4>{{ t.mixer_step_2_title }}</h4><p>{{ t.mixer_step_2_desc }}</p><p style="color: #48bb78; font-size: 0.85rem;">{{ t.mixer_step_2_hint }}</p></div>
                 </div>
-
-                <div class="mixing-step">
+                <div style="display: flex; gap: 15px;">
                     <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>🧪 Добавь удобрение</h4>
-                        <p>PPM вырастет на 50-150 — <strong>это нормально!</strong> Удобрение = соли = PPM выше. Не надо корректировать.</p>
-                        <span class="step-badge fert">PPM вырос — OK!</span>
-                    </div>
+                    <div><h4>{{ t.mixer_step_3_title }}</h4><p>{{ t.mixer_step_3_desc }}</p></div>
                 </div>
-
-                <div class="mixing-step">
+                <div style="display: flex; gap: 15px;">
                     <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h4>⏱️ Подожди 2-3 минуты</h4>
-                        <p>Микроэлементы растворяются не сразу. pH может упасть на 0.2-0.4 после полного растворения.</p>
-                    </div>
+                    <div><h4>{{ t.mixer_step_4_title }}</h4><p>{{ t.mixer_step_4_desc }}</p></div>
                 </div>
-
-                <div class="mixing-step">
+                <div style="display: flex; gap: 15px;">
                     <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>📊 Измерь и скорректируй pH</h4>
-                        <p>Целевой pH: 5.8-6.5 (в зависимости от группы). Корректируй pH ПОСЛЕДНИМ — после всех добавок.</p>
-                        <span class="step-badge ph">pH в конце!</span>
-                    </div>
+                    <div><h4>{{ t.mixer_step_5_title }}</h4><p>{{ t.mixer_step_5_desc }}</p></div>
                 </div>
-
-                <div class="mixing-step">
+                <div style="display: flex; gap: 15px;">
                     <div class="step-number check">✓</div>
-                    <div class="step-content">
-                        <h4>🎉 Готово!</h4>
-                        <p>Вода готова к поливу. PPM после удобрения: 130-300 — это норма.</p>
-                        <span class="step-badge ok">Можно поливать</span>
-                    </div>
+                    <div><h4>{{ t.mixer_step_final_title }}</h4><p>{{ t.mixer_step_final_desc }}</p></div>
                 </div>
             </div>
 
-            <!-- PPM Explanation -->
-            <div class="ppm-explanation">
-                <h4>📊 Почему PPM после удобрения выше — и это OK</h4>
-                <p style="margin-bottom: 15px; color: #4a5568;">Целевой PPM (80/120/150) — это база CalMag. Удобрение добавляется СВЕРХУ:</p>
+            <div style="background: #eff6ff; padding: 15px; border-radius: 4px; border-left: 4px solid #3b82f6; margin-top: 20px;">
+                <h4 style="color: #1e40af; margin-bottom: 10px;">{{ t.mixer_ppm_why_title }}</h4>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">{{ t.mixer_ppm_why_desc }}</p>
                 <div class="ppm-table">
-                    <div class="ppm-cell">
-                        <div class="label">RO вода</div>
-                        <div class="value">~0</div>
-                    </div>
-                    <div class="ppm-cell">
-                        <div class="label">+ CalMag</div>
-                        <div class="value">80-150</div>
-                        <div class="note">← целевой</div>
-                    </div>
-                    <div class="ppm-cell">
-                        <div class="label">+ Удобрение</div>
-                        <div class="value">+50-150</div>
-                        <div class="note">норма!</div>
-                    </div>
-                    <div class="ppm-cell">
-                        <div class="label">Итого</div>
-                        <div class="value">130-300</div>
-                        <div class="note">✓ OK</div>
-                    </div>
+                    <div class="ppm-cell"><div class="label">RO</div><div class="value">~0</div></div>
+                    <div class="ppm-cell"><div class="label">+ CalMag</div><div class="value">80-150</div><div class="note">← target</div></div>
+                    <div class="ppm-cell"><div class="label">+ Fert</div><div class="value">+50-150</div></div>
+                    <div class="ppm-cell"><div class="label">Total</div><div class="value">130-300</div><div class="note">{{ t.mixer_ppm_total_ok }}</div></div>
                 </div>
-            </div>
-
-            <!-- Flush vs Feed -->
-            <div style="background: #f0fff4; border-radius: 4px; padding: 15px; margin-top: 15px; border-left: 4px solid #48bb78;">
-                <h4 style="color: #22543d; margin-bottom: 10px;">🚿 Промывка vs 🧪 Подкормка</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div style="background: white; padding: 12px; border-radius: 8px;">
-                        <strong style="color: #2f855a;">Промывка (каждый 4-й)</strong>
-                        <p style="font-size: 0.85rem; color: #4a5568; margin-top: 5px;">RO → CalMag → PPM ✓ → <strong>pH ✓</strong></p>
-                    </div>
-                    <div style="background: white; padding: 12px; border-radius: 8px;">
-                        <strong style="color: #2f855a;">Подкормка</strong>
-                        <p style="font-size: 0.85rem; color: #4a5568; margin-top: 5px;">RO → CalMag → PPM ✓ → удобрение → <strong>pH ✓</strong></p>
-                    </div>
-                </div>
-                <p style="text-align: center; margin-top: 10px; color: #22543d; font-size: 0.9rem;">☝️ CalMag база <strong>одинаковая</strong>, pH всегда <strong>в конце</strong>!</p>
-            </div>
-
-            <!-- pH Explanation -->
-            <div class="ph-explanation">
-                <h4>🧪 Что происходит с pH</h4>
-                <div class="ph-flow">
-                    <span class="ph-item">RO вода ~7.0</span>
-                    <span class="ph-arrow">→</span>
-                    <span class="ph-item">+ CalMag ↑</span>
-                    <span class="ph-arrow">→</span>
-                    <span class="ph-item">+ Удобрение ↓</span>
-                    <span class="ph-arrow">→</span>
-                    <span class="ph-item" style="background: #fed7aa;">Корректируй!</span>
-                </div>
-                <p style="margin-top: 15px; color: #744210; font-size: 0.9rem;">
-                    CalMag поднимает pH, удобрение опускает. Поэтому мерь pH только ПОСЛЕ добавления всего — один раз в конце.
-                </p>
             </div>
         </div>
 
-        <script>
-            function toggleGuide() {
-                var guide = document.getElementById('mixingGuide');
-                var btn = document.querySelector('.toggle-guide');
-                if (guide.style.display === 'none') {
-                    guide.style.display = 'block';
-                    btn.textContent = '📖 Как правильно смешивать воду (нажми чтобы скрыть)';
-                } else {
-                    guide.style.display = 'none';
-                    btn.textContent = '📖 Как правильно смешивать воду (нажми чтобы открыть)';
-                }
-            }
-        </script>
-
-        <!-- Canisters -->
         <div class="canisters-grid">
-            <!-- Canister A -->
-            <div class="canister-card canister-a">
+            {% for letter, gkey in [('A', 'group_a'), ('B', 'group_b'), ('C', 'group_c')] %}
+            <div class="canister-card canister-{{ letter.lower() }}">
                 <div class="canister-header">
-                    <div class="canister-letter">A</div>
-                    <div class="canister-title">Чувствительные</div>
+                    <div class="canister-letter">{{ letter }}</div>
+                    <div class="canister-title">{{ t['mixer_' ~ gkey] }}</div>
                 </div>
                 <div class="canister-params">
                     <div class="param">
-                        <div class="param-value">60–90</div>
-                        <div class="param-label">PPM (target 80)</div>
+                        <div class="param-value">{% if letter=='A' %}60–90{% elif letter=='B' %}90–140{% else %}120–170{% endif %}</div>
+                        <div class="param-label">PPM (target {% if letter=='A' %}80{% elif letter=='B' %}120{% else %}150{% endif %})</div>
                     </div>
                     <div class="param">
-                        <div class="param-value">5.8–6.3</div>
+                        <div class="param-value">{% if letter=='A' %}5.8–6.3{% elif letter=='B' %}6.0–6.5{% else %}6.2–6.7{% endif %}</div>
                         <div class="param-label">pH</div>
                     </div>
                 </div>
-                <div class="canister-content">
-                    <!-- Recipe 1: Universal 1/4 -->
-                    <div class="recipe-group growth-recipe">
-                        <div class="recipe-header">
-                            <span class="recipe-dose dose-quarter">Universal 1/4</span>
-                            <span class="recipe-hint">(1.5 мл/л)</span>
-                        </div>
-                        <div class="plants-grid">
-                            <div class="plant-card-mini">
-                                <img src="{{ images.calathea_lancifolia }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Калатея Л.</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.calathea_ornata }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Калатея О.</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.nephrolepis }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Папоротник</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.alocasia_amazonica }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Алоказия</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.alocasia_frydek }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">А. Фрайдек</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <span class="fert-badge">🌸</span>
-                                <img src="{{ images.anthurium_andraeanum }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Антуриум</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.anthurium_clarinervium }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">А. кларинервиум</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <span class="fert-badge">🌸</span>
-                                <img src="{{ images.guzmania }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Гузмания</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recipe 2: Universal 1/8 -->
-                    <div class="recipe-group growth-recipe">
-                        <div class="recipe-header">
-                            <span class="recipe-dose dose-eighth">Universal 1/8</span>
-                            <span class="recipe-hint">(0.75 мл/л)</span>
-                        </div>
-                        <div class="plants-grid">
-                            <div class="plant-card-mini">
-                                <span class="fert-badge">🌸</span>
-                                <img src="{{ images.phalaenopsis }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Орхидея</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recipe 3: Nothing -->
-                    <div class="recipe-group growth-recipe">
-                        <div class="recipe-header">
-                            <span class="recipe-dose dose-none">🚫 БЕЗ удобрений!</span>
-                        </div>
-                        <div class="plants-grid">
-                            <div class="plant-card-mini">
-                                <img src="{{ images.dionaea }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Дионея</div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <button class="print-btn" onclick="window.print()">🖨️ Печать рецепта</button>
+                <div style="padding: 16px;">
+                    <button style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;" onclick="window.print()">{{ t.mixer_btn_print }}</button>
                 </div>
             </div>
-
-            <!-- Canister B -->
-            <div class="canister-card canister-b">
-                <div class="canister-header">
-                    <div class="canister-letter">B</div>
-                    <div class="canister-title">Ароидные и стандартные</div>
-                </div>
-                <div class="canister-params">
-                    <div class="param">
-                        <div class="param-value">90–140</div>
-                        <div class="param-label">PPM (target 120)</div>
-                    </div>
-                    <div class="param">
-                        <div class="param-value">6.0–6.5</div>
-                        <div class="param-label">pH</div>
-                    </div>
-                </div>
-                <div class="canister-content">
-                    <!-- Recipe 1: Universal 100% -->
-                    <div class="recipe-group growth-recipe">
-                        <div class="recipe-header">
-                            <span class="recipe-dose dose-full">Universal 100%</span>
-                            <span class="recipe-hint">(6 мл/л)</span>
-                        </div>
-                        <div class="plants-grid">
-                            <div class="plant-card-mini">
-                                <img src="{{ images.monstera_deliciosa }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Монстера Д.</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.monstera_adansonii }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Монстера А.</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.philodendron }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Филодендрон</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.philodendron_selloum }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Ф. Селлоу</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.epipremnum }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Эпипремнум</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.aglaonema }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Аглаонема</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <span class="fert-badge">🌸</span>
-                                <img src="{{ images.begonia_maculata }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Бегония</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.actinidia_kiwi }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Киви</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recipe 2: Spathiphyllum - choice -->
-                    <div class="recipe-group growth-recipe">
-                        <div class="recipe-header">
-                            <span class="recipe-dose dose-full">Universal ИЛИ Flowering</span>
-                            <span class="recipe-hint">(6 мл/л — выбери одно)</span>
-                        </div>
-                        <div class="plants-grid">
-                            <div class="plant-card-mini">
-                                <span class="fert-badge">🌸</span>
-                                <img src="{{ images.spathiphyllum }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Спатифиллум</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <span class="fert-badge">🌸</span>
-                                <img src="{{ images.saintpaulia }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Сенполия</div>
-                            </div>
-                        </div>
-                        <div style="font-size: 0.85rem; color: #718096; margin-top: 10px; padding: 8px; background: #f7fafc; border-radius: 8px;">
-                            💡 Universal — для роста листьев. Flowering — для стимуляции цветения.
-                        </div>
-                    </div>
-
-
-                    <button class="print-btn" onclick="window.print()">🖨️ Печать рецепта</button>
-                </div>
-            </div>
-
-            <!-- Canister C -->
-            <div class="canister-card canister-c">
-                <div class="canister-header">
-                    <div class="canister-letter">C</div>
-                    <div class="canister-title">Неприхотливые</div>
-                </div>
-                <div class="canister-params">
-                    <div class="param">
-                        <div class="param-value">120–170</div>
-                        <div class="param-label">PPM (target 150)</div>
-                    </div>
-                    <div class="param">
-                        <div class="param-value">6.2–6.7</div>
-                        <div class="param-label">pH</div>
-                    </div>
-                </div>
-                <div class="canister-content">
-                    <!-- Recipe: Universal 100% -->
-                    <div class="recipe-group growth-recipe">
-                        <div class="recipe-header">
-                            <span class="recipe-dose dose-full">Universal 100%</span>
-                            <span class="recipe-hint">(6 мл/л)</span>
-                        </div>
-                        <div class="plants-grid">
-                            <div class="plant-card-mini">
-                                <img src="{{ images.sansevieria }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Сансевиерия</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.dracaena_marginata }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Драцена М.</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.dracaena_fragrans }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Драцена Ф.</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.chlorophytum_comosum }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Хлорофитум</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.croton }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Кротон</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.chamaedorea }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Хамедорея</div>
-                            </div>
-                            <div class="plant-card-mini">
-                                <img src="{{ images.zamioculcas }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Замиокулькас</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recipe 2: Schlumbergera - flowering -->
-                    <div class="recipe-group growth-recipe">
-                        <div class="recipe-header">
-                            <span class="recipe-dose dose-full">Universal ИЛИ Flowering</span>
-                            <span class="recipe-hint">(6 мл/л — выбери одно)</span>
-                        </div>
-                        <div class="plants-grid">
-                            <div class="plant-card-mini">
-                                <span class="fert-badge">🌸</span>
-                                <img src="{{ images.schlumbergera }}" class="plant-mini-image" alt="">
-                                <div class="plant-mini-name">Декабрист</div>
-                            </div>
-                        </div>
-                        <div style="font-size: 0.85rem; color: #718096; margin-top: 10px; padding: 8px; background: #f7fafc; border-radius: 8px;">
-                            💡 Flowering — для стимуляции зимнего цветения.
-                        </div>
-                    </div>
-
-
-                    <button class="print-btn" onclick="window.print()">🖨️ Печать рецепта</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
-        <!-- Warning for Dionaea -->
-        <div class="warning-box">
-            <h3>⚠️ Дионея — особый случай!</h3>
-            <p>Используй воду из канистры A, но <strong>БЕЗ УДОБРЕНИЙ</strong>.<br>
-            Ещё лучше — чистый RO (PPM < 50). Любые добавки убивают растение!</p>
-        </div>
-
-        <!-- Fertilizer Info -->
-        <div class="fertilizer-info">
-            <h2>🧪 Удобрения FLOWER</h2>
-
-            <div class="fertilizer-grid">
-                <div class="fertilizer-card">
-                    <div class="fertilizer-header universal">Universal</div>
-                    <div class="fertilizer-content">
-                        <div class="fertilizer-npk">NPK: 5-3-4</div>
-                        <div class="fertilizer-desc">Универсальное для всех растений</div>
-                        <div class="fertilizer-micro">+ микроэлементы: Fe, Mn, Zn, Cu, Co, B</div>
-                        <div class="fertilizer-amino">+ аминокислоты 0.1%</div>
-                    </div>
-                </div>
-
-                <div class="fertilizer-card">
-                    <div class="fertilizer-header flowering">Flowering</div>
-                    <div class="fertilizer-content">
-                        <div class="fertilizer-npk">NPK: 4-3-6</div>
-                        <div class="fertilizer-desc">Для цветущих растений (больше калия)</div>
-                        <div class="fertilizer-micro">+ микроэлементы: Fe, Mn, Zn, Cu, Co, B</div>
-                    </div>
-                </div>
-
-                <div class="fertilizer-card">
-                    <div class="fertilizer-header" style="background: #805ad5;">Orchids 0-17-7</div>
-                    <div class="fertilizer-content">
-                        <div class="fertilizer-npk">NPK: 0-17-7</div>
-                        <div class="fertilizer-desc">Только для орхидей в цветении!</div>
-                        <div class="fertilizer-micro">+ микроэлементы: Fe, Mn, B, Cu, Zn</div>
-                        <div style="margin-top: 8px; padding: 6px 10px; background: #faf5ff; border-radius: 6px; font-size: 0.8rem; color: #6b46c1;">
-                            0% азота — максимум фосфора для цветков
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Which fertilizer for which plant -->
-            <div class="fertilizer-plants">
-                <div class="fert-group">
-                    <h4>🌸 Flowering ИЛИ Universal</h4>
-                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 10px;">Цветущие — можно чередовать или Flowering для стимуляции цветов</p>
-                    <div class="fert-plant-list">
-                        <span class="fert-plant flowering">Спатифиллум</span>
-                        <span class="fert-plant flowering">Антуриум</span>
-                        <span class="fert-plant flowering">Бегония</span>
-                        <span class="fert-plant flowering">Гузмания</span>
-                        <span class="fert-plant flowering">Шлюмбергера</span>
-                        <span class="fert-plant flowering">Сенполия</span>
-                    </div>
-                </div>
-                <div class="fert-group">
-                    <h4>🪻 Орхидеи — специальный режим</h4>
-                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 10px;">Доза 1/8! Разные удобрения для разных фаз</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-                        <div style="background: #f0fff4; padding: 10px; border-radius: 8px;">
-                            <strong style="color: #22543d; font-size: 0.9rem;">Рост листьев/корней:</strong>
-                            <p style="font-size: 0.85rem; color: #4a5568; margin: 5px 0 0 0;">Universal 1/8 (0.75 мл/л)</p>
-                        </div>
-                        <div style="background: #faf5ff; padding: 10px; border-radius: 8px;">
-                            <strong style="color: #6b46c1; font-size: 0.9rem;">Цветение:</strong>
-                            <p style="font-size: 0.85rem; color: #4a5568; margin: 5px 0 0 0;">Orchids 0-17-7</p>
-                        </div>
-                    </div>
-                    <div class="fert-plant-list">
-                        <span class="fert-plant" style="background: #e9d8fd; color: #553c9a;">Орхидея</span>
-                    </div>
-                </div>
-                <div class="fert-group">
-                    <h4>🌿 Только Universal</h4>
-                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 10px;">Декоративно-лиственные — Flowering им не нужен</p>
-                    <div class="fert-plant-list">
-                        <span class="fert-plant universal">Монстеры</span>
-                        <span class="fert-plant universal">Филодендрон</span>
-                        <span class="fert-plant universal">Ф. Селлоу</span>
-                        <span class="fert-plant universal">Эпипремнум</span>
-                        <span class="fert-plant universal">Аглаонема</span>
-                        <span class="fert-plant universal">Калатеи</span>
-                        <span class="fert-plant universal">Алоказия</span>
-                        <span class="fert-plant universal">Драцены</span>
-                        <span class="fert-plant universal">Сансевиерия</span>
-                        <span class="fert-plant universal">Хлорофитум</span>
-                        <span class="fert-plant universal">Хамедорея</span>
-                        <span class="fert-plant universal">Кротон</span>
-                        <span class="fert-plant universal">Папоротник</span>
-                        <span class="fert-plant universal">Замиокулькас</span>
-                        <span class="fert-plant universal">Киви</span>
-                    </div>
-                </div>
-                <div class="fert-group">
-                    <h4>⚠️ Без удобрений</h4>
-                    <div class="fert-plant-list">
-                        <span class="fert-plant none">Дионея</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dosage-table">
-                <h3>📏 Дозировки FLOWER (шприц)</h3>
-                <p style="color: #718096; font-size: 0.9rem; margin-bottom: 15px;">Базовая доза: 6 мл/л (6:1000)</p>
-                <table>
-                    <tr>
-                        <th>Доза</th>
-                        <th>мл/л</th>
-                    </tr>
-                    <tr>
-                        <td><span class="recipe-dose dose-full">100%</span></td>
-                        <td><strong>6 мл</strong> на литр</td>
-                    </tr>
-                    <tr>
-                        <td><span class="recipe-dose dose-half">1/2</span></td>
-                        <td><strong>3 мл</strong> на литр</td>
-                    </tr>
-                    <tr>
-                        <td><span class="recipe-dose dose-quarter">1/4</span></td>
-                        <td><strong>1.5 мл</strong> на литр</td>
-                    </tr>
-                    <tr>
-                        <td><span class="recipe-dose dose-eighth">1/8</span></td>
-                        <td><strong>0.75 мл</strong> на литр</td>
-                    </tr>
-                </table>
-                <div class="precision-tip">
-                    <strong>💉 Лайфхак для точности 1/8:</strong><br>
-                    Разведи 6 мл в 1 л воды = концентрат.<br>
-                    Из него бери 125 мл на литр = точная доза 1/8.
-                </div>
-            </div>
-
-            <!-- Multicote Section -->
-            <div class="multicote-section">
-                <h3>🔵 Гранулы Multicote (Ecogan)</h3>
-                <p style="color: #718096; margin-bottom: 15px;">Удобрение длительного действия — медленно высвобождается 3-6 месяцев</p>
-
-                <div class="multicote-grid">
-                    <div class="multicote-card">
-                        <div class="multicote-icon">📏</div>
-                        <div class="multicote-title">Сколько</div>
-                        <div class="multicote-value">3-5 г на 1 л грунта</div>
-                        <div class="multicote-hint">~1 чайная ложка на горшок 15 см</div>
-                    </div>
-                    <div class="multicote-card">
-                        <div class="multicote-icon">📅</div>
-                        <div class="multicote-title">Когда</div>
-                        <div class="multicote-value">При пересадке</div>
-                        <div class="multicote-hint">Или сверху (top dressing) весной</div>
-                    </div>
-                    <div class="multicote-card">
-                        <div class="multicote-icon">🔄</div>
-                        <div class="multicote-title">Как часто</div>
-                        <div class="multicote-value">Раз в 3-6 мес</div>
-                        <div class="multicote-hint">Зависит от типа гранул</div>
-                    </div>
-                </div>
-
-                <div class="multicote-warning">
-                    <strong>⚠️ НЕЛЬЗЯ для фитильного полива!</strong>
-                    <p>Гранулы вымываются и обжигают корни. Только верхний полив!</p>
-                </div>
-
-                <div class="multicote-combo">
-                    <h4>🔀 Совмещение с жидкими (FLOWER)</h4>
-                    <ul>
-                        <li>✅ Можно использовать вместе</li>
-                        <li>⚡ Уменьши жидкое до <strong>1/2 дозы</strong> (3 мл/л)</li>
-                        <li>📊 Следи за состоянием листьев — при ожогах убери жидкое</li>
-                    </ul>
-                </div>
-
-                <div class="multicote-plants">
-                    <h4>Для каких растений</h4>
-                    <div class="fert-plant-list">
-                        <span class="fert-plant universal">Монстеры</span>
-                        <span class="fert-plant universal">Филодендрон</span>
-                        <span class="fert-plant universal">Драцены</span>
-                        <span class="fert-plant universal">Сансевиерия</span>
-                        <span class="fert-plant universal">Хлорофитум</span>
-                        <span class="fert-plant universal">Кротон</span>
-                        <span class="fert-plant none" style="background:#fee2e2;">НЕ для фитиля!</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DYNOMYCO Spark Section -->
-            <div class="multicote-section" style="border-left-color: #9f7aea;">
-                <h3>🍄 DYNOMYCO Spark (Микориза + бактерии)</h3>
-                <p style="color: #718096; margin-bottom: 15px;">3-в-1 инокулянт: микоризные грибы + бактерии Bacillus + гуминовая кислота</p>
-
-                <div class="multicote-grid">
-                    <div class="multicote-card" style="background: #faf5ff;">
-                        <div class="multicote-icon">📏</div>
-                        <div class="multicote-title">Сколько</div>
-                        <div class="multicote-value">1 ч.л. (~3 г) на 4 л</div>
-                        <div class="multicote-hint">Тщательно размешать</div>
-                    </div>
-                    <div class="multicote-card" style="background: #faf5ff;">
-                        <div class="multicote-icon">📅</div>
-                        <div class="multicote-title">Когда</div>
-                        <div class="multicote-value">Каждые 1-2 недели</div>
-                        <div class="multicote-hint">До 6 применений на растение</div>
-                    </div>
-                    <div class="multicote-card" style="background: #faf5ff;">
-                        <div class="multicote-icon">🎯</div>
-                        <div class="multicote-title">Для чего</div>
-                        <div class="multicote-value">Корни + питание</div>
-                        <div class="multicote-hint">Пересадка, укоренение, вегетация</div>
-                    </div>
-                </div>
-
-                <div style="background: #f0fff4; border-radius: 4px; padding: 15px; margin-bottom: 15px;">
-                    <h4 style="color: #22543d; margin-bottom: 10px;">🧬 Что внутри</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
-                        <div>
-                            <strong style="color: #2f855a;">Микоризные грибы:</strong>
-                            <ul style="margin: 5px 0 0 15px; color: #4a5568;">
-                                <li>Glomus intraradices (250/г)</li>
-                                <li>Glomus mosseae (750/г)</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong style="color: #2f855a;">Бактерии Bacillus (10M CFU/г):</strong>
-                            <ul style="margin: 5px 0 0 15px; color: #4a5568;">
-                                <li>B. subtilis, B. pumilus</li>
-                                <li>B. velezensis, B. licheniformis</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <p style="margin-top: 10px; color: #22543d; font-size: 0.85rem;">+ Гуминовая кислота 90% (из леонардита)</p>
-                </div>
-
-                <div class="multicote-warning" style="border-color: #d69e2e; background: #fffff0;">
-                    <strong style="color: #975a16;">⚠️ Важно: НЕ добавлять фосфорные удобрения!</strong>
-                    <p style="color: #744210;">После DYNOMYCO избегай стартовых P-удобрений — высокий фосфор подавляет развитие микоризы.</p>
-                </div>
-
-                <div style="background: #ebf8ff; border-radius: 4px; padding: 15px; margin-bottom: 15px;">
-                    <h4 style="color: #2c5282; margin-bottom: 10px;">💡 Когда использовать</h4>
-                    <ul style="list-style: none; padding: 0; color: #2c5282;">
-                        <li>✅ При пересадке (полить после посадки)</li>
-                        <li>✅ При проращивании семян</li>
-                        <li>✅ При укоренении черенков</li>
-                        <li>✅ Каждые 1-2 недели в вегетацию</li>
-                    </ul>
-                </div>
-
-                <div class="multicote-plants">
-                    <h4>Для каких растений</h4>
-                    <div class="fert-plant-list">
-                        <span class="fert-plant universal">Монстеры</span>
-                        <span class="fert-plant universal">Филодендрон</span>
-                        <span class="fert-plant universal">Калатеи</span>
-                        <span class="fert-plant universal">Алоказия</span>
-                        <span class="fert-plant universal">Спатифиллум</span>
-                        <span class="fert-plant universal">Драцены</span>
-                        <span class="fert-plant universal">Хлорофитум</span>
-                        <span class="fert-plant flowering" style="background:#fef3c7;">Орхидеи (осторожно)</span>
-                        <span class="fert-plant none">НЕ для хищных!</span>
-                    </div>
-                </div>
-
-                <div style="background: #f7fafc; border-radius: 4px; padding: 15px; margin-top: 15px;">
-                    <h4 style="color: #4a5568; margin-bottom: 8px;">📦 Хранение</h4>
-                    <p style="font-size: 0.9rem; color: #718096; margin: 0;">
-                        Тёмное, сухое место • 5-25°C • Не замораживать • Срок годности: 09/2027
-                    </p>
-                </div>
-            </div>
-
-            <!-- pH Regulators Section -->
-            <div class="multicote-section" style="border-left-color: #ed8936;">
-                <h3>⚗️ Регуляторы pH</h3>
-                <p style="color: #718096; margin-bottom: 15px;">Корректировка кислотности воды — последний шаг перед поливом</p>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                    <!-- pH Down -->
-                    <div style="background: #fff5f5; border-radius: 4px; padding: 15px; border: 2px solid #fc8181;">
-                        <h4 style="color: #c53030; margin-bottom: 10px;">⬇️ Green Farmer pH-</h4>
-                        <p style="font-size: 0.85rem; color: #742a2a; margin-bottom: 10px;">Понижает pH (минеральный)</p>
-                        <div style="background: white; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                            <strong style="color: #c53030;">Применение:</strong>
-                            <p style="font-size: 0.85rem; color: #4a5568; margin: 5px 0 0 0;">По каплям до нужного pH</p>
-                        </div>
-                        <div style="font-size: 0.8rem; color: #742a2a;">
-                            ⚠️ Осторожно с кожей и глазами
-                        </div>
-                    </div>
-
-                    <!-- pH Up -->
-                    <div style="background: #f0fff4; border-radius: 4px; padding: 15px; border: 2px solid #68d391;">
-                        <h4 style="color: #22543d; margin-bottom: 10px;">⬆️ BioBizz Bio·Up</h4>
-                        <p style="font-size: 0.85rem; color: #276749; margin-bottom: 10px;">Повышает pH (органический, OMRI)</p>
-                        <div style="background: white; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                            <strong style="color: #22543d;">Применение:</strong>
-                            <p style="font-size: 0.85rem; color: #4a5568; margin: 5px 0 0 0;">0.1 мл/л = +0.1 pH</p>
-                        </div>
-                        <div style="font-size: 0.8rem; color: #276749;">
-                            ✅ Не вредит микоризе и бактериям
-                        </div>
-                    </div>
-                </div>
-
-                <div style="background: #fffaf0; border-radius: 4px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #ed8936;">
-                    <h4 style="color: #c05621; margin-bottom: 10px;">🎯 Целевые значения pH</h4>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
-                        <div style="background: white; padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.75rem; color: #718096;">Канистра A</div>
-                            <div style="font-weight: 700; color: #2d3748;">5.8–6.3</div>
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.75rem; color: #718096;">Канистра B</div>
-                            <div style="font-weight: 700; color: #2d3748;">6.0–6.5</div>
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.75rem; color: #718096;">Канистра C</div>
-                            <div style="font-weight: 700; color: #2d3748;">6.2–6.7</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="background: #ebf8ff; border-radius: 4px; padding: 15px;">
-                    <h4 style="color: #2c5282; margin-bottom: 10px;">💡 Bio·Up — когда выбрать органику</h4>
-                    <ul style="list-style: none; padding: 0; color: #2c5282; font-size: 0.9rem;">
-                        <li>✅ Работаешь с микоризой (DYNOMYCO)</li>
-                        <li>✅ Используешь живые почвы</li>
-                        <li>✅ Органические субстраты</li>
-                        <li>✅ Мягкая вода (часто нужно поднять pH)</li>
-                    </ul>
-                    <p style="margin-top: 10px; font-size: 0.85rem; color: #4a5568;">
-                        <strong>Важно:</strong> Bio·Up на основе гуминовых кислот — не убивает полезные микроорганизмы!
-                    </p>
-                </div>
+        <div class="multicote-section">
+            <h3>{{ t.mixer_multicote_title }}</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">{{ t.mixer_multicote_desc }}</p>
+            <div style="background: #fef2f2; border: 1px solid #ef4444; padding: 12px; border-radius: 4px;">
+                <strong style="color: #b91c1c;">{{ t.mixer_multicote_warning }}</strong>
+                <p style="font-size: 0.85rem; margin-top: 4px;">{{ t.mixer_multicote_warning_desc }}</p>
             </div>
         </div>
     </div>
 {% endblock %}
-
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script>
+    function toggleGuide() {
+        const g = document.getElementById('mixingGuide');
+        const b = document.getElementById('toggleGuideBtn');
+        const isOpen = g.style.display !== 'none';
+        g.style.display = isOpen ? 'none' : 'block';
+        b.textContent = isOpen ? "{{ t.mixer_guide_btn_open }}" : "{{ t.mixer_guide_btn_close }}";
+    }
+</script>
+{% endblock %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Протокол полива - Plants Care{% endblock %}
+{% block title %}{{ t.title_tracker }}{% endblock %}
 {% block head %}
     <style>
         body { font-family: 'Courier New', monospace; }
@@ -267,25 +267,25 @@
             <tr>
                 <td class="group-cell">A</td>
                 <td class="value">80</td>
-                <td class="value">1.5 мл</td>
+                <td class="value">1.5 {{ units.ml }}</td>
                 <td class="value">5.8–6.3</td>
             </tr>
             <tr>
                 <td class="group-cell">A+</td>
                 <td class="value">80</td>
-                <td class="value">6 мл</td>
+                <td class="value">6 {{ units.ml }}</td>
                 <td class="value">5.8–6.3</td>
             </tr>
             <tr>
                 <td class="group-cell">B</td>
                 <td class="value">120</td>
-                <td class="value">6 мл</td>
+                <td class="value">6 {{ units.ml }}</td>
                 <td class="value">6.0–6.5</td>
             </tr>
             <tr>
                 <td class="group-cell">C</td>
                 <td class="value">150</td>
-                <td class="value">6 мл</td>
+                <td class="value">6 {{ units.ml }}</td>
                 <td class="value">6.2–6.7</td>
             </tr>
         </table>
@@ -415,6 +415,7 @@
 {% endblock %}
 {% block scripts %}
     <script>
+        var t = {{ t_json|safe }};
         var groups = {
             'A':  { ppm: 80,  universal: 1.5, ph: '5.8–6.3' },
             'A+': { ppm: 80,  universal: 6,   ph: '5.8–6.3' },
@@ -429,7 +430,7 @@
 
             var universal = (g.universal * liters).toFixed(1).replace('.0', '');
 
-            document.getElementById('resultUniversal').textContent = universal + ' мл';
+            document.getElementById('resultUniversal').textContent = universal + ' ' + t.unit_ml;
             document.getElementById('resultPPM').textContent = 'PPM ' + g.ppm;
             document.getElementById('resultPH').textContent = g.ph;
         }
