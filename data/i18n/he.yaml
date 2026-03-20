@@ -416,6 +416,19 @@ feeding_group_orchids: "סחלבים"
 feeding_group_general: "צמחי בית כלליים"
 feeding_wick_forbidden: "אסור בפתילה"
 
+# Fertilizer cards
+fert_universal_desc: "דשן נוזלי אוניברסלי NPK 5-5-7. מתאים לרוב הצמחים בתקופת צמיחה פעילה."
+fert_flowering_desc: "דשן לצמחים פורחים עם תכולה מוגברת של זרחן ואשלגן. ממריץ פריחה."
+fert_multicote_desc: "דשן גרגירי בשחרור איטי. אסור לשימוש בהשקיית פתילה!"
+fert_orchids_desc: "דשן מיוחד לסחלבים בשלב הפריחה. 0% חנקן, 17% זרחן — לפריחה בלבד!"
+fert_dynomyco_desc: "מיקוריזה + חיידקי Bacillus + חומצה הומית. 1 כפית ל-4 ליטר, כל 1-2 שבועות. לשתילה והשרשה."
+fert_bioup_desc: "מעלה pH אורגני על בסיס חומצות הומיות. 0.1 מ\"ל/ל' = +0.1 pH. לא פוגע במיקוריזה!"
+fert_phdown_desc: "מוריד pH מינרלי. טיפות עד לערך הרצוי. להשתמש בזהירות."
+fert_rule_calmag: "השתמשו רק עם מי אוסמוזה (RO) למניעת מחסור במינרלים."
+fert_rule_ph: "כוונו pH בסוף, אחרי כל התוספות. Bio·Up להעלאה (אורגני), pH- להורדה."
+fert_rule_dynomyco: "אחרי שימוש, לא להוסיף דשנים זרחניים — P גבוה מדכא מיקוריזה."
+fert_rule_multicote: "אסור לצמחים בהשקיית פתילה — נשטף וגורם לצריבת שורשים."
+
 # Watering tracker — UI
 tracker_recipe: "1. מתכון ל-1 ליטר"
 tracker_col_group: "קבוצה"

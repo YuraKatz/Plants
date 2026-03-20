@@ -368,6 +368,19 @@ feeding_group_orchids: "Orchids"
 feeding_group_general: "General Houseplants"
 feeding_wick_forbidden: "Forbidden on wick"
 
+# Fertilizer cards
+fert_universal_desc: "Universal liquid fertilizer NPK 5-5-7. Suitable for most plants during active growth."
+fert_flowering_desc: "Fertilizer for flowering plants with increased phosphorus and potassium. Stimulates blooming."
+fert_multicote_desc: "Slow-release granular fertilizer. Do NOT use with wick watering!"
+fert_orchids_desc: "Special fertilizer for orchids in blooming phase. 0% nitrogen, 17% phosphorus — for blooming only!"
+fert_dynomyco_desc: "Mycorrhiza + Bacillus bacteria + humic acid. 1 tsp per 4L, every 1-2 weeks. For rooting and transplanting."
+fert_bioup_desc: "Organic pH Up based on humic acids. 0.1 ml/L = +0.1 pH. Does not harm mycorrhiza!"
+fert_phdown_desc: "Mineral pH Down. Drop by drop to desired value. Use with caution."
+fert_rule_calmag: "Use only with RO (reverse osmosis) water to prevent mineral deficiency."
+fert_rule_ph: "Adjust pH last, after all additives. Bio·Up to raise (organic), pH- to lower."
+fert_rule_dynomyco: "After application, do NOT add phosphorus fertilizers — high P suppresses mycorrhiza."
+fert_rule_multicote: "Forbidden for wick-watered plants — it leaches and causes root burn."
+
 # Watering tracker — UI
 tracker_recipe: "1. Recipe per 1 liter"
 tracker_col_group: "Group"

@@ -147,19 +147,19 @@
         <div class="fertilizer-info">
             <div class="fertilizer-card">
                 <h4>Flower Universal</h4>
-                <p>Универсальное жидкое удобрение NPK 5-5-7. Подходит для большинства растений в период активного роста.</p>
+                <p>{{ t.fert_universal_desc }}</p>
             </div>
             <div class="fertilizer-card">
                 <h4>Flower Flowering</h4>
-                <p>Удобрение для цветущих растений с повышенным содержанием фосфора и калия. Стимулирует цветение.</p>
+                <p>{{ t.fert_flowering_desc }}</p>
             </div>
             <div class="fertilizer-card" style="border-left-color: #805ad5;">
                 <h4>Ecogan Multicote</h4>
-                <p>Гранулированное удобрение пролонгированного действия. НЕ использовать на фитильном поливе!</p>
+                <p>{{ t.fert_multicote_desc }}</p>
             </div>
             <div class="fertilizer-card" style="border-left-color: #9f7aea;">
                 <h4>Flower Orchids 0-17-7</h4>
-                <p>Специальное удобрение для орхидей в фазе цветения. 0% азота, 17% фосфора — только для цветения!</p>
+                <p>{{ t.fert_orchids_desc }}</p>
             </div>
         </div>
 
@@ -168,15 +168,15 @@
         <div class="fertilizer-info">
             <div class="fertilizer-card" style="border-left-color: #9f7aea;">
                 <h4>🍄 DYNOMYCO Spark</h4>
-                <p>Микориза + бактерии Bacillus + гуминовая кислота. 1 ч.л. на 4 л, каждые 1-2 недели. Для укоренения и пересадки.</p>
+                <p>{{ t.fert_dynomyco_desc }}</p>
             </div>
             <div class="fertilizer-card" style="border-left-color: #68d391;">
                 <h4>⬆️ BioBizz Bio·Up</h4>
-                <p>Органический pH Up на гуминовых кислотах. 0.1 мл/л = +0.1 pH. Не вредит микоризе!</p>
+                <p>{{ t.fert_bioup_desc }}</p>
             </div>
             <div class="fertilizer-card" style="border-left-color: #fc8181;">
                 <h4>⬇️ Green Farmer pH-</h4>
-                <p>Минеральный pH Down. По каплям до нужного значения. Использовать с осторожностью.</p>
+                <p>{{ t.fert_phdown_desc }}</p>
             </div>
         </div>
 
@@ -184,11 +184,10 @@
         <div class="water-rules">
             <h2>{{ t.feeding_section_rules }}</h2>
             <ul>
-                <li><b>Cal-Mag:</b> Используйте только с RO (осмос) водой для предотвращения дефицита минералов.</li>
-                <li><b>pH:</b> Регулируйте в конце, после всех добавок. Bio·Up для повышения (органика), pH- для понижения.</li>
-                <li><b>DYNOMYCO:</b> После применения НЕ вносить фосфорные удобрения — высокий P подавляет микоризу.</li>
-                <li><b>Хищники:</b> ТОЛЬКО чистый RO (TDS < 10), никаких добавок и удобрений.</li>
-                <li><b>Multicote:</b> Запрещён для растений на фитильном поливе — вымывается и вызывает ожог корней.</li>
+                <li><b>Cal-Mag:</b> {{ t.fert_rule_calmag }}</li>
+                <li><b>pH:</b> {{ t.fert_rule_ph }}</li>
+                <li><b>DYNOMYCO:</b> {{ t.fert_rule_dynomyco }}</li>
+                <li><b>Multicote:</b> {{ t.fert_rule_multicote }}</li>
             </ul>
         </div>
     </div>
