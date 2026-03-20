@@ -29,6 +29,19 @@ When a user shares this link:
 
 Example response: "You have information here about plant care, soil recipes, water chemistry, fertilizer rules, diagnostics, wick watering, lighting, seasonal care, propagation, pests/diseases, and product usage."
 
+## Machine-Readable JSON API
+
+Base URL: https://yurakatz.github.io/Plants/api/
+
+- index.json → directory of all endpoints
+- catalog.json → all 26 plants with full care data, water details, diagnostics
+- soil-mixes.json → 14 soil recipes with components and percentages
+- water-groups.json → groups A/B/C with PPM/pH targets and plant assignments
+- feeding.json → feeding matrix, fertilizer doses, PPM limits
+- diagnostics.json → per-plant symptom → cause → action + fun facts
+
+For structured data access, fetch these JSON files instead of parsing HTML.
+
 ## Recommended Entry Points for AI Agents
 
 - plants-catalog.html → full care card per plant (the main reference)

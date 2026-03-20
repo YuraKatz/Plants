@@ -772,7 +772,131 @@ def main():
         shutil.copy2(llms_src, SITE_DIR / 'llms.txt')
         print('  [OK] llms.txt')
 
+    # Generate machine-readable JSON for AI agents
+    builder = SiteBuilder().load()
+    _generate_api_json(builder)
+
     print('Done.')
+
+
+def _generate_api_json(b):
+    """Generate JSON endpoints for AI agent consumption."""
+    api_dir = SITE_DIR / 'api'
+    api_dir.mkdir(exist_ok=True)
+
+    def write_json(name, data):
+        (api_dir / name).write_text(
+            json.dumps(data, ensure_ascii=False, indent=2),
+            encoding='utf-8'
+        )
+        print(f'  [OK] api/{name}')
+
+    # --- index.json: directory of available endpoints ---
+    write_json('index.json', {
+        '_description': 'Machine-readable API for Plants Care Database. All data from YAML sources.',
+        '_base_url': 'https://yurakatz.github.io/Plants/api/',
+        'endpoints': {
+            'catalog.json': 'All 26 plants with full care data',
+            'soil-mixes.json': '14 soil mix recipes with components',
+            'water-groups.json': 'Water chemistry groups A/B/C with plant assignments',
+            'feeding.json': 'Feeding matrix, fertilizer products, doses',
+            'diagnostics.json': 'Per-plant symptom → cause → action',
+        }
+    })
+
+    # --- catalog.json: all plants with care data ---
+    catalog = {}
+    for pid, p in b.plants.items():
+        entry = dict(p)
+        entry['id'] = pid
+        # Add water group details
+        wg = p.get('water_group', '')
+        group_defs = b.water_req.get('water_groups', {})
+        if wg in group_defs:
+            gdef = group_defs[wg]
+            entry['water_details'] = {
+                'group': wg,
+                'target_ppm': gdef.get('target_ppm'),
+                'deviation': gdef.get('allowed_deviation'),
+                'ph_range': gdef.get('ph_range'),
+            }
+        # Add individual water sensitivity
+        ind = b.water_req.get('individual_requirements', {}).get(pid, {})
+        if ind:
+            entry['water_sensitivity'] = ind.get('sensitivity', '')
+            entry['water_notes'] = ind.get('notes', '')
+        # Add diagnostics
+        diag = b.facts_problems.get(pid, {})
+        if diag:
+            entry['diagnostics'] = diag.get('diagnostics', [])
+            entry['fun_facts'] = diag.get('facts', [])
+        catalog[pid] = entry
+
+    write_json('catalog.json', {
+        '_description': 'Complete plant care catalog. Primary source of truth.',
+        'plant_count': len(catalog),
+        'plants': catalog,
+    })
+
+    # --- soil-mixes.json ---
+    mixes = {}
+    for key, mix in b.soil_mixes.items():
+        mixes[key] = dict(mix)
+    write_json('soil-mixes.json', {
+        '_description': '14 soil mix recipes with component percentages and variants.',
+        'mix_count': len(mixes),
+        'mixes': mixes,
+    })
+
+    # --- water-groups.json ---
+    groups = {}
+    group_defs = b.water_req.get('water_groups', {})
+    individual = b.water_req.get('individual_requirements', {})
+    for gkey in ['group_a', 'group_b', 'group_c']:
+        gdef = group_defs.get(gkey, {})
+        letter = gkey[-1].upper()
+        plants_in_group = [
+            {'id': pid, 'name': pr.get('plant_name', pid), 'sensitivity': pr.get('sensitivity', '')}
+            for pid, pr in individual.items() if pr.get('group') == letter
+        ]
+        groups[gkey] = {
+            'letter': letter,
+            'name': gdef.get('name', ''),
+            'target_ppm': gdef.get('target_ppm'),
+            'allowed_deviation': gdef.get('allowed_deviation'),
+            'ph_range': gdef.get('ph_range', ''),
+            'plants': plants_in_group,
+        }
+    write_json('water-groups.json', {
+        '_description': 'Water chemistry groups with PPM/pH targets and plant assignments.',
+        'groups': groups,
+        'protocol': b.water_req.get('calmag_protocol', {}),
+    })
+
+    # --- feeding.json ---
+    write_json('feeding.json', {
+        '_description': 'Feeding matrix, fertilizer products, and dosing rules.',
+        'feeding_matrix': b.feeding_matrix,
+        'settings': b.fert_settings,
+        'ppm_limits': b.ppm_limits,
+        'default_feeding': b.default_feeding,
+        'stop_conditions': b.stop_conditions,
+    })
+
+    # --- diagnostics.json ---
+    diag_data = {}
+    for pid, data in b.facts_problems.items():
+        if pid in b.plants:
+            diag_data[pid] = {
+                'plant_name': b.plants[pid].get('name', pid),
+                'facts': data.get('facts', []),
+                'diagnostics': data.get('diagnostics', []),
+            }
+    write_json('diagnostics.json', {
+        '_description': 'Per-plant diagnostics: symptom → cause → action. Plus fun facts.',
+        'common_symptoms': b.common_symptoms,
+        'plants': diag_data,
+    })
 
 
 if __name__ == '__main__':
