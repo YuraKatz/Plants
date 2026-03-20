@@ -51,6 +51,9 @@ card_propagation_desc: "שיטות ריבוי לכל צמח."
 card_pests: "מזיקים ומחלות"
 card_pests_desc: "זיהוי, טיפול ומניעה."
 footer_text: "Plants Database v3.0 | PWA Ready"
+ai_link_desc: "הדביקו את הקישור בצ'אט AI (ChatGPT, Claude, Gemini) — והוא יידע הכל על הצמחים שלכם"
+ai_link_btn: "🤖 העתקת קישור ל-AI"
+ai_link_copied: "✅ הועתק!"
 
 # Stat labels
 stat_plants: "צמחים"

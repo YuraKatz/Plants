@@ -766,6 +766,12 @@ def main():
                 shutil.copy2(item, dest)
             print(f'  [OK] static/{item.name}')
 
+    # Copy llms.txt for AI context sharing
+    llms_src = ROOT / 'docs' / 'llms.txt'
+    if llms_src.exists():
+        shutil.copy2(llms_src, SITE_DIR / 'llms.txt')
+        print('  [OK] llms.txt')
+
     print('Done.')
 
 

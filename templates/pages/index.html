@@ -302,6 +302,14 @@
             </a>
         </div>
 
+        <div class="ai-link-section" style="text-align:center; margin: 30px 0 10px; padding: 15px; background: #f0f7f4; border-radius: 8px; border: 1px dashed #2d6a4f;">
+            <p style="margin: 0 0 8px; font-size: 0.9rem; color: #555;">{{ t.ai_link_desc }}</p>
+            <button id="copyAiLink" onclick="copyLlmsLink()" style="padding: 8px 20px; background: #2d6a4f; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600;">
+                {{ t.ai_link_btn }}
+            </button>
+            <span id="copyAiOk" style="display:none; color: #2d6a4f; margin-left: 10px; font-weight: 600;">{{ t.ai_link_copied }}</span>
+        </div>
+
         <footer>
             <p>{{ t.footer_text }}</p>
             <div class="visitor-badge">
@@ -313,6 +321,14 @@
 
 {% block scripts %}
     <script>
+        function copyLlmsLink() {
+            var url = 'https://yurakatz.github.io/Plants/llms.txt';
+            navigator.clipboard.writeText(url).then(function() {
+                document.getElementById('copyAiOk').style.display = 'inline';
+                setTimeout(function() { document.getElementById('copyAiOk').style.display = 'none'; }, 3000);
+            });
+        }
+
         var searchInput = document.getElementById('searchInput');
 
         searchInput.addEventListener('keydown', function(e) {

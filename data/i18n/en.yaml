@@ -51,6 +51,9 @@ card_propagation_desc: "Propagation methods for each plant."
 card_pests: "Pests & Diseases"
 card_pests_desc: "Identification, treatment and prevention."
 footer_text: "Plants Database v3.0 | PWA Ready"
+ai_link_desc: "Paste this link into any AI chat (ChatGPT, Claude, Gemini) — it will know everything about your plants"
+ai_link_btn: "🤖 Copy link for AI"
+ai_link_copied: "✅ Copied!"
 
 # Stat labels
 stat_plants: "Plants"
