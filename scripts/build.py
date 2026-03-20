@@ -175,7 +175,18 @@ class SiteBuilder:
             mix_num = p.get('soil', {}).get('mix_number')
             if mix_num is None:
                 continue
-            by_mix.setdefault(mix_num, []).append(self._plant_entry(pid, p))
+            entry = self._plant_entry(pid, p)
+            by_mix.setdefault(mix_num, []).append(entry)
+            # Also index by alternative_mix so wick variants show plants too
+            alt = p.get('soil', {}).get('alternative_mix', '')
+            if alt:
+                # Extract mix number from "4 (марантовые, фитильный)" -> 4 or "5-Ф"
+                alt_str = str(alt).split('(')[0].strip().split()[0]
+                try:
+                    alt_key = int(alt_str)
+                except ValueError:
+                    alt_key = alt_str
+                by_mix.setdefault(alt_key, []).append(entry)
         self._plants_by_mix = by_mix
 
     def _plant_entry(self, pid, p):
