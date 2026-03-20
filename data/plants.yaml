@@ -115,9 +115,8 @@ plants:
     - Гниль корней при застое воды
     soil:
       alternative_mix: 2 (ароидная, фитильный)
-      mix_name: ароидная (ручной)
-      mix_number: 1
-      preferred_variant: variant_light
+      mix_name: ароидная облегчённая
+      mix_number: 1-Л
     type: Ароидные цветущие
     watering:
       frequency: Регулярный
@@ -663,8 +662,8 @@ plants:
     - Желтеющие листья при переливе
     - Чувствителен к застою воды
     soil:
-      mix_name: ароидная (ручной)
-      mix_number: 1
+      mix_name: ароидная облегчённая
+      mix_number: 1-Л
     type: Ароидные (древовидные)
     watering:
       frequency: Умеренный

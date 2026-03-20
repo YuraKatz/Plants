@@ -35,8 +35,35 @@ soil_mixes:
             percentage: 5
           - component: Древесный уголь
             percentage: 5
-      variant_light:
-        name: Облегчённый (для антуриумов и чувствительных к застою)
+
+  mix_1l:
+    number: 1-Л
+    name: Ароидная облегчённая (для чувствительных к застою)
+    watering_type: ручной
+    airiness_level: high
+    rot_risk_if_overwatered: low
+    suitable_for:
+      - Антуриум
+      - Филодендрон Ксанаду
+    notes:
+      - Более воздушный субстрат, чем стандартная ароидная смесь Mix #1
+      - Для растений, чувствительных к застою воды и гнили корней
+    variants:
+      variant_a:
+        name: С кокос-перлитом 50/50
+        composition:
+          - component: Универсальный грунт Premium
+            percentage: 40
+          - component: Кокос-перлит (50/50)
+            percentage: 30
+          - component: Смесь для орхидей (кора)
+            percentage: 20
+          - component: Перлит
+            percentage: 5
+          - component: Древесный уголь
+            percentage: 5
+      variant_b:
+        name: Без кокос-перлита
         composition:
           - component: Универсальный грунт Premium
             percentage: 40
