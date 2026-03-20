@@ -13,7 +13,7 @@
             {% if mix.variants %}
             {% for vkey, variant in mix.variants.items() %}
             <div class="composition">
-                <h4>{{ t.soil_variant if t else 'Вариант' }} {{ loop.cycle('A', 'B') }} - {{ variant.name }}</h4>
+                <h4>{{ t.soil_variant if t else 'Вариант' }} {{ 'ABCDEFGH'[loop.index0] if loop.index0 < 8 else loop.index }} - {{ variant.name }}</h4>
                 {% for c in variant.composition %}
                 <div class="component">
                     <span class="component-name">{{ c.component }}</span>
