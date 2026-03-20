@@ -51,7 +51,7 @@ card_propagation_desc: "Методы размножения для каждог�
 card_pests: "Вредители и болезни"
 card_pests_desc: "Определение, лечение и профилактика."
 footer_text: "Plants Database v3.0 | PWA Ready"
-ai_link_desc: "Вставьте эту ссылку в чат с AI (ChatGPT, Claude, Gemini) — и он будет знать всё о ваших растениях"
+ai_link_desc: "Вставьте эту ссылку в чат с AI (ChatGPT, Claude, Gemini) — и он будет знать всю информацию сайта"
 ai_link_btn: "🤖 Скопировать ссылку для AI"
 ai_link_copied: "✅ Скопировано!"
 
