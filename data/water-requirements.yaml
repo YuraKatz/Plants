@@ -111,6 +111,18 @@ water_requirements:
       sensitivity: low
       notes: Неприхотлив, прощает ошибки
 
+    philodendron_selloum:
+      plant_name: Филодендрон Селлоу
+      group: B
+      sensitivity: low
+      notes: Аналогично филодендрону, стабильность важнее точности
+
+    philodendron_xanadu:
+      plant_name: Филодендрон Ксанаду
+      group: B
+      sensitivity: low
+      notes: Компактный филодендрон, не требователен к ppm
+
     alocasia_amazonica:
       plant_name: Алоказия (Polly / Amazonica)
       group: A
@@ -192,6 +204,8 @@ water_requirements:
         - Бегония макулата
         - Хамедорея
         - Хлорофитум
+        - Филодендрон Селлоу
+        - Филодендрон Ксанаду
       sensitivity_level: Средняя
 
     group_c:
