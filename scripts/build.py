@@ -3,6 +3,7 @@
 
 import sys
 import json
+import shutil
 import argparse
 from pathlib import Path
 
@@ -14,6 +15,7 @@ DATA_DIR = ROOT / 'data'
 I18N_DIR = DATA_DIR / 'i18n'
 TEMPLATES_DIR = ROOT / 'templates'
 SITE_DIR = ROOT / 'site'
+STATIC_DIR = ROOT / 'static'
 
 LANGUAGES = ['ru', 'en', 'he']
 
@@ -710,6 +712,19 @@ def main():
 
     print('Building Plants site...')
     SiteBuilder().load().build(args.page, args.lang)
+
+    # Copy static assets (IMAGES, icons, manifest.json, service-worker.js)
+    if STATIC_DIR.exists():
+        for item in STATIC_DIR.iterdir():
+            dest = SITE_DIR / item.name
+            if item.is_dir():
+                if dest.exists():
+                    shutil.rmtree(dest)
+                shutil.copytree(item, dest)
+            else:
+                shutil.copy2(item, dest)
+            print(f'  [OK] static/{item.name}')
+
     print('Done.')
 
 
