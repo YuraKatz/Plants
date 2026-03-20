@@ -129,15 +129,22 @@
                     <div class="canister-letter">{{ letter }}</div>
                     <div class="canister-title">{{ t['mixer_' ~ gkey] }}</div>
                 </div>
+                {% set wg = water_groups[gkey] %}
                 <div class="canister-params">
                     <div class="param">
-                        <div class="param-value">{% if letter=='A' %}60–90{% elif letter=='B' %}90–140{% else %}120–170{% endif %}</div>
-                        <div class="param-label">PPM (target {% if letter=='A' %}80{% elif letter=='B' %}120{% else %}150{% endif %})</div>
+                        <div class="param-value">{{ wg.target_ppm }} ± {{ wg.allowed_deviation }}</div>
+                        <div class="param-label">PPM (target {{ wg.target_ppm }})</div>
                     </div>
                     <div class="param">
-                        <div class="param-value">{% if letter=='A' %}5.8–6.3{% elif letter=='B' %}6.0–6.5{% else %}6.2–6.7{% endif %}</div>
+                        <div class="param-value">{{ wg.ph_range }}</div>
                         <div class="param-label">pH</div>
                     </div>
+                    {% if ppm_limits.limits[gkey] %}
+                    <div class="param">
+                        <div class="param-value">≤ {{ ppm_limits.limits[gkey].target_max }}</div>
+                        <div class="param-label">{{ t.get('mixer_ppm_with_fert', 'PPM + fert') }}</div>
+                    </div>
+                    {% endif %}
                 </div>
                 <div style="padding: 16px;">
                     <button style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;" onclick="window.print()">{{ t.mixer_btn_print }}</button>

@@ -191,6 +191,7 @@ mixer_step_final_desc: "המים מוכנים להשקיה. PPM לאחר דשן:
 mixer_ppm_why_title: "📊 למה ה-PPM אחרי דשן גבוה יותר — וזה בסדר"
 mixer_ppm_why_desc: "PPM יעד (80/120/150) הוא בסיס ה-CalMag. הדשן מתווסף מעל:"
 mixer_ppm_total_ok: "✓ תקין"
+mixer_ppm_with_fert: "PPM + דשן"
 mixer_flush_vs_feed_title: "🚿 שטיפה לעומת 🧪 הזנה"
 mixer_flush_title: "שטיפה (כל פעם רביעית)"
 mixer_feed_title: "הזנה"

@@ -191,6 +191,7 @@ mixer_step_final_desc: "Water is ready for use. PPM after fertilizer: 130-300 is
 mixer_ppm_why_title: "📊 Why PPM after fertilizer is higher — and it's OK"
 mixer_ppm_why_desc: "Target PPM (80/120/150) is the CalMag base. Fertilizer is added ON TOP:"
 mixer_ppm_total_ok: "✓ OK"
+mixer_ppm_with_fert: "PPM + fert"
 mixer_flush_vs_feed_title: "🚿 Flush vs 🧪 Feed"
 mixer_flush_title: "Flush (every 4th)"
 mixer_feed_title: "Feeding"

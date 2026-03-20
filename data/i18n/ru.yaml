@@ -191,6 +191,7 @@ mixer_step_final_desc: "Вода готова к поливу. PPM после у
 mixer_ppm_why_title: "📊 Почему PPM после удобрения выше — и это OK"
 mixer_ppm_why_desc: "Целевой PPM (80/120/150) — это база CalMag. Удобрение добавляется СВЕРХУ:"
 mixer_ppm_total_ok: "✓ OK"
+mixer_ppm_with_fert: "PPM + удобр."
 mixer_flush_vs_feed_title: "🚿 Промывка vs 🧪 Подкормка"
 mixer_flush_title: "Промывка (каждый 4-й)"
 mixer_feed_title: "Подкормка"

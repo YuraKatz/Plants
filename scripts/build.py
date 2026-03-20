@@ -102,6 +102,9 @@ class SiteBuilder:
         self.fertilizers = fert_raw.get('fertilizers', {})
         self.feeding_matrix = fert_raw.get('feeding_matrix', {})
         self.fert_settings = fert_raw.get('settings', {})
+        self.ppm_limits = fert_raw.get('ppm_limits', {})
+        self.default_feeding = fert_raw.get('default_feeding', {})
+        self.stop_conditions = fert_raw.get('stop_conditions', [])
 
         self.care_data = load_yaml('care-data.yaml')
 
@@ -409,12 +412,16 @@ class SiteBuilder:
             gname_key = f'water_group_{letter.lower()}'
             gname = t.get(gname_key, f'Group {letter} - {gdef.get("name", "")}')
 
+            target_ppm = gdef.get('target_ppm', '')
+            deviation = gdef.get('allowed_deviation', 0)
+            ppm_range = f'{target_ppm} ± {deviation}' if target_ppm else ''
+
             groups.append({
                 'key': gkey,
                 'letter': letter,
                 'name': gname,
-                'ppm_range': gdef.get('ppm_range', ''),
-                'ppm_target': gdef.get('ppm_target', ''),
+                'ppm_range': ppm_range,
+                'ppm_target': target_ppm,
                 'ph_range': gdef.get('ph_range', ''),
                 'plants': plants,
             })
@@ -520,6 +527,11 @@ class SiteBuilder:
     def _build_water_mixer(self):
         ctx = self._base_ctx('water-mixer.html')
         ctx['images'] = self._images_for_lang()
+        ctx['water_groups'] = self.water_req.get('water_groups', {})
+        ctx['ppm_limits'] = self.ppm_limits
+        ctx['default_feeding'] = self.default_feeding
+        ctx['stop_conditions'] = self.stop_conditions
+        ctx['calmag_protocol'] = self.water_req.get('calmag_protocol', {})
         html = self.env.get_template('pages/water-mixer.html').render(**ctx)
         self._write('water-mixer.html', html)
 
