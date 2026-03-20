@@ -114,16 +114,16 @@ soil_suitable_for: "מתאים ל:"
 
 # Water groups page
 water_title: "💧 קבוצות מים"
-water_subtitle: "RO Water + CalMag System for Indoor Plants"
-water_search: "חיפוש לפי שם או plant_id..."
+water_subtitle: "מערכת מים RO + CalMag לצמחי בית"
+water_search: "חיפוש לפי שם או מזהה צמח..."
 water_no_results: "לא נמצאו צמחים"
 water_btn_mixer: "🧪 מיקסר דשנים"
 water_pure_ro: "RO טהור בלבד"
 water_no_additives: "ללא תוספים!"
-water_group_a: "Group A - מים רכים מאוד"
-water_group_b: "Group B - מינרליזציה בינונית"
-water_group_c: "Group C - רוויה מעט יותר"
-water_target: "target"
+water_group_a: "קבוצה A — מים רכים מאוד"
+water_group_b: "קבוצה B — מינרליזציה בינונית"
+water_group_c: "קבוצה C — רוויה מעט יותר"
+water_target: "יעד"
 
 # Lighting groups page
 lighting_title: "☀️ קבוצות תאורה"
