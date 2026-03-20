@@ -1,74 +1,89 @@
 # Plants Care Database
 
-> Structured knowledge base for indoor plant care with calculators, diagnostics, and soil/water/feeding protocols. Not just a website — a complete care system for 26 houseplants, designed for practical daily use.
+Structured knowledge base for indoor plant care.
+26 houseplants. Soil recipes, water chemistry, feeding, diagnostics.
+Data-driven: all plant data lives in YAML, rendered to static HTML.
 
-## Purpose
+## System Assumptions
 
-This is a data-driven plant care system. All plant data lives in YAML files and is rendered into a multilingual static site (RU/EN/HE). The system covers the full care cycle: soil composition, water chemistry (RO + CalMag), lighting requirements, feeding schedules, diagnostics, and propagation.
+- All water is RO (reverse osmosis) + CalMag. Tap water is never used.
+- 3 water groups by sensitivity: A (PPM 80±5), B (PPM 120±10), C (PPM 150±10).
+- 14 soil mixes with exact component percentages. Each plant has an assigned mix.
+- 4 feeding groups: aroids, sensitive, orchids, general_houseplants.
+- Wick watering compatibility tracked per plant.
+- Static site: Jinja2 + YAML → HTML. Deployed via GitHub Pages.
+- 3 UI languages: Russian (primary), English, Hebrew.
 
-## Constraints & Assumptions
+## Recommended Entry Points for AI Agents
 
-- All water is RO (reverse osmosis) + CalMag remineralization. Tap water is never used.
-- 3 water groups: A (sensitive, PPM 80±5), B (standard, PPM 120±10), C (hardy, PPM 150±10).
-- 14 soil mixes with exact component percentages. Each plant is assigned a specific mix.
-- 4 feeding groups: aroids, sensitive, orchids, general houseplants.
-- Wick watering is tracked per plant (compatible / not recommended).
-- Static site generated with Jinja2 + YAML → HTML, deployed via GitHub Pages.
-- 3 languages: Russian (primary), English, Hebrew.
+- plants-catalog.html → full care card per plant (the main reference)
+- soil-groups.html → 14 soil recipes, which plants use which mix
+- water-groups.html → PPM/pH targets, plant assignments per group
+- water-mixer.html → calculator for mixing RO + CalMag + fertilizers
+- plant-problems.html → symptom → cause → action diagnostics
 
-## Entry Points (start here)
+## Canonical Data Sources
 
-1. **Plant Catalog** → full care card per plant (lighting, watering, soil, feeding, water group, risks)
-2. **Soil Mixes** → 14 recipes with exact percentages, which plants use which mix
-3. **Water Groups** → PPM/pH targets per group, plant assignments
-4. **Water Mixer** → calculator for mixing RO water with CalMag and fertilizers
-5. **Plant Diagnostics** → symptom → cause → action per plant
+Priority order for machine reading:
 
-## Data Files (priority order for machine reading)
+1. `plants.yaml` — **PRIMARY SOURCE OF TRUTH**
+   - 26 plants, each with: soil mix, water group, feeding group, lighting (lux), watering, humidity, risks, care notes, wick compatibility
 
-1. `plants.yaml` — **PRIMARY**. 26 plants with: soil mix number, water group, feeding group, lighting (lux range), watering method/frequency, humidity, risks, care notes, wick watering compatibility. This is the single source of truth for all plant data.
-2. `water-requirements.yaml` — water groups (A/B/C) with target PPM, allowed deviation, pH range. Individual requirements per plant with sensitivity level.
-3. `soil-mixes.yaml` — 14 mixes. Each has: composition (components + percentages), variants (A/B for different component availability), notes. Includes wick-watering variants.
-4. `fertilizers.yaml` — 8 products (4 fertilizers + 4 additives). Feeding matrix maps feeding_group × fertilizer → dose. PPM limits, stop conditions, seasonal schedules.
-5. `facts-problems.yaml` — common symptoms dictionary (9 entries) + per-plant diagnostics (symptom, causes, severity, actions) + fun facts.
-6. `image-map.yaml` — maps plant IDs to image file paths.
-7. `data/i18n/{ru,en,he}.yaml` — all UI text translations.
+2. `water-requirements.yaml` — water groups A/B/C
+   - Target PPM, deviation, pH range per group
+   - Individual sensitivity per plant
 
-## Pages
+3. `soil-mixes.yaml` — 14 soil mixes
+   - Components + percentages + variants (A/B)
+   - Wick-watering variants included
 
-- [Plant Catalog](https://yurakatz.github.io/Plants/plants-catalog.html): Full care cards for 26 plants.
-- [Water Groups](https://yurakatz.github.io/Plants/water-groups.html): Group A (PPM 80±5, pH 5.8-6.3), Group B (PPM 120±10, pH 6.0-6.5), Group C (PPM 150±10, pH 6.2-6.7).
-- [Lighting Groups](https://yurakatz.github.io/Plants/lighting-groups.html): Low (2000-5000 lux), Medium (5000-9000 lux), Bright (9000-10000+ lux).
-- [Soil Mixes](https://yurakatz.github.io/Plants/soil-groups.html): 14 recipes with percentage and parts ratios.
-- [Feeding Guide](https://yurakatz.github.io/Plants/feeding-guide.html): Fertilizer schedules by season and plant group.
-- [Water Mixer](https://yurakatz.github.io/Plants/water-mixer.html): RO water mixing calculator with PPM/pH targets.
-- [Plant Problems](https://yurakatz.github.io/Plants/plant-problems.html): Diagnostics — symptom → cause → action.
-- [Propagation](https://yurakatz.github.io/Plants/propagation.html): Propagation methods per plant.
-- [Seasonal Care](https://yurakatz.github.io/Plants/seasonal-care.html): Season-specific care adjustments.
-- [Pests & Diseases](https://yurakatz.github.io/Plants/pests-diseases.html): Pest identification and treatment.
-- [My Products](https://yurakatz.github.io/Plants/my-products.html): 8 fertilizers/additives with dosing.
-- [Watering Tracker](https://yurakatz.github.io/Plants/watering-tracker.html): Watering log per canister group.
+4. `fertilizers.yaml` — 8 products
+   - Feeding matrix: feeding_group × fertilizer → dose
+   - PPM limits, stop conditions, seasonal schedules
 
-## Plant Collection (26 plants)
+5. `facts-problems.yaml` — diagnostics
+   - 9 common symptoms (yellow leaves, brown tips, etc.)
+   - Per-plant: symptom, causes, severity, actions, fun facts
 
-Aroids: Monstera deliciosa, Monstera adansonii, Philodendron Imperial Green, Philodendron Selloum, Philodendron Xanadu, Epipremnum aureum, Spathiphyllum, Aglaonema, Alocasia amazonica, Alocasia Frydek, Anthurium andraeanum, Anthurium clarinervium.
-Prayer plants: Calathea lancifolia, Calathea ornata.
-Palms & Dracaenas: Dracaena marginata, Dracaena fragrans, Chamaedorea.
-Other: Guzmania, Chlorophytum comosum, Begonia maculata, Phalaenopsis, Codiaeum (Croton), Nephrolepis, Sansevieria, Zamioculcas, Schlumbergera.
+6. `image-map.yaml` — plant ID → image path
+7. `data/i18n/{ru,en,he}.yaml` — UI translations
 
-## Water Groups Quick Reference
+## Water Groups
 
-| Group | Target PPM | Deviation | pH Range | Sensitivity | Plants |
-|-------|-----------|-----------|----------|-------------|--------|
-| A | 80 | ±5 | 5.8-6.3 | Very high | Calatheas, Alocasias, Anthuriums, Spathiphyllum, Orchid, Guzmania, Fern |
-| B | 120 | ±10 | 6.0-6.5 | Medium | Monsteras, Philodendrons, Epipremnum, Aglaonema, Begonia, Chamaedorea, Chlorophytum |
-| C | 150 | ±10 | 6.2-6.7 | Low | Dracaenas, Croton, Sansevieria, Zamioculcas, Schlumbergera |
+| Group | PPM | pH | Sensitivity | Example plants |
+|-------|-----|-----|------------|----------------|
+| A | 80 ±5 | 5.8–6.3 | Very high | Calatheas, Alocasias, Anthuriums, Fern, Orchid |
+| B | 120 ±10 | 6.0–6.5 | Medium | Monsteras, Philodendrons, Epipremnum, Begonia |
+| C | 150 ±10 | 6.2–6.7 | Low | Dracaenas, Sansevieria, Zamioculcas, Croton |
 
-## Feeding Groups Quick Reference
+## Feeding Groups
 
-| Group | Fertilizers allowed | Plants |
-|-------|-------------------|--------|
-| aroids | Universal full, Flowering full, Multicote OK | Monsteras, Philodendrons, Epipremnum, Aglaonema |
-| sensitive | Universal 1/4 only | Calatheas, Alocasias, Anthuriums, Guzmania, Fern |
-| orchids | Universal 1/8, Orchid fertilizer for bloom | Phalaenopsis |
-| general_houseplants | Universal full, Flowering full, Multicote OK | Begonia, Dracaenas, Croton, Sansevieria, Zamioculcas, Schlumbergera, Chamaedorea, Chlorophytum |
+| Group | Dose | Example plants |
+|-------|------|----------------|
+| aroids | Universal 100%, Flowering 100%, Multicote OK | Monsteras, Philodendrons, Epipremnum |
+| sensitive | Universal 25% only | Calatheas, Alocasias, Anthuriums, Fern |
+| orchids | Universal 12.5%, Orchid fert for bloom | Phalaenopsis |
+| general_houseplants | Universal 100%, Flowering 100%, Multicote OK | Dracaenas, Begonia, Croton, Sansevieria |
+
+## All Pages
+
+- plants-catalog.html — full plant care cards
+- water-groups.html — water chemistry groups
+- lighting-groups.html — light requirement groups
+- soil-groups.html — soil mix recipes
+- feeding-guide.html — fertilizer schedules
+- water-mixer.html — water mixing calculator
+- plant-problems.html — plant diagnostics
+- propagation.html — propagation methods
+- seasonal-care.html — seasonal adjustments
+- pests-diseases.html — pest identification
+- my-products.html — fertilizer/additive details
+- watering-tracker.html — watering log
+
+## Plant List
+
+Full list in `plants.yaml`. Groups:
+- Aroids (12): Monstera ×2, Philodendron ×3, Epipremnum, Spathiphyllum, Aglaonema, Alocasia ×2, Anthurium ×2
+- Prayer plants (2): Calathea lancifolia, Calathea ornata
+- Palms & Dracaenas (3): Dracaena ×2, Chamaedorea
+- Other (9): Guzmania, Chlorophytum, Begonia, Phalaenopsis, Croton, Nephrolepis, Sansevieria, Zamioculcas, Schlumbergera
