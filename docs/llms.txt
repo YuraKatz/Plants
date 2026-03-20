@@ -1,17 +1,17 @@
 # Plants Care Database
 
-> Comprehensive houseplant care system (PWA v3.0). 28 plants with detailed care protocols, water chemistry, soil recipes, feeding schedules, and diagnostics.
+> Comprehensive houseplant care system (PWA v3.0). 26 plants with detailed care protocols, water chemistry, soil recipes, feeding schedules, and diagnostics. Multilingual: Russian, English, Hebrew.
 
 ## Pages
 
-- [Plant Catalog](https://yurakatz.github.io/Plants/plants-catalog.html): Full catalog of 28 plants with care cards — lighting (lux), watering, humidity, soil mix, feeding schedule, wick watering compatibility, water group (PPM/pH), difficulty level, fun facts and common problems.
-- [Water Groups](https://yurakatz.github.io/Plants/water-groups.html): Plants organized by water chemistry requirements. Group A (PPM 60-90, pH 5.8-6.3) — sensitive plants. Group B (PPM 90-140, pH 6.0-6.5) — aroids. Group C (PPM 120-170, pH 6.2-6.7) — hardy plants. All use RO water + CalMag.
+- [Plant Catalog](https://yurakatz.github.io/Plants/plants-catalog.html): Full catalog of 26 plants with care cards — lighting (lux), watering, humidity, soil mix, feeding schedule, wick watering compatibility, water group (PPM/pH), difficulty level.
+- [Water Groups](https://yurakatz.github.io/Plants/water-groups.html): Plants organized by water chemistry requirements. Group A (PPM 80±5, pH 5.8-6.3) — sensitive plants. Group B (PPM 120±10, pH 6.0-6.5) — standard aroids. Group C (PPM 150±10, pH 6.2-6.7) — hardy plants. All use RO water + CalMag.
 - [Lighting Groups](https://yurakatz.github.io/Plants/lighting-groups.html): Plants organized by light needs — Low (2000-5000 lux), Medium (5000-9000 lux), Bright (9000-10000+ lux).
-- [Soil Mixes](https://yurakatz.github.io/Plants/soil-groups.html): 12 soil mix recipes with percentage and parts-based ratios. Mixes for aroids, prayer plants, palms, bromeliads, begonias, orchids, ferns, succulents, carnivorous plants, velvet anthuriums.
-- [Feeding Guide](https://yurakatz.github.io/Plants/feeding-guide.html): Fertilizer schedules by season (growth/dormancy) and plant group (aroids, sensitive, general, flowering, carnivorous).
-- [Water Mixer](https://yurakatz.github.io/Plants/water-mixer.html): RO water mixing calculator — 3 canister recipes (A/B/C) with PPM, pH targets, CalMag and fertilizer dosing.
+- [Soil Mixes](https://yurakatz.github.io/Plants/soil-groups.html): 14 soil mix recipes with percentage and parts-based ratios. Mixes for aroids (standard + lightweight), prayer plants, palms, bromeliads, begonias, orchids, ferns, succulents, velvet anthuriums, tuberous aroids. Includes wick-watering variants.
+- [Feeding Guide](https://yurakatz.github.io/Plants/feeding-guide.html): Fertilizer schedules by season (growth/dormancy) and plant group (aroids, sensitive, orchids, general houseplants).
+- [Water Mixer](https://yurakatz.github.io/Plants/water-mixer.html): RO water mixing calculator — 3 canister recipes (A/B/C) with PPM, pH targets, CalMag and fertilizer dosing from YAML data.
 - [Watering Tracker](https://yurakatz.github.io/Plants/watering-tracker.html): Watering and flushing log tracker per canister group.
-- [Plant Problems](https://yurakatz.github.io/Plants/plant-problems.html): Diagnostics for 28 plants with 60+ symptom-solution pairs.
+- [Plant Problems](https://yurakatz.github.io/Plants/plant-problems.html): Diagnostics for 26 plants — structured symptom→cause→action from facts-problems.yaml.
 - [Propagation](https://yurakatz.github.io/Plants/propagation.html): Propagation methods (water, soil, division, air layering, offsets) for 15+ plants with difficulty ratings.
 - [Seasonal Care](https://yurakatz.github.io/Plants/seasonal-care.html): Season-specific care tips for all plants.
 - [Pests & Diseases](https://yurakatz.github.io/Plants/pests-diseases.html): Pest identification and treatment guide.
@@ -19,25 +19,29 @@
 
 ## Data
 
-- Primary data source: `plants.yaml` — structured YAML with full care specs per plant.
-- Soil recipes: `soil-mixes.yaml` — 12 mixes with component percentages.
-- Water chemistry: `water-requirements.yaml` — PPM/pH targets per group.
-- Fertilizers: `fertilizers.yaml` — product details and dosing.
-- Troubleshooting: `troubleshooting.yaml` — symptom-solution database.
+- Primary data source: `plants.yaml` — structured YAML with full care specs per plant (26 plants).
+- Soil recipes: `soil-mixes.yaml` — 14 mixes with component percentages and variants.
+- Water chemistry: `water-requirements.yaml` — PPM/pH targets per group, individual requirements per plant.
+- Fertilizers: `fertilizers.yaml` — product details, dosing, feeding matrix by plant group.
+- Diagnostics: `facts-problems.yaml` — common symptoms dictionary + per-plant diagnostics with severity levels.
+- Images: `image-map.yaml` — maps plant IDs to image file paths.
+- Translations: `data/i18n/{ru,en,he}.yaml` — all UI text in 3 languages.
 
-## Plant Collection (28 plants)
+## Plant Collection (26 plants)
 
-Aroids: Monstera deliciosa, Monstera adansonii, Philodendron Imperial Green, Philodendron bipinnatifidum (selloum), Epipremnum aureum, Spathiphyllum, Aglaonema, Alocasia amazonica, Alocasia Frydek, Anthurium andraeanum, Anthurium clarinervium.
+Aroids: Monstera deliciosa, Monstera adansonii, Philodendron Imperial Green, Philodendron bipinnatifidum (Selloum), Philodendron Xanadu, Epipremnum aureum, Spathiphyllum, Aglaonema, Alocasia amazonica, Alocasia Frydek, Anthurium andraeanum, Anthurium clarinervium.
 Prayer plants: Calathea lancifolia, Calathea ornata.
-Palms: Dracaena marginata, Dracaena fragrans, Chamaedorea.
-Other: Guzmania, Chlorophytum comosum, Begonia maculata, Phalaenopsis, Saintpaulia, Codiaeum (Croton), Nephrolepis, Sansevieria, Zamioculcas, Schlumbergera, Dionaea muscipula, Actinidia (Kiwi).
+Palms & Dracaenas: Dracaena marginata, Dracaena fragrans, Chamaedorea.
+Other: Guzmania, Chlorophytum comosum, Begonia maculata, Phalaenopsis, Codiaeum (Croton), Nephrolepis, Sansevieria, Zamioculcas, Schlumbergera.
 
 ## Key Features
 
 - RO water system with CalMag remineralization
-- 3 water groups by PPM/pH sensitivity
-- 12 soil mix recipes (percentage + parts ratios)
+- 3 water groups by PPM/pH sensitivity (A/B/C)
+- 14 soil mix recipes (percentage + parts ratios) with wick variants
 - Wick watering compatibility tracking
 - Season-aware feeding (growth vs dormancy)
 - Lux-based lighting groups
+- Multilingual UI (Russian, English, Hebrew)
 - PWA with offline support
+- Static site: Jinja2 templates + YAML → HTML, deployed via GitHub Pages
