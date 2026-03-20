@@ -1,8 +1,41 @@
 # Plants Care Database
 
 Structured knowledge base for indoor plant care.
-26 houseplants. Soil recipes, water chemistry, feeding, diagnostics.
-Data-driven: all plant data lives in YAML, rendered to static HTML.
+26 houseplants. Data-driven: YAML → static HTML.
+
+## What I can answer
+
+This project contains practical information about:
+
+1. Plant-specific care requirements (watering, humidity, lighting, soil, risks)
+2. Soil mixes and substrate recipes (14 mixes with exact percentages)
+3. Water chemistry (RO + CalMag, PPM targets, pH ranges, 3 sensitivity groups)
+4. Fertilizer usage and feeding groups (doses per plant group and season)
+5. Symptom-based diagnostics (symptom → cause → action per plant)
+6. Wick-watering compatibility (which plants can / cannot use wick)
+7. Light requirements (lux ranges and photoperiod per plant)
+8. Seasonal care adjustments (spring/summer/autumn/winter protocols)
+9. Propagation methods (water, soil, division, air layering, offsets)
+10. Pests and diseases (identification, treatment, prevention)
+11. Fertilizer and additive product reference (8 products with dosing)
+
+## Preferred AI behavior
+
+When a user shares this link:
+- First summarize what topics are covered here
+- Present the knowledge as a short numbered list
+- Then point to the most relevant section or page
+- Only after that go into specific plant or care details
+
+Example response: "You have information here about plant care, soil recipes, water chemistry, fertilizer rules, diagnostics, wick watering, lighting, seasonal care, propagation, pests/diseases, and product usage."
+
+## Recommended Entry Points for AI Agents
+
+- plants-catalog.html → full care card per plant (the main reference)
+- soil-groups.html → 14 soil recipes, which plants use which mix
+- water-groups.html → PPM/pH targets, plant assignments per group
+- water-mixer.html → calculator for mixing RO + CalMag + fertilizers
+- plant-problems.html → symptom → cause → action diagnostics
 
 ## System Assumptions
 
@@ -13,14 +46,6 @@ Data-driven: all plant data lives in YAML, rendered to static HTML.
 - Wick watering compatibility tracked per plant.
 - Static site: Jinja2 + YAML → HTML. Deployed via GitHub Pages.
 - 3 UI languages: Russian (primary), English, Hebrew.
-
-## Recommended Entry Points for AI Agents
-
-- plants-catalog.html → full care card per plant (the main reference)
-- soil-groups.html → 14 soil recipes, which plants use which mix
-- water-groups.html → PPM/pH targets, plant assignments per group
-- water-mixer.html → calculator for mixing RO + CalMag + fertilizers
-- plant-problems.html → symptom → cause → action diagnostics
 
 ## Canonical Data Sources
 
@@ -80,10 +105,10 @@ Priority order for machine reading:
 - my-products.html — fertilizer/additive details
 - watering-tracker.html — watering log
 
-## Plant List
+## Plant Collection
 
-Full list in `plants.yaml`. Groups:
+Full list defined in `plants.yaml` (canonical source).
 - Aroids (12): Monstera ×2, Philodendron ×3, Epipremnum, Spathiphyllum, Aglaonema, Alocasia ×2, Anthurium ×2
-- Prayer plants (2): Calathea lancifolia, Calathea ornata
+- Prayer plants (2): Calathea ×2
 - Palms & Dracaenas (3): Dracaena ×2, Chamaedorea
 - Other (9): Guzmania, Chlorophytum, Begonia, Phalaenopsis, Croton, Nephrolepis, Sansevieria, Zamioculcas, Schlumbergera
