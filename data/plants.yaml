@@ -341,36 +341,6 @@ plants:
     wick_watering:
       notes: Чувствителен к переливу — высокий риск корневой гнили
       recommended: false
-  dionaea:
-    water_group: special
-    care_notes:
-    - Только дистиллят или чистый RO
-    - Питание только через ловушки (живые насекомые)
-    feeding_group: carnivorous
-    humidity:
-      level: Высокая
-      spraying: Не обязательно при влажном поддоне
-    latin_name: Dionaea muscipula
-    lighting:
-      direct_sun: true
-      lux_max: 50000
-      lux_min: 10000
-      lux_optimal: 30000
-      photoperiod_hours: 12-14
-    name: Дионея (Венерина мухоловка)
-    risks:
-    - КРИТИЧНО - любые удобрения в почву убивают растение
-    - КРИТИЧНО - обычная вода из крана убивает растение
-    soil:
-      mix_name: Торф + перлит (без удобрений)
-    type: Хищные
-    watering:
-      frequency: Постоянная влажность
-      method: Поддон (постоянно)
-      notes: Использовать ТОЛЬКО RO воду (TDS < 10)
-    wick_watering:
-      notes: Сидит в болоте в поддоне
-      recommended: false
   dracaena_fragrans:
     water_group: group_c
     feeding_group: general_houseplants
@@ -703,40 +673,6 @@ plants:
     wick_watering:
       notes: Не рекомендуется — корневая чувствительна к переливу
       recommended: false
-  saintpaulia:
-    water_group: group_b
-    care_notes:
-    - Не опрыскивать! Вода на листьях вызывает пятна
-    - Идеальна для фитильного полива
-    - Цветёт круглый год при хорошем освещении
-    feeding_group: general_houseplants
-    humidity:
-      level: Средняя-высокая
-      preferred_method: Только повышение влажности воздуха (поддоны, увлажнитель)
-      spraying: НЕ ОПРЫСКИВАТЬ листья!
-    latin_name: Saintpaulia ionantha
-    lighting:
-      direct_sun: false
-      lux_max: 10000
-      lux_min: 2000
-      lux_optimal: 5000
-      photoperiod_hours: 10-12
-    name: Сенполия (Узамбарская фиалка)
-    risks:
-    - Гниль при попадании воды на листья
-    - Чувствительна к переливу
-    soil:
-      mix_name: для сенполий (фитильный)
-      mix_number: 14
-    type: Геснериевые
-    watering:
-      frequency: Регулярный
-      method: Фитиль/Поддон
-      notes: Поливать только в поддон или через фитиль. Вода не должна попадать на
-        листья!
-    wick_watering:
-      notes: Идеальный кандидат для фитиля
-      recommended: true
   sansevieria:
     water_group: group_c
     care_notes:

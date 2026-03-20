@@ -307,9 +307,7 @@ fertilizers:
         - Питомники
         - Рассада
         - Пересадка растений
-        - Все комнатные растения (кроме хищных)
-      not_suitable_for:
-        - Хищные растения (Dionaea, Drosera, Sarracenia)
+        - Все комнатные растения
 
 ppm_limits:
   principle: Удобрения увеличивают общий ppm раствора
@@ -333,7 +331,6 @@ category_mapping:
   aroids: group_b
   sensitive: group_a
   orchids: group_a
-  carnivorous: special
   general_houseplants: group_b
 
 default_feeding:
@@ -420,22 +417,6 @@ feeding_matrix:
       ecogan_multicote: forbidden
       atami_calmag: "allowed (via base water only)"
       dynomyco_spark: forbidden
-
-  carnivorous:
-    growth:
-      flower_universal: forbidden
-      flower_flowering: forbidden
-      ecogan_multicote: forbidden
-      atami_calmag: forbidden
-      dynomyco_spark: forbidden
-      note: "RO-only / keep TDS very low"
-    slow:
-      flower_universal: forbidden
-      flower_flowering: forbidden
-      ecogan_multicote: forbidden
-      atami_calmag: forbidden
-      dynomyco_spark: forbidden
-      note: "RO-only / keep TDS very low"
 
   general_houseplants:
     growth:

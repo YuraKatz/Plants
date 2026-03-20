@@ -78,7 +78,7 @@ propagation_methods:
     desc: "propagation_soil_desc"
     steps: ["propagation_soil_step_1", "propagation_soil_step_2", "propagation_soil_step_3", "propagation_soil_step_4"]
     tips: ["propagation_soil_tip_1", "propagation_soil_tip_2"]
-    plants: ["saintpaulia", "begonia_maculata", "dracaena_marginata"]
+    plants: ["begonia_maculata", "dracaena_marginata"]
   division:
     tab: "propagation_tab_division"
     icon: "✂️"

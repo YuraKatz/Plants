@@ -153,12 +153,6 @@ water_requirements:
       sensitivity: low
       notes: Не требователен к качеству воды
 
-    saintpaulia:
-      plant_name: Сенполия (Узамбарская фиалка)
-      group: B
-      sensitivity: medium
-      notes: Предпочитает мягкую воду. Вода не должна попадать на листья!
-
     anthurium_clarinervium:
       plant_name: Антуриум кларинервиум
       group: A
@@ -198,7 +192,6 @@ water_requirements:
         - Бегония макулата
         - Хамедорея
         - Хлорофитум
-        - Сенполия (Узамбарская фиалка)
       sensitivity_level: Средняя
 
     group_c:

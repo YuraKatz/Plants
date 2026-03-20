@@ -10,7 +10,6 @@ images:
   chamaedorea: IMAGES/chamaedorea.jpg
   chlorophytum_comosum: IMAGES/chlorophytum.jpg
   croton: IMAGES/croton.jpg
-  dionaea: IMAGES/dionaea.jpg
   dracaena_fragrans: IMAGES/dracaena_fragrans.jpg
   dracaena_marginata: IMAGES/dracaena_marginata.jpg
   epipremnum: IMAGES/epipremnum.jpg
@@ -21,7 +20,7 @@ images:
   phalaenopsis: IMAGES/orchid.jpg
   philodendron: IMAGES/philodendron_imperial.jpg
   philodendron_selloum: IMAGES/philodendron_selloum.jpg
-  saintpaulia: IMAGES/saintpaulia.jpg
+  philodendron_xanadu: IMAGES/philodendron_xanadu.jpg
   sansevieria: IMAGES/sansevieria.jpg
   schlumbergera: IMAGES/schlumbergera.jpg
   spathiphyllum: IMAGES/spathiphyllum.jpg
