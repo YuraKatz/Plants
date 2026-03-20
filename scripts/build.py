@@ -96,7 +96,9 @@ class SiteBuilder:
         self.soil_principles = soil_raw.get('general_principles', {})
 
         self.water_req = load_yaml('water-requirements.yaml').get('water_requirements', {})
-        self.facts_problems = load_yaml('facts-problems.yaml').get('facts_and_problems', {})
+        facts_problems_raw = load_yaml('facts-problems.yaml')
+        self.common_symptoms = facts_problems_raw.get('common_symptoms', {})
+        self.facts_problems = facts_problems_raw.get('plants', {})
 
         fert_raw = load_yaml('fertilizers.yaml')
         self.fertilizers = fert_raw.get('fertilizers', {})
@@ -589,28 +591,44 @@ class SiteBuilder:
 
     def _build_plant_problems(self):
         ctx = self._base_ctx('plant-problems.html')
-        t = self._current_t
-        
-        # Load and translate troubleshooting data
-        trouble_data = load_yaml('troubleshooting.yaml')
-        problems = trouble_data.get('problems', [])
-        
-        translated_problems = []
-        for p in problems:
-            np = dict(p)
-            np['symptom'] = t.get('trouble_symptoms', {}).get(p.get('symptom', ''), p.get('symptom', ''))
-            np['cause'] = t.get('trouble_causes', {}).get(p.get('cause', ''), p.get('cause', ''))
-            np['solution'] = t.get('trouble_solutions', {}).get(p.get('solution', ''), p.get('solution', ''))
-            translated_problems.append(np)
-            
+
         # Translate plants for selection JSON (needed for searchable names in each lang)
         problem_plants = {}
         for pid, p in self._current_plants.items():
             problem_plants[pid] = self._plant_entry(pid, p)
 
-        ctx['problems'] = translated_problems
+        # Build diagnostics data from facts-problems.yaml, only for plants in plants.yaml
+        diagnostics = {}
+        for pid in self._current_plants:
+            fp = self.facts_problems.get(pid)
+            if not fp:
+                continue
+            facts = fp.get('facts', [])
+            raw_diags = fp.get('diagnostics', [])
+            diag_list = []
+            for d in raw_diags:
+                symptom_key = d.get('symptom', '')
+                # Resolve symptom description: use per-diagnostic 'description',
+                # else look up in common_symptoms, else use the symptom key
+                desc = d.get('description', '')
+                if not desc:
+                    common = self.common_symptoms.get(symptom_key, {})
+                    desc = common.get('description', symptom_key)
+                actions = d.get('actions', [])
+                severity = d.get('severity', 'medium')
+                diag_list.append({
+                    'symptom_desc': desc,
+                    'actions': actions,
+                    'severity': severity,
+                })
+            diagnostics[pid] = {
+                'facts': facts,
+                'diagnostics': diag_list,
+            }
+
         ctx['plants_json'] = json.dumps(problem_plants, ensure_ascii=False, indent=2)
         ctx['images_json'] = json.dumps(self._images_for_lang(), ensure_ascii=False, indent=2)
+        ctx['diagnostics_json'] = json.dumps(diagnostics, ensure_ascii=False, indent=2)
         html = self.env.get_template('pages/plant-problems.html').render(**ctx)
         self._write('plant-problems.html', html)
 

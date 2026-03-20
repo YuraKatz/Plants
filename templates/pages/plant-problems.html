@@ -217,369 +217,47 @@
 {% endblock %}
 {% block scripts %}
     <script>
-        // Plant data with problems and facts
-        var plantsData = {
-            "monstera_deliciosa": {
-                name: "Монстера Делициоза",
-                latin: "Monstera deliciosa",
-                image: "IMAGES/Монстера делициоза.jpg",
-                problems: [
-                    { symptom: "Жёлтые листья", solution: "Перелив или недостаток света. Дайте просохнуть, переставьте ближе к окну." },
-                    { symptom: "Нет дырок в листьях", solution: "Мало света! Молодые листья без фенестрации — нужно больше освещения." },
-                    { symptom: "Коричневые пятна", solution: "Солнечный ожог. Уберите от прямых лучей." },
-                    { symptom: "Капает вода с листьев", solution: "Гуттация — это норма! Растение выводит лишнюю влагу." }
-                ],
-                facts: [
-                    "Дырки в листьях помогают выдержать тропические ливни",
-                    "В природе плоды съедобны и пахнут ананасом",
-                    "Может вырасти до 20 метров в джунглях"
-                ]
-            },
-            "monstera_adansonii": {
-                name: "Монстера Адансона",
-                latin: "Monstera adansonii",
-                image: "IMAGES/Монстера адансони.jpeg",
-                problems: [
-                    { symptom: "Желтеют нижние листья", solution: "Естественное старение. Если массово — проверьте полив." },
-                    { symptom: "Мелкие листья без дырок", solution: "Мало света! Переставьте ближе к источнику света." },
-                    { symptom: "Коричневые края", solution: "Низкая влажность. Опрыскивайте или поставьте увлажнитель." }
-                ],
-                facts: [
-                    "Называют 'швейцарский сыр' за форму отверстий",
-                    "Быстро растёт — до 30 см в месяц летом",
-                    "Отлично смотрится в подвесных кашпо"
-                ]
-            },
-            "philodendron": {
-                name: "Филодендрон",
-                latin: "Philodendron",
-                image: "IMAGES/филодендрон imperial.jpg",
-                problems: [
-                    { symptom: "Вытянутые стебли", solution: "Недостаток света. Переставьте ближе к окну." },
-                    { symptom: "Жёлтые листья", solution: "Перелив! Дайте грунту просохнуть между поливами." },
-                    { symptom: "Мелкие листья", solution: "Нужна подкормка или опора для лазания вверх." }
-                ],
-                facts: [
-                    "Название означает 'любящий деревья' (греч.)",
-                    "Более 400 видов в семействе",
-                    "Очищает воздух от формальдегида"
-                ]
-            },
-            "philodendron_selloum": {
-                name: "Филодендрон Селлоу",
-                latin: "Philodendron bipinnatifidum",
-                image: "IMAGES/Филодендрон Селлоу.jpg",
-                problems: [
-                    { symptom: "Много жёлтых листьев", solution: "Перелив или тесный горшок. Проверьте корни и пересадите." },
-                    { symptom: "Листья поникли", solution: "Недолив или мало света. Полейте и переставьте ближе к свету." },
-                    { symptom: "Коричневые края", solution: "Сухой воздух или ожог. Уберите от прямых лучей, увеличьте влажность." }
-                ],
-                facts: [
-                    "В природе вырастает до 3-5 метров в ширину",
-                    "Листья глубоко рассечённые — до 40-50 см длиной",
-                    "Переклассифицирован в род Thaumatophyllum"
-                ]
-            },
-            "epipremnum": {
-                name: "Эпипремнум",
-                latin: "Epipremnum aureum",
-                image: "IMAGES/пипремнум.jpg",
-                problems: [
-                    { symptom: "Потеря пестроты", solution: "Мало света! Вариегатным нужно больше освещения." },
-                    { symptom: "Гниль стебля", solution: "Перелив + холод. Обрежьте гниль, укорените здоровую часть." },
-                    { symptom: "Коричневые пятна", solution: "Солнечный ожог. Уберите от прямых лучей." }
-                ],
-                facts: [
-                    "Одно из самых неубиваемых растений",
-                    "Может расти в воде годами",
-                    "NASA включило в список очистителей воздуха"
-                ]
-            },
-            "aglaonema": {
-                name: "Аглаонема",
-                latin: "Aglaonema",
-                image: "IMAGES/Аглаонема.jpeg",
-                problems: [
-                    { symptom: "Скручиваются листья", solution: "Холод или сквозняк. Переставьте в тёплое место." },
-                    { symptom: "Бледнеет окраска", solution: "Слишком темно. Добавьте рассеянного света." },
-                    { symptom: "Коричневые кончики", solution: "Сухой воздух. Опрыскивайте или используйте увлажнитель." }
-                ],
-                facts: [
-                    "Считается символом удачи в Азии",
-                    "Выживает при минимальном освещении",
-                    "Существует более 100 сортов"
-                ]
-            },
-            "spathiphyllum": {
-                name: "Спатифиллум",
-                latin: "Spathiphyllum",
-                image: "IMAGES/Спатифиллум.jpg",
-                problems: [
-                    { symptom: "Не цветёт", solution: "Мало света или удобрений. Переставьте ближе к окну, начните подкармливать." },
-                    { symptom: "Коричневые кончики", solution: "Жёсткая вода с хлором. Используйте отстоянную или RO воду." },
-                    { symptom: "Жёлтые листья", solution: "Перелив или естественное старение нижних листьев." },
-                    { symptom: "Поникли листья", solution: "Хочет пить! Полейте — восстановится за пару часов." }
-                ],
-                facts: [
-                    "'Женское счастье' — популярное название",
-                    "Цветёт белыми 'парусами' круглый год",
-                    "Сигнализирует о жажде поникшими листьями"
-                ]
-            },
-            "calathea_lancifolia": {
-                name: "Калатея Лансифолия",
-                latin: "Calathea lancifolia",
-                image: "IMAGES/Калатея лансифолия.jpg",
-                problems: [
-                    { symptom: "Сохнут края листьев", solution: "Низкая влажность или жёсткая вода! Только RO вода, влажность 60%+." },
-                    { symptom: "Скручиваются листья", solution: "Мало воды или сухой воздух. Полейте и опрыскайте." },
-                    { symptom: "Бледнеют узоры", solution: "Слишком много прямого света. Нужен рассеянный свет." }
-                ],
-                facts: [
-                    "Листья складываются на ночь как в молитве",
-                    "Узоры на листьях уникальны как отпечатки",
-                    "Родом из бразильских тропиков"
-                ]
-            },
-            "calathea_ornata": {
-                name: "Калатея Орната",
-                latin: "Calathea ornata",
-                image: "IMAGES/алатея орната.jpg",
-                problems: [
-                    { symptom: "Коричневые края", solution: "ОБЯЗАТЕЛЬНО RO вода! Калатея орната очень чувствительна к солям." },
-                    { symptom: "Тусклые листья", solution: "Нужна влажность 60%+. Поставьте увлажнитель." },
-                    { symptom: "Паутинный клещ", solution: "Частая проблема! Регулярно осматривайте, промывайте листья." }
-                ],
-                facts: [
-                    "Розовые полоски с возрастом белеют",
-                    "Листья двигаются за солнцем в течение дня",
-                    "Одна из самых красивых калатей"
-                ]
-            },
-            "alocasia_amazonica": {
-                name: "Алоказия",
-                latin: "Alocasia amazonica",
-                image: "IMAGES/Алоказия.jpg",
-                problems: [
-                    { symptom: "Опали все листья", solution: "Спячка! НЕ ВЫБРАСЫВАЙТЕ! Клубень жив, весной даст новые листья." },
-                    { symptom: "Жёлтые пятна", solution: "Перелив. Дайте просохнуть, проверьте дренаж." },
-                    { symptom: "Паутинный клещ", solution: "Главный враг алоказии! Регулярный душ и осмотр." }
-                ],
-                facts: [
-                    "'Африканская маска' — народное название",
-                    "Может уйти в спячку зимой и сбросить листья",
-                    "Клубень выживает даже без листьев"
-                ]
-            },
-            "anthurium_andraeanum": {
-                name: "Антуриум",
-                latin: "Anthurium andraeanum",
-                image: "IMAGES/Антуриум.jpg",
-                problems: [
-                    { symptom: "Не цветёт", solution: "Мало света или холодно. Нужен яркий рассеянный свет и тепло." },
-                    { symptom: "Зелёные цветы", solution: "Недостаток света. 'Цветок' теряет яркость без освещения." },
-                    { symptom: "Коричневые пятна", solution: "Бактериальная инфекция. Удалите поражённые части, изолируйте." }
-                ],
-                facts: [
-                    "'Цветок' — это на самом деле лист (покрывало)",
-                    "Цветёт почти круглый год",
-                    "Символ гостеприимства на Гавайях"
-                ]
-            },
-            "guzmania": {
-                name: "Гузмания",
-                latin: "Guzmania",
-                image: "IMAGES/Гузмания.jpg",
-                problems: [
-                    { symptom: "Материнское растение умирает", solution: "НОРМА после цветения! Отделите деток и выращивайте их." },
-                    { symptom: "Гниёт розетка", solution: "Вода попала в розетку + холод. Держите в тепле, меняйте воду в розетке." },
-                    { symptom: "Бледный цвет", solution: "Мало света. Переставьте ближе к окну." }
-                ],
-                facts: [
-                    "Цветёт один раз в жизни, затем даёт деток",
-                    "Воду наливают в розетку, не в грунт",
-                    "Относится к семейству ананасовых"
-                ]
-            },
-            "nephrolepis": {
-                name: "Папоротник",
-                latin: "Nephrolepis",
-                image: "IMAGES/ПапоротникНефролепис.jpeg",
-                problems: [
-                    { symptom: "Осыпаются листочки", solution: "Сухой воздух! Папоротнику нужна высокая влажность 60%+." },
-                    { symptom: "Жёлтые вайи", solution: "Перелив или недостаток света." },
-                    { symptom: "Коричневые споры снизу листа", solution: "Это НОРМА! Споры — способ размножения папоротника." }
-                ],
-                facts: [
-                    "Один из древнейших видов растений (300 млн лет)",
-                    "Идеальный очиститель воздуха",
-                    "Любит ванную комнату с окном"
-                ]
-            },
-            "phalaenopsis": {
-                name: "Орхидея Фаленопсис",
-                latin: "Phalaenopsis",
-                image: "IMAGES/Орхидея.jpg",
-                problems: [
-                    { symptom: "Не цветёт повторно", solution: "Нужен перепад температур день/ночь 5-7°C для закладки цветоносов." },
-                    { symptom: "Жёлтые листья снизу", solution: "Норма — 1-2 листа в год. Если больше — проверьте корни." },
-                    { symptom: "Гнилые корни", solution: "Пересадите в свежую кору! Срежьте гниль, обработайте." },
-                    { symptom: "Вялые листья", solution: "Проблемы с корнями. Проверьте — возможно гниль или пересушка." }
-                ],
-                facts: [
-                    "Может цвести 3-6 месяцев подряд",
-                    "Корни фотосинтезируют — не закапывайте!",
-                    "В природе растёт на деревьях, не в земле"
-                ]
-            },
-            "dracaena_marginata": {
-                name: "Драцена Маргината",
-                latin: "Dracaena marginata",
-                image: "IMAGES/Драцена маргината.jpg",
-                problems: [
-                    { symptom: "Сохнут кончики", solution: "Жёсткая вода с фтором! Используйте RO или отстоянную воду." },
-                    { symptom: "Опадают нижние листья", solution: "Норма с возрастом — формируется ствол." },
-                    { symptom: "Мягкий ствол", solution: "Гниль от перелива! Срочно просушите, возможно нужна обрезка." }
-                ],
-                facts: [
-                    "'Драконово дерево' — из-за красного сока",
-                    "Живёт десятилетиями",
-                    "Очищает воздух от бензола и ксилола"
-                ]
-            },
-            "dracaena_fragrans": {
-                name: "Драцена Фрагранс",
-                latin: "Dracaena fragrans",
-                image: "IMAGES/Драцена фрагранс.jpg",
-                problems: [
-                    { symptom: "Коричневые пятна", solution: "Избыток фтора в воде. Используйте очищенную воду." },
-                    { symptom: "Бледные листья", solution: "Мало света. Переставьте ближе к окну." },
-                    { symptom: "Мягкий ствол", solution: "Срочно проверьте корни! Возможна гниль от перелива." }
-                ],
-                facts: [
-                    "Цветёт очень редко, но аромат сильный",
-                    "Может вырасти до 2 метров дома",
-                    "Одна из лучших для офисов"
-                ]
-            },
-            "croton": {
-                name: "Кротон",
-                latin: "Codiaeum variegatum",
-                image: "IMAGES/Кротон.jpg",
-                problems: [
-                    { symptom: "Опадают листья", solution: "Стресс от переезда, сквозняк или пересушка. Не двигайте!" },
-                    { symptom: "Тусклые цвета", solution: "Нужно больше света! Кротону нужен яркий свет для окраски." },
-                    { symptom: "Паутинный клещ", solution: "Частая проблема! Регулярный душ и осмотр листьев." }
-                ],
-                facts: [
-                    "Чем больше света — тем ярче краски",
-                    "Млечный сок ядовит — осторожно!",
-                    "Не любит перемещений — сбрасывает листья"
-                ]
-            },
-            "sansevieria": {
-                name: "Сансевиерия",
-                latin: "Sansevieria",
-                image: "IMAGES/Сансевиерия.jpg",
-                problems: [
-                    { symptom: "Мягкие листья", solution: "ПЕРЕЛИВ! Срочно просушите. Сансевиерия гниёт от лишней воды." },
-                    { symptom: "Бледнеет окраска", solution: "Можно добавить света, но выживет и в тени." },
-                    { symptom: "Не растёт", solution: "Это нормально — очень медленное растение." }
-                ],
-                facts: [
-                    "'Тёщин язык' — выживает при любом уходе",
-                    "Выделяет кислород ночью (идеально для спальни)",
-                    "Может месяц без полива"
-                ]
-            },
-            "begonia_maculata": {
-                name: "Бегония Макулата",
-                latin: "Begonia maculata",
-                image: "IMAGES/Бегония макулата.jpg",
-                problems: [
-                    { symptom: "Опадают листья", solution: "Сквозняк или стресс. Держите в стабильных условиях." },
-                    { symptom: "Мучнистая роса", solution: "Плохая вентиляция. Улучшите циркуляцию воздуха." },
-                    { symptom: "Вытягивается", solution: "Прищипните верхушку для кустистости." }
-                ],
-                facts: [
-                    "'Крыло ангела' — за форму листьев",
-                    "Серебряные точки — естественный узор",
-                    "Цветёт розовыми гроздьями"
-                ]
-            },
-            "chamaedorea": {
-                name: "Хамедорея",
-                latin: "Chamaedorea elegans",
-                image: "IMAGES/Хамедорея.jpg",
-                problems: [
-                    { symptom: "Сохнут кончики", solution: "Сухой воздух. Опрыскивайте или поставьте увлажнитель." },
-                    { symptom: "Жёлтые листья", solution: "Перелив или холод. Проверьте условия." },
-                    { symptom: "Паутинный клещ", solution: "Осматривайте регулярно, промывайте листья." }
-                ],
-                facts: [
-                    "Одна из немногих пальм для дома",
-                    "Очень теневынослива",
-                    "Может цвести жёлтыми метёлками"
-                ]
-            },
-            "chlorophytum_comosum": {
-                name: "Хлорофитум",
-                latin: "Chlorophytum comosum",
-                image: "IMAGES/Хлорофитум.jpg",
-                problems: [
-                    { symptom: "Коричневые кончики", solution: "Жёсткая вода с фтором. Используйте очищенную воду." },
-                    { symptom: "Бледные листья", solution: "Мало света. Переставьте ближе к окну." },
-                    { symptom: "Нет деток", solution: "Растение ещё молодое или горшок слишком большой." }
-                ],
-                facts: [
-                    "Чемпион по очистке воздуха (NASA)",
-                    "Даёт 'деток' на длинных усах",
-                    "Практически неубиваем"
-                ]
-            },
-            "dionaea": {
-                name: "Дионея (Венерина мухоловка)",
-                latin: "Dionaea muscipula",
-                image: "IMAGES/Дионея.jpg",
-                problems: [
-                    { symptom: "Чернеют ловушки", solution: "Норма после еды или касания. Не трогайте ловушки!" },
-                    { symptom: "Погибает через 1-2 года", solution: "НЕ БЫЛО ЗИМОВКИ! Обязательна холодная зимовка 3-4 месяца при 0-10°C." },
-                    { symptom: "Слабые ловушки", solution: "Нужно больше прямого солнца. Минимум 4-6 часов." },
-                    { symptom: "Гниёт", solution: "Вода не RO или удобряли! Только дистиллят, никаких удобрений!" }
-                ],
-                facts: [
-                    "Ловушка срабатывает за 0.1 секунды",
-                    "Переваривает насекомых 5-12 дней",
-                    "ОБЯЗАТЕЛЬНА холодная зимовка 3-4 месяца!"
-                ]
-            }
-        };
+        // Data from YAML via build.py
+        var plantsInfo = {{ plants_json }};
+        var imagesMap = {{ images_json }};
+        var diagnosticsData = {{ diagnostics_json }};
+
+        // Build combined plantsData from YAML sources — only plants that have diagnostics
+        var plantsData = {};
+        Object.keys(plantsInfo).forEach(function(id) {
+            var diag = diagnosticsData[id];
+            if (!diag) return; // skip plants without diagnostics data
+            var p = plantsInfo[id];
+            var img = imagesMap[id] || p.image || '';
+            plantsData[id] = {
+                name: p.name || id,
+                latin: p.latin_name || '',
+                type: p.type || '',
+                image: img,
+                problems: (diag.diagnostics || []).map(function(d) {
+                    return {
+                        symptom: d.symptom_desc,
+                        solution: (d.actions || []).join('. ')
+                    };
+                }),
+                facts: diag.facts || []
+            };
+        });
 
         var plantsGrid = document.getElementById('plantsGrid');
         var selectedPlant = document.getElementById('selectedPlant');
         var plantSelection = document.getElementById('plantSelection');
-
-        // Render plant selection grid
-        var floweringPlants = ['spathiphyllum', 'anthurium_andraeanum', 'phalaenopsis', 'begonia_maculata', 'guzmania'];
 
         function renderPlantsGrid() {
             Object.keys(plantsData).forEach(function(id) {
                 var plant = plantsData[id];
                 var card = document.createElement('div');
                 card.className = 'plant-select-card';
-                // Shorten long names but keep unique
                 var shortName = plant.name;
-                if (plant.name.indexOf('Монстера') !== -1) {
-                    shortName = plant.name.replace('Монстера ', 'М. ');
-                } else if (plant.name.indexOf('Драцена') !== -1) {
-                    shortName = plant.name.replace('Драцена ', 'Д. ');
-                } else if (plant.name.indexOf('Калатея') !== -1) {
-                    shortName = plant.name.replace('Калатея ', 'К. ');
-                }
 
-                var isFlowering = floweringPlants.indexOf(id) !== -1;
+                var isFlowering = (plant.type.toLowerCase().indexOf('цветущ') !== -1);
                 card.innerHTML =
-                    (isFlowering ? '<div class="flowering-badge" title="Можно Flowering удобрение">🌸</div>' : '') +
+                    (isFlowering ? '<div class="flowering-badge">🌸</div>' : '') +
                     '<img src="' + plant.image + '" alt="' + plant.name + '" onerror="this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23eee%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2240%22>🌿</text></svg>\'">' +
                     '<div class="name">' + shortName + '</div>';
                 card.onclick = function() { showPlantProblems(id); };
@@ -587,11 +265,9 @@
             });
         }
 
-        // Show problems for selected plant
         function showPlantProblems(id) {
             var plant = plantsData[id];
 
-            // Update header
             document.getElementById('plantHeader').innerHTML =
                 '<img src="' + plant.image + '" alt="' + plant.name + '">' +
                 '<div class="plant-header-info">' +
@@ -599,7 +275,6 @@
                     '<div class="latin">' + plant.latin + '</div>' +
                 '</div>';
 
-            // Update problems
             var problemsList = document.getElementById('problemsList');
             problemsList.innerHTML = plant.problems.map(function(p) {
                 return '<div class="problem-card">' +
@@ -608,22 +283,18 @@
                 '</div>';
             }).join('');
 
-            // Update facts
             var factsList = document.getElementById('factsList');
             factsList.innerHTML = plant.facts.map(function(f) { return '<li>' + f + '</li>'; }).join('');
 
-            // Show selected plant view
             plantSelection.style.display = 'none';
             selectedPlant.classList.add('visible');
         }
 
-        // Show all plants
         function showAllPlants() {
             selectedPlant.classList.remove('visible');
             plantSelection.style.display = 'block';
         }
 
-        // Initialize
         renderPlantsGrid();
     </script>
 {% endblock %}
