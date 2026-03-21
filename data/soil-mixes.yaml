@@ -10,31 +10,19 @@ soil_mixes:
       - Филодендрон
       - Эпипремнум
       - Аглаонема
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 55
-          - component: Кокос-перлит (50/50)
-            percentage: 35
-          - component: Смесь для орхидей (кора)
-            percentage: 5
-          - component: Древесный уголь
-            percentage: 5
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 50
-          - component: Кокосовый субстрат
-            percentage: 25
-          - component: Перлит
-            percentage: 15
-          - component: Смесь для орхидей (кора)
-            percentage: 5
-          - component: Древесный уголь
-            percentage: 5
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 45
+      - component: Кокос гас (крупная фракция)
+        percentage: 15
+      - component: Перлит
+        percentage: 15
+      - component: Кокос дак (мелкая фракция)
+        percentage: 10
+      - component: Bark (кора)
+        percentage: 10
+      - component: Древесный уголь
+        percentage: 5
 
   mix_1l:
     number: 1-Л
@@ -48,33 +36,19 @@ soil_mixes:
     notes:
       - Более воздушный субстрат, чем стандартная ароидная смесь Mix #1
       - Для растений, чувствительных к застою воды и гнили корней
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 40
-          - component: Кокос-перлит (50/50)
-            percentage: 30
-          - component: Смесь для орхидей (кора)
-            percentage: 20
-          - component: Перлит
-            percentage: 5
-          - component: Древесный уголь
-            percentage: 5
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 40
-          - component: Перлит
-            percentage: 20
-          - component: Смесь для орхидей (кора)
-            percentage: 20
-          - component: Кокосовый субстрат
-            percentage: 15
-          - component: Древесный уголь
-            percentage: 5
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 35
+      - component: Bark (кора)
+        percentage: 20
+      - component: Перлит
+        percentage: 20
+      - component: Кокос гас (крупная фракция)
+        percentage: 15
+      - component: Древесный уголь
+        percentage: 5
+      - component: Кокос дак (мелкая фракция)
+        percentage: 5
 
   mix_2:
     number: 2
@@ -86,31 +60,19 @@ soil_mixes:
       - Спатифиллум
       - Монстера (на фитиле)
       - Филодендрон (на фитиле)
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 45
-          - component: Кокос-перлит (50/50)
-            percentage: 40
-          - component: Смесь для орхидей (кора)
-            percentage: 10
-          - component: Древесный уголь
-            percentage: 5
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 40
-          - component: Кокосовый субстрат
-            percentage: 20
-          - component: Перлит
-            percentage: 25
-          - component: Смесь для орхидей (кора)
-            percentage: 10
-          - component: Древесный уголь
-            percentage: 5
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 35
+      - component: Перлит
+        percentage: 25
+      - component: Кокос гас (крупная фракция)
+        percentage: 15
+      - component: Bark (кора)
+        percentage: 10
+      - component: Кокос дак (мелкая фракция)
+        percentage: 10
+      - component: Древесный уголь
+        percentage: 5
 
   mix_3:
     number: 3
@@ -121,27 +83,17 @@ soil_mixes:
     suitable_for:
       - Калатея лансифолия
       - Калатея орната
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 45
-          - component: Кокос-перлит (50/50)
-            percentage: 35
-          - component: Вермикулит
-            percentage: 20
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 40
-          - component: Кокосовый субстрат
-            percentage: 30
-          - component: Вермикулит
-            percentage: 20
-          - component: Перлит
-            percentage: 10
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 40
+      - component: Кокос дак (мелкая фракция)
+        percentage: 25
+      - component: Вермикулит
+        percentage: 15
+      - component: Перлит
+        percentage: 10
+      - component: Кокос гас (крупная фракция)
+        percentage: 10
 
   mix_4:
     number: 4
@@ -154,27 +106,17 @@ soil_mixes:
     warnings:
       - КРИТИЧНО - Следить за застоем воды!
       - Кору не использовать или максимум 5%
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 40
-          - component: Кокос-перлит (50/50)
-            percentage: 45
-          - component: Вермикулит
-            percentage: 15
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 35
-          - component: Кокосовый субстрат
-            percentage: 30
-          - component: Перлит
-            percentage: 20
-          - component: Вермикулит
-            percentage: 15
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 35
+      - component: Кокос дак (мелкая фракция)
+        percentage: 25
+      - component: Перлит
+        percentage: 20
+      - component: Вермикулит
+        percentage: 15
+      - component: Кокос гас (крупная фракция)
+        percentage: 5
 
   mix_5:
     number: 5
@@ -187,23 +129,15 @@ soil_mixes:
       - Драцена фрагранс
       - Кротон
       - Хлорофитум
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 65
-          - component: Кокос-перлит (50/50)
-            percentage: 35
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 60
-          - component: Кокосовый субстрат
-            percentage: 20
-          - component: Перлит
-            percentage: 20
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 55
+      - component: Перлит
+        percentage: 20
+      - component: Кокос гас (крупная фракция)
+        percentage: 10
+      - component: Кокос дак (мелкая фракция)
+        percentage: 15
 
   mix_5f:
     number: 5-Ф
@@ -213,27 +147,17 @@ soil_mixes:
     rot_risk_if_overwatered: medium
     suitable_for:
       - Кротон (на фитиле)
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 55
-          - component: Кокос-перлит (50/50)
-            percentage: 40
-          - component: Смесь для орхидей (кора)
-            percentage: 5
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 50
-          - component: Кокосовый субстрат
-            percentage: 20
-          - component: Перлит
-            percentage: 25
-          - component: Смесь для орхидей (кора)
-            percentage: 5
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 45
+      - component: Перлит
+        percentage: 25
+      - component: Кокос гас (крупная фракция)
+        percentage: 15
+      - component: Кокос дак (мелкая фракция)
+        percentage: 10
+      - component: Bark (кора)
+        percentage: 5
 
   mix_6:
     number: 6
@@ -245,27 +169,17 @@ soil_mixes:
       - Хамедорея
     notes:
       - Фитильный полив не рекомендуется — пальмы чувствительны к переливу
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 65
-          - component: Кокос-перлит (50/50)
-            percentage: 25
-          - component: Вермикулит
-            percentage: 10
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 60
-          - component: Кокосовый субстрат
-            percentage: 20
-          - component: Перлит
-            percentage: 10
-          - component: Вермикулит
-            percentage: 10
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 55
+      - component: Кокос дак (мелкая фракция)
+        percentage: 15
+      - component: Перлит
+        percentage: 10
+      - component: Вермикулит
+        percentage: 10
+      - component: Кокос гас (крупная фракция)
+        percentage: 10
 
   mix_7:
     number: 7
@@ -279,27 +193,17 @@ soil_mixes:
     notes:
       - "Для бромелиевых: основной полив в розетку, субстрат лишь для опоры"
       - "Для лесных кактусов: рыхлый быстро просыхающий субстрат"
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Смесь для орхидей (кора)
-            percentage: 50
-          - component: Кокос-перлит (50/50)
-            percentage: 40
-          - component: Древесный уголь
-            percentage: 10
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Смесь для орхидей (кора)
-            percentage: 50
-          - component: Кокосовый субстрат
-            percentage: 25
-          - component: Перлит
-            percentage: 15
-          - component: Древесный уголь
-            percentage: 10
+    composition:
+      - component: Bark (кора)
+        percentage: 45
+      - component: Кокос гас (крупная фракция)
+        percentage: 20
+      - component: Перлит
+        percentage: 15
+      - component: Древесный уголь
+        percentage: 10
+      - component: Кокос дак (мелкая фракция)
+        percentage: 10
 
   mix_8:
     number: 8
@@ -311,33 +215,20 @@ soil_mixes:
       - Бегония макулата
     notes:
       - Фитильный полив НЕ рекомендуется — критичный риск гнили
-    variants:
-      variant_a:
-        name: С кокос-перлитом 50/50
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 55
-          - component: Кокос-перлит (50/50)
-            percentage: 30
-          - component: Вермикулит
-            percentage: 10
-          - component: Древесный уголь
-            percentage: 5
-            optional: true
-      variant_b:
-        name: Без кокос-перлита
-        composition:
-          - component: Универсальный грунт Premium
-            percentage: 50
-          - component: Кокосовый субстрат
-            percentage: 25
-          - component: Перлит
-            percentage: 15
-          - component: Вермикулит
-            percentage: 5
-          - component: Древесный уголь
-            percentage: 5
-            optional: true
+    composition:
+      - component: Универсальный грунт Premium
+        percentage: 45
+      - component: Кокос дак (мелкая фракция)
+        percentage: 20
+      - component: Перлит
+        percentage: 15
+      - component: Вермикулит
+        percentage: 10
+      - component: Кокос гас (крупная фракция)
+        percentage: 5
+      - component: Древесный уголь
+        percentage: 5
+        optional: true
 
   mix_9:
     number: 9
@@ -360,15 +251,15 @@ soil_mixes:
       - Замачивание
       - Пролив по краю
     composition:
-      - component: Смесь для орхидей (кора + уголь из готовой смеси)
+      - component: Bark (кора)
         percentage: 60-70
       - component: Сфагнум (мох)
         percentage: 15-20
       - component: Перлит
         percentage: 10-15
-      - component: Дополнительный древесный уголь крупной фракции
+      - component: Древесный уголь
         percentage: 5-10
-        notes: Если нужно больше сорбции
+        notes: Для дополнительной сорбции
 
   mix_10:
     number: 10
@@ -385,7 +276,7 @@ soil_mixes:
     composition:
       - component: Универсальный грунт Premium
         percentage: 35
-      - component: Кокосовый субстрат
+      - component: Кокос дак (мелкая фракция)
         percentage: 25
       - component: Перлит
         percentage: 15
@@ -417,7 +308,7 @@ soil_mixes:
         percentage: 40
       - component: Древесный уголь
         percentage: 10
-      - component: Песок/мелкий керамзит
+      - component: Туф/керамзит
         percentage: 5
 
   mix_12:
@@ -433,16 +324,18 @@ soil_mixes:
       - Фитильный полив категорически не подходит — риск гнили клубня
       - Горшок с крупными дренажными отверстиями обязателен
     composition:
-      - component: Смесь для орхидей (кора)
+      - component: Bark (кора)
         percentage: 35
       - component: Перлит
         percentage: 25
       - component: Универсальный грунт Premium
-        percentage: 20
+        percentage: 15
       - component: Древесный уголь
         percentage: 10
       - component: Сфагнум (мох)
         percentage: 10
+      - component: Кокос гас (крупная фракция)
+        percentage: 5
 
   mix_13:
     number: 13
@@ -459,20 +352,22 @@ soil_mixes:
       - Снижает риск гнили клубня и застоя воды
       - Фитильный полив не рекомендуется
     composition:
-      - component: Перлит
+      - component: Bark (кора)
         percentage: 30
+      - component: Перлит
+        percentage: 25
       - component: Универсальный грунт Premium
-        percentage: 25
-      - component: Смесь для орхидей (кора)
-        percentage: 25
+        percentage: 20
+      - component: Кокос гас (крупная фракция)
+        percentage: 10
+      - component: Кокос дак (мелкая фракция)
+        percentage: 10
       - component: Древесный уголь
-        percentage: 10
-      - component: Кокосовый субстрат
-        percentage: 10
+        percentage: 5
 
 general_principles:
   wick_watering_rule: Фитильный полив требует более воздухопроницаемого грунта. Застой воды = гниение корней
   drainage: Всегда используйте дренажный слой из керамзита на дне горшка
   sterilization: Стерилизуйте компоненты перед смешиванием при необходимости
   storage: Храните неиспользованные компоненты в сухом месте
-  coco_perlite_note: Кокос-перлит можно использовать вместо раздельного добавления кокоса и перлита. Если используете кокос-перлит, уменьшите количество отдельного перлита в рецепте
+  coco_types_note: "Кокос гас (крупный) — для аэрации. Кокос дак (мелкий) — для влагоудержания. Можно комбинировать в одной смеси в разных пропорциях"

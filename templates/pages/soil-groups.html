@@ -39,10 +39,8 @@
         }
         .component-name { color: #444; font-size: 0.9rem; }
         .component-percentage { font-weight: 600; color: #2d6a4f; font-size: 0.9rem; }
-        .component-parts { font-weight: 600; color: #6b46c1; font-size: 0.85rem; margin-left: 8px; display: none; }
-        .show-parts .component-parts { display: inline; }
+        .component-parts { font-weight: 600; color: #6b46c1; font-size: 0.85rem; margin-left: 8px; }
         .parts-ratio {
-            display: none;
             background: #f0ecf8;
             padding: 6px 12px;
             border-radius: 4px;
@@ -51,7 +49,6 @@
             color: #553c9a;
             font-size: 0.88rem;
         }
-        .show-parts .parts-ratio { display: block; }
         .plants-list {
             background: #fff;
             padding: 16px;
@@ -119,7 +116,6 @@
                 placeholder="{{ t.soil_search }}"
                 autocomplete="off"
             >
-            <button class="btn-parts" id="btnParts" onclick="toggleParts()" data-parts="{{ t.btn_parts }}" data-pct="{{ t.btn_percentages }}">{{ t.btn_parts }}</button>
             <button class="btn-print" onclick="window.print()">{{ t.btn_print }}</button>
         </div>
 
@@ -205,15 +201,17 @@
                 if (h4 && !(h4.nextElementSibling && h4.nextElementSibling.classList.contains('parts-ratio'))) {
                     var names = Array.from(comp.querySelectorAll('.component-name')).map(function(el) {
                         var name = el.textContent;
-                        if (name.indexOf('Универсальный грунт') !== -1) return 'Грунт';
-                        if (name.indexOf('Кокос-перлит') !== -1) return 'Кокос-перлит';
-                        if (name.indexOf('Кокосовый субстрат') !== -1) return 'Кокос';
-                        if (name.indexOf('орхидей') !== -1 || name.indexOf('Кора') !== -1) return 'Кора';
-                        if (name.indexOf('уголь') !== -1) return 'Уголь';
-                        if (name.indexOf('Сфагнум') !== -1) return 'Мох';
+                        if (name.indexOf('Универсальный грунт') !== -1 || name.indexOf('Premium') !== -1) return 'Грунт';
+                        if (name.indexOf('гас') !== -1 || name.indexOf('Coarse') !== -1 || name.indexOf('גס') !== -1) return 'Кокос-гас';
+                        if (name.indexOf('дак') !== -1 || name.indexOf('Fine') !== -1 || name.indexOf('דק') !== -1) return 'Кокос-дак';
+                        if (name.indexOf('Bark') !== -1 || name.indexOf('bark') !== -1 || name.indexOf('בארק') !== -1) return 'Кора';
+                        if (name.indexOf('уголь') !== -1 || name.indexOf('Charcoal') !== -1 || name.indexOf('פחם') !== -1) return 'Уголь';
+                        if (name.indexOf('Сфагнум') !== -1 || name.indexOf('Sphagnum') !== -1 || name.indexOf('ספגנום') !== -1) return 'Мох';
+                        if (name.indexOf('Перлит') !== -1 || name.indexOf('Perlite') !== -1 || name.indexOf('פרליט') !== -1) return 'Перлит';
+                        if (name.indexOf('Вермикулит') !== -1 || name.indexOf('Vermiculite') !== -1 || name.indexOf('ורמיקוליט') !== -1) return 'Вермикулит';
+                        if (name.indexOf('Туф') !== -1 || name.indexOf('Tuff') !== -1 || name.indexOf('טוף') !== -1) return 'Туф';
                         if (name.indexOf('Верховой торф') !== -1) return 'Торф';
                         if (name.indexOf('Листовой') !== -1) return 'Перегной';
-                        if (name.indexOf('Песок') !== -1) return 'Песок';
                         return name;
                     });
                     var ratioDiv = document.createElement('div');
@@ -224,18 +222,7 @@
             });
         }
 
-        function toggleParts() {
-            var container = document.querySelector('.container');
-            var btn = document.getElementById('btnParts');
-            container.classList.toggle('show-parts');
-            btn.classList.toggle('active');
-
-            if (container.classList.contains('show-parts')) {
-                calcParts();
-                btn.textContent = btn.getAttribute('data-pct');
-            } else {
-                btn.textContent = btn.getAttribute('data-parts');
-            }
-        }
+        // Auto-calculate parts on page load
+        calcParts();
     </script>
 {% endblock %}

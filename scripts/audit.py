@@ -126,12 +126,12 @@ class PlantsDatabaseAuditor:
         # Common component names that should exist
         expected_components = [
             'Универсальный грунт Premium',
-            'Кокосовый субстрат',
+            'Кокос гас',
+            'Кокос дак',
             'Перлит',
             'Вермикулит',
-            'Смесь для орхидей',
+            'Bark',
             'Древесный уголь',
-            'Кокос-перлит'
         ]
 
         for comp in expected_components:
