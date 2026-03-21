@@ -13,6 +13,8 @@ plants:
       lux_min: 2000
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 3
+    humidity_score: 3
     name: Аглаонема пестролистная
     risks:
     - Устойчива
@@ -43,6 +45,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 6
+    humidity_score: 8
     name: Алоказия (Polly / Amazonica)
     risks:
     - КРИТИЧНО - чувствительна к переливу
@@ -76,6 +80,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 6
+    humidity_score: 9
     name: Алоказия Фрайдек
     risks:
     - КРИТИЧНО - гниль клубня при переливе
@@ -109,6 +115,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 6
+    humidity_score: 8
     name: Антуриум
     risks:
     - Чувствителен к качеству воды
@@ -145,6 +153,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 6
+    humidity_score: 9
     name: Антуриум кларинервиум
     risks:
     - КРИТИЧНО - гниль клубня при переливе
@@ -177,6 +187,8 @@ plants:
       lux_min: 4000
       lux_optimal: 9000
       photoperiod_hours: 10-12
+    lighting_score: 8
+    humidity_score: 5
     name: Бегония макулата
     risks:
     - КРИТИЧНО - гниль при переливе
@@ -207,6 +219,8 @@ plants:
       lux_min: 2500
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 2
+    humidity_score: 8
     name: Калатея лансифолия
     risks:
     - Сухие кончики при низкой влажности
@@ -238,6 +252,8 @@ plants:
       lux_min: 2500
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 2
+    humidity_score: 8
     name: Калатея орната
     risks:
     - Сухие кончики при низкой влажности
@@ -267,6 +283,8 @@ plants:
       lux_min: 2000
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 2
+    humidity_score: 7
     name: Хамедорея / пальма комнатная
     risks:
     - Чувствительна к переливу
@@ -295,6 +313,8 @@ plants:
       lux_min: 2000
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 3
+    humidity_score: 3
     name: Хлорофитум
     risks:
     - Устойчив к ошибкам в уходе
@@ -325,6 +345,8 @@ plants:
       lux_min: 4000
       lux_optimal: 10000
       photoperiod_hours: 10-12
+    lighting_score: 10
+    humidity_score: 7
     name: Кротон
     risks:
     - Не любит пересыхание
@@ -354,6 +376,8 @@ plants:
       lux_min: 2500
       lux_optimal: 6000
       photoperiod_hours: 10-12
+    lighting_score: 5
+    humidity_score: 3
     name: Драцена фрагранс / деременсис
     risks:
     - Чувствительна к переливу
@@ -382,6 +406,8 @@ plants:
       lux_min: 2500
       lux_optimal: 6000
       photoperiod_hours: 10-12
+    lighting_score: 5
+    humidity_score: 3
     name: Драцена маргината
     risks:
     - Чувствительна к переливу
@@ -410,6 +436,8 @@ plants:
       lux_min: 2000
       lux_optimal: 6000
       photoperiod_hours: 10-12
+    lighting_score: 5
+    humidity_score: 3
     name: Эпипремнум / сциндапсус
     risks:
     - Устойчив
@@ -440,6 +468,8 @@ plants:
       lux_min: 5000
       lux_optimal: 10000
       photoperiod_hours: 10-12
+    lighting_score: 9
+    humidity_score: 8
     name: Гузмания
     risks:
     - Поливать только в розетку
@@ -468,6 +498,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 7
+    humidity_score: 6
     name: Монстера адансони
     risks:
     - Устойчива
@@ -496,6 +528,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 7
+    humidity_score: 5
     name: Монстера молодая
     risks:
     - Устойчива
@@ -527,6 +561,8 @@ plants:
       lux_min: 1500
       lux_optimal: 4000
       photoperiod_hours: 10-12
+    lighting_score: 1
+    humidity_score: 10
     name: Папоротник (Нефролепис)
     risks:
     - Сухие кончики при низкой влажности
@@ -560,6 +596,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 6
+    humidity_score: 5
     name: Орхидея фаленопсис
     pot_requirements:
       critical: true
@@ -592,6 +630,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 7
+    humidity_score: 6
     name: Филодендрон крупнолистный
     risks:
     - Устойчив
@@ -624,6 +664,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 7
+    humidity_score: 6
     name: Филодендрон Селлоу
     risks:
     - Желтеющие нижние листья при переливе
@@ -657,6 +699,8 @@ plants:
       lux_min: 3000
       lux_optimal: 8000
       photoperiod_hours: 10-12
+    lighting_score: 7
+    humidity_score: 5
     name: Филодендрон Ксанаду
     risks:
     - Желтеющие листья при переливе
@@ -689,6 +733,8 @@ plants:
       lux_min: 1000
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 2
+    humidity_score: 1
     name: Сансевиерия (Щучий хвост)
     risks:
     - Гниль при переливе
@@ -722,6 +768,8 @@ plants:
       lux_min: 2000
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 3
+    humidity_score: 2
     name: Шлюмбергера (Декабрист)
     risks:
     - Опадание бутонов при перестановке или сквозняке
@@ -752,6 +800,8 @@ plants:
       lux_min: 2500
       lux_optimal: 6000
       photoperiod_hours: 10-12
+    lighting_score: 4
+    humidity_score: 6
     name: Спатифиллум
     risks:
     - Любит стабильную влажность
@@ -783,6 +833,8 @@ plants:
       lux_min: 1000
       lux_optimal: 5000
       photoperiod_hours: 10-12
+    lighting_score: 2
+    humidity_score: 1
     name: Замиокулькас (Долларовое дерево)
     risks:
     - Гниль клубня при переливе

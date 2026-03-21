@@ -32,6 +32,10 @@ card_water: "Группы воды"
 card_water_desc: "Система RO Water + CalMag. Группы растений по требованиям к PPM и pH."
 card_lighting: "Группы освещения"
 card_lighting_desc: "Группировка на основе Lux. Группы растений по требованиям к уровню света."
+card_humidity: "Группы влажности"
+card_humidity_desc: "Относительные потребности во влажности (1-10). Группировка растений по требовательности к влажности."
+card_lighting_score: "Группы освещения (относительные)"
+card_lighting_score_desc: "Относительные потребности в свете (1-10). Группировка растений по требовательности к освещению."
 card_soil: "Грунтовые смеси"
 card_soil_desc: "Рецепты грунтовых смесей для различных типов растений и методов полива."
 card_feeding: "Подкормки"
@@ -696,6 +700,24 @@ lighting_medium_name: "Medium Light - Средний свет"
 lighting_bright_name: "Bright Light - Яркий свет"
 lighting_period_10_12: "10-12 ч"
 lighting_period_10_14: "10-14 ч"
+
+# Humidity groups (relative scores)
+title_humidity: "Группы влажности"
+humidity_title: "💧 Группы влажности (относительные)"
+humidity_subtitle: "Относительные потребности во влажности ваших растений (шкала 1-10)"
+humidity_search: "Поиск по названию или plant_id..."
+humidity_no_results: "Растения не найдены"
+humidity_legend_title: "Шкала потребности во влажности"
+humidity_score_label: "Балл"
+
+# Lighting score (relative scores)
+title_lighting_score: "Группы освещения (относительные)"
+lighting_score_title: "☀️ Группы освещения (относительные)"
+lighting_score_subtitle: "Относительные потребности в свете ваших растений (шкала 1-10)"
+lighting_score_search: "Поиск по названию или plant_id..."
+lighting_score_no_results: "Растения не найдены"
+lighting_score_legend_title: "Шкала потребности в свете"
+lighting_score_label: "Балл"
 
 # Water groups
 water_group_names:

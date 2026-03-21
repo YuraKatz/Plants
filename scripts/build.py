@@ -46,6 +46,18 @@ LIGHTING_THRESHOLDS = [
     },
 ]
 
+SCORE_COLORS = {
+    1: '#2196F3',
+    2: '#26A69A',
+    3: '#4CAF50',
+    4: '#66BB6A',
+    5: '#8BC34A',
+    6: '#CDDC39',
+    7: '#FFC107',
+    8: '#FF9800',
+    9: '#FF5722',
+    10: '#E91E63',
+}
 
 
 def load_yaml(filename):
@@ -317,6 +329,8 @@ class SiteBuilder:
                 self._build_soil_groups()
                 self._build_water_groups()
                 self._build_lighting_groups()
+                self._build_humidity_groups()
+                self._build_lighting_score()
                 self._build_plants_catalog()
                 self._build_feeding_guide()
                 self._build_water_mixer()
@@ -471,6 +485,58 @@ class SiteBuilder:
         ctx['groups'] = groups
         html = self.env.get_template('pages/lighting-groups.html').render(**ctx)
         self._write('lighting-groups.html', html)
+
+    def _build_humidity_groups(self):
+        t = self._current_t
+        groups = []
+        for score in range(1, 11):
+            plants = []
+            for pid, p in self._current_plants.items():
+                if p.get('humidity_score') == score:
+                    entry = self._plant_entry(pid, p)
+                    entry['humidity_score'] = score
+                    entry['humidity_level'] = entry.get('humidity', {}).get('level', '')
+                    plants.append(entry)
+            if plants:
+                plants.sort(key=lambda x: x['name'])
+                groups.append({
+                    'score': score,
+                    'color': SCORE_COLORS.get(score, '#999'),
+                    'plants': plants,
+                    'plant_count': len(plants),
+                })
+
+        ctx = self._base_ctx('humidity-groups.html')
+        ctx['groups'] = groups
+        ctx['colors'] = SCORE_COLORS
+        html = self.env.get_template('pages/humidity-groups.html').render(**ctx)
+        self._write('humidity-groups.html', html)
+
+    def _build_lighting_score(self):
+        t = self._current_t
+        groups = []
+        for score in range(1, 11):
+            plants = []
+            for pid, p in self._current_plants.items():
+                if p.get('lighting_score') == score:
+                    entry = self._plant_entry(pid, p)
+                    entry['lighting_score'] = score
+                    entry['lux_optimal'] = p.get('lighting', {}).get('lux_optimal', 0)
+                    plants.append(entry)
+            if plants:
+                plants.sort(key=lambda x: x['name'])
+                groups.append({
+                    'score': score,
+                    'color': SCORE_COLORS.get(score, '#999'),
+                    'plants': plants,
+                    'plant_count': len(plants),
+                })
+
+        ctx = self._base_ctx('lighting-score.html')
+        ctx['groups'] = groups
+        ctx['colors'] = SCORE_COLORS
+        html = self.env.get_template('pages/lighting-score.html').render(**ctx)
+        self._write('lighting-score.html', html)
 
     def _build_plants_catalog(self):
         individual = self.water_req.get('individual_requirements', {})

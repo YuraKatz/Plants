@@ -32,6 +32,10 @@ card_water: "Water Groups"
 card_water_desc: "RO Water + CalMag system. Plant groups by PPM and pH water requirements."
 card_lighting: "Lighting Groups"
 card_lighting_desc: "Lux-based grouping. Plant groups by light level requirements."
+card_humidity: "Humidity Groups"
+card_humidity_desc: "Relative humidity needs (1-10). Plant groups by humidity requirements."
+card_lighting_score: "Lighting Groups (Relative)"
+card_lighting_score_desc: "Relative light needs (1-10). Plant groups by light requirements."
 card_soil: "Soil Mixes"
 card_soil_desc: "Soil mix recipes for different plant types and watering methods."
 card_feeding: "Fertilization"
@@ -711,6 +715,24 @@ lighting_medium_name: "Medium Light - Average Light"
 lighting_bright_name: "Bright Light - High Light"
 lighting_period_10_12: "10-12 h"
 lighting_period_10_14: "10-14 h"
+
+# Humidity groups (relative scores)
+title_humidity: "Humidity Groups"
+humidity_title: "💧 Humidity Groups (Relative)"
+humidity_subtitle: "Relative humidity needs of your plants (scale 1-10)"
+humidity_search: "Search by name or plant_id..."
+humidity_no_results: "No plants found"
+humidity_legend_title: "Humidity Needs Scale"
+humidity_score_label: "Score"
+
+# Lighting score (relative scores)
+title_lighting_score: "Lighting Groups (Relative)"
+lighting_score_title: "☀️ Lighting Groups (Relative)"
+lighting_score_subtitle: "Relative light needs of your plants (scale 1-10)"
+lighting_score_search: "Search by name or plant_id..."
+lighting_score_no_results: "No plants found"
+lighting_score_legend_title: "Light Needs Scale"
+lighting_score_label: "Score"
 
 # Water groups
 water_group_names:

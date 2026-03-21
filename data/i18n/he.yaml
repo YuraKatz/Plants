@@ -32,6 +32,10 @@ card_water: "קבוצות מים"
 card_water_desc: "מערכת RO Water + CalMag. קבוצות צמחים לפי דרישות PPM ו-pH."
 card_lighting: "קבוצות תאורה"
 card_lighting_desc: "קיבוץ מבוסס Lux. קבוצות צמחים לפי דרישות רמת אור."
+card_humidity: "קבוצות לחות"
+card_humidity_desc: "צרכי לחות יחסיים (1-10). קבוצות צמחים לפי דרישות לחות."
+card_lighting_score: "קבוצות תאורה (יחסי)"
+card_lighting_score_desc: "צרכי אור יחסיים (1-10). קבוצות צמחים לפי דרישות אור."
 card_soil: "תערובות אדמה"
 card_soil_desc: "מתכונים לתערובות אדמה לסוגי צמחים ושיטות השקיה שונים."
 card_feeding: "דישון"
@@ -710,6 +714,24 @@ lighting_medium_name: "אור בינוני"
 lighting_bright_name: "אור חזק"
 lighting_period_10_12: "10-12 שעות"
 lighting_period_10_14: "10-14 שעות"
+
+# Humidity groups (relative scores)
+title_humidity: "קבוצות לחות"
+humidity_title: "💧 קבוצות לחות (יחסי)"
+humidity_subtitle: "צרכי לחות יחסיים של הצמחים שלך (סולם 1-10)"
+humidity_search: "חיפוש לפי שם או plant_id..."
+humidity_no_results: "לא נמצאו צמחים"
+humidity_legend_title: "סולם צרכי לחות"
+humidity_score_label: "ציון"
+
+# Lighting score (relative scores)
+title_lighting_score: "קבוצות תאורה (יחסי)"
+lighting_score_title: "☀️ קבוצות תאורה (יחסי)"
+lighting_score_subtitle: "צרכי אור יחסיים של הצמחים שלך (סולם 1-10)"
+lighting_score_search: "חיפוש לפי שם או plant_id..."
+lighting_score_no_results: "לא נמצאו צמחים"
+lighting_score_legend_title: "סולם צרכי אור"
+lighting_score_label: "ציון"
 
 # Water groups
 water_group_names:
