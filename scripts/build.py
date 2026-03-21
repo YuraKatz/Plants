@@ -337,7 +337,7 @@ class SiteBuilder:
                 self._build_plant_problems()
                 self._build_seasonal_care()
                 self._build_propagation()
-                self._build_watering_tracker()
+                # self._build_watering_tracker()  # disabled per user request
                 self._build_pests_diseases()
 
     def _build_soil_groups(self):
@@ -495,6 +495,8 @@ class SiteBuilder:
                     entry = self._plant_entry(pid, p)
                     entry['humidity_score'] = score
                     entry['humidity_level'] = entry.get('humidity', {}).get('level', '')
+                    entry['lighting_score'] = p.get('lighting_score', 0)
+                    entry['lux_optimal'] = p.get('lighting', {}).get('lux_optimal', 0)
                     plants.append(entry)
             if plants:
                 plants.sort(key=lambda x: x['name'])
@@ -521,6 +523,8 @@ class SiteBuilder:
                     entry = self._plant_entry(pid, p)
                     entry['lighting_score'] = score
                     entry['lux_optimal'] = p.get('lighting', {}).get('lux_optimal', 0)
+                    entry['humidity_score'] = p.get('humidity_score', 0)
+                    entry['humidity_level'] = entry.get('humidity', {}).get('level', '')
                     plants.append(entry)
             if plants:
                 plants.sort(key=lambda x: x['name'])

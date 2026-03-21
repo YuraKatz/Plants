@@ -1,4 +1,4 @@
-{% macro plant_card(plant, show_lux=false, show_humidity_score=false, show_lighting_score=false, t=none) %}
+{% macro plant_card(plant, show_lux=false, show_humidity_score=false, show_lighting_score=false, primary=none, t=none) %}
 <div class="plant-card" data-name="{{ plant.name }}" data-id="{{ plant.id }}">
     <img src="{{ plant.image }}" alt="{{ plant.name }}" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
     <div class="plant-image-placeholder">
@@ -11,11 +11,19 @@
         {% if show_lux %}
         <div class="plant-lux">Optimal: <span class="lux-value">{{ plant.lux_optimal }} lux</span></div>
         {% endif %}
+        {% if primary == 'humidity' %}
+        <div class="plant-score">💧 <span class="score-value">{{ plant.humidity_score }}/10</span> — {{ plant.humidity_level }}</div>
+        <div class="plant-score-secondary">☀️ {{ plant.lighting_score }}/10 — {{ plant.lux_optimal }} lux</div>
+        {% elif primary == 'lighting' %}
+        <div class="plant-score">☀️ <span class="score-value">{{ plant.lighting_score }}/10</span> — {{ plant.lux_optimal }} lux</div>
+        <div class="plant-score-secondary">💧 {{ plant.humidity_score }}/10 — {{ plant.humidity_level }}</div>
+        {% else %}
         {% if show_humidity_score %}
         <div class="plant-score">💧 <span class="score-value">{{ plant.humidity_score }}/10</span> — {{ plant.humidity_level }}</div>
         {% endif %}
         {% if show_lighting_score %}
         <div class="plant-score">☀️ <span class="score-value">{{ plant.lighting_score }}/10</span> — {{ plant.lux_optimal }} lux</div>
+        {% endif %}
         {% endif %}
         <div class="plant-id">{{ plant.id }}</div>
     </div>
