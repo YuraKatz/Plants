@@ -328,7 +328,6 @@ class SiteBuilder:
                 self._build_index()
                 self._build_soil_groups()
                 self._build_water_groups()
-                self._build_lighting_groups()
                 self._build_humidity_groups()
                 self._build_lighting_score()
                 self._build_plants_catalog()
@@ -489,7 +488,7 @@ class SiteBuilder:
     def _build_humidity_groups(self):
         t = self._current_t
         groups = []
-        for score in range(1, 11):
+        for score in range(10, 0, -1):
             plants = []
             for pid, p in self._current_plants.items():
                 if p.get('humidity_score') == score:
@@ -515,7 +514,7 @@ class SiteBuilder:
     def _build_lighting_score(self):
         t = self._current_t
         groups = []
-        for score in range(1, 11):
+        for score in range(10, 0, -1):
             plants = []
             for pid, p in self._current_plants.items():
                 if p.get('lighting_score') == score:

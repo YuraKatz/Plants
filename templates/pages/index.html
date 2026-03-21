@@ -121,24 +121,6 @@
                 </div>
             </a>
 
-            <a href="lighting-groups.html" class="nav-card light">
-                <div class="card-icon">☀️</div>
-                <div class="card-title">{{ t.card_lighting }}</div>
-                <div class="card-description">
-                    {{ t.card_lighting_desc }}
-                </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">{{ t.stat_groups }}</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">{{ plant_count }}</div>
-                        <div class="stat-label">{{ t.stat_plants }}</div>
-                    </div>
-                </div>
-            </a>
-
             <a href="humidity-groups.html" class="nav-card" style="border-left-color: #26A69A;">
                 <div class="card-icon">💧</div>
                 <div class="card-title">{{ t.card_humidity }}</div>
@@ -388,7 +370,7 @@
             if (document.activeElement === searchInput) return;
             if (e.key === '0') window.location.href = 'plants-catalog.html';
             if (e.key === '1') window.location.href = 'water-groups.html';
-            if (e.key === '2') window.location.href = 'lighting-groups.html';
+            if (e.key === '2') window.location.href = 'lighting-score.html';
             if (e.key === '3') window.location.href = 'soil-groups.html';
         });
 

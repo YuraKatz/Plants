@@ -107,7 +107,8 @@ Priority order for machine reading:
 
 - plants-catalog.html — full plant care cards
 - water-groups.html — water chemistry groups
-- lighting-groups.html — light requirement groups
+- humidity-groups.html — relative humidity needs (1-10 scale)
+- lighting-score.html — relative light needs (1-10 scale)
 - soil-groups.html — soil mix recipes
 - feeding-guide.html — fertilizer schedules
 - water-mixer.html — water mixing calculator
