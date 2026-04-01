@@ -127,9 +127,11 @@ water_no_results: "No plants found"
 water_btn_mixer: "🧪 Fertilizer Mixer"
 water_pure_ro: "PURE RO ONLY"
 water_no_additives: "No additives!"
+water_carnivorous: "Carnivorous"
 water_group_a: "Group A - Very Soft Water"
 water_group_b: "Group B - Medium Mineralization"
 water_group_c: "Group C - Slightly More Saturated"
+water_group_special: "Carnivorous - Pure RO ONLY"
 water_target: "target"
 
 # Lighting groups page
@@ -206,6 +208,8 @@ mixer_flush_vs_feed_hint: "☝️ CalMag base is the same, pH is always at the e
 mixer_ph_logic_title: "🧪 What happens with pH"
 mixer_ph_logic_desc: "CalMag raises pH, fertilizer lowers it. Measure pH only AFTER adding everything — once at the end."
 mixer_ph_logic_adjust: "Adjust!"
+mixer_dionaea_warning_title: "⚠️ Dionaea — Special Case!"
+mixer_dionaea_warning_desc: "Use water from Canister A, but NO FERTILIZER. Even better — pure RO (PPM < 50). Any additives kill the plant!"
 mixer_fert_info_title: "🧪 FLOWER Fertilizers"
 mixer_fert_universal_desc: "Universal for all plants"
 mixer_fert_flowering_desc: "For flowering plants (more potassium)"
@@ -373,6 +377,7 @@ feeding_group_aroids: "Aroids"
 feeding_group_sensitive: "Sensitive"
 feeding_group_orchids: "Orchids"
 feeding_group_general: "General Houseplants"
+feeding_group_carnivorous: "Carnivorous"
 feeding_wick_forbidden: "Forbidden on wick"
 
 # Fertilizer cards
@@ -568,6 +573,8 @@ lang_he: "HE"
 "Декоративнолистные": "Ornamental foliage"
 "Кротон": "Croton"
 "Пестролистные": "Variegated"
+"Поддон (постоянно)": "Tray (constant)"
+"Хищные": "Carnivorous"
 "Драцена фрагранс / деременсис": "Dracaena fragrans / deremensis"
 "Драцена маргината": "Dracaena marginata"
 "Эпипремнум / сциндапсус": "Pothos / Scindapsus"
@@ -611,6 +618,8 @@ lang_he: "HE"
 "Антуриум Кларинервиум": "Anthurium clarinervium"
 "Бегония Макулата": "Begonia maculata"
 "Гузмания": "Guzmania"
+"Дионея (Венерина мухоловка)": "Venus Flytrap (Dionaea)"
+"Хищные растения": "Carnivorous plants"
 "Драцена Маргината": "Dracaena marginata"
 "Ложные пальмы": "False palms"
 "Драцена Фрагранс / Деремская": "Dracaena fragrans / deremensis"
@@ -651,6 +660,7 @@ lang_he: "HE"
 "Для пальм": "For Palms"
 "Для папоротников": "For Ferns"
 "Для суккулентов/сансевиерии": "For Succulents/Sansevieria"
+"Для хищных растений": "For Carnivorous plants"
 # Variants A/B removed — single recipe per mix
 
 # Soil components
@@ -753,6 +763,7 @@ water_group_names:
   "Sansevieria trifasciata": "Sansevieria trifasciata"
   "Zamioculcas zamiifolia": "Zamioculcas zamiifolia"
   "Schlumbergera": "Schlumbergera"
+  "Dionaea muscipula": "Dionaea muscipula"
   "Calathea lancifolia": "Calathea lancifolia"
   "Calathea ornata": "Calathea ornata"
   "Spathiphyllum": "Spathiphyllum"
@@ -775,6 +786,7 @@ soil_names:
   "Для бегоний и фиалок": "Begonia & Violet Mix"
   "Орхидейная": "Orchid Mix"
   "Суккулентная": "Succulent Mix"
+  "Для хищных": "Carnivorous Mix"
 
 soil_subtitles:
   'mix_1': 'For Aroids with manual watering'
@@ -791,6 +803,7 @@ soil_subtitles:
   'mix_11': 'Quick-drying mix with excellent drainage'
   'mix_12': 'Very airy, large-fraction substrate'
   'mix_13': 'Airy substrate for tuberous plants, reduces rot risk'
+  'mix_carnivorous': 'NO FERTILIZERS! Only pure substrate'
 
 soil_notes:
   "Дырки в листьях помогают выдержать тропические ливни": "Holes in the leaves help withstand tropical downpours"
@@ -1062,6 +1075,8 @@ care_notes:
   "Бархатные листья НЕ опрыскивать напрямую": "Do NOT spray velvety leaves directly"
   "Если сбросила все листья — НЕ выбрасывать, клубень жив": "If it drops all leaves — do NOT discard, the tuber is alive"
   "Стабильность важнее частоты полива": "Stability matters more than watering frequency"
+  "Только дистиллят или чистый RO": "Only distilled or pure RO"
+  "Питание только через ловушки (живые насекомые)": "Feeding only through traps (live insects)"
   "Регулярно опрыскивать": "Spray regularly"
   "Беречь от сквозняков и батарей": "Keep away from drafts and radiators"
   "Крайне неприхотлива": "Extremely low-maintenance"

@@ -416,6 +416,37 @@ plants:
           - Обработать акарицидом
           - Повысить влажность
 
+  alocasia_regal_shields:
+    facts:
+      - "Гибрид Alocasia odora × Alocasia reginula"
+      - "Крупные тёмно-зелёные листья с бордовой изнанкой"
+      - "Более выносливая, чем большинство алоказий"
+    diagnostics:
+      - symptom: leaf_drop
+        description: Опали листья
+        causes: [dormancy]
+        severity: info
+        affected_systems: []
+        actions:
+          - "НЕ выбрасывать! Клубень жив"
+          - Сократить полив до минимума
+          - Ждать новых ростков
+      - symptom: yellow_spots
+        description: Жёлтые пятна
+        causes: [overwatering]
+        severity: high
+        affected_systems: [watering]
+        actions:
+          - Проверить влажность грунта
+          - Просушить
+      - symptom: spider_mites
+        causes: [low_humidity]
+        severity: high
+        affected_systems: [environment, pests]
+        actions:
+          - Обработать акарицидом
+          - Повысить влажность
+
   anthurium_andraeanum:
     facts:
       - "'Цветок' — это на самом деле лист (покрывало)"
@@ -764,6 +795,36 @@ plants:
         affected_systems: []
         actions:
           - "Растение ещё молодое — ждите"
+
+  dionaea:
+    facts:
+      - "Ловушка срабатывает за 0.1 секунды"
+      - "Переваривает насекомых 5-12 дней"
+      - "ОБЯЗАТЕЛЬНА холодная зимовка 3-4 месяца!"
+    diagnostics:
+      - symptom: black_traps
+        description: Чернеют ловушки
+        causes: [post_feeding]
+        severity: info
+        affected_systems: []
+        actions:
+          - "Норма после переваривания"
+          - Обрезать чёрные ловушки
+      - symptom: death_after_1_2_years
+        description: Погибает через 1-2 года
+        causes: [no_dormancy]
+        severity: critical
+        affected_systems: [environment]
+        actions:
+          - "Не было зимовки!"
+          - Обеспечить 3-4 месяца при 2-10°C
+      - symptom: weak_traps
+        description: Слабые ловушки
+        causes: [low_light]
+        severity: medium
+        affected_systems: [lighting]
+        actions:
+          - Нужно прямое солнце 12-14 часов
 
   zamioculcas:
     facts:

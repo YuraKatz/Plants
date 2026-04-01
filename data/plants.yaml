@@ -98,6 +98,41 @@ plants:
     wick_watering:
       notes: Высокий риск гнили клубня
       recommended: false
+  alocasia_regal_shields:
+    water_group: group_a
+    care_notes:
+    - Использовать только RO воду (группа A)
+    - Крупное растение — нуждается в пространстве
+    - Более выносливая, чем другие алоказии, но всё равно чувствительна к переливу
+    feeding_group: sensitive
+    humidity:
+      level: Высокая (60-70%)
+      preferred_method: Увлажнитель или поддон с влажным керамзитом. Протирать крупные листья
+      spraying: По ситуации
+    latin_name: Alocasia 'Regal Shields' (odora × reginula)
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 10-12
+    lighting_score: 7
+    humidity_score: 8
+    name: Алоказия Регал Шилдс
+    risks:
+    - КРИТИЧНО - гниль клубня при переливе
+    - Чувствительна к солям в воде
+    soil:
+      mix_name: для клубневых ароидных
+      mix_number: 13
+    type: Ароидные
+    watering:
+      frequency: Регулярный
+      method: Ручной
+      notes: Держать грунт слегка влажным, но без застоя воды. Просушка верхнего слоя
+    wick_watering:
+      notes: Высокий риск гнили клубня
+      recommended: false
   anthurium_andraeanum:
     water_group: group_a
     care_notes:
@@ -361,6 +396,36 @@ plants:
       notes: Не допускать пересыхания
     wick_watering:
       notes: Чувствителен к переливу — высокий риск корневой гнили
+      recommended: false
+  dionaea:
+    water_group: special
+    care_notes:
+    - Только дистиллят или чистый RO
+    - Питание только через ловушки (живые насекомые)
+    feeding_group: carnivorous
+    humidity:
+      level: Высокая
+      spraying: Не обязательно при влажном поддоне
+    latin_name: Dionaea muscipula
+    lighting:
+      direct_sun: true
+      lux_max: 50000
+      lux_min: 10000
+      lux_optimal: 30000
+      photoperiod_hours: 12-14
+    name: Дионея (Венерина мухоловка)
+    risks:
+    - КРИТИЧНО - любые удобрения в почву убивают растение
+    - КРИТИЧНО - обычная вода из крана убивает растение
+    soil:
+      mix_name: Торф кислый + перлит (без удобрений)
+    type: Хищные
+    watering:
+      frequency: Постоянная влажность
+      method: Поддон (постоянно)
+      notes: Использовать ТОЛЬКО RO воду (TDS < 10)
+    wick_watering:
+      notes: Сидит в болоте в поддоне
       recommended: false
   dracaena_fragrans:
     water_group: group_c

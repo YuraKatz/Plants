@@ -365,6 +365,24 @@ soil_mixes:
       - component: Древесный уголь
         percentage: 5
 
+  mix_carnivorous:
+    name: Для хищных растений
+    watering_type: поддон
+    airiness_level: medium
+    rot_risk_if_overwatered: medium
+    plant_ids:
+      - dionaea
+    suitable_for:
+      - Дионея (Венерина мухоловка)
+    warnings:
+      - КРИТИЧНО — любые удобрения убивают растение
+      - Использовать ТОЛЬКО дистиллят или чистый RO (TDS < 10)
+    composition:
+      - component: Торф кислый (без удобрений)
+        percentage: 70
+      - component: Перлит
+        percentage: 30
+
 general_principles:
   wick_watering_rule: Фитильный полив требует более воздухопроницаемого грунта. Застой воды = гниение корней
   drainage: Всегда используйте дренажный слой из керамзита на дне горшка

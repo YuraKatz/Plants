@@ -1,18 +1,170 @@
 water_requirements:
-  base_principle: RO (осмос) + CalMag
+  base_principle: RO (осмос) → CalMag → Удобрение → pH
 
   operational_mode:
     goal: стабильность
-    rule_1: Использовать фиксированные target_ppm, не диапазоны
-    rule_2: Не менять настройки без причины
-    rule_3: Стабильность важнее точности
-    system_stability: Не менять target_ppm и группы без явной проблемы у растения
+    method: пошаговое смешивание под каждый полив
+    rule_1: Всегда начинать с RO воды (0 PPM)
+    rule_2: CalMag первый, удобрение второй — никогда наоборот
+    rule_3: Измерять PPM после каждого шага
+    rule_4: pH корректировать только в конце
+    rule_5: Стабильность важнее точности
 
-  daily_usage:
-    step_1: Определить группу растения (A / B / C)
-    step_2: Взять соответствующую канистру
-    step_3: Не смешивать группы
-    step_4: Не менять ppm вручную между поливами
+  mixing_protocol:
+    step_1:
+      action: Налить RO воду
+      target_ppm: 0
+      note: Чистая осмос-вода, TDS метр должен показывать 0-10
+
+    step_2:
+      action: Добавить CalMag (ATAMI CALMAG)
+      method: По каплям, измеряя PPM
+      note: Довести до базового PPM группы
+
+    step_3:
+      action: Добавить удобрение
+      method: По каплям/дозе, измеряя PPM
+      note: Довести до целевого PPM группы (в сезон роста)
+
+    step_4:
+      action: Скорректировать pH
+      method: pH Down (Green Farmer) по каплям
+      note: Довести до целевого pH группы
+
+    step_5:
+      action: Перемешать и полить
+      note: Использовать сразу, не хранить долго
+
+  water_groups:
+    group_a:
+      name: Чувствительные
+      color: red
+      after_calmag_ppm: 50
+      after_fertilizer_ppm:
+        growth: 80-100
+        rest: 50
+      ph_target: 5.8-6.3
+      fertilizer_dose:
+        growth: 1/4 от инструкции (Universal)
+        rest: НЕ удобрять
+      plants:
+        - Калатея лансифолия
+        - Калатея орната
+        - Спатифиллум
+        - Гузмания
+        - Алоказия (Polly / Amazonica)
+        - Алоказия Фрайдек
+        - Алоказия Регал Шилдс
+        - Антуриум
+        - Антуриум кларинервиум
+        - Папоротник (Нефролепис)
+      sensitivity_level: Очень высокая
+
+    group_orchids:
+      name: Орхидеи
+      color: purple
+      after_calmag_ppm: 30
+      after_fertilizer_ppm:
+        growth: 60-80
+        blooming: 80-100
+        rest: 30
+      ph_target: 5.5-6.0
+      fertilizer_dose:
+        growth: 1/8 от инструкции (Universal — вегетация)
+        blooming: Orchid fertilizer (по инструкции, слабая доза)
+        rest: НЕ удобрять
+      plants:
+        - Орхидея (Phalaenopsis)
+      sensitivity_level: Очень высокая
+      notes:
+        - Орхидеи требуют самый низкий PPM
+        - CalMag минимально — только базовые минералы
+        - При цветении использовать удобрение для орхидей вместо универсального
+        - Полив методом замачивания 15-20 минут
+        - Не допускать накопления солей в субстрате
+
+    group_b:
+      name: Ароидные и стандартные
+      color: blue
+      after_calmag_ppm: 60
+      after_fertilizer_ppm:
+        growth: 120-150
+        rest: 60-80
+      ph_target: 6.0-6.5
+      fertilizer_dose:
+        growth: 1/2 от инструкции (Universal)
+        rest: 1/4 от инструкции или НЕ удобрять
+      plants:
+        - Монстера делициоза
+        - Монстера адансони
+        - Филодендрон
+        - Филодендрон Селлоу
+        - Филодендрон Ксанаду
+        - Эпипремнум
+        - Аглаонема
+        - Бегония макулата
+        - Хамедорея
+        - Хлорофитум
+      sensitivity_level: Средняя
+
+    group_c:
+      name: Неприхотливые
+      color: green
+      after_calmag_ppm: 80
+      after_fertilizer_ppm:
+        growth: 150-200
+        rest: 80-100
+      ph_target: 6.2-6.7
+      fertilizer_dose:
+        growth: 1/2 от инструкции (Universal)
+        rest: НЕ удобрять
+      plants:
+        - Драцена маргината
+        - Драцена фрагранс
+        - Кротон
+        - Сансевиерия
+        - Замиокулькас (ZZ plant)
+        - Шлюмбергера (Декабрист)
+      sensitivity_level: Низкая
+
+    group_semi_hydro:
+      name: Semi-Hydro
+      color: orange
+      after_calmag_ppm: 60
+      after_fertilizer_ppm:
+        growth: 150-180
+        rest: 80-100
+      ph_target: 5.5-6.0
+      fertilizer_dose:
+        growth: 1/2 от инструкции (Universal) — каждый долив
+        rest: 1/4 от инструкции
+      plants: []
+      sensitivity_level: Средняя
+      notes:
+        - В semi-hydro удобрение нужно КАЖДЫЙ раз при доливе воды
+        - Субстрат инертный — нет питательных веществ кроме того что в воде
+        - pH ниже чем в грунте — минералы в субстрате (цеолит, лава) работают лучше при 5.5-6.0
+        - Раз в месяц промывать субстрат чистой RO водой для удаления солей
+        - При переводе из грунта — первые 2-3 недели только CalMag без удобрений
+
+    group_carnivorous:
+      name: Хищные
+      color: black
+      after_calmag_ppm: 0
+      after_fertilizer_ppm:
+        growth: 0
+        rest: 0
+      ph_target: 5.0-5.5
+      fertilizer_dose:
+        growth: НИЧЕГО! Только чистый RO
+        rest: НИЧЕГО! Только чистый RO
+      plants:
+        - Дионея (Венерина мухоловка)
+      sensitivity_level: Критическая
+      notes:
+        - НИКАКИХ добавок в воду
+        - Только чистый RO (TDS < 10)
+        - Любые минералы/удобрения убивают растение
 
   individual_requirements:
     calathea_lancifolia:
@@ -35,9 +187,9 @@ water_requirements:
 
     phalaenopsis:
       plant_name: Орхидея (Phalaenopsis)
-      group: A
+      group: orchids
       sensitivity: very_high
-      notes: Для макания, без накопления солей
+      notes: Минимальный PPM, замачивание, без накопления солей
 
     guzmania:
       plant_name: Гузмания
@@ -115,7 +267,7 @@ water_requirements:
       plant_name: Филодендрон Селлоу
       group: B
       sensitivity: low
-      notes: Аналогично филодендрону, стабильность важнее точности
+      notes: Стабильность важнее точности
 
     philodendron_xanadu:
       plant_name: Филодендрон Ксанаду
@@ -135,11 +287,17 @@ water_requirements:
       sensitivity: very_high
       notes: Бархатная алоказия — очень чувствительна к солям
 
+    alocasia_regal_shields:
+      plant_name: Алоказия Регал Шилдс
+      group: A
+      sensitivity: very_high
+      notes: Крупная алоказия — чувствительна к солям в воде
+
     anthurium_andraeanum:
       plant_name: Антуриум
       group: A
       sensitivity: very_high
-      notes: Чувствителен к качеству воды, стабильность критична
+      notes: Чувствителен к качеству воды
 
     nephrolepis:
       plant_name: Папоротник (Нефролепис)
@@ -151,7 +309,7 @@ water_requirements:
       plant_name: Сансевиерия
       group: C
       sensitivity: very_low
-      notes: Лучше использовать C, но допустимы A/B при необходимости
+      notes: Крайне неприхотлива
 
     zamioculcas:
       plant_name: Замиокулькас (ZZ plant)
@@ -171,119 +329,45 @@ water_requirements:
       sensitivity: very_high
       notes: Бархатный антуриум — очень чувствителен к солям
 
-  water_groups:
-    group_a:
-      name: Очень мягкая вода
-      target_ppm: 80
-      allowed_deviation: 5
-      ph_range: 5.8-6.3
-      plants:
-        - Калатея лансифолия
-        - Калатея орната
-        - Спатифиллум
-        - Орхидея (Phalaenopsis)
-        - Гузмания
-        - Алоказия (Polly / Amazonica)
-        - Алоказия Фрайдек
-        - Антуриум
-        - Антуриум кларинервиум
-        - Папоротник (Нефролепис)
-      sensitivity_level: Очень высокая
-
-    group_b:
-      name: Средняя минерализация
-      target_ppm: 120
-      allowed_deviation: 10
-      ph_range: 6.0-6.5
-      plants:
-        - Монстера делициоза
-        - Монстера адансони
-        - Филодендрон
-        - Эпипремнум
-        - Аглаонема
-        - Бегония макулата
-        - Хамедорея
-        - Хлорофитум
-        - Филодендрон Селлоу
-        - Филодендрон Ксанаду
-      sensitivity_level: Средняя
-
-    group_c:
-      name: Чуть более насыщенная
-      target_ppm: 150
-      allowed_deviation: 10
-      ph_range: 6.2-6.7
-      plants:
-        - Драцена маргината
-        - Драцена фрагранс
-        - Кротон
-        - Сансевиерия
-        - Замиокулькас (ZZ plant)
-        - Шлюмбергера (Декабрист)
-      sensitivity_level: Низкая
-      alternative: Если используешь B вместо C — обязательно измерить ppm после добавки CalMag
-
-  practical_setup:
-    bottle_a:
-      label: "A — sensitive"
-      color: red
-      target_ppm: 80
-      group: A
-      description: Для самых чувствительных
-
-    bottle_b:
-      label: "B — standard"
-      color: blue
-      target_ppm: 120
-      group: B
-      description: Основная вода для большинства растений
-
-    bottle_c:
-      label: "C — rich"
-      color: green
-      target_ppm: 150
-      group: C
-      description: Опционально, можно использовать B + CalMag
-      optional: true
-
-  calmag_protocol:
-    step_1: Налить RO воду
-    step_2: Добавить минимальную дозу CalMag (ATAMI CALMAG)
-    step_3: Измерить ppm
-    step_4: Довести до target_ppm группы
-    step_5: Проверить pH, скорректировать при необходимости (pH Down по каплям)
+    dionaea:
+      plant_name: Дионея (Венерина мухоловка)
+      group: carnivorous
+      sensitivity: critical
+      notes: ТОЛЬКО чистый RO! Любые добавки убивают!
 
   common_mistakes:
-    - mistake: Смешивание групп
-      rule: Нельзя поливать растение группы A водой группы C
-    - mistake: CalMag на глаз
-      rule: Всегда измерять ppm после добавления
-    - mistake: Ежедневная смена ppm
-      rule: Не менять концентрацию каждый полив — стабильность важнее
-    - mistake: Чистый RO без CalMag
-      rule: Нельзя использовать (кроме экстренных случаев)
-
-  watering_frequency_rule:
-    airy_soil: Поливать чаще — субстрат просыхает быстрее
-    dense_soil: Поливать реже — субстрат удерживает влагу дольше
-    note: Состав воды (ppm) не меняется в зависимости от частоты полива
+    - mistake: Добавлять удобрение ДО CalMag
+      rule: Всегда сначала CalMag, потом удобрение
+    - mistake: Не измерять PPM после каждого шага
+      rule: Измерять PPM после CalMag и после удобрения
+    - mistake: Корректировать pH до добавления удобрений
+      rule: pH только в самом конце, после всех добавок
+    - mistake: Хранить раствор с удобрением долго
+      rule: Готовить свежий раствор на каждый полив
+    - mistake: Использовать одинаковый PPM для грунта и semi-hydro
+      rule: Semi-hydro получает удобрение каждый долив, но слабее
+    - mistake: Чистый RO без CalMag (кроме хищных)
+      rule: Всегда добавлять CalMag как базу
+    - mistake: Одинаковый рецепт для орхидей и остальных группы A
+      rule: Орхидеи — отдельная группа с самым низким PPM
 
   ph_policy:
-    priority: secondary
-    default_action: Не трогать если нет симптомов
-    note: ppm важнее pH для большинства растений
+    priority: Последний шаг в процессе
+    method: pH Down (Green Farmer) по каплям
+    note: Добавлять pH Down ТОЛЬКО после CalMag + удобрение
+    tip: CalMag обычно поднимает pH, удобрения могут понижать — поэтому pH в конце
 
   measurement_tools:
     tds_meter:
       measures: PPM (Total Dissolved Solids)
-      importance: Критично для RO воды
+      importance: Критично — используется на каждом шаге
       calibration: Регулярная калибровка обязательна
 
     ph_meter:
       measures: Кислотность (pH)
-      importance: Важно, но менее критично чем PPM
+      importance: Важно — используется на последнем шаге
       calibration: Регулярная калибровка обязательна
-      adjustment: Использовать pH Down (Green Farmer) по каплям
+      adjustment: pH Down (Green Farmer) по каплям
 
   troubleshooting:
     salt_buildup:
@@ -291,10 +375,12 @@ water_requirements:
         - Белый налёт на поверхности грунта
         - Коричневые кончики листьев
         - Общее угнетение роста
+        - В semi-hydro — белый налёт на камнях
       solution:
-        - Промыть грунт чистой RO водой с CalMag
+        - Промыть грунт/субстрат чистой RO водой
         - Снизить PPM в следующих поливах
         - Проверить дренаж
+        - Semi-hydro — замочить субстрат в RO воде на 30 мин
 
     ph_problems:
       high_ph:
