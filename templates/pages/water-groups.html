@@ -32,6 +32,7 @@
             gap: 4px;
         }
         .group-a .group-header { background: #4a6fa5; }
+        .group-orchids .group-header { background: #9b59b6; }
         .group-b .group-header { background: #b85c78; }
         .group-c .group-header { background: #3a8a9e; }
         .group-special .group-header { background: #2d6a4f; }
@@ -143,6 +144,16 @@
                         <span class="param-arrow">→</span>
                         <span class="param-value">pH {{ group.ph_range }}</span>
                     </div>
+                    {% if group.after_fert_blooming %}
+                    <div class="param-row">
+                        <span class="param-label">🌸</span>
+                        <span class="param-value">CalMag → {{ group.after_calmag_ppm }} PPM</span>
+                        <span class="param-arrow">→</span>
+                        <span class="param-value">Орхидейное → {{ group.after_fert_blooming }} PPM</span>
+                        <span class="param-arrow">→</span>
+                        <span class="param-value">pH {{ group.ph_range }}</span>
+                    </div>
+                    {% endif %}
                     <div class="param-row">
                         <span class="param-label">❄️</span>
                         <span class="param-value">CalMag → {{ group.after_fert_rest }} PPM</span>

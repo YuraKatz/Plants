@@ -644,7 +644,7 @@ plants:
       notes: Рекомендован — папоротники любят стабильную влажность
       recommended: true
   phalaenopsis:
-    water_group: group_a
+    water_group: group_orchids
     care_notes:
     - Обязательно прозрачный горшок
     - Субстрат должен быстро просыхать

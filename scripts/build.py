@@ -417,12 +417,12 @@ class SiteBuilder:
         t = self._current_t
 
         groups = []
-        for gkey, letter in [('group_a', 'A'), ('group_b', 'B'), ('group_c', 'C')]:
+        for gkey, letter in [('group_a', 'A'), ('group_orchids', 'orchids'), ('group_b', 'B'), ('group_c', 'C')]:
             gdef = group_defs.get(gkey, {})
             plants = []
-            for pid, preq in individual.items():
-                if preq.get('group') == letter:
-                    plants.append(self._plant_entry(pid, self._current_plants.get(pid, {})))
+            for pid, pdata in self._current_plants.items():
+                if pdata.get('water_group') == gkey:
+                    plants.append(self._plant_entry(pid, pdata))
 
             gname_key = f'water_group_{letter.lower()}'
             gname = t.get(gname_key, f'Group {letter} - {gdef.get("name", "")}')
@@ -435,6 +435,7 @@ class SiteBuilder:
                 'name': gname,
                 'after_calmag_ppm': gdef.get('after_calmag_ppm', ''),
                 'after_fert_growth': after_fert.get('growth', ''),
+                'after_fert_blooming': after_fert.get('blooming', ''),
                 'after_fert_rest': after_fert.get('rest', ''),
                 'ph_range': gdef.get('ph_target', ''),
                 'plants': plants,
