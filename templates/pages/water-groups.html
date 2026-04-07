@@ -28,22 +28,34 @@
             padding: 14px 20px;
             color: #fff;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            gap: 4px;
         }
         .group-a .group-header { background: #4a6fa5; }
         .group-b .group-header { background: #b85c78; }
         .group-c .group-header { background: #3a8a9e; }
         .group-special .group-header { background: #2d6a4f; }
         .group-title { font-size: 1.2rem; font-weight: 600; }
-        .group-params { display: flex; gap: 12px; font-size: 0.85rem; }
-        .param {
-            background: rgba(255,255,255,0.18);
+        .group-params {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.82rem;
+            width: 100%;
+            margin-top: 6px;
+        }
+        .param-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.12);
             padding: 4px 10px;
             border-radius: 3px;
         }
+        .param-arrow { opacity: 0.7; }
+        .param-label { font-weight: 600; margin-right: 2px; }
+        .param-value { opacity: 0.95; }
         .plants-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -78,7 +90,7 @@
         }
         @media (max-width: 768px) {
             .group-title { font-size: 1.1rem; }
-            .group-params { flex-direction: column; gap: 4px; }
+            .group-params { font-size: 0.78rem; }
             .plants-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
             .plant-image, .plant-image-placeholder { height: 120px; }
         }
@@ -117,11 +129,26 @@
                 </div>
                 <div class="group-params">
                     {% if group.letter == 'special' %}
-                    <div class="param">PPM: {{ group.ppm_range }}</div>
-                    <div class="param">{{ t.water_no_additives }}</div>
+                    <div class="param-row">
+                        <span class="param-value">PPM: {{ group.ppm_range }}</span>
+                        <span class="param-arrow">—</span>
+                        <span class="param-value">{{ t.water_no_additives }}</span>
+                    </div>
                     {% else %}
-                    <div class="param">PPM: {{ group.ppm_range }}</div>
-                    <div class="param">pH: {{ group.ph_range }}</div>
+                    <div class="param-row">
+                        <span class="param-label">🌱</span>
+                        <span class="param-value">CalMag → {{ group.after_calmag_ppm }} PPM</span>
+                        <span class="param-arrow">→</span>
+                        <span class="param-value">Удобрение → {{ group.after_fert_growth }} PPM</span>
+                        <span class="param-arrow">→</span>
+                        <span class="param-value">pH {{ group.ph_range }}</span>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-label">❄️</span>
+                        <span class="param-value">CalMag → {{ group.after_fert_rest }} PPM</span>
+                        <span class="param-arrow">→</span>
+                        <span class="param-value">pH {{ group.ph_range }}</span>
+                    </div>
                     {% endif %}
                 </div>
             </div>

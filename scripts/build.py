@@ -423,21 +423,20 @@ class SiteBuilder:
             for pid, preq in individual.items():
                 if preq.get('group') == letter:
                     plants.append(self._plant_entry(pid, self._current_plants.get(pid, {})))
-            
+
             gname_key = f'water_group_{letter.lower()}'
             gname = t.get(gname_key, f'Group {letter} - {gdef.get("name", "")}')
 
-            target_ppm = gdef.get('target_ppm', '')
-            deviation = gdef.get('allowed_deviation', 0)
-            ppm_range = f'{target_ppm} ± {deviation}' if target_ppm else ''
+            after_fert = gdef.get('after_fertilizer_ppm', {})
 
             groups.append({
                 'key': gkey,
                 'letter': letter,
                 'name': gname,
-                'ppm_range': ppm_range,
-                'ppm_target': target_ppm,
-                'ph_range': gdef.get('ph_range', ''),
+                'after_calmag_ppm': gdef.get('after_calmag_ppm', ''),
+                'after_fert_growth': after_fert.get('growth', ''),
+                'after_fert_rest': after_fert.get('rest', ''),
+                'ph_range': gdef.get('ph_target', ''),
                 'plants': plants,
             })
 
