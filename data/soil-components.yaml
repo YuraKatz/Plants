@@ -1,0 +1,387 @@
+soil_components:
+
+  bark:
+    name: Bark (кора)
+    category: каркас
+    role: Каркас и воздух
+    properties:
+      moisture_retention: low
+      aeration: very_high
+      drainage: high
+      nutrition: none
+    description: >
+      Основа воздушных субстратов. Создаёт крупнопористую структуру,
+      не слёживается, обеспечивает доступ кислорода к корням.
+      Практически не держит воду — влага проходит насквозь.
+    when_to_use:
+      - Как каркас для эпифитов и ароидных
+      - Когда нужна максимальная аэрация
+      - Для орхидей — основной компонент (60-70%)
+    when_not_to_use:
+      - Для растений, любящих постоянно влажный грунт (калатеи)
+    fraction: крупная (1-3 см)
+    used_in_mixes: [1, 1-Л, 2, 5-Ф, 7, 9, 12, 13]
+
+  perlite:
+    name: Перлит
+    category: аэрация
+    role: Аэрация и облегчение смеси
+    properties:
+      moisture_retention: low
+      aeration: high
+      drainage: high
+      nutrition: none
+    description: >
+      Лёгкий вулканический материал. Разрыхляет грунт, не даёт ему
+      слёживаться, улучшает дренаж. Присутствует практически в каждом миксе.
+    when_to_use:
+      - Универсальный разрыхлитель — подходит почти везде
+      - Когда нужно облегчить тяжёлую смесь
+      - Для суккулентов — до 40%
+    when_not_to_use:
+      - Всплывает при поливе — не идеален как верхний слой
+    fraction: средняя (2-5 мм)
+    used_in_mixes: [1, 1-Л, 2, 3, 4, 5, 5-Ф, 6, 7, 8, 9, 10, 11, 12, 13, carnivorous]
+
+  universal_soil:
+    name: Универсальный грунт Premium
+    category: питание
+    role: Питание + влагоудержание
+    properties:
+      moisture_retention: high
+      aeration: low
+      drainage: low
+      nutrition: high
+    description: >
+      Готовая смесь на основе торфа с добавками. Даёт питание и держит влагу.
+      Хорошая база для неприхотливых растений, но для чувствительных к переливу
+      может быть слишком влагоёмким.
+    when_to_use:
+      - Как основа для стандартных ароидных, драцен, кротонов
+      - Когда растению нужно стабильное питание из грунта
+    when_not_to_use:
+      - Для клубневых алоказий — слишком долго держит влагу
+      - Для орхидей — категорически нет
+      - Для хищных растений — убьёт удобрениями
+    warnings:
+      - Состав неизвестен — может содержать что угодно
+      - При большой доле (>40%) повышает риск застоя
+    fraction: мелкая (смесь)
+    used_in_mixes: [1, 1-Л, 2, 3, 4, 5, 5-Ф, 6, 8, 10, 11, 12]
+
+  coco_husk:
+    name: Кокос гас (крупная фракция)
+    category: аэрация
+    role: Аэрация + умеренная влага
+    properties:
+      moisture_retention: medium
+      aeration: medium
+      drainage: medium
+      nutrition: none
+    description: >
+      Крупные кусочки кокосовой скорлупы. Держит немного влаги,
+      но без болота. Хороший баланс между воздухом и водой.
+    when_to_use:
+      - Когда нужна аэрация с лёгким влагоудержанием
+      - Как дополнение к коре и перлиту
+    when_not_to_use:
+      - Как единственный влагоёмкий компонент для влаголюбивых
+    fraction: крупная (5-15 мм)
+    used_in_mixes: [1, 1-Л, 2, 3, 4, 5, 5-Ф, 6, 7, 8, 12, 13]
+
+  coco_dust:
+    name: Кокос дак (мелкая фракция)
+    category: влагоудержание
+    role: Влагоудержание, связывает смесь
+    properties:
+      moisture_retention: high
+      aeration: low
+      drainage: low
+      nutrition: none
+    description: >
+      Мелкий кокосовый субстрат. Хорошо держит влагу и связывает
+      рыхлые компоненты. Но в больших количествах может уплотняться.
+    when_to_use:
+      - Чтобы связать крупнофракционную смесь
+      - Для марантовых и других влаголюбивых
+    when_not_to_use:
+      - Много (>20%) для чувствительных к переливу
+    fraction: мелкая (<2 мм)
+    used_in_mixes: [1, 2, 3, 4, 5, 5-Ф, 6, 7, 8, 10, 13]
+
+  charcoal:
+    name: Древесный уголь
+    category: стабилизатор
+    role: Сорбция, стабилизатор среды
+    properties:
+      moisture_retention: low
+      aeration: medium
+      drainage: medium
+      nutrition: none
+    description: >
+      Адсорбирует токсины и продукты гниения. Стабилизирует pH,
+      предотвращает закисание субстрата. Обычно 5-10% в смеси.
+    when_to_use:
+      - В любом миксе как стабилизатор (5-10%)
+      - Особенно важен для орхидей и эпифитов
+      - Для растений, чувствительных к гнили
+    when_not_to_use:
+      - Не бывает «слишком много», но больше 10% бессмысленно
+    fraction: средняя (5-10 мм)
+    used_in_mixes: [1, 1-Л, 2, 7, 8, 9, 10, 11, 12, 13]
+
+  vermiculite:
+    name: Вермикулит
+    category: влагоудержание
+    role: Сильное влагоудержание
+    properties:
+      moisture_retention: very_high
+      aeration: low
+      drainage: low
+      nutrition: none
+    description: >
+      Слоистый минерал, впитывает огромное количество воды.
+      Полезен для влаголюбивых растений, но опасен для чувствительных к переливу.
+    when_to_use:
+      - Для марантовых, папоротников, бегоний
+      - Когда нужно максимальное влагоудержание
+    when_not_to_use:
+      - Для клубневых алоказий — категорически
+      - Не сочетать с биогумусом (слишком мокро + тяжело)
+      - Для орхидей и эпифитов
+    warnings:
+      - В больших количествах (>15%) создаёт болото
+    fraction: мелкая (1-5 мм)
+    used_in_mixes: [3, 4, 6, 8, 10]
+
+  sphagnum:
+    name: Сфагнум (мох)
+    category: влагоудержание
+    role: Влагоудержание + антисептик
+    properties:
+      moisture_retention: very_high
+      aeration: medium
+      drainage: low
+      nutrition: none
+    description: >
+      Натуральный антисептик, отлично держит влагу. Обладает
+      бактерицидными свойствами — подавляет гниль.
+    when_to_use:
+      - Для орхидей (15-20%)
+      - Для папоротников
+      - Для бархатных антуриумов
+      - Как верхний слой для поддержания влажности
+    when_not_to_use:
+      - В больших количествах для растений, не терпящих сырость
+    fraction: длинноволокнистый
+    used_in_mixes: [9, 10, 12]
+
+  biohumus:
+    name: Биогумус
+    category: питание
+    role: Мягкое органическое питание
+    properties:
+      moisture_retention: medium
+      aeration: low
+      drainage: low
+      nutrition: medium
+    description: >
+      Продукт переработки червями. Даёт мягкое, постепенное питание
+      без риска ожога корней. Используется вместо универсального грунта
+      когда нужно питание без лишней влагоёмкости.
+    when_to_use:
+      - Немного (5-10%) как источник питания в воздушных миксах
+      - Замена универсальному грунту в миксах для алоказий
+    when_not_to_use:
+      - Не сочетать с вермикулитом (слишком тяжело и мокро)
+      - Для хищных растений — убьёт удобрениями
+      - Не использовать как основную массу (>10%)
+    fraction: мелкая (рассыпчатый)
+    used_in_mixes: [13]
+
+  peat_acidic:
+    name: Торф кислый (без удобрений)
+    category: специальный
+    role: Кислая бедная среда
+    properties:
+      moisture_retention: high
+      aeration: low
+      drainage: low
+      nutrition: none
+    description: >
+      Чистый кислый торф без каких-либо добавок и удобрений.
+      Единственный допустимый грунт для хищных растений.
+    when_to_use:
+      - ТОЛЬКО для хищных растений (дионея, росянка, непентес)
+    when_not_to_use:
+      - Для любых других растений — слишком кислый и бедный
+    warnings:
+      - Обязательно без удобрений — даже следы удобрений убивают хищные растения
+    fraction: мелкая
+    used_in_mixes: [carnivorous]
+
+  semi_hydro_mix:
+    name: Semi Hydro Mix (вулканический минеральный субстрат)
+    category: специальный
+    role: Полноценный минеральный субстрат или добавка для дренажа/аэрации
+    properties:
+      moisture_retention: low
+      aeration: very_high
+      drainage: very_high
+      nutrition: low
+    description: >
+      Готовая смесь из 4 типов вулканических камней для semi-hydro метода.
+      Инертный минеральный субстрат — не разлагается, не уплотняется,
+      не содержит органику. Стабилен годами.
+    sub_components:
+      lava_red:
+        name: Абני лава адумот (скория)
+        role: Пористая структура для воздуха и воды, якорь для корней
+      basalt_chips:
+        name: Шивей базальт (грусса)
+        role: Микроэлементы, медленное высвобождение минералов
+      gravel:
+        name: Хацац гилад
+        role: Предотвращает застой воды, стимулирует развитие корней
+      zeolite:
+        name: Зеолит
+        role: Буфер — адсорбирует воду и удобрения, отдаёт постепенно по потребности растения
+    when_to_use:
+      - Как полноценный субстрат для semi-hydro метода
+      - Для ароидных (монстера, филодендрон, антуриум, алоказия)
+      - Для хойи, калатеи, некоторых орхидей, бонсай
+      - Как добавка для дренажа в обычные смеси
+      - Дренажный слой на дне горшка
+      - Для суккулентов/кактусов (без постоянного резервуара воды, полная просушка)
+    when_not_to_use:
+      - Для хищных растений (минералы убьют)
+      - Без удобрений — субстрат инертный, требует жидкие подкормки
+    warnings:
+      - Требует жидкое удобрение — сам не питает
+      - Зеолит стабилизирует удобрения, но не заменяет их
+      - При переходе с земли — тщательно очистить корни
+      - Перед первым использованием промыть от минеральной пыли
+    usage_modes:
+      full_substrate: Полная замена грунта (semi-hydro метод)
+      drainage_additive: Добавка для улучшения дренажа в обычной смеси
+      bottom_drainage: Дренажный слой на дне горшка
+      decorative: Декоративное покрытие для горшков
+    fraction: смешанная (разные размеры камней)
+    used_in_mixes: []
+
+  tuff:
+    name: Туф/керамзит
+    category: дренаж
+    role: Дренаж, утяжеление
+    properties:
+      moisture_retention: low
+      aeration: high
+      drainage: very_high
+      nutrition: none
+    description: >
+      Тяжёлый пористый материал. Используется для дренажного слоя
+      на дне горшка и как добавка для утяжеления лёгких смесей.
+    when_to_use:
+      - Дренажный слой на дне горшка (не в составе смеси)
+      - Для суккулентов и сансевиерий — в составе смеси
+      - Когда горшок слишком лёгкий и падает
+    when_not_to_use:
+      - Как замена перлиту (слишком тяжёлый)
+    fraction: крупная (5-20 мм)
+    used_in_mixes: [11]
+
+soil_corrections:
+  overwatering:
+    priority: critical
+    description: Грунт мокрый >5 дней, жёлтые листья, мягкий стебель
+    linked_symptoms: [yellow_leaves, soft_stem]
+    direction: сделать суше и воздушнее
+    adjust_mix:
+      reduce: [universal_soil, coco_dust, vermiculite]
+      increase: [bark, perlite]
+    also_check:
+      - Дренажные отверстия не забиты
+      - Горшок не слишком большой
+      - Сократить частоту полива
+
+  underwatering:
+    priority: low
+    description: Грунт высыхает за <1 день, сухие кончики, увядание
+    linked_symptoms: [brown_tips, brown_edges]
+    direction: сделать чуть влагоёмче
+    adjust_mix:
+      reduce: [bark, perlite]
+      increase: [coco_dust, sphagnum]
+    also_check:
+      - Горшок не слишком маленький
+      - Влажность воздуха достаточная
+      - Увеличить частоту полива
+
+  dense_soil:
+    priority: high
+    description: Грунт слежался, вода стоит сверху, корни задыхаются
+    linked_symptoms: [yellow_leaves, soft_stem]
+    direction: разрыхлить и облегчить
+    adjust_mix:
+      reduce: [universal_soil]
+      increase: [bark, perlite, coco_husk]
+    also_check:
+      - Пересадить в свежий субстрат
+      - Возможно грунт просто старый (>1.5 года)
+
+  salt_buildup:
+    priority: medium
+    description: Белый налёт на грунте, коричневые кончики при мягкой воде
+    linked_symptoms: [brown_tips]
+    direction: улучшить промывку и сорбцию
+    adjust_mix:
+      increase: [charcoal]
+    also_check:
+      - Проливать субстрат чистой водой раз в месяц
+      - Проверить концентрацию удобрений
+      - Проверить TDS воды
+
+  root_rot_recovery:
+    priority: critical
+    description: Обнаружена гниль корней при пересадке
+    linked_symptoms: [soft_stem, yellow_leaves, leaf_drop]
+    direction: максимально воздушный субстрат
+    adjust_mix:
+      reduce: [universal_soil, vermiculite, coco_dust]
+      increase: [bark, perlite, charcoal]
+    also_check:
+      - Обрезать все гнилые корни
+      - Обработать срезы углём или фунгицидом
+      - Не поливать 2-3 дня после пересадки
+      - Уменьшить горшок если корней мало
+
+compatibility_warnings:
+  - pair: [vermiculite, biohumus]
+    warning: "Не сочетать — вместе дают слишком тяжёлую и мокрую смесь"
+  - pair: [universal_soil, biohumus]
+    warning: "Оба дают питание — вместе могут перекормить. Выбирать одно"
+  - pair: [peat_acidic, any_fertilizer]
+    warning: "Кислый торф ТОЛЬКО без удобрений — для хищных растений"
+
+categories:
+  каркас:
+    description: Создают структуру и пористость
+    components: [bark]
+  аэрация:
+    description: Разрыхляют грунт, обеспечивают доступ воздуха
+    components: [perlite, coco_husk]
+  влагоудержание:
+    description: Удерживают воду между поливами
+    components: [coco_dust, vermiculite, sphagnum]
+  питание:
+    description: Обеспечивают растение питательными веществами
+    components: [universal_soil, biohumus]
+  стабилизатор:
+    description: Поддерживают здоровую среду
+    components: [charcoal]
+  дренаж:
+    description: Отводят лишнюю воду
+    components: [tuff]
+  специальный:
+    description: Для специфических условий
+    components: [peat_acidic, semi_hydro_mix]

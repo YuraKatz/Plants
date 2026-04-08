@@ -36,18 +36,19 @@ soil_mixes:
     notes:
       - Более воздушный субстрат, чем стандартная ароидная смесь Mix #1
       - Для растений, чувствительных к застою воды и гнили корней
+      - Universal снижен до 20% — достаточно для питания без лишней влаги
     composition:
-      - component: Универсальный грунт Premium
-        percentage: 35
       - component: Bark (кора)
-        percentage: 20
+        percentage: 25
       - component: Перлит
+        percentage: 25
+      - component: Универсальный грунт Premium
         percentage: 20
       - component: Кокос гас (крупная фракция)
         percentage: 15
-      - component: Древесный уголь
-        percentage: 5
       - component: Кокос дак (мелкая фракция)
+        percentage: 10
+      - component: Древесный уголь
         percentage: 5
 
   mix_2:
@@ -210,25 +211,28 @@ soil_mixes:
     name: Для бегоний
     watering_type: ручной
     airiness_level: medium
-    rot_risk_if_overwatered: high
+    rot_risk_if_overwatered: medium
     suitable_for:
       - Бегония макулата
     notes:
       - Фитильный полив НЕ рекомендуется — критичный риск гнили
+      - Universal снижен до 30% — бегонии критично чувствительны к переливу
+      - Добавлена кора для аэрации, вермикулит снижен
     composition:
       - component: Универсальный грунт Premium
-        percentage: 45
+        percentage: 30
       - component: Кокос дак (мелкая фракция)
-        percentage: 20
-      - component: Перлит
         percentage: 15
-      - component: Вермикулит
-        percentage: 10
+      - component: Перлит
+        percentage: 20
+      - component: Bark (кора)
+        percentage: 15
       - component: Кокос гас (крупная фракция)
+        percentage: 10
+      - component: Вермикулит
         percentage: 5
       - component: Древесный уголь
         percentage: 5
-        optional: true
 
   mix_9:
     number: 9
@@ -313,14 +317,17 @@ soil_mixes:
 
   mix_12:
     number: 12
-    name: Для бархатных антуриумов
+    name: Для бархатных антуриумов (без универсального грунта)
     watering_type: ручной
     airiness_level: very_high
     rot_risk_if_overwatered: low
     suitable_for:
       - Антуриум кларинервиум
+      - Другие бархатные антуриумы
     notes:
       - Очень воздушный, крупнофракционный субстрат — ключевое требование
+      - Без универсального грунта — слишком плотный и влагоёмкий для бархатных
+      - Биогумус даёт мягкое питание без лишней влаги
       - Фитильный полив категорически не подходит — риск гнили клубня
       - Горшок с крупными дренажными отверстиями обязателен
     composition:
@@ -328,42 +335,52 @@ soil_mixes:
         percentage: 35
       - component: Перлит
         percentage: 25
-      - component: Универсальный грунт Premium
-        percentage: 15
+      - component: Сфагнум (мох)
+        percentage: 13
+      - component: Кокос гас (крупная фракция)
+        percentage: 10
       - component: Древесный уголь
         percentage: 10
-      - component: Сфагнум (мох)
-        percentage: 10
-      - component: Кокос гас (крупная фракция)
-        percentage: 5
+      - component: Биогумус
+        percentage: 7
 
   mix_13:
     number: 13
-    name: Для клубневых ароидных
+    name: Для клубневых ароидных (алоказии)
     watering_type: ручной
-    airiness_level: high
+    airiness_level: very_high
     rot_risk_if_overwatered: low
     suitable_for:
+      - Алоказия Regal Shields
       - Алоказия (Polly / Amazonica)
       - Алоказия Фрайдек
-      - Другие клубневые/ризомные ароидные
+      - Алоказия Black Velvet
+      - Другие клубневые (corm-based) алоказии
     notes:
-      - Более воздушный субстрат, чем стандартная ароидная смесь
-      - Снижает риск гнили клубня и застоя воды
+      - "Архетип грунта для алоказий: воздушная смесь как база, влагоёмкие компоненты — только понемногу"
+      - Без универсального грунта — он долго держит влагу, мало воздуха у корней, выше шанс подгнивания
+      - "Кора — каркас и воздух, перлит — аэрация, кокос крупный — немного влаги без болота"
+      - "Биогумус — немного питания (не база), уголь — стабилизатор среды"
       - Фитильный полив не рекомендуется
+    warnings:
+      - "НЕ использовать: вермикулит + биогумус вместе, тяжёлую мелкую смесь, большой горшок с мокрым субстратом"
+    adjustments:
+      small_corms: Для деток/маленьких клубней — чуть больше мелкой фракции или чаще полив
+      dry_conditions: При очень сухом воздухе (<40%) — можно добавить немного влагоёмкости
+      rehab: При реанимации — отдельный режим (semi-dry), этот микс не применяется
     composition:
       - component: Bark (кора)
-        percentage: 30
+        percentage: 37
       - component: Перлит
-        percentage: 25
-      - component: Универсальный грунт Premium
-        percentage: 20
+        percentage: 31
       - component: Кокос гас (крупная фракция)
-        percentage: 10
+        percentage: 13
       - component: Кокос дак (мелкая фракция)
-        percentage: 10
+        percentage: 6
+      - component: Биогумус
+        percentage: 6
       - component: Древесный уголь
-        percentage: 5
+        percentage: 6
 
   mix_carnivorous:
     name: Для хищных растений
@@ -382,6 +399,190 @@ soil_mixes:
         percentage: 70
       - component: Перлит
         percentage: 30
+
+mix_usage_rules:
+  mix_1:
+    target_dry_time_days: 3-5
+    state_fit: [stable]
+    not_for: [rehab]
+    watering_mode: [hand, wick]
+    too_wet_if: влажный >6 дней
+    too_dry_if: высыхает <1 дня
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+      dense: dense_soil
+
+  mix_1l:
+    target_dry_time_days: 2-4
+    state_fit: [stable, sensitive]
+    not_for: [rehab]
+    watering_mode: [hand]
+    too_wet_if: влажный >5 дней
+    too_dry_if: высыхает <1 дня
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+
+  mix_2:
+    target_dry_time_days: 4-7
+    state_fit: [stable]
+    not_for: [rehab, sensitive]
+    watering_mode: [wick]
+    too_wet_if: влажный постоянно без просушки
+    too_dry_if: фитиль не тянет воду
+    correction_links:
+      too_wet: overwatering
+      dense: dense_soil
+    notes: На фитиле грунт не должен быть болотом — лёгкая влажность
+
+  mix_3:
+    target_dry_time_days: 4-6
+    state_fit: [stable]
+    not_for: [rehab]
+    watering_mode: [hand, wick]
+    too_wet_if: влажный >7 дней
+    too_dry_if: высыхает <2 дней
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+    notes: Марантовые любят стабильную влажность — пересушка хуже перелива
+
+  mix_4:
+    target_dry_time_days: 5-7
+    state_fit: [stable]
+    not_for: [rehab, sensitive]
+    watering_mode: [wick]
+    too_wet_if: вода стоит >7 дней
+    too_dry_if: фитиль не тянет воду
+    correction_links:
+      too_wet: overwatering
+      dense: dense_soil
+    notes: Критичный контроль — фитиль + марантовые = высокий риск
+
+  mix_5:
+    target_dry_time_days: 4-6
+    state_fit: [stable]
+    not_for: [rehab]
+    watering_mode: [hand]
+    too_wet_if: влажный >7 дней
+    too_dry_if: высыхает <2 дней
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+
+  mix_5f:
+    target_dry_time_days: 5-7
+    state_fit: [stable]
+    not_for: [rehab]
+    watering_mode: [wick]
+    too_wet_if: влажный постоянно без просушки
+    too_dry_if: фитиль не тянет воду
+    correction_links:
+      too_wet: overwatering
+
+  mix_6:
+    target_dry_time_days: 4-6
+    state_fit: [stable]
+    not_for: [rehab, wick]
+    watering_mode: [hand]
+    too_wet_if: влажный >7 дней
+    too_dry_if: высыхает <2 дней
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+
+  mix_7:
+    target_dry_time_days: 1-3
+    state_fit: [stable, sensitive]
+    not_for: [rehab, wick]
+    watering_mode: [hand]
+    too_wet_if: влажный >4 дня
+    too_dry_if: не применимо — быстрая просушка норма
+    correction_links:
+      too_wet: overwatering
+    notes: Эпифитный субстрат — должен быстро просыхать. Для бромелиевых основной полив в розетку
+
+  mix_8:
+    target_dry_time_days: 3-5
+    state_fit: [stable, sensitive]
+    not_for: [rehab, wick]
+    watering_mode: [hand]
+    too_wet_if: влажный >6 дней
+    too_dry_if: высыхает <1 дня
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+    notes: Бегонии критично чувствительны к переливу
+
+  mix_9:
+    target_dry_time_days: 2-5
+    state_fit: [stable]
+    not_for: [rehab, wick]
+    watering_mode: [hand]
+    too_wet_if: влажный >5 дней
+    too_dry_if: не применимо — полная просушка норма
+    correction_links:
+      too_wet: overwatering
+    notes: Полная просушка между поливами обязательна. Прозрачный горшок для контроля
+
+  mix_10:
+    target_dry_time_days: 3-5
+    state_fit: [stable]
+    not_for: [rehab]
+    watering_mode: [hand, wick]
+    too_wet_if: влажный >6 дней
+    too_dry_if: высыхает <1 дня
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+    notes: Папоротники не переносят пересушку — стабильная влажность важнее всего
+
+  mix_11:
+    target_dry_time_days: 5-10
+    state_fit: [stable]
+    not_for: [rehab, wick]
+    watering_mode: [hand]
+    too_wet_if: влажный >10 дней
+    too_dry_if: не применимо — полная просушка норма
+    correction_links:
+      too_wet: overwatering
+    notes: Суккулентный режим — полная просушка между поливами
+
+  mix_12:
+    target_dry_time_days: 2-4
+    state_fit: [stable, sensitive]
+    not_for: [rehab, wick]
+    watering_mode: [hand]
+    too_wet_if: влажный >5 дней
+    too_dry_if: высыхает <1 дня
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+    notes: Бархатные антуриумы — воздушный субстрат критичен
+
+  mix_13:
+    target_dry_time_days: 2-4
+    state_fit: [stable, sensitive]
+    not_for: [rehab, wick]
+    watering_mode: [hand]
+    too_wet_if: влажный >5 дней
+    too_dry_if: высыхает <1 дня
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+      rot: root_rot_recovery
+    notes: Клубневые алоказии — перелив опаснее пересушки. Клубень жив даже без листьев
+
+  mix_carnivorous:
+    target_dry_time_days: never
+    state_fit: [stable]
+    not_for: [rehab]
+    watering_mode: [tray]
+    too_wet_if: не применимо — постоянная влажность норма
+    too_dry_if: поддон высох
+    correction_links: {}
+    notes: Постоянно влажный через поддон. ТОЛЬКО дистиллят/RO. Никаких удобрений
 
 general_principles:
   wick_watering_rule: Фитильный полив требует более воздухопроницаемого грунта. Застой воды = гниение корней
