@@ -336,13 +336,13 @@ soil_mixes:
       - component: Перлит
         percentage: 25
       - component: Сфагнум (мох)
-        percentage: 13
+        percentage: 10
       - component: Кокос гас (крупная фракция)
         percentage: 10
       - component: Древесный уголь
         percentage: 10
       - component: Биогумус
-        percentage: 7
+        percentage: 10
 
   mix_13:
     number: 13
@@ -370,17 +370,17 @@ soil_mixes:
       rehab: При реанимации — отдельный режим (semi-dry), этот микс не применяется
     composition:
       - component: Bark (кора)
-        percentage: 37
+        percentage: 35
       - component: Перлит
-        percentage: 31
+        percentage: 30
       - component: Кокос гас (крупная фракция)
-        percentage: 13
+        percentage: 15
       - component: Кокос дак (мелкая фракция)
-        percentage: 6
+        percentage: 5
       - component: Биогумус
-        percentage: 6
+        percentage: 5
       - component: Древесный уголь
-        percentage: 6
+        percentage: 10
 
   mix_carnivorous:
     name: Для хищных растений
