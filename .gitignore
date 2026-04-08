@@ -8,3 +8,15 @@ __pycache__/
 # IDE
 .idea/
 .claude/settings.local.json
+
+# Claude Code / IDE artifacts
+.claude/worktrees/
+.claude/settings.local.json
+.claude/plans/
+.idea/
+__pycache__/
+*.pyc
+bin/Debug/
+obj/Debug/
+nul
+~$*
