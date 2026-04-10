@@ -118,6 +118,9 @@ soil_no_results: "No mixes found"
 soil_variant: "Variant"
 soil_composition: "Composition"
 soil_suitable_for: "Suitable for:"
+soil_humus_allowed: "Humus can be added"
+soil_humus_not_allowed: "Humus not recommended"
+soil_humus_replaces: "replacing part of"
 
 # Water groups page
 water_title: "💧 Water Groups"

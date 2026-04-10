@@ -118,6 +118,9 @@ soil_no_results: "Смеси не найдены"
 soil_variant: "Вариант"
 soil_composition: "Состав"
 soil_suitable_for: "Подходит для:"
+soil_humus_allowed: "Можно добавить гумус"
+soil_humus_not_allowed: "Гумус не рекомендуется"
+soil_humus_replaces: "вместо части"
 
 # Water groups page
 water_title: "💧 Группы воды"

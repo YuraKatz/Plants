@@ -118,6 +118,9 @@ soil_no_results: "לא נמצאו תערובות"
 soil_variant: "גרסה"
 soil_composition: "הרכב"
 soil_suitable_for: "מתאים ל:"
+soil_humus_allowed: "ניתן להוסיף הומוס"
+soil_humus_not_allowed: "הומוס לא מומלץ"
+soil_humus_replaces: "במקום חלק מ"
 
 # Water groups page
 water_title: "💧 קבוצות מים"

@@ -35,6 +35,29 @@
             {% endif %}
         </div>
 
+        {% if mix.optional_humus %}
+        <div class="mix-notes">
+            {% if mix.optional_humus.allowed %}
+            <div class="note" style="background:#f0fdf4; border-left:3px solid #22c55e;">
+                {{ t.soil_humus_allowed if t else 'Можно добавить гумус' }}: {{ mix.optional_humus.percentage }}%
+                {% if mix.optional_humus.replaces %}
+                ({{ t.soil_humus_replaces if t else 'вместо части' }} {{ mix.optional_humus.replaces }})
+                {% endif %}
+                {% if mix.optional_humus.note %}
+                <br><small>{{ mix.optional_humus.note }}</small>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                {{ t.soil_humus_not_allowed if t else 'Гумус не рекомендуется' }}
+                {% if mix.optional_humus.reason %}
+                — {{ mix.optional_humus.reason }}
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
         {% if mix.plants %}
         <div class="plants-list">
             <h4>{{ t.soil_suitable_for if t else 'Подходит для:' }}</h4>
