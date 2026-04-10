@@ -23,6 +23,11 @@ soil_mixes:
         percentage: 10
       - component: Древесный уголь
         percentage: 5
+    optional_humus:
+      allowed: true
+      percentage: 5-10
+      replaces: Универсальный грунт Premium
+      note: Свой компостный гумус вместо части универсального грунта (45% -> 35-40%)
 
   mix_1l:
     number: 1-Л
@@ -50,6 +55,11 @@ soil_mixes:
         percentage: 10
       - component: Древесный уголь
         percentage: 5
+    optional_humus:
+      allowed: true
+      percentage: 5
+      replaces: Универсальный грунт Premium
+      note: Только 5% — универсального и так мало (20%), не снижать больше
 
   mix_2:
     number: 2
@@ -61,6 +71,9 @@ soil_mixes:
       - Спатифиллум
       - Монстера (на фитиле)
       - Филодендрон (на фитиле)
+    optional_humus:
+      allowed: false
+      reason: Фитильный полив — гумус слишком влагоёмкий, риск застоя и гнили
     composition:
       - component: Универсальный грунт Premium
         percentage: 35
@@ -95,6 +108,11 @@ soil_mixes:
         percentage: 10
       - component: Кокос гас (крупная фракция)
         percentage: 10
+    optional_humus:
+      allowed: true
+      percentage: 5
+      replaces: Универсальный грунт Premium
+      note: Немного, осторожно — марантовые любят влагу, но гумус добавит ещё влагоёмкости
 
   mix_4:
     number: 4
@@ -107,6 +125,9 @@ soil_mixes:
     warnings:
       - КРИТИЧНО - Следить за застоем воды!
       - Кору не использовать или максимум 5%
+    optional_humus:
+      allowed: false
+      reason: Фитильный полив — гумус слишком влагоёмкий
     composition:
       - component: Универсальный грунт Premium
         percentage: 35
@@ -139,6 +160,11 @@ soil_mixes:
         percentage: 10
       - component: Кокос дак (мелкая фракция)
         percentage: 15
+    optional_humus:
+      allowed: true
+      percentage: 5-10
+      replaces: Универсальный грунт Premium
+      note: Универсального много (55%), есть откуда забрать (55% -> 45-50%)
 
   mix_5f:
     number: 5-Ф
@@ -148,6 +174,9 @@ soil_mixes:
     rot_risk_if_overwatered: medium
     suitable_for:
       - Кротон (на фитиле)
+    optional_humus:
+      allowed: false
+      reason: Фитильный полив — гумус слишком влагоёмкий
     composition:
       - component: Универсальный грунт Premium
         percentage: 45
@@ -181,6 +210,11 @@ soil_mixes:
         percentage: 10
       - component: Кокос гас (крупная фракция)
         percentage: 10
+    optional_humus:
+      allowed: true
+      percentage: 5
+      replaces: Универсальный грунт Premium
+      note: Немного, заменить часть универсального (55% -> 50%)
 
   mix_7:
     number: 7
@@ -191,6 +225,9 @@ soil_mixes:
     suitable_for:
       - Гузмания
       - Шлюмбергера (Декабрист)
+    optional_humus:
+      allowed: false
+      reason: Эпифитный субстрат без земли — гумус не нужен, нарушит структуру
     notes:
       - "Для бромелиевых: основной полив в розетку, субстрат лишь для опоры"
       - "Для лесных кактусов: рыхлый быстро просыхающий субстрат"
@@ -214,6 +251,9 @@ soil_mixes:
     rot_risk_if_overwatered: medium
     suitable_for:
       - Бегония макулата
+    optional_humus:
+      allowed: false
+      reason: Бегонии критично чувствительны к переливу, гумус добавит влагоёмкости
     notes:
       - Фитильный полив НЕ рекомендуется — критичный риск гнили
       - Universal снижен до 30% — бегонии критично чувствительны к переливу
@@ -242,6 +282,9 @@ soil_mixes:
     rot_risk_if_overwatered: low
     suitable_for:
       - Орхидея фаленопсис
+    optional_humus:
+      allowed: false
+      reason: Чистый эпифитный субстрат, никакой земли/гумуса
     critical_requirements:
       pot_type: Прозрачный горшок ОБЯЗАТЕЛЬНО!
       pot_reason: Корни фаленопсис участвуют в фотосинтезе и нуждаются в свете
@@ -274,6 +317,11 @@ soil_mixes:
     suitable_for:
       - Нефролепис
       - Другие папоротники
+    optional_humus:
+      allowed: true
+      percentage: 5
+      replaces: Универсальный грунт Premium
+      note: Папоротники любят органику (35% -> 30%)
     notes:
       - Папоротники любят постоянно влажный, но не мокрый грунт
       - Фитильный полив не рекомендуется — риск переувлажнения
@@ -301,6 +349,9 @@ soil_mixes:
       - Сансевиерия
       - Замиокулькас (ZZ plant)
       - Суккуленты
+    optional_humus:
+      allowed: false
+      reason: Суккулентам нужна бедная сухая почва, гумус добавит лишнее питание и влагу
     notes:
       - Очень хороший дренаж — главное требование
       - Фитильный полив категорически не подходит
@@ -324,6 +375,9 @@ soil_mixes:
     suitable_for:
       - Антуриум кларинервиум
       - Другие бархатные антуриумы
+    optional_humus:
+      allowed: false
+      reason: Биогумус 10% уже в рецепте — дополнительный гумус не нужен
     notes:
       - Очень воздушный, крупнофракционный субстрат — ключевое требование
       - Без универсального грунта — слишком плотный и влагоёмкий для бархатных
@@ -350,6 +404,9 @@ soil_mixes:
     watering_type: ручной
     airiness_level: very_high
     rot_risk_if_overwatered: low
+    optional_humus:
+      allowed: false
+      reason: Биогумус 5% уже в рецепте — дополнительный гумус не нужен
     suitable_for:
       - Алоказия Regal Shields
       - Алоказия (Polly / Amazonica)
@@ -391,6 +448,9 @@ soil_mixes:
       - dionaea
     suitable_for:
       - Дионея (Венерина мухоловка)
+    optional_humus:
+      allowed: false
+      reason: Категорически нет — любые удобрения/органика убивают хищные растения
     warnings:
       - КРИТИЧНО — любые удобрения убивают растение
       - Использовать ТОЛЬКО дистиллят или чистый RO (TDS < 10)

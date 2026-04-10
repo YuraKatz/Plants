@@ -43,6 +43,7 @@ class PlantsDatabaseAuditor:
         self.check_wick_watering_consistency()
         self.check_ppm_ph_ranges()
         self.check_duplicates_and_conflicts()
+        self.check_optional_humus()
 
         self.print_report()
 
@@ -271,6 +272,70 @@ class PlantsDatabaseAuditor:
                 plant_names[name] = plant_id
 
         print("   [+] Duplicates and conflicts checked\n")
+
+    def check_optional_humus(self):
+        """Check optional_humus consistency in soil mixes"""
+        print("[*] Checking optional_humus in soil mixes...")
+
+        soil_mixes_data = self.soil_mixes.get('soil_mixes', {})
+
+        for mix_id, mix_data in soil_mixes_data.items():
+            mix_name = mix_data.get('name', mix_id)
+            humus = mix_data.get('optional_humus')
+            watering_type = mix_data.get('watering_type', '')
+            composition = mix_data.get('composition', [])
+
+            # 1. Проверка: у каждого микса должен быть optional_humus
+            if humus is None:
+                self.warnings.append(
+                    f"[W] Mix '{mix_name}': missing optional_humus field"
+                )
+                continue
+
+            allowed = humus.get('allowed', False)
+
+            # 2. Если фитильный полив — гумус не должен быть allowed
+            if watering_type == 'фитильный' and allowed:
+                self.issues.append(
+                    f"[!] Mix '{mix_name}': optional_humus allowed=true but watering is фитильный — risk of rot"
+                )
+
+            # 3. Если allowed=true — должен быть percentage и replaces
+            if allowed:
+                if not humus.get('percentage'):
+                    self.issues.append(
+                        f"[!] Mix '{mix_name}': optional_humus allowed but no percentage specified"
+                    )
+                if not humus.get('replaces'):
+                    self.issues.append(
+                        f"[!] Mix '{mix_name}': optional_humus allowed but no 'replaces' component specified"
+                    )
+                else:
+                    # Проверить что replaces компонент существует в composition
+                    replaces = humus.get('replaces', '')
+                    comp_names = [c.get('component', '') for c in composition]
+                    if replaces not in comp_names:
+                        self.issues.append(
+                            f"[!] Mix '{mix_name}': optional_humus replaces '{replaces}' but it's not in composition"
+                        )
+
+            # 4. Если allowed=false — должен быть reason
+            if not allowed:
+                if not humus.get('reason'):
+                    self.warnings.append(
+                        f"[W] Mix '{mix_name}': optional_humus not allowed but no reason given"
+                    )
+
+            # 5. Если в составе уже есть биогумус — не должен быть allowed
+            if allowed:
+                for comp in composition:
+                    comp_name = comp.get('component', '').lower()
+                    if 'биогумус' in comp_name or 'гумус' in comp_name:
+                        self.issues.append(
+                            f"[!] Mix '{mix_name}': optional_humus allowed but composition already contains '{comp.get('component')}'"
+                        )
+
+        print("   [+] Optional humus checked\n")
 
     def print_report(self):
         """Print audit report"""
