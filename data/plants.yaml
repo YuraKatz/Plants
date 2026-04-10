@@ -586,7 +586,7 @@ plants:
       level: Средняя-высокая
       preferred_method: Протирать крупные листья
       spraying: По сезону (чаще летом)
-    latin_name: Monstera deliciosa (juvenile)
+    latin_name: Monstera deliciosa
     lighting:
       direct_sun: false
       lux_max: 15000
@@ -595,7 +595,7 @@ plants:
       photoperiod_hours: 10-12
     lighting_score: 7
     humidity_score: 5
-    name: Монстера молодая
+    name: Монстера делициоза
     risks:
     - Устойчива
     soil:
