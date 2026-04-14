@@ -114,6 +114,49 @@ fertilizers:
         - Продление цветения
         - Усиление цветения
 
+    ecogan_orchids:
+      name: Ecogan — דשן סחלבים (Orchid Fertilizer)
+      brand: Ecogan (Algo, Израиль)
+      volume: 250 мл
+      type: Жидкое удобрение для орхидей — все сезоны
+      purpose: Сбалансированное питание орхидей круглый год
+      ready_to_use: false
+      composition:
+        npk:
+          nitrogen_n: 7%
+          phosphorus_p2o5: 3%
+          potassium_k2o: 7%
+        npk_note: "7-3-7 — сбалансированная формула для роста И цветения"
+        microelements:
+          iron_fe: присутствует
+          manganese_mn: присутствует
+          zinc_zn: присутствует
+          copper_cu: присутствует
+          molybdenum_mo: присутствует
+      application:
+        timing: Круглый год (с корректировкой дозировки)
+        method: Развести в воде согласно инструкции
+        frequency:
+          spring_summer_autumn: 2 колпачка на 5 л воды, каждые 5 дней
+          winter: 2 колпачка на 5 л воды, каждые 12 дней
+        notes:
+          - Использовать при каждом поливе орхидей
+      suitable_for:
+        - Все виды орхидей
+        - Фаленопсис
+        - Дендробиум
+        - Онцидиум
+        - Каттлея
+      effects:
+        - Стимуляция цветения
+        - Поддержка вегетативного роста
+        - Укрепление корневой системы
+        - Улучшение окраски листьев
+      purchase:
+        price: null
+        currency: ILS
+        date: 2026-04-14
+
   granulated:
     ecogan_multicote:
       name: Экоген (Ecogan) Multicote
