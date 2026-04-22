@@ -439,6 +439,36 @@ soil_mixes:
       - component: Древесный уголь
         percentage: 10
 
+  mix_14:
+    number: 14
+    name: Для сенполий / геснериевых (фиалок)
+    watering_type: ручной / фитильный
+    airiness_level: high
+    rot_risk_if_overwatered: medium
+    suitable_for:
+      - Сенполия (узамбарская фиалка)
+      - Стрептокарпус
+      - Другие геснериевые
+    notes:
+      - Фитильный полив рекомендован — сенполии не любят попадание воды на листья
+      - Лёгкий, слабокислый, воздушный субстрат
+      - Торф — основа, перлит и вермикулит обеспечивают воздух и влагоудержание
+      - Уголь для стабилизации среды
+    optional_humus:
+      allowed: false
+      reason: Торф уже обеспечивает органическую базу; гумус повышает риск гнили черешков
+    composition:
+      - component: Торф верховой (кислый)
+        percentage: 50
+      - component: Перлит
+        percentage: 25
+      - component: Вермикулит
+        percentage: 15
+      - component: Кокос дак (мелкая фракция)
+        percentage: 5
+      - component: Древесный уголь
+        percentage: 5
+
   mix_carnivorous:
     name: Для хищных растений
     watering_type: поддон
@@ -633,6 +663,18 @@ mix_usage_rules:
       too_dry: underwatering
       rot: root_rot_recovery
     notes: Клубневые алоказии — перелив опаснее пересушки. Клубень жив даже без листьев
+
+  mix_14:
+    target_dry_time_days: 3-5
+    state_fit: [stable, sensitive]
+    not_for: [rehab]
+    watering_mode: [hand, wick]
+    too_wet_if: влажный >6 дней
+    too_dry_if: высыхает <2 дней
+    correction_links:
+      too_wet: overwatering
+      too_dry: underwatering
+    notes: Сенполии любят стабильную влажность без переувлажнения. Фитиль идеален — листья не мокнут
 
   mix_carnivorous:
     target_dry_time_days: never

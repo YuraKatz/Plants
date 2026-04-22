@@ -781,6 +781,44 @@ plants:
     wick_watering:
       notes: Не рекомендуется — корневая чувствительна к переливу
       recommended: false
+  saintpaulia:
+    water_group: group_b
+    care_notes:
+    - НЕ опрыскивать листья — остаются пятна, загнивают
+    - Полив только под корень или через поддон/фитиль
+    - Чувствительна к холодной воде (поливать тёплой, комнатной)
+    - Не переносит прямое солнце — сжигает листья
+    - Для обильного цветения нужен световой день 12-14 часов
+    feeding_group: general_houseplants
+    humidity:
+      level: Средняя (50-60%)
+      preferred_method: Поддоны с водой/увлажнитель. Листья НЕ опрыскивать
+      spraying: НЕ ОПРЫСКИВАТЬ!
+    latin_name: Saintpaulia ionantha
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 3000
+      lux_optimal: 8000
+      photoperiod_hours: 12-14
+    lighting_score: 5
+    humidity_score: 4
+    name: Сенполия (узамбарская фиалка)
+    risks:
+    - Пятна на листьях при попадании воды
+    - Гниль черешков при переливе
+    - Вытягивается без цветения при недостатке света
+    soil:
+      mix_name: для сенполий / геснериевых
+      mix_number: 14
+    type: Декоративно-цветущие (геснериевые)
+    watering:
+      frequency: Умеренный
+      method: Фитиль / в поддон
+      notes: Поливать снизу или по краю горшка. Не допускать воду на розетку листьев
+    wick_watering:
+      notes: Рекомендован — стабильная влажность, вода не попадает на листья
+      recommended: true
   sansevieria:
     water_group: group_c
     care_notes:
@@ -850,6 +888,44 @@ plants:
     wick_watering:
       notes: Не рекомендуется — риск загнивания корней
       recommended: false
+  selaginella:
+    water_group: group_a
+    care_notes:
+    - КРИТИЧНО — требует высокую влажность воздуха (70-90%), идеально в террариуме / под колпаком
+    - Не допускать пересушку грунта ни на день — погибает быстро
+    - Использовать только RO воду — чувствительна к солям
+    - Не опрыскивать жёсткой водой — остаются пятна на листьях
+    - Размножение — горизонтально положенные черенки на влажный субстрат под плёнкой
+    feeding_group: sensitive
+    humidity:
+      level: Очень высокая (70-90%)
+      preferred_method: Террариум / закрытая флорариум / увлажнитель. Частое опрыскивание RO
+      spraying: Ежедневно мягкой водой
+    latin_name: Selaginella martensii
+    lighting:
+      direct_sun: false
+      lux_max: 8000
+      lux_min: 1500
+      lux_optimal: 4000
+      photoperiod_hours: 10-12
+    lighting_score: 1
+    humidity_score: 10
+    name: Селагинелла Мартенса (плаунок)
+    risks:
+    - КРИТИЧНО — гибнет при пересушке грунта или воздуха
+    - Солнце сжигает листочки
+    - Чувствительна к солям и хлору в воде
+    soil:
+      mix_name: для папоротников
+      mix_number: 10
+    type: Плауновидные
+    watering:
+      frequency: Регулярный
+      method: Ручной/Фитиль
+      notes: Грунт всегда слегка влажный. Не заливать, но и не пересушивать
+    wick_watering:
+      notes: Допустим — помогает поддерживать стабильную влажность
+      recommended: true
   spathiphyllum:
     water_group: group_a
     feeding_group: aroids
@@ -879,6 +955,39 @@ plants:
       method: Фитиль
     wick_watering:
       notes: Рекомендован (любит стабильную влажность)
+      recommended: true
+  syngonium:
+    water_group: group_b
+    feeding_group: aroids
+    humidity:
+      level: Средняя-высокая
+      preferred_method: Увлажнитель/поддоны. Можно опрыскивать
+      spraying: По сезону (чаще летом)
+    latin_name: Syngonium podophyllum
+    lighting:
+      direct_sun: false
+      lux_max: 12000
+      lux_min: 2500
+      lux_optimal: 6000
+      photoperiod_hours: 10-12
+    lighting_score: 5
+    humidity_score: 5
+    name: Сингониум ножколистный
+    risks:
+    - Устойчив
+    - На прямом солнце выгорает вариегатность
+    - Без опоры листья остаются мелкими и ювенильными
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные (лианы)
+    watering:
+      frequency: Умеренный
+      method: Ручной/Фитиль
+      notes: Просушка верхнего слоя между поливами
+    wick_watering:
+      notes: Допустим
       recommended: true
   zamioculcas:
     water_group: group_c

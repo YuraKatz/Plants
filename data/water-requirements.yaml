@@ -58,6 +58,7 @@ water_requirements:
         - Антуриум
         - Антуриум кларинервиум
         - Папоротник (Нефролепис)
+        - Селагинелла Мартенса
       sensitivity_level: Очень высокая
 
     group_orchids:
@@ -105,6 +106,8 @@ water_requirements:
         - Бегония макулата
         - Хамедорея
         - Хлорофитум
+        - Сенполия (узамбарская фиалка)
+        - Сингониум ножколистный
       sensitivity_level: Средняя
 
     group_c:
@@ -334,6 +337,24 @@ water_requirements:
       group: carnivorous
       sensitivity: critical
       notes: ТОЛЬКО чистый RO! Любые добавки убивают!
+
+    saintpaulia:
+      plant_name: Сенполия (узамбарская фиалка)
+      group: B
+      sensitivity: medium
+      notes: Поливать тёплой водой комнатной температуры только под корень / через фитиль. Не допускать воду на листья
+
+    selaginella:
+      plant_name: Селагинелла Мартенса
+      group: A
+      sensitivity: very_high
+      notes: Чувствительна к солям и жёсткой воде. Мягкая RO вода обязательна. Опрыскивать только RO
+
+    syngonium:
+      plant_name: Сингониум ножколистный
+      group: B
+      sensitivity: low
+      notes: Аналогично эпипремнуму — неприхотлив, стабильность важнее точности
 
   common_mistakes:
     - mistake: Добавлять удобрение ДО CalMag
