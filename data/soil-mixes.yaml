@@ -10,6 +10,7 @@ soil_mixes:
       - Филодендрон
       - Эпипремнум
       - Аглаонема
+      - Сингониум
     composition:
       - component: Универсальный грунт Premium
         percentage: 45
@@ -316,6 +317,7 @@ soil_mixes:
     rot_risk_if_overwatered: medium
     suitable_for:
       - Нефролепис
+      - Селагинелла (плаунок)
       - Другие папоротники
     optional_humus:
       allowed: true
