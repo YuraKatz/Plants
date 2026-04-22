@@ -241,9 +241,11 @@
             var waterGroupDetails = {
                 'A': { label: 'A \u2014 PPM 60-90, pH 5.8-6.3', subtitle: t.group_sensitive },
                 'B': { label: 'B \u2014 PPM 90-140, pH 6.0-6.5', subtitle: t.group_aroids },
-                'C': { label: 'C \u2014 PPM 120-170, pH 6.2-6.7', subtitle: t.group_undemanding }
+                'C': { label: 'C \u2014 PPM 120-170, pH 6.2-6.7', subtitle: t.group_undemanding },
+                'orchids': { label: 'Orchids \u2014 PPM 80-120, pH 5.5-6.5', subtitle: t.group_orchids || 'Orchids' },
+                'carnivorous': { label: 'Carnivorous \u2014 PPM 0-30, pH 4.5-5.5', subtitle: t.group_carnivorous || 'Carnivorous' }
             };
-            var canisterInfo = canister ? {
+            var canisterInfo = (canister && waterGroupDetails[canister]) ? {
                 letter: canister,
                 cls: 'canister-' + canister.toLowerCase(),
                 title: waterGroupDetails[canister].subtitle,
