@@ -283,6 +283,24 @@
                 </div>
             </a>
 
+            <a href="garden.html" class="nav-card" style="border-left-color: #52b788;">
+                <div class="card-icon">🌳</div>
+                <div class="card-title">{{ t.card_garden | default('Сад — плодовые деревья') }}</div>
+                <div class="card-description">
+                    {{ t.card_garden_desc | default('Каталог садовых деревьев, удобрения для сада, сезонный уход.') }}
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">{{ t.stat_trees | default('деревьев') }}</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">WIP</div>
+                        <div class="stat-label">{{ t.stat_source | default('источник') }}</div>
+                    </div>
+                </div>
+            </a>
+
             <a href="pests-diseases.html" class="nav-card" style="border-left-color: #c94050;">
                 <div class="card-icon">🐛</div>
                 <div class="card-title">{{ t.card_pests }}</div>

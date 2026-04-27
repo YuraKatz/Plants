@@ -68,6 +68,14 @@ def load_yaml(filename):
         return yaml.safe_load(f) or {}
 
 
+def load_yaml_garden(filename):
+    path = DATA_DIR / 'garden' / filename
+    if not path.exists():
+        return {}
+    with open(path, encoding='utf-8') as f:
+        return yaml.safe_load(f) or {}
+
+
 def mix_sort_key(number):
     """Sort mix numbers naturally: 1, 2, ..., 5-Ф after 5, unnumbered last."""
     if number is None:
@@ -121,6 +129,9 @@ class SiteBuilder:
         self.stop_conditions = fert_raw.get('stop_conditions', [])
 
         self.care_data = load_yaml('care-data.yaml')
+
+        self.garden_trees = load_yaml_garden('trees.yaml').get('trees', {})
+        self.garden_fertilizers = load_yaml_garden('garden-fertilizers.yaml').get('garden_fertilizers', {})
 
         self._load_i18n()
         return self
@@ -339,6 +350,7 @@ class SiteBuilder:
                 self._build_propagation()
                 # self._build_watering_tracker()  # disabled per user request
                 self._build_pests_diseases()
+                self._build_garden()
 
     def _build_soil_groups(self):
         ordered = []
@@ -795,6 +807,14 @@ class SiteBuilder:
         ctx['diseases'] = translated_diseases
         html = self.env.get_template('pages/pests-diseases.html').render(**ctx)
         self._write('pests-diseases.html', html)
+
+    def _build_garden(self):
+        ctx = self._base_ctx('garden.html')
+        ctx['trees'] = self.garden_trees
+        ctx['tree_count'] = len(self.garden_trees)
+        ctx['garden_fertilizers'] = self.garden_fertilizers
+        html = self.env.get_template('pages/garden.html').render(**ctx)
+        self._write('garden.html', html)
 
     def _build_index(self):
         ctx = self._base_ctx('index.html')

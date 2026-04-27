@@ -1,0 +1,77 @@
+garden_fertilizers:
+  npk_17_10_27:
+    name: NPK 17-10-27
+    type: Минеральное комплексное удобрение
+    npk:
+      nitrogen_n: 17
+      phosphorus_p2o5: 10
+      potassium_k2o: 27
+    purpose: Базовое сезонное удобрение для плодовых деревьев
+    notes_to_fill:
+      - бренд
+      - где покупает
+      - дозировка для каждого дерева
+      - календарь внесения
+
+  vgi_kf_10:
+    ref: fertilizers.additives.kf_10
+    use_in_garden: |
+      В каталоге для дома KF-10 был оценён как избыточный (есть flower_bio_gel).
+      Для сада — основное применение по словам производителя: овощи, травы,
+      декоративные, плодовые деревья, цитрусы, виноградники, оливки, миндаль.
+      Сертифицирован для органического земледелия (Израиль + US NOP).
+    targets_in_garden:
+      - citrus
+      - avocado
+      - mango
+      - persimmon
+      - nectarine
+      - peach
+      - grape
+
+  vgi_kf_macroboost:
+    ref: fertilizers.additives.kf_macroboost
+    use_in_garden: |
+      Калийная добавка с L-пролином, заявлена работа на холоде.
+      Для сада в Кацрине — особенно полезен зимой и в холодные периоды.
+      Применять для усиления цветения и плодоношения.
+    targets_in_garden:
+      - all_fruiting_trees
+
+  vgi_kf_garden_balcony:
+    ref: fertilizers.additives.kf_garden_balcony
+    use_in_garden: |
+      Полноценное минеральное удобрение для контейнеров.
+      Применимо для деревьев в горшках на участке (если есть).
+    targets_in_garden:
+      - container_plants
+
+  vgi_kf_guard:
+    ref: fertilizers.additives.kf_guard
+    use_in_garden: |
+      Универсальное масло нима 40% — работает и в саду, и дома.
+      Профилактика от тли, паутинного клеща, щитовки, белокрылки на деревьях.
+    targets_in_garden: all_trees
+    cautions:
+      - НЕ применять при температуре выше 24°C
+      - Обработка только утром или вечером
+      - Не применять во время активного цветения (опасно для пчёл, хотя VGI заявляет совместимость)
+      - Период ожидания до сбора урожая 2 дня
+
+  vgi_kf_iron:
+    ref: fertilizers.additives.kf_iron
+    use_in_garden: |
+      Хелатное железо. На странице производителя в suitable_for прямо
+      указаны "плодовые деревья" и "домашние сады". В Кацрине почвы могут
+      быть щелочными → железо иногда блокируется.
+    targets_in_garden:
+      - citrus
+      - avocado
+    note: Применять только при подтверждённом хлорозе (молодые листья жёлтые с зелёными прожилками)
+
+  vgi_kf_serfico:
+    ref: fertilizers.additives.kf_serfico
+    use_in_garden: |
+      Биостимулятор укоренения. Для сада — при посадке новых саженцев
+      и для восстановления после пересадки/обрезки.
+    targets_in_garden: new_plantings

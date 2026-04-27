@@ -1,0 +1,89 @@
+trees:
+  avocado:
+    name: Авокадо
+    name_lat: Persea americana
+    name_he: אבוקדו
+    category: Субтропические плодовые
+    type: Вечнозелёное
+    notes_to_fill:
+      - возраст
+      - сорт
+      - местоположение в саду
+      - текущее состояние
+      - сезон цветения и сбора урожая
+
+  mango:
+    name: Манго
+    name_lat: Mangifera indica
+    name_he: מנגו
+    category: Тропические плодовые
+    type: Вечнозелёное
+    notes_to_fill:
+      - возраст
+      - сорт
+      - местоположение в саду
+      - текущее состояние
+      - сезон цветения и сбора урожая
+
+  persimmon:
+    name: Хурма
+    name_lat: Diospyros kaki
+    name_he: אפרסמון
+    category: Листопадные плодовые
+    type: Листопадное
+    notes_to_fill:
+      - возраст
+      - сорт (Hachiya / Fuyu / Sharon)
+      - местоположение в саду
+      - текущее состояние
+      - сезон цветения и сбора урожая
+
+  citrus:
+    name: Цитрусовое
+    name_lat: Citrus sp.
+    name_he: הדר
+    category: Субтропические плодовые
+    type: Вечнозелёное
+    notes_to_fill:
+      - какой именно цитрус (лимон / апельсин / мандарин / помело / клементин)
+      - возраст
+      - сорт
+      - местоположение в саду
+      - текущее состояние
+
+  nectarine:
+    name: Нектарин
+    name_lat: Prunus persica var. nucipersica
+    name_he: נקטרינה
+    category: Косточковые листопадные
+    type: Листопадное
+    notes_to_fill:
+      - возраст
+      - сорт
+      - местоположение в саду
+      - текущее состояние
+
+  peach:
+    name: Персик
+    name_lat: Prunus persica
+    name_he: אפרסק
+    category: Косточковые листопадные
+    type: Листопадное
+    notes_to_fill:
+      - возраст
+      - сорт
+      - местоположение в саду
+      - текущее состояние
+
+  grape:
+    name: Виноград
+    name_lat: Vitis vinifera
+    name_he: גפן
+    category: Лиановидные плодовые
+    type: Листопадное
+    notes_to_fill:
+      - сорт (столовый / винный)
+      - возраст
+      - тип шпалеры/опоры
+      - местоположение в саду
+      - текущее состояние

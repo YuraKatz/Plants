@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t.garden_title | default('Сад') }}{% endblock %}
+
+{% block head %}
+    <style>
+        .trees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .tree-card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 16px;
+            background: #fff;
+            border-left: 4px solid #52b788;
+        }
+        .tree-card h3 {
+            font-size: 1.05rem;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .tree-lat {
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+        .tree-he {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .tree-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .tree-tag {
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            background: #f0f7f4;
+            color: #2d6a4f;
+            border-radius: 3px;
+            border: 1px solid #c8e0d3;
+        }
+        .needs-fill {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff8e1;
+            border: 1px dashed #d4a843;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        .needs-fill strong { color: #8a6800; display: block; margin-bottom: 6px; }
+        .needs-fill ul { padding-left: 20px; color: #6a5500; }
+
+        .fertilizers-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5e0;
+        }
+        .fert-item {
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #fafaf6;
+            border-left: 3px solid #d4a843;
+            border-radius: 0 4px 4px 0;
+        }
+        .fert-item h4 { font-size: 1rem; color: #1a1a1a; margin-bottom: 4px; }
+        .fert-purpose { color: #555; font-size: 0.9rem; margin-top: 4px; }
+        .fert-targets {
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .npk-display {
+            font-family: monospace;
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .wip-banner {
+            background: #fff8e1;
+            border: 1px solid #d4a843;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            color: #6a5500;
+            font-size: 0.92rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <a href="index.html" class="nav-home">← {{ t.nav_home | default('Домой') }}</a>
+
+        <header>
+            <h1>🌳 {{ t.garden_title | default('Сад — плодовые деревья') }}</h1>
+            <p class="subtitle">{{ t.garden_subtitle | default('Кацрин, Голан') }} · {{ tree_count }} {{ t.garden_trees_count | default('деревьев') }}</p>
+        </header>
+
+        <div class="wip-banner">
+            🚧 {{ t.garden_wip | default('Раздел в разработке. Базовые карточки деревьев — данные будут пополняться по мере наблюдений.') }}
+        </div>
+
+        <h2>{{ t.garden_trees_section | default('Деревья') }}</h2>
+
+        <div class="trees-grid">
+            {% for tree_id, tree in trees.items() %}
+            <div class="tree-card" id="{{ tree_id }}">
+                <h3>{{ tree.name }}</h3>
+                {% if tree.name_lat %}<div class="tree-lat">{{ tree.name_lat }}</div>{% endif %}
+                {% if tree.name_he %}<div class="tree-he" dir="rtl">{{ tree.name_he }}</div>{% endif %}
+
+                <div class="tree-meta">
+                    {% if tree.category %}<span class="tree-tag">{{ tree.category }}</span>{% endif %}
+                    {% if tree.type %}<span class="tree-tag">{{ tree.type }}</span>{% endif %}
+                </div>
+
+                {% if tree.notes_to_fill %}
+                <div class="needs-fill">
+                    <strong>📝 {{ t.garden_to_fill | default('Заполнить:') }}</strong>
+                    <ul>
+                        {% for note in tree.notes_to_fill %}
+                        <li>{{ note }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="fertilizers-section">
+            <h2>{{ t.garden_fert_section | default('Удобрения для сада') }}</h2>
+
+            {% for fert_id, fert in garden_fertilizers.items() %}
+            <div class="fert-item">
+                <h4>{{ fert.name | default(fert_id) }}</h4>
+                {% if fert.npk %}
+                    <div class="npk-display">
+                        N {{ fert.npk.nitrogen_n }} - P {{ fert.npk.phosphorus_p2o5 }} - K {{ fert.npk.potassium_k2o }}
+                    </div>
+                {% endif %}
+                {% if fert.type %}<div class="fert-purpose"><strong>{{ t.garden_type | default('Тип:') }}</strong> {{ fert.type }}</div>{% endif %}
+                {% if fert.purpose %}<div class="fert-purpose">{{ fert.purpose }}</div>{% endif %}
+                {% if fert.use_in_garden %}<div class="fert-purpose">{{ fert.use_in_garden }}</div>{% endif %}
+                {% if fert.targets_in_garden and fert.targets_in_garden is iterable and fert.targets_in_garden is not string %}
+                    <div class="fert-targets"><strong>{{ t.garden_targets | default('Применение для:') }}</strong> {{ fert.targets_in_garden | join(', ') }}</div>
+                {% elif fert.targets_in_garden %}
+                    <div class="fert-targets"><strong>{{ t.garden_targets | default('Применение для:') }}</strong> {{ fert.targets_in_garden }}</div>
+                {% endif %}
+                {% if fert.ref %}
+                    <div class="fert-targets"><strong>{{ t.garden_ref | default('Подробно:') }}</strong> <a href="my-products.html">my-products.html</a> ({{ fert.ref }})</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <footer style="margin-top:30px; padding-top:20px; border-top:1px solid #eee; text-align:center; color:#888; font-size:0.85rem;">
+            <p>{{ t.footer_text }}</p>
+        </footer>
+    </div>
+{% endblock %}
