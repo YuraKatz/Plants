@@ -221,9 +221,9 @@
 
         <!-- Category Tabs -->
         <div class="category-tabs">
-            <button class="category-tab active" onclick="filterProducts('all')">{{ t.products_tab_all }} (12)</button>
+            <button class="category-tab active" onclick="filterProducts('all')">{{ t.products_tab_all }} ({{ 12 + vgi_additives|length }})</button>
             <button class="category-tab" onclick="filterProducts('fertilizer')">{{ t.products_tab_fertilizers }} (5)</button>
-            <button class="category-tab" onclick="filterProducts('additive')">{{ t.products_tab_additives }} (5)</button>
+            <button class="category-tab" onclick="filterProducts('additive')">{{ t.products_tab_additives }} ({{ 5 + vgi_additives|length }})</button>
             <button class="category-tab" onclick="filterProducts('ph-reg')">{{ t.products_tab_ph }} (2)</button>
         </div>
 
@@ -1084,6 +1084,76 @@
                 </div>
             </div>
 
+
+            {% for key, prod in vgi_additives.items() %}
+            <div class="product-card additive" data-category="additive" id="{{ key }}">
+                <div class="product-header" style="background: #5b4fa8;">
+                    <div class="product-name">{{ prod.name }}</div>
+                    <div class="product-type">{{ prod.type }}</div>
+                </div>
+                <div class="product-content">
+                    {% if prod.purpose %}
+                    <div class="product-section">
+                        <div class="section-title">&#x1F3AF; Назначение</div>
+                        <div class="tip-box">{{ prod.purpose }}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if prod.composition %}
+                    <div class="product-section">
+                        <div class="section-title">&#x1F9EA; Состав</div>
+                        <div class="composition-list">
+                            {% if prod.composition is mapping %}
+                            <ul>
+                            {% for ck, cv in prod.composition.items() %}
+                                <li><strong>{{ ck }}:</strong> {{ cv }}</li>
+                            {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p style="white-space:pre-line;">{{ prod.composition }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if prod.application %}
+                    <div class="product-section">
+                        <div class="section-title">&#x1F4A7; Применение</div>
+                        <div class="usage-box">
+                            {% for ak, av in prod.application.items() %}
+                                {% if av is mapping %}
+                                    <strong>{{ ak }}:</strong>
+                                    {% for sk, sv in av.items() %} {{ sk }}: {{ sv }}{% if not loop.last %} /{% endif %}{% endfor %}<br>
+                                {% else %}
+                                    <strong>{{ ak }}:</strong> {{ av }}<br>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if prod.indoor_use %}
+                    <div class="product-section">
+                        <div class="section-title">&#x1F3E0; Для домашней коллекции</div>
+                        {% if prod.indoor_use.verdict %}
+                            <div class="tip-box" style="margin-bottom:8px;"><strong>Вердикт:</strong> {{ prod.indoor_use.verdict }}</div>
+                        {% endif %}
+                        {% if prod.indoor_use.my_opinion %}
+                            <div class="usage-box" style="white-space:pre-line;">{{ prod.indoor_use.my_opinion }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% if prod.source %}
+                    <div class="product-section">
+                        <div class="section-title">&#x1F517; Источник</div>
+                        <div class="tip-box"><a href="{{ prod.source }}" target="_blank" rel="noopener">{{ prod.source }}</a></div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
         </div>
 
         <!-- Summary Section -->
@@ -1095,7 +1165,7 @@
                     <div class="summary-label">{{ t.products_tab_fertilizers }}</div>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-number">5</div>
+                    <div class="summary-number">{{ 5 + vgi_additives|length }}</div>
                     <div class="summary-label">{{ t.products_tab_additives }}</div>
                 </div>
                 <div class="summary-card">
@@ -1103,7 +1173,7 @@
                     <div class="summary-label">{{ t.products_tab_ph }}</div>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-number">12</div>
+                    <div class="summary-number">{{ 12 + vgi_additives|length }}</div>
                     <div class="summary-label">{{ t.products_total }}</div>
                 </div>
             </div>

@@ -639,6 +639,7 @@ class SiteBuilder:
             translated_fert[fkey] = nf
         
         ctx['fertilizers'] = translated_fert
+        ctx['vgi_additives'] = {k: v for k, v in self.fertilizers.get('additives', {}).items() if k.startswith('kf_')}
         html = self.env.get_template('pages/my-products.html').render(**ctx)
         self._write('my-products.html', html)
 
