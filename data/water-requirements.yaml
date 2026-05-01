@@ -150,6 +150,28 @@ water_requirements:
         - Раз в месяц промывать субстрат чистой RO водой для удаления солей
         - При переводе из грунта — первые 2-3 недели только CalMag без удобрений
 
+    group_v:
+      name: Вариегатные
+      color: white
+      after_calmag_ppm: 50
+      after_fertilizer_ppm:
+        growth: 100-130
+        rest: 70-90
+      ph_target: 6.0-6.3
+      fertilizer_dose:
+        growth: 0.4 мл/л Universal (между 1/2 и 1/4) — снижаем N
+        rest: НЕ удобрять или 1/4 от инструкции
+      plants:
+        - Монстера альбо вариегата
+      sensitivity_level: Высокая (по белым участкам)
+      notes:
+        - Высокий N → потеря белизны (больше зелёных листьев)
+        - PPM ниже чем у обычной делициозы — белые участки не работают на питание
+        - Свет критичен — 12ч+ досветки оптимально
+        - НЕ применять "стероиды" / повышенный PPM
+        - KF-IRON осторожно — может вызвать тёмные пятна на белых участках
+        - KF-MACROBOOST не применять — нарушит баланс N/K
+
     group_carnivorous:
       name: Хищные
       color: black
@@ -355,6 +377,12 @@ water_requirements:
       group: B
       sensitivity: low
       notes: Аналогично эпипремнуму — неприхотлив, стабильность важнее точности
+
+    monstera_albo_variegata:
+      plant_name: Монстера альбо вариегата
+      group: V
+      sensitivity: high
+      notes: Низкий N для сохранения вариегатности. PPM ниже обычной делициозы. Стабильность критична.
 
   common_mistakes:
     - mistake: Добавлять удобрение ДО CalMag

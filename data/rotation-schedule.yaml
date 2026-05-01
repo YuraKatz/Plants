@@ -1,0 +1,474 @@
+rotation_schedule:
+  meta:
+    purpose: |
+      Стратегия ротации удобрений и биостимуляторов для канистр A/B/C
+      на RO-протоколе. Цель: разнообразие питания (минералка ↔ органика)
+      + последовательный ввод VGI-биостимуляторов с возможностью оценки
+      каждого по отдельности.
+    principle: |
+      Один биостимулятор за полив, не stacking. Чередование минеральной
+      и органической базы. Тест каждого нового VGI продукта 4 недели
+      перед расширением на другие канистры.
+    start_date: 2026-05-01
+    cycle_length: 8 недель (4 полива при поливе раз в 2 недели)
+    season: growth (май-сентябрь)
+
+  # Постоянные элементы — добавляются в КАЖДЫЙ полив всех канистр
+  constants_every_watering:
+    atami_calmag:
+      role: База RO-протокола
+      method: По каплям до базового PPM группы
+      not_for: dionaea (только чистый RO)
+    hg_multizyme:
+      role: Энзимная база (стандарт Юры)
+      dose: 1 мл/л в лейку
+      ppm_contribution: Минимальный (энзимы — белки)
+      not_for:
+        - dionaea
+        - При поливе с DYNOMYCO (разводить во времени — энзимы могут вредить микоризе)
+    green_farmer_ph_down:
+      role: Финальный pH в коридор группы
+      method: По каплям после всех добавок
+
+  # Растения вне ротационных канистр — отдельный ритуал
+  excluded_from_canisters:
+    dionaea:
+      reason: Хищное растение
+      protocol: Чистый RO 0 PPM, никаких добавок
+    phalaenopsis:
+      reason: Замачивание, низкий PPM, особый цикл цветение/покой
+      protocol_bloom: ecogan_orchids 7-3-7 или flower_orchids 0-17-7
+      protocol_rest: Только RO + минимум CalMag
+
+  # ============================================================
+  # КАНИСТРА A — Чувствительные (PPM target ~78, pH 5.85)
+  # ============================================================
+  canister_a:
+    target_ppm: 78
+    target_ppm_with_fertilizer: 80-110
+    ppm_max: 120
+    ph_target: 5.85
+    base_dose_universal: 0.25 мл/л (1/4 от инструкции)
+    plants:
+      - Калатея лансифолия
+      - Калатея орната
+      - Спатифиллум
+      - Гузмания
+      - Алоказия (Polly / Amazonica)
+      - Алоказия Фрайдек
+      - Алоказия Регал Шилдс
+      - Антуриум
+      - Антуриум кларинервиум
+      - Папоротник (Нефролепис)
+      - Селагинелла Мартенса
+    introduction_strategy: |
+      Канистра A вводит LEON ПОСЛЕ канистры B. То есть май — без VGI,
+      базовая ротация. Июнь — после успешного теста LEON на B,
+      осторожно вводить на A в малой дозе.
+    rotation_phase_1_may:
+      description: Базовая ротация без VGI (тест на B идёт)
+      polив_1:
+        date_target: 2026-05-01
+        base: flower_universal 0.25 мл/л
+        biostim: НЕТ
+      polив_2:
+        date_target: 2026-05-15
+        base: flower_bio_gel 0.5 нажатия/л (1/4 дозы)
+        biostim: НЕТ
+    rotation_phase_2_june:
+      description: Ввод LEON в малой дозе после успеха на B
+      polив_3:
+        date_target: 2026-05-29
+        base: flower_universal 0.25 мл/л
+        biostim: KF-LEON 1 мл/л (старт теста на A)
+      polив_4:
+        date_target: 2026-06-12
+        base: flower_bio_gel 0.5 нажатия/л
+        biostim: НЕТ (reset, оценка LEON-эффекта)
+    rotation_phase_3_july_onward:
+      description: Стабильная ротация с одним biostim
+      pattern:
+        odd_polив:
+          base: flower_universal 0.25 мл/л
+          biostim: KF-LEON 1 мл/л
+        even_polив:
+          base: flower_bio_gel 0.5 нажатия/л
+          biostim: НЕТ или SERFICO 1 мл/л (после теста на B)
+        every_4_weeks:
+          biostim: НЕТ (reset week)
+    cautions:
+      - Селагинелла — самая чувствительная. Возможно держать отдельно или ВСЕГДА давать без biostim.
+      - Нефролепис — НЕ применять KF-GUARD (масла повреждают вайи)
+      - При признаках Fe-хлороза на калатеях — точечно KF-IRON 1-2 мл/л
+
+  # ============================================================
+  # КАНИСТРА B — Ароидные и стандартные (PPM target ~120, pH 6.3)
+  # ============================================================
+  canister_b:
+    target_ppm: 120
+    target_ppm_with_fertilizer: 120-150
+    ppm_max: 180
+    ph_target: 6.3
+    base_dose_universal: 0.5 мл/л (1/2 от инструкции — водные требования)
+    plan_md_dose: 1 мл/л (исторический формат — расхождение с water-requirements.yaml требует выравнивания)
+    plants_decorative:
+      - Монстера делициоза
+      - Монстера адансони
+      - Филодендрон
+      - Филодендрон Селлоу
+      - Филодендрон Ксанаду
+      - Эпипремнум
+      - Аглаонема
+      - Хамедорея
+      - Хлорофитум
+      - Сингониум ножколистный
+    plants_flowering:
+      - Бегония макулата
+      - Сенполия (узамбарская фиалка)
+    not_in_canister_b:
+      - Спатифиллум (group_a — чувствительный, в канистре A)
+      - Орхидея (отдельный ритуал замачивания, не в канистрах)
+      - Монстера альбо (group_v — вариегатная, в канистре V)
+    flowering_overlay:
+      when: Активная фаза цветения
+      action: Заменить flower_universal на flower_flowering 0.5 мл/л в этот полив
+      bonus: Раз в 2 месяца поверх — KF-MACROBOOST 5-10 мл/л для удержания цветения
+    introduction_strategy: |
+      Канистра B — главная ротационная и тестовая. Сюда вводим VGI
+      первым (LEON), оцениваем 4 недели, затем расширяем на A и C.
+    rotation_phase_1_may_test_leon:
+      description: Тест KF-LEON в малой дозе
+      polив_1:
+        date_target: 2026-05-01
+        base: flower_universal 0.5 мл/л
+        biostim: KF-LEON 2 мл/л  # СТАРТ ТЕСТА
+        notes: Точка отсчёта — записать дату и наблюдать 2 недели
+      polив_2:
+        date_target: 2026-05-15
+        base: flower_bio_gel 0.5 нажатия/л
+        biostim: НЕТ (baseline без VGI)
+        notes: Сравнение отклика без LEON
+    rotation_phase_2_june_introduce_serfico:
+      description: Подтверждение LEON + ввод SERFICO
+      polив_3:
+        date_target: 2026-05-29
+        base: flower_universal 0.5 мл/л
+        biostim: KF-LEON 2 мл/л
+        notes: Если на полив 1-2 не было негатива — продолжаем
+      polив_4:
+        date_target: 2026-06-12
+        base: flower_bio_gel 0.5 нажатия/л
+        biostim: KF-SERFICO 2 мл/л  # ВВОД ВТОРОГО VGI
+        notes: Ввод SERFICO на органике
+    rotation_phase_3_stable_july_onward:
+      description: Стабильная ротация
+      pattern:
+        odd_polив:
+          base: flower_universal 0.5 мл/л
+          biostim: KF-LEON 2 мл/л
+        even_polив:
+          base: flower_bio_gel 0.5 нажатия/л
+          biostim: KF-SERFICO 2 мл/л
+        every_4th_polив:
+          biostim: НЕТ (reset week, оценка состояния)
+    cautions:
+      - При вводе LEON — итоговый PPM может вырасти на 10-20, проверять TDS-метром
+      - Бегония и сенполия в цветении — переключать на flower_flowering, не пропускать удобрение
+
+  # ============================================================
+  # КАНИСТРА V — Вариегатные (PPM target ~110, pH 6.2)
+  # ============================================================
+  canister_v:
+    target_ppm: 110
+    target_ppm_with_fertilizer: 100-130
+    ppm_max: 140
+    ph_target: 6.2
+    base_dose_universal: 0.4 мл/л (между 1/2 и 1/4 — снижаем N для сохранения вариегатности)
+    plants:
+      - Монстера альбо вариегата
+    philosophy: |
+      Вариегатные растения требуют ОБРАТНУЮ стратегию от "стероидов".
+      Высокий N → потеря белизны (растение делает больше зелёного хлорофилла).
+      Свет 12ч+ Юры — идеален. PPM держим ниже обычной делициозы.
+      Стабильность важнее агрессивного роста.
+    introduction_strategy: |
+      Канистра V вводит VGI ОСТОРОЖНО, после канистры B.
+      KF-LEON в малой дозе (1.5 мл/л).
+      KF-MACROBOOST НЕ применять (нарушит баланс N/K).
+      KF-IRON только при подтверждённом Fe-хлорозе на ЗЕЛЁНЫХ участках.
+    rotation_phase_1_may:
+      description: Базовая ротация без VGI
+      polив_1:
+        date_target: 2026-05-01
+        base: flower_universal 0.4 мл/л
+        biostim: НЕТ
+        notes: Стабилизация, baseline
+      polив_2:
+        date_target: 2026-05-15
+        base: flower_bio_gel 0.4 нажатия/л (1/5 дозы — мягко)
+        biostim: НЕТ
+    rotation_phase_2_june:
+      description: Ввод KF-LEON в малой дозе
+      polив_3:
+        date_target: 2026-05-29
+        base: flower_universal 0.4 мл/л
+        biostim: KF-LEON 1.5 мл/л
+        notes: Аккуратный ввод после успеха на B
+      polив_4:
+        date_target: 2026-06-12
+        base: flower_bio_gel 0.4 нажатия/л
+        biostim: НЕТ (reset)
+    rotation_phase_3_stable:
+      description: Стабильная ротация без агрессии
+      pattern:
+        odd_polив:
+          base: flower_universal 0.4 мл/л
+          biostim: KF-LEON 1.5 мл/л
+        even_polив:
+          base: flower_bio_gel 0.4 нажатия/л
+          biostim: KF-SERFICO 1.5 мл/л (после теста на B)
+        every_4th_polив:
+          biostim: НЕТ (reset, проверка PPM в субстрате)
+    philosophy_corrected: |
+      Codex audit: вариегатность держат прежде всего ГЕНЕТИКА И СВЕТ, не дефицит азота.
+      Стратегия — УМЕРЕННЫЙ N (0.4 мл/л), чтобы не перегнать растение в мягкий
+      рост зелёной массы, который белые участки не тянут (мало хлорофилла,
+      слабая структура). Не "морить" азотом — иначе медленное истощение.
+    cautions:
+      - Молодые листья могут не показывать вариегацию — это нормально
+      - Полностью белые листья усыхают (норма) — не лечить удобрениями
+      - НЕ применять KF-MACROBOOST (нет фосфора, нарушит баланс)
+      - KF-IRON осторожно — может оставить тёмные пятна на белых участках
+      - Опора (мох-стик) для лазящего роста и крупных листьев с фенестрациями
+      - Если видишь общую слабость, мелкие листья, вытягивание — НЕ снижать N дальше, это уже истощение
+      - Органические biostim (LEON, SERFICO, Bio Gel) могут НЕ полностью отражаться на TDS — следить и по листу/субстрату
+    not_applicable:
+      - kf_macroboost (NPK 1.3-0-4.5 несбалансирован для вариегатной)
+      - silicon_liquid в полную дозу (pH ломается, для вариегатной нестабильность опасна)
+      - npk_20_20_20 (слишком концентрированное)
+      - "стероидный режим" канистры D Boost (увеличит зелёную массу, потеряешь вариегацию)
+
+  # ============================================================
+  # КАНИСТРА C — Неприхотливые (PPM target ~152, pH 6.62)
+  # ============================================================
+  canister_c:
+    target_ppm: 152
+    target_ppm_with_fertilizer: 150-200
+    ppm_max: 220
+    ph_target: 6.62
+    base_dose_universal: 0.5 мл/л
+    plants_regular:
+      - Драцена маргината
+      - Драцена фрагранс
+      - Кротон
+      - Шлюмбергера
+    plants_succulents:
+      - Сансевиерия
+      - Замиокулькас (ZZ plant)
+    succulent_subgroup_c_succ:
+      description: Operational subgroup внутри C для суккулентов (Codex audit)
+      plants:
+        - Сансевиерия
+        - Замиокулькас (ZZ plant)
+      same_solution_as_c: true
+      modifications:
+        ppm_target: 120-140 (вместо 150-200)
+        feeding_frequency: Каждый 2-3 полив с удобрением, остальные — только RO + CalMag
+        vgi_biostim: Пропускать каждый второй VGI-цикл (LEON/SERFICO)
+        kf_iron: ИСКЛЮЧЕН (избыток токсичен для суккулентов)
+        signs_to_skip_feed: Нет явного активного роста (нет новых побегов / листьев)
+    introduction_strategy: |
+      Канистра C — самая толерантная. Можно вводить LEON одновременно
+      с B (с мая) и быть смелее с экспериментами (Silicon точечно).
+    rotation_phase_1_may:
+      description: Тест LEON параллельно с B
+      polив_1:
+        date_target: 2026-05-01
+        base: flower_universal 0.5 мл/л
+        biostim: KF-LEON 2 мл/л
+      polив_2:
+        date_target: 2026-05-15
+        base: flower_bio_gel 0.5 нажатия/л
+        biostim: НЕТ
+    rotation_phase_2_june:
+      polив_3:
+        date_target: 2026-05-29
+        base: flower_universal 0.5 мл/л
+        biostim: KF-LEON 2 мл/л
+      polив_4:
+        date_target: 2026-06-12
+        base: flower_bio_gel 0.5 нажатия/л
+        biostim: KF-SERFICO 2 мл/л
+    rotation_phase_3_stable:
+      pattern:
+        odd_polив:
+          base: flower_universal 0.5 мл/л
+          biostim: KF-LEON 2 мл/л
+        even_polив:
+          base: flower_bio_gel 0.5 нажатия/л
+          biostim: KF-SERFICO 2 мл/л
+      experimental_overlay:
+        product: silicon_liquid
+        dose: 1 мл/л
+        frequency: Раз в 4-6 недель только для крупнолистных (драцена, кротон)
+        order: ПЕРВЫМ в воду до CalMag
+        warning: Поднимает pH — обязательно проверить TDS и pH после добавления
+    autumn_winter_schlumbergera:
+      months: Сентябрь-февраль
+      description: Шлюмбергера переходит в фазу цветения в прохладе
+      action: |
+        Поверх обычной ротации канистры C — раз в 2 недели для шлюмбергеры
+        отдельно: KF-MACROBOOST 10 мл/л (K без P + L-пролин для холодового
+        стресса).
+      do_not_apply_during: Активный летний рост шлюмбергеры
+
+  # ============================================================
+  # ВВОД VGI ПРОДУКТОВ — ХРОНОЛОГИЧЕСКИЙ ПЛАН
+  # ============================================================
+  vgi_introduction_timeline:
+    month_1_may:
+      - product: KF-LEON
+        canisters: B, C (одновременно)
+        dose: 2 мл/л
+        evaluate_after: 4 недели
+        skip: A (ждём результаты)
+    month_2_june:
+      - product: KF-LEON
+        canisters: A (после подтверждения на B/C)
+        dose: 1 мл/л (половинная для чувствительных)
+      - product: KF-SERFICO
+        canisters: B, C
+        dose: 2 мл/л
+        skip: A
+    month_3_july:
+      - product: KF-SERFICO
+        canisters: A
+        dose: 1 мл/л
+        condition: Если не было реакции в B/C
+      - product: KF-IRON
+        condition: ТОЛЬКО при подтверждённом Fe-хлорозе (молодые листья жёлтые, прожилки зелёные)
+        not_for: Сансевиерия, замиокулькас, дионея
+    autumn_september_november:
+      - product: KF-MACROBOOST
+        target: Шлюмбергера (главный), сенполия в цветении, антуриум, спатифиллум, бегония
+        usage: Отдельно от ротации — по растению в фазе цветения
+      - product: KF-GUARD
+        usage: Опрыскивание при первых признаках вредителей или карантин нового растения
+        not_in_water: НЕ добавлять в полив, только опрыскивание
+        temperature: Не применять при t выше 24°C
+    rest_of_year:
+      - product: KF-10
+        verdict: Низкий приоритет — дублирует flower_bio_gel
+        usage: Можно использовать как замену Bio Gel в ротации, если хочется варьировать
+      - product: KF GARDEN & BALCONY
+        verdict: Не для комнатных в RO-протоколе
+        usage: Лежит для будущих балконных горшков на улице
+
+  # ============================================================
+  # СОБЫТИЙНЫЕ ОВЕРЛЕИ — ВНЕ РОТАЦИИ
+  # ============================================================
+  event_overlays:
+    repotting:
+      description: При пересадке растения
+      products:
+        - dynomyco_spark — заселение микоризы (одноразово)
+        - kf_serfico — стимуляция корней в первые поливы (после ввода)
+      conflicts:
+        - НЕ совмещать DYNOMYCO с фосфорными удобрениями (flower_orchids, NPK 20-20-20 в высокой дозе)
+        - В полив с DYNOMYCO — БЕЗ MultiZyme (энзимы могут вредить гифам)
+      protocol: |
+        Полив 1 после пересадки: RO + CalMag + DYNOMYCO 1 ч.л./4 л
+        (без удобрений, без MultiZyme)
+        Полив 2-4: обычная ротация + KF-SERFICO для поддержки корней
+    propagation:
+      description: Черенкование
+      products:
+        - rootech_cloning_gel на срез черенка
+        - kf_serfico в воду для опрыскивания молодого растения
+    pest_treatment:
+      description: При обнаружении вредителей или карантин нового растения
+      product: kf_guard 10-20 мл/л опрыскивание (НЕ в полив)
+      schedule: 2 раза с интервалом 5 дней при первичной обработке, далее раз в месяц профилактически
+      temperature: Только при t < 24°C, утро/вечер
+      not_for:
+        - dionaea (хищное)
+        - nephrolepis (масла повреждают)
+        - phalaenopsis в цветении (на цветы — не наносить)
+        - saintpaulia (опушённые листья)
+        - schlumbergera в цветении
+    fe_chlorosis:
+      description: Подтверждённый дефицит железа (молодые листья жёлтые, прожилки зелёные)
+      product: kf_iron 2-3 мл/л в полив
+      diagnosis_first: Проверить что это именно Fe (молодые листья), а не N (общая желтизна снизу) или Mg (старые листья межжилковая)
+      not_for: Сансевиерия, замиокулькас, дионея, здоровые растения
+    flowering_phase:
+      description: Цветение растения (бегония, сенполия, антуриум, спатифиллум, гузмания, шлюмбергера, фаленопсис)
+      base_change: flower_universal → flower_flowering 0.5 мл/л
+      potassium_boost:
+        product: kf_macroboost 5-10 мл/л
+        frequency: Раз в 2-4 недели в активную фазу цветения
+        for: Цветущие декоративные группы B/C, шлюмбергера осенью
+
+  # ============================================================
+  # ПРАВИЛА НЕСОВМЕСТИМОСТИ
+  # ============================================================
+  conflicts:
+    dynomyco_with_phosphorus:
+      reason: Высокий фосфор разрушает микоризу
+      avoid_combinations:
+        - DYNOMYCO + flower_orchids (0-17-7)
+        - DYNOMYCO + NPK 20-20-20 в высокой дозе
+      action: DYNOMYCO давать в отдельный полив без фосфорных удобрений
+    multizyme_with_dynomyco:
+      reason: Энзимы могут переваривать гифы микоризы
+      action: При поливе DYNOMYCO исключить MultiZyme
+    silicon_with_stable_ph:
+      reason: Силикат калия (концентрат pH 11-12) резко повышает pH раствора
+      action: Использовать точечно, измерять pH после добавления, не каждый полив
+      not_in_canister: Канистра A (буфер слишком мал для коррекции)
+    kf_macroboost_decorative:
+      reason: NPK 1.3-0-4.5 — нет фосфора, мало азота, для зелёной массы бесполезно
+      action: Только цветущим в фазе цветения, не в общую ротацию
+    kf_iron_succulents:
+      reason: Избыток железа токсичен
+      avoid: Сансевиерия, замиокулькас
+    kf_guard_in_water:
+      reason: KF-GUARD — это инсектицид (40% масла нима), не удобрение
+      action: Только опрыскивание, не в канистру
+
+  # ============================================================
+  # ПРИЗНАКИ УСПЕХА И НЕУСПЕХА ПРИ ВВОДЕ НОВОГО ПРЕПАРАТА
+  # ============================================================
+  evaluation:
+    positive_signs_2_4_weeks:
+      - Новый прирост листьев активнее
+      - Лучше тургор
+      - Темнее зелёный цвет (не путать с переизбытком N)
+      - Меньше реакции на стресс (жара, переезд)
+    negative_signs_stop_immediately:
+      - Желтизна или некроз новых листьев
+      - Опадание молодых листьев
+      - Изменение текстуры субстрата
+      - Резкий рост PPM в субстрате (белый налёт)
+    neutral_no_change:
+      action: Возможно эффект минимален на стабильном RO. Можно прекратить или оставить как страховку.
+
+  # ============================================================
+  # ИЗВЕСТНЫЕ РАСХОЖДЕНИЯ В ДОКУМЕНТАЦИИ (требуют выравнивания)
+  # ============================================================
+  documentation_inconsistencies:
+    - issue: Доза flower_universal для канистры B
+      sources:
+        - "docs/PLAN.md:43 — '1 мл/л (100%)'"
+        - "data/water-requirements.yaml:96 — '1/2 от инструкции' (= 3 мл/л при 6:1000)"
+      recommendation: Выровнять по фактической практике пользователя — записать как PPM-target, не мл/л
+    - issue: Спатифиллум — группа A или B
+      sources:
+        - "docs/PLAN.md:38 — канистра B"
+        - "data/water-requirements.yaml:53 — group_a (чувствительные)"
+      recommendation: Уточнить у пользователя где он реально его поливает
+    - issue: Орхидея в канистре A или отдельно
+      sources:
+        - "docs/PLAN.md:27 — в канистре A с дозой 1/8"
+        - "data/water-requirements.yaml:64 — отдельная group_orchids"
+      recommendation: По факту орхидеи замачиваются — это отдельный ритуал, исключить из канистр

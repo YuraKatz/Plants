@@ -609,6 +609,45 @@ plants:
     wick_watering:
       notes: Допустим
       recommended: true
+  monstera_albo_variegata:
+    water_group: group_v
+    feeding_group: aroids_variegated
+    humidity:
+      level: Высокая
+      preferred_method: Увлажнитель воздуха, протирать листья
+      spraying: Регулярно мягкой RO водой
+    latin_name: Monstera deliciosa 'Albo Variegata'
+    lighting:
+      direct_sun: false
+      lux_max: 20000
+      lux_min: 8000
+      lux_optimal: 15000
+      photoperiod_hours: 12-14
+    lighting_score: 9
+    humidity_score: 7
+    name: Монстера альбо вариегата
+    risks:
+    - Реверсия (потеря вариегатности при избытке азота)
+    - Дороже большинства, цена ошибки выше
+    - Молодые листья могут не показывать полную вариегацию
+    - Белые участки не делают фотосинтез — медленнее обычной делициозы
+    care_notes:
+    - Низкий N (избыток азота → потеря белизны)
+    - Стабильный PPM, без "стероидов"
+    - Много света критично — твои 12ч+ досветки идеально
+    - Опора (мох-стик) для лазящего роста и развития фенестраций
+    - При появлении полностью белого листа — может усохнуть, это норма
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные
+    watering:
+      frequency: Умеренный
+      method: Ручной (не фитиль — для контроля питания)
+    wick_watering:
+      notes: Не рекомендуется (нужен контроль PPM)
+      recommended: false
   nephrolepis:
     water_group: group_a
     care_notes:
