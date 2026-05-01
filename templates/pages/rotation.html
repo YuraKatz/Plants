@@ -113,6 +113,7 @@
     <div class="toc">
         <strong>Разделы:</strong>
         <a href="#constants">Константы</a>
+        <a href="#moss-pole">Моховые столбы</a>
         <a href="#canister-a">A · Чувствительные</a>
         <a href="#canister-b">B · Ароидные</a>
         <a href="#canister-v">V · Вариегатные</a>
@@ -121,6 +122,34 @@
         <a href="#events">События</a>
         <a href="#conflicts">Конфликты</a>
     </div>
+
+    {% if rs.moss_pole_protocol %}
+    {% set moss = rs.moss_pole_protocol %}
+    <div class="constants-block" style="background:#ecfdf5;border-color:#bbf7d0;" id="moss-pole">
+        <h2 style="color:#065f46;">🪴 Моховые столбы (drip-ёмкость)</h2>
+        <p style="font-size:0.88rem;color:#444;margin-bottom:8px;white-space:pre-line;">{{ moss.description }}</p>
+        <p style="font-size:0.9rem;font-weight:600;color:#065f46;margin-bottom:10px;">{{ moss.rule }}</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
+            <div style="background:#fff;border:1px solid #d1ddd6;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#1b4332;">Ароидные с мохстиком:</strong><br>
+                <span style="font-size:0.85rem;">В горшок → канистра <strong>{{ moss.mapping.aroids_on_moss_pole.plant_canister }}</strong></span><br>
+                <span style="font-size:0.85rem;">На мох → канистра <strong>{{ moss.mapping.aroids_on_moss_pole.moss_canister }}</strong></span><br>
+                <span style="font-size:0.78rem;color:#555;">{{ moss.mapping.aroids_on_moss_pole.reason }}</span>
+            </div>
+            <div style="background:#fff;border:1px solid #d1ddd6;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#1b4332;">Вариегатные с мохстиком:</strong><br>
+                <span style="font-size:0.85rem;">В горшок → канистра <strong>{{ moss.mapping.variegated_on_moss_pole.plant_canister }}</strong></span><br>
+                <span style="font-size:0.85rem;">На мох → канистра <strong>{{ moss.mapping.variegated_on_moss_pole.moss_canister }}</strong></span><br>
+                <span style="font-size:0.78rem;color:#555;">{{ moss.mapping.variegated_on_moss_pole.alternative }}</span>
+            </div>
+            <div style="background:#fff;border:1px solid #d97706;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9a3412;">🚿 Промывка мха:</strong><br>
+                <span style="font-size:0.85rem;">{{ moss.flush_routine.frequency }} → {{ moss.flush_routine.action }}</span><br>
+                <span style="font-size:0.78rem;color:#555;">{{ moss.flush_routine.reason }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <div class="constants-block" id="constants">
         <h2>⚙️ Константы — в КАЖДЫЙ полив всех канистр</h2>
