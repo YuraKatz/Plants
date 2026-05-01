@@ -638,16 +638,26 @@ class SiteBuilder:
                 })
             return out
 
+        wg_defs = self.water_req.get('water_groups', {})
         canisters = []
-        for letter, key, title in [
-            ('A', 'canister_a', 'Чувствительные'),
-            ('B', 'canister_b', 'Ароидные и стандартные'),
-            ('V', 'canister_v', 'Вариегатные'),
-            ('C', 'canister_c', 'Неприхотливые'),
+        for letter, key, title, wg_key in [
+            ('A', 'canister_a', 'Чувствительные', 'group_a'),
+            ('B', 'canister_b', 'Ароидные и стандартные', 'group_b'),
+            ('V', 'canister_v', 'Вариегатные', 'group_v'),
+            ('C', 'canister_c', 'Неприхотливые', 'group_c'),
         ]:
             data = self.rotation.get(key)
             if not data:
                 continue
+            wg = wg_defs.get(wg_key, {})
+            after_fert = wg.get('after_fertilizer_ppm', {})
+            process = {
+                'calmag_ppm': wg.get('after_calmag_ppm'),
+                'fert_growth': after_fert.get('growth'),
+                'fert_blooming': after_fert.get('blooming'),
+                'fert_rest': after_fert.get('rest'),
+                'ph_target': wg.get('ph_target'),
+            }
             plant_groups = []
             for label, field in [
                 ('Растения', 'plant_ids'),
@@ -670,6 +680,7 @@ class SiteBuilder:
                 'data': data,
                 'plant_groups': plant_groups,
                 'stable_pattern': stable,
+                'process': process,
             })
         ctx['canisters'] = canisters
         ctx['images'] = self._images_for_lang()

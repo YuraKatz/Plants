@@ -52,6 +52,16 @@
     .recipe-card .recipe-base { font-weight: 700; font-size: 0.88rem; }
     .recipe-card .recipe-biostim { color: #b91c1c; font-weight: 600; font-size: 0.85rem; margin-top: 4px; }
     .recipe-card .recipe-biostim.none { color: #888; font-weight: 400; }
+    .process-block { background: #f0f7f4; border: 1px solid #cfe3d6; border-radius: 6px; padding: 12px 14px; margin-top: 14px; }
+    .process-block h4 { color: #1b4332; margin-bottom: 10px; font-size: 0.95rem; }
+    .process-steps { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+    .process-step { flex: 1 1 130px; min-width: 130px; background: #fff; border: 1px solid #d1ddd6; border-radius: 4px; padding: 8px 10px; position: relative; }
+    .process-step .step-num { position: absolute; top: -8px; left: -8px; width: 22px; height: 22px; background: #2d6a4f; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; }
+    .process-step .step-action { font-size: 0.82rem; font-weight: 600; color: #1b4332; margin-bottom: 4px; padding-left: 14px; }
+    .process-step .step-target { font-size: 0.78rem; color: #555; padding-left: 14px; }
+    .process-step .step-target strong { color: #2d6a4f; font-size: 0.9rem; }
+    .process-arrow { display: flex; align-items: center; color: #2d6a4f; font-size: 1.2rem; }
+    @media (max-width: 600px) { .process-arrow { display: none; } }
     .recipe-rule { background: #ecfdf5; border-left: 3px solid #10b981; padding: 8px 12px; border-radius: 4px; margin-top: 10px; font-size: 0.85rem; }
     .recipe-rule strong { color: #065f46; }
 
@@ -171,6 +181,44 @@
                 {% endif %}
                 {% if c.philosophy %}
                 <div class="strategy-note" style="background:#fef3c7;border-left-color:#d97706;">{{ c.philosophy }}</div>
+                {% endif %}
+
+                {% set proc = cdef.process %}
+                {% if proc.calmag_ppm is not none %}
+                <div class="process-block">
+                    <h4>📋 Пошаговый процесс замешки</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">по каплям до <strong>{{ proc.calmag_ppm }} PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ Удобрение (по ротации)</div>
+                            <div class="step-target">до <strong>{{ proc.fert_growth }} PPM</strong>{% if proc.fert_blooming %}<br>цветение: <strong>{{ proc.fert_blooming }}</strong>{% endif %}{% if proc.fert_rest %}<br>покой: <strong>{{ proc.fert_rest }}</strong>{% endif %}</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">4</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л<br>+ biostim (если в цикле)</div>
+                            <div class="step-target">PPM не должен подскочить выше max</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH {{ proc.ph_target }}</strong></div>
+                        </div>
+                    </div>
+                </div>
                 {% endif %}
 
                 {% if cdef.stable_pattern %}
