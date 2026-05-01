@@ -49,18 +49,18 @@ rotation_schedule:
     ppm_max: 120
     ph_target: 5.85
     base_dose_universal: 0.25 мл/л (1/4 от инструкции)
-    plants:
-      - Калатея лансифолия
-      - Калатея орната
-      - Спатифиллум
-      - Гузмания
-      - Алоказия (Polly / Amazonica)
-      - Алоказия Фрайдек
-      - Алоказия Регал Шилдс
-      - Антуриум
-      - Антуриум кларинервиум
-      - Папоротник (Нефролепис)
-      - Селагинелла Мартенса
+    plant_ids:
+      - calathea_lancifolia
+      - calathea_ornata
+      - spathiphyllum
+      - guzmania
+      - alocasia_amazonica
+      - alocasia_frydek
+      - alocasia_regal_shields
+      - anthurium_andraeanum
+      - anthurium_clarinervium
+      - nephrolepis
+      - selaginella
     introduction_strategy: |
       Канистра A вводит LEON ПОСЛЕ канистры B. То есть май — без VGI,
       базовая ротация. Июнь — после успешного теста LEON на B,
@@ -111,20 +111,20 @@ rotation_schedule:
     ph_target: 6.3
     base_dose_universal: 0.5 мл/л (1/2 от инструкции — водные требования)
     plan_md_dose: 1 мл/л (исторический формат — расхождение с water-requirements.yaml требует выравнивания)
-    plants_decorative:
-      - Монстера делициоза
-      - Монстера адансони
-      - Филодендрон
-      - Филодендрон Селлоу
-      - Филодендрон Ксанаду
-      - Эпипремнум
-      - Аглаонема
-      - Хамедорея
-      - Хлорофитум
-      - Сингониум ножколистный
-    plants_flowering:
-      - Бегония макулата
-      - Сенполия (узамбарская фиалка)
+    plant_ids_decorative:
+      - monstera_deliciosa
+      - monstera_adansonii
+      - philodendron
+      - philodendron_selloum
+      - philodendron_xanadu
+      - epipremnum
+      - aglaonema
+      - chamaedorea
+      - chlorophytum_comosum
+      - syngonium_golden_allusion
+    plant_ids_flowering:
+      - begonia_maculata
+      - saintpaulia
     not_in_canister_b:
       - Спатифиллум (group_a — чувствительный, в канистре A)
       - Орхидея (отдельный ритуал замачивания, не в канистрах)
@@ -184,11 +184,11 @@ rotation_schedule:
     ppm_max: 140
     ph_target: 6.2
     base_dose_universal: 0.4 мл/л (между 1/2 и 1/4 — снижаем N для сохранения вариегатности)
-    plants:
-      - Монстера альбо вариегата
-      - Монстера Aurea (жёлтая вариегата) — заказана
-      - Филодендрон 'Pink Princess' — заказан
-      - Сингониум 'Mojito' — на укоренении (после корней входит сюда)
+    plant_ids:
+      - monstera_albo_variegata
+      - monstera_aurea
+      - philodendron_pink_princess
+      - syngonium_mojito
     plants_pink_princess_extra:
       note: Pink Princess требует яркий свет 10-15k lux для развития розового пигмента (антоциан)
       pruning: Обрезать полностью зелёные побеги выше последнего вариегатного листа
@@ -267,14 +267,14 @@ rotation_schedule:
     ppm_max: 220
     ph_target: 6.62
     base_dose_universal: 0.5 мл/л
-    plants_regular:
-      - Драцена маргината
-      - Драцена фрагранс
-      - Кротон
-      - Шлюмбергера
-    plants_succulents:
-      - Сансевиерия
-      - Замиокулькас (ZZ plant)
+    plant_ids_regular:
+      - dracaena_marginata
+      - dracaena_fragrans
+      - croton
+      - schlumbergera
+    plant_ids_succulents:
+      - sansevieria
+      - zamioculcas
     succulent_subgroup_c_succ:
       description: Operational subgroup внутри C для суккулентов (Codex audit)
       plants:

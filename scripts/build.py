@@ -623,6 +623,21 @@ class SiteBuilder:
     def _build_rotation(self):
         ctx = self._base_ctx('rotation.html')
         ctx['rotation'] = self.rotation
+
+        def resolve_ids(ids):
+            out = []
+            for pid in ids or []:
+                p = self._current_plants.get(pid)
+                if not p:
+                    continue
+                out.append({
+                    'id': pid,
+                    'name': p.get('name', pid),
+                    'image': self.images.get(pid, ''),
+                    'status': p.get('status', ''),
+                })
+            return out
+
         canisters = []
         for letter, key, title in [
             ('A', 'canister_a', 'Чувствительные'),
@@ -631,9 +646,33 @@ class SiteBuilder:
             ('C', 'canister_c', 'Неприхотливые'),
         ]:
             data = self.rotation.get(key)
-            if data:
-                canisters.append({'letter': letter, 'title': title, 'data': data})
+            if not data:
+                continue
+            plant_groups = []
+            for label, field in [
+                ('Растения', 'plant_ids'),
+                ('Декоративные', 'plant_ids_decorative'),
+                ('Цветущие', 'plant_ids_flowering'),
+                ('Обычные', 'plant_ids_regular'),
+                ('Суккуленты (C-succ)', 'plant_ids_succulents'),
+            ]:
+                items = resolve_ids(data.get(field))
+                if items:
+                    plant_groups.append({'label': label, 'plants': items})
+
+            stable = {}
+            for k, v in data.items():
+                if k.startswith('rotation_phase_') and isinstance(v, dict) and v.get('pattern'):
+                    stable = v.get('pattern', {})
+            canisters.append({
+                'letter': letter,
+                'title': title,
+                'data': data,
+                'plant_groups': plant_groups,
+                'stable_pattern': stable,
+            })
         ctx['canisters'] = canisters
+        ctx['images'] = self._images_for_lang()
         html = self.env.get_template('pages/rotation.html').render(**ctx)
         self._write('rotation.html', html)
 
