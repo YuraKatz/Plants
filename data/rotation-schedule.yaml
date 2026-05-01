@@ -62,9 +62,9 @@ rotation_schedule:
       - nephrolepis
       - selaginella
     introduction_strategy: |
-      Канистра A вводит LEON ПОСЛЕ канистры B. То есть май — без VGI,
-      базовая ротация. Июнь — после успешного теста LEON на B,
-      осторожно вводить на A в малой дозе.
+      LEON вводить ТОЛЬКО после 3-4 успешных замесов с LEON на канистре B.
+      До подтверждения на B — на канистре A только базовая ротация без VGI.
+      Доза LEON на A — половинная (1 мл/л) из-за чувствительности.
     rotation_phase_1_may:
       description: Базовая ротация без VGI (тест на B идёт)
       polив_1:
@@ -134,8 +134,9 @@ rotation_schedule:
       action: Заменить flower_universal на flower_flowering 0.5 мл/л в этот полив
       bonus: Раз в 2 месяца поверх — KF-MACROBOOST 5-10 мл/л для удержания цветения
     introduction_strategy: |
-      Канистра B — главная ротационная и тестовая. Сюда вводим VGI
-      первым (LEON), оцениваем 4 недели, затем расширяем на A и C.
+      Канистра B — главная тестовая. Здесь вводим каждый новый VGI ПЕРВЫМ.
+      Оцениваем 3-4 замеса (наблюдаем за ростом, тургором, изменениями PPM
+      в субстрате), и только потом расширяем на канистры A и V.
     rotation_phase_1_may_test_leon:
       description: Тест KF-LEON в малой дозе
       polив_1:
@@ -202,8 +203,8 @@ rotation_schedule:
       Свет 12ч+ Юры — идеален. PPM держим ниже обычной делициозы.
       Стабильность важнее агрессивного роста.
     introduction_strategy: |
-      Канистра V вводит VGI ОСТОРОЖНО, после канистры B.
-      KF-LEON в малой дозе (1.5 мл/л).
+      VGI на канистре V вводить ТОЛЬКО после подтверждения на канистре B.
+      KF-LEON в сниженной дозе (1.5 мл/л вместо 2 мл/л).
       KF-MACROBOOST НЕ применять (нарушит баланс N/K).
       KF-IRON только при подтверждённом Fe-хлорозе на ЗЕЛЁНЫХ участках.
     rotation_phase_1_may:
@@ -288,8 +289,9 @@ rotation_schedule:
         kf_iron: ИСКЛЮЧЕН (избыток токсичен для суккулентов)
         signs_to_skip_feed: Нет явного активного роста (нет новых побегов / листьев)
     introduction_strategy: |
-      Канистра C — самая толерантная. Можно вводить LEON одновременно
-      с B (с мая) и быть смелее с экспериментами (Silicon точечно).
+      Канистра C — самая толерантная. LEON можно вводить параллельно
+      с канистрой B (полная доза 2 мл/л). Здесь же тестируются
+      эксперименты — Silicon точечно для крупнолистных.
     rotation_phase_1_may:
       description: Тест LEON параллельно с B
       polив_1:
@@ -336,37 +338,40 @@ rotation_schedule:
   # ВВОД VGI ПРОДУКТОВ — ХРОНОЛОГИЧЕСКИЙ ПЛАН
   # ============================================================
   vgi_introduction_timeline:
-    month_1_may:
+    stage_1_first_biostim:
       - product: KF-LEON
-        canisters: B, C (одновременно)
+        canisters: B, C (параллельно)
         dose: 2 мл/л
-        evaluate_after: 4 недели
-        skip: A (ждём результаты)
-    month_2_june:
+        evaluate_after: 3-4 замеса
+        skip: A, V (ждём результаты на B)
+    stage_2_expand_leon:
       - product: KF-LEON
-        canisters: A (после подтверждения на B/C)
+        canisters: A (после подтверждения на B)
         dose: 1 мл/л (половинная для чувствительных)
+      - product: KF-LEON
+        canisters: V
+        dose: 1.5 мл/л (сниженная для вариегатных)
       - product: KF-SERFICO
         canisters: B, C
         dose: 2 мл/л
-        skip: A
-    month_3_july:
+        skip: A, V
+    stage_3_expand_serfico:
       - product: KF-SERFICO
-        canisters: A
-        dose: 1 мл/л
+        canisters: A, V
+        dose: 1-1.5 мл/л
         condition: Если не было реакции в B/C
       - product: KF-IRON
         condition: ТОЛЬКО при подтверждённом Fe-хлорозе (молодые листья жёлтые, прожилки зелёные)
         not_for: Сансевиерия, замиокулькас, дионея
-    autumn_september_november:
+    flowering_period:
       - product: KF-MACROBOOST
-        target: Шлюмбергера (главный), сенполия в цветении, антуриум, спатифиллум, бегония
+        target: Шлюмбергера (главный, осень-зима), сенполия в цветении, антуриум, спатифиллум, бегония
         usage: Отдельно от ротации — по растению в фазе цветения
       - product: KF-GUARD
         usage: Опрыскивание при первых признаках вредителей или карантин нового растения
         not_in_water: НЕ добавлять в полив, только опрыскивание
         temperature: Не применять при t выше 24°C
-    rest_of_year:
+    low_priority:
       - product: KF-10
         verdict: Низкий приоритет — дублирует flower_bio_gel
         usage: Можно использовать как замену Bio Gel в ротации, если хочется варьировать
