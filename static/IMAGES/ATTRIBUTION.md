@@ -4,7 +4,6 @@ Images licensed under Creative Commons. Attribution required.
 
 | File | Source | License | Author |
 |------|--------|---------|--------|
-| `syngonium_golden_allusion.jpg` | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Syngonium_podophyllum_Golden_0zz.jpg) | CC BY-SA 4.0 | David J. Stang |
 | `monstera_albo_variegata.jpg` | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fruit_Salad_Plant_(Monstera_deliciosa_'Albo-Variegata').jpg) | CC BY-SA 3.0 | Mokkie |
 | `philodendron_pink_princess.jpg` | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Philodendron_Pink_Princess.jpg) | CC BY-SA 4.0 | Srikandi73 |
 
