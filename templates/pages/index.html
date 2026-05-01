@@ -211,6 +211,24 @@
                 </div>
             </a>
 
+            <a href="rotation.html" class="nav-card" style="border-left-color: #c084fc;">
+                <div class="card-icon">🔄</div>
+                <div class="card-title">{{ t.card_rotation | default('Ротация удобрений') }}</div>
+                <div class="card-description">
+                    {{ t.card_rotation_desc | default('Стратегия чередования базы и biostim по канистрам A/B/C/V с фазированным вводом VGI.') }}
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">{{ t.stat_canisters }}</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">VGI</div>
+                    </div>
+                </div>
+            </a>
+
             <a href="my-products.html" class="nav-card" style="border-left-color: #7c5cbf;">
                 <div class="card-icon">🧪</div>
                 <div class="card-title">{{ t.card_products }}</div>

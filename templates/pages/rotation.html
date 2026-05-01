@@ -1,0 +1,395 @@
+{% extends "base.html" %}
+{% block title %}{{ t.rotation_title | default('Ротация удобрений') }} - Plants Care{% endblock %}
+{% block head %}
+<style>
+    header { text-align: center; }
+    .rot-meta { background: #f0f7f4; border: 1px solid #cfe3d6; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+    .rot-meta p { margin: 4px 0; font-size: 0.9rem; color: #444; }
+    .rot-meta strong { color: #1b4332; }
+
+    .constants-block { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+    .constants-block h2 { margin-top: 0; color: #78350f; }
+    .const-item { padding: 8px 0; border-bottom: 1px dashed #e5d9b6; font-size: 0.9rem; }
+    .const-item:last-child { border-bottom: none; }
+    .const-item .const-name { font-weight: 700; color: #78350f; }
+
+    .canisters-grid { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
+    .canister-card { border: 1px solid #ddd; border-radius: 6px; overflow: hidden; background: #fff; border-left: 5px solid #ddd; }
+    .canister-card.canister-a { border-left-color: #4a90d9; }
+    .canister-card.canister-b { border-left-color: #2d6a4f; }
+    .canister-card.canister-c { border-left-color: #888; }
+    .canister-card.canister-v { border-left-color: #c084fc; }
+
+    .canister-header { padding: 14px 18px; color: #fff; }
+    .canister-a .canister-header { background: #4a6fa5; }
+    .canister-b .canister-header { background: #2d6a4f; }
+    .canister-c .canister-header { background: #666; }
+    .canister-v .canister-header { background: #7c3aed; }
+    .canister-letter { font-size: 1.5rem; font-weight: 800; }
+    .canister-title { font-size: 0.95rem; opacity: 0.9; }
+
+    .canister-params { display: flex; flex-wrap: wrap; gap: 12px; padding: 12px 18px; background: #fafaf8; border-bottom: 1px solid #e5e5e0; }
+    .param { text-align: center; min-width: 80px; }
+    .param-value { font-size: 1.05rem; font-weight: 700; color: #333; }
+    .param-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+
+    .canister-body { padding: 16px 18px; }
+    .strategy-note { background: #f5f3ff; border-left: 3px solid #7c3aed; padding: 10px 14px; border-radius: 4px; font-size: 0.88rem; margin-bottom: 14px; white-space: pre-line; }
+
+    .plants-mini { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; margin-bottom: 14px; }
+    .plant-mini { background: #fafaf8; border: 1px solid #e5e5e0; border-radius: 4px; padding: 6px 10px; font-size: 0.82rem; color: #333; }
+
+    .phase { background: #fafaf8; border: 1px solid #e5e5e0; border-radius: 6px; padding: 12px 14px; margin-bottom: 12px; }
+    .phase-title { font-weight: 700; color: #1b4332; margin-bottom: 6px; }
+    .phase-desc { font-size: 0.85rem; color: #555; margin-bottom: 8px; }
+    .pour { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dashed #e5e5e0; font-size: 0.85rem; }
+    .pour:last-child { border-bottom: none; }
+    .pour .pour-label { font-weight: 600; color: #2d6a4f; }
+    .pour .biostim-yes { color: #b91c1c; font-weight: 600; }
+    .pour .biostim-no { color: #888; }
+    .pour-notes { grid-column: 1 / -1; font-size: 0.78rem; color: #6b6b6b; padding-left: 100px; padding-top: 4px; }
+
+    .pattern-block { background: #ecfdf5; border: 1px solid #bbf7d0; border-radius: 4px; padding: 10px 14px; margin-top: 8px; font-size: 0.85rem; }
+    .pattern-block strong { color: #1b4332; }
+    .pattern-row { padding: 4px 0; }
+
+    .cautions { background: #fef2f2; border: 1px solid #fecaca; border-radius: 4px; padding: 10px 14px; margin-top: 12px; }
+    .cautions h4 { color: #991b1b; margin-bottom: 6px; font-size: 0.9rem; }
+    .cautions ul { padding-left: 20px; font-size: 0.83rem; color: #4a1a1a; }
+    .cautions li { padding: 2px 0; }
+
+    .timeline-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; }
+    .timeline-table th { background: #2d6a4f; color: #fff; padding: 8px 10px; text-align: left; }
+    .timeline-table td { padding: 8px 10px; border-bottom: 1px solid #e5e5e0; vertical-align: top; }
+    .timeline-table tr:nth-child(even) td { background: #fafaf8; }
+
+    .conflict-card { background: #fff; border: 1px solid #fecaca; border-left: 3px solid #ef4444; border-radius: 4px; padding: 10px 14px; margin-bottom: 8px; }
+    .conflict-card h4 { color: #991b1b; font-size: 0.92rem; margin-bottom: 4px; }
+    .conflict-card p { font-size: 0.83rem; margin: 2px 0; }
+    .conflict-card .conflict-action { font-weight: 600; color: #2d6a4f; }
+
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+    .event-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px 14px; }
+    .event-card h4 { color: #1b4332; margin-bottom: 6px; font-size: 0.95rem; }
+    .event-card p { font-size: 0.83rem; margin: 3px 0; }
+
+    .toc { background: #fff; border: 1px solid #e5e5e0; border-radius: 6px; padding: 12px 18px; margin-bottom: 20px; }
+    .toc a { display: inline-block; margin: 4px 8px 4px 0; padding: 4px 10px; background: #f0f7f4; border-radius: 4px; font-size: 0.85rem; text-decoration: none; }
+    .toc a:hover { background: #d1fae5; }
+
+    @media (max-width: 600px) {
+        .pour { grid-template-columns: 80px 1fr; }
+        .pour-notes { padding-left: 0; }
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <a href="index.html" class="nav-back">{{ t.nav_home }}</a>
+    <header>
+        <h1>{{ t.rotation_title | default('🔄 Ротация удобрений и биостимуляторов') }}</h1>
+        <p class="subtitle">{{ t.rotation_subtitle | default('Стратегия ротации по канистрам A/B/C/V с фазированным вводом VGI') }}</p>
+    </header>
+
+    {% set rs = rotation %}
+    {% set meta = rs.meta %}
+    {% set consts = rs.constants_every_watering %}
+
+    <div class="rot-meta">
+        <p><strong>{{ t.rotation_purpose | default('Цель') }}:</strong> {{ meta.purpose }}</p>
+        <p><strong>{{ t.rotation_principle | default('Принцип') }}:</strong> {{ meta.principle }}</p>
+        <p><strong>{{ t.rotation_start | default('Старт') }}:</strong> {{ meta.start_date }} &nbsp;·&nbsp; {{ t.rotation_cycle | default('Цикл') }}: {{ meta.cycle_length }} &nbsp;·&nbsp; {{ t.rotation_season | default('Сезон') }}: {{ meta.season }}</p>
+    </div>
+
+    <div class="toc">
+        <strong>{{ t.rotation_toc | default('Разделы') }}:</strong>
+        <a href="#constants">{{ t.rotation_constants | default('Константы') }}</a>
+        <a href="#canister-a">A · {{ t.rotation_sensitive | default('Чувствительные') }}</a>
+        <a href="#canister-b">B · {{ t.rotation_aroids | default('Ароидные') }}</a>
+        <a href="#canister-v">V · {{ t.rotation_variegated | default('Вариегатные') }}</a>
+        <a href="#canister-c">C · {{ t.rotation_resilient | default('Неприхотливые') }}</a>
+        <a href="#timeline">{{ t.rotation_timeline | default('Таймлайн VGI') }}</a>
+        <a href="#events">{{ t.rotation_events | default('События') }}</a>
+        <a href="#conflicts">{{ t.rotation_conflicts | default('Конфликты') }}</a>
+    </div>
+
+    <div class="constants-block" id="constants">
+        <h2>⚙️ {{ t.rotation_constants_title | default('Константы — в КАЖДЫЙ полив всех канистр') }}</h2>
+        {% for ckey, c in consts.items() %}
+        <div class="const-item">
+            <span class="const-name">{{ ckey }}:</span>
+            {% if c.role %}<span>{{ c.role }}</span>{% endif %}
+            {% if c.dose %} · <strong>{{ c.dose }}</strong>{% endif %}
+            {% if c.method %} · {{ c.method }}{% endif %}
+            {% if c.not_for %}
+                <div style="font-size:0.8rem;color:#991b1b;margin-top:4px;">⚠ Не применять: {% if c.not_for is string %}{{ c.not_for }}{% else %}{{ c.not_for | join(', ') }}{% endif %}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="canisters-grid">
+        {% for cdef in canisters %}
+        {% set c = cdef.data %}
+        <div class="canister-card canister-{{ cdef.letter | lower }}" id="canister-{{ cdef.letter | lower }}">
+            <div class="canister-header">
+                <div class="canister-letter">{{ cdef.letter }}</div>
+                <div class="canister-title">{{ cdef.title }}</div>
+            </div>
+            <div class="canister-params">
+                <div class="param">
+                    <div class="param-value">{{ c.target_ppm }}</div>
+                    <div class="param-label">PPM target</div>
+                </div>
+                {% if c.target_ppm_with_fertilizer %}
+                <div class="param">
+                    <div class="param-value">{{ c.target_ppm_with_fertilizer }}</div>
+                    <div class="param-label">PPM + fert</div>
+                </div>
+                {% endif %}
+                {% if c.ppm_max %}
+                <div class="param">
+                    <div class="param-value">≤ {{ c.ppm_max }}</div>
+                    <div class="param-label">PPM max</div>
+                </div>
+                {% endif %}
+                <div class="param">
+                    <div class="param-value">{{ c.ph_target }}</div>
+                    <div class="param-label">pH</div>
+                </div>
+                {% if c.base_dose_universal %}
+                <div class="param">
+                    <div class="param-value" style="font-size:0.85rem;">{{ c.base_dose_universal }}</div>
+                    <div class="param-label">Universal</div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="canister-body">
+                {% if c.introduction_strategy %}
+                <div class="strategy-note">{{ c.introduction_strategy }}</div>
+                {% endif %}
+                {% if c.philosophy %}
+                <div class="strategy-note" style="background:#fef3c7;border-left-color:#d97706;">{{ c.philosophy }}</div>
+                {% endif %}
+
+                {% set plant_lists = [] %}
+                {% if c.plants %}{% set _ = plant_lists.append(('Растения', c.plants)) %}{% endif %}
+                {% if c.plants_decorative %}{% set _ = plant_lists.append(('Декоративные', c.plants_decorative)) %}{% endif %}
+                {% if c.plants_flowering %}{% set _ = plant_lists.append(('Цветущие', c.plants_flowering)) %}{% endif %}
+                {% if c.plants_regular %}{% set _ = plant_lists.append(('Обычные', c.plants_regular)) %}{% endif %}
+                {% if c.plants_succulents %}{% set _ = plant_lists.append(('Суккуленты (C-succ)', c.plants_succulents)) %}{% endif %}
+
+                {% for label, plist in plant_lists %}
+                <h4 style="font-size:0.88rem; color:#555; margin: 10px 0 4px;">{{ label }}:</h4>
+                <div class="plants-mini">
+                    {% for p in plist %}
+                    <div class="plant-mini">{{ p }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                {% for pkey, phase in c.items() %}
+                {% if pkey.startswith('rotation_phase_') %}
+                <div class="phase">
+                    <div class="phase-title">{{ pkey | replace('rotation_phase_', 'Фаза ') | replace('_', ' ') }}</div>
+                    {% if phase.description %}<div class="phase-desc">{{ phase.description }}</div>{% endif %}
+                    {% for k, v in phase.items() %}
+                        {% if k.startswith('polив_') or k.startswith('poliv_') %}
+                        <div class="pour">
+                            <div class="pour-label">{{ k }}</div>
+                            <div>📅 {{ v.date_target | default('—') }}<br>{{ v.base | default('') }}</div>
+                            <div>
+                                {% if v.biostim and v.biostim != 'НЕТ' %}
+                                    <span class="biostim-yes">🧪 {{ v.biostim }}</span>
+                                {% else %}
+                                    <span class="biostim-no">— без biostim</span>
+                                {% endif %}
+                            </div>
+                            {% if v.notes %}<div class="pour-notes">📝 {{ v.notes }}</div>{% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% if phase.pattern %}
+                    <div class="pattern-block">
+                        <strong>Паттерн (стабильная фаза):</strong>
+                        {% for pk, pv in phase.pattern.items() %}
+                        <div class="pattern-row">
+                            <strong>{{ pk | replace('_', ' ') }}:</strong>
+                            {% if pv is mapping %}
+                                {% if pv.base %}{{ pv.base }}{% endif %}
+                                {% if pv.biostim %} + {{ pv.biostim }}{% endif %}
+                            {% else %}
+                                {{ pv }}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if phase.experimental_overlay %}
+                    <div class="pattern-block" style="background:#fef3c7;border-color:#fde68a;">
+                        <strong>🧪 Эксперимент:</strong> {{ phase.experimental_overlay.product }} {{ phase.experimental_overlay.dose }} — {{ phase.experimental_overlay.frequency }}
+                        {% if phase.experimental_overlay.warning %}<br><em style="color:#991b1b;">⚠ {{ phase.experimental_overlay.warning }}</em>{% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                {% if c.flowering_overlay %}
+                <div class="pattern-block" style="background:#fce7f3;border-color:#fbcfe8;">
+                    <strong>🌸 Цветение:</strong> {{ c.flowering_overlay.action }}
+                    {% if c.flowering_overlay.bonus %}<br>{{ c.flowering_overlay.bonus }}{% endif %}
+                </div>
+                {% endif %}
+
+                {% if c.succulent_subgroup_c_succ %}
+                <div class="pattern-block" style="background:#f3f4f6;border-color:#d1d5db;">
+                    <strong>🌵 Подгруппа C-succ (суккуленты):</strong>
+                    <div style="font-size:0.83rem;margin-top:4px;">
+                        PPM: {{ c.succulent_subgroup_c_succ.modifications.ppm_target }} ·
+                        Кормление: {{ c.succulent_subgroup_c_succ.modifications.feeding_frequency }}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if c.autumn_winter_schlumbergera %}
+                <div class="pattern-block" style="background:#fef3c7;border-color:#fde68a;">
+                    <strong>❄ Шлюмбергера ({{ c.autumn_winter_schlumbergera.months }}):</strong>
+                    <div style="font-size:0.83rem;margin-top:4px;white-space:pre-line;">{{ c.autumn_winter_schlumbergera.action }}</div>
+                </div>
+                {% endif %}
+
+                {% if c.cautions %}
+                <div class="cautions">
+                    <h4>⚠ Предостережения</h4>
+                    <ul>
+                        {% for w in c.cautions %}
+                        <li>{{ w }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if c.not_applicable %}
+                <div class="cautions" style="background:#fee2e2;">
+                    <h4>🚫 Не применять</h4>
+                    <ul>
+                        {% for w in c.not_applicable %}
+                        <li>{{ w }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 id="timeline">📅 {{ t.rotation_timeline_title | default('Таймлайн ввода VGI продуктов') }}</h2>
+    <table class="timeline-table">
+        <thead>
+            <tr>
+                <th>Период</th>
+                <th>Продукт</th>
+                <th>Канистры</th>
+                <th>Доза / условие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for period_key, items in rs.vgi_introduction_timeline.items() %}
+                {% for item in items %}
+                <tr>
+                    <td>{{ period_key | replace('_', ' ') }}</td>
+                    <td><strong>{{ item.product }}</strong></td>
+                    <td>{{ item.canisters | default('—') }}{% if item.target %} · target: {{ item.target }}{% endif %}</td>
+                    <td>
+                        {% if item.dose %}{{ item.dose }}{% endif %}
+                        {% if item.evaluate_after %}<br>Оценка через {{ item.evaluate_after }}{% endif %}
+                        {% if item.condition %}<br>Условие: {{ item.condition }}{% endif %}
+                        {% if item.skip %}<br>Пропустить: {{ item.skip }}{% endif %}
+                        {% if item.usage %}<br>{{ item.usage }}{% endif %}
+                        {% if item.not_for %}<br>Не для: {% if item.not_for is string %}{{ item.not_for }}{% else %}{{ item.not_for | join(', ') }}{% endif %}{% endif %}
+                        {% if item.not_in_water %}<br>⚠ {{ item.not_in_water }}{% endif %}
+                        {% if item.temperature %}<br>🌡 {{ item.temperature }}{% endif %}
+                        {% if item.verdict %}<br>Вердикт: {{ item.verdict }}{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 id="events">⚡ {{ t.rotation_events_title | default('Событийные оверлеи (вне ротации)') }}</h2>
+    <div class="events-grid">
+        {% for ekey, ev in rs.event_overlays.items() %}
+        <div class="event-card">
+            <h4>{{ ekey | replace('_', ' ') | title }}</h4>
+            <p><strong>{{ ev.description | default('') }}</strong></p>
+            {% if ev.product %}<p>💊 {{ ev.product }}</p>{% endif %}
+            {% if ev.products %}
+                <p>💊 Препараты:</p>
+                <ul style="font-size:0.82rem;padding-left:20px;">
+                    {% for p in ev.products %}<li>{{ p }}</li>{% endfor %}
+                </ul>
+            {% endif %}
+            {% if ev.protocol %}<p style="white-space:pre-line;font-size:0.82rem;color:#555;">{{ ev.protocol }}</p>{% endif %}
+            {% if ev.schedule %}<p>📅 {{ ev.schedule }}</p>{% endif %}
+            {% if ev.temperature %}<p>🌡 {{ ev.temperature }}</p>{% endif %}
+            {% if ev.diagnosis_first %}<p>🔍 {{ ev.diagnosis_first }}</p>{% endif %}
+            {% if ev.base_change %}<p>🔄 {{ ev.base_change }}</p>{% endif %}
+            {% if ev.potassium_boost %}<p>K+: {{ ev.potassium_boost.product }} {{ ev.potassium_boost.dose }} · {{ ev.potassium_boost.frequency }}</p>{% endif %}
+            {% if ev.not_for %}
+                <p style="color:#991b1b;font-size:0.8rem;">⚠ Не для:
+                {% if ev.not_for is string %}{{ ev.not_for }}{% else %}{{ ev.not_for | join(', ') }}{% endif %}
+                </p>
+            {% endif %}
+            {% if ev.conflicts %}
+                <p style="color:#991b1b;font-size:0.8rem;">⚠ Конфликты:</p>
+                <ul style="font-size:0.78rem;color:#991b1b;padding-left:20px;">
+                    {% for c in ev.conflicts %}<li>{{ c }}</li>{% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 id="conflicts">🚫 {{ t.rotation_conflicts_title | default('Правила несовместимости') }}</h2>
+    {% for ckey, conf in rs.conflicts.items() %}
+    <div class="conflict-card">
+        <h4>{{ ckey | replace('_', ' ') | title }}</h4>
+        <p><strong>Причина:</strong> {{ conf.reason }}</p>
+        {% if conf.avoid_combinations %}
+            <p><strong>Избегать:</strong></p>
+            <ul style="font-size:0.82rem;padding-left:20px;">
+                {% for ac in conf.avoid_combinations %}<li>{{ ac }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+        {% if conf.avoid %}<p><strong>Избегать:</strong> {{ conf.avoid | join(', ') }}</p>{% endif %}
+        {% if conf.action %}<p class="conflict-action">✓ {{ conf.action }}</p>{% endif %}
+        {% if conf.not_in_canister %}<p style="color:#991b1b;">Не в канистре: {{ conf.not_in_canister }}</p>{% endif %}
+    </div>
+    {% endfor %}
+
+    {% if rs.evaluation %}
+    <h2>📊 {{ t.rotation_evaluation | default('Оценка эффекта при вводе нового препарата') }}</h2>
+    <div class="events-grid">
+        <div class="event-card" style="border-left:3px solid #10b981;">
+            <h4 style="color:#065f46;">✓ Признаки успеха (2-4 нед)</h4>
+            <ul style="font-size:0.83rem;padding-left:20px;">
+                {% for s in rs.evaluation.positive_signs_2_4_weeks %}<li>{{ s }}</li>{% endfor %}
+            </ul>
+        </div>
+        <div class="event-card" style="border-left:3px solid #ef4444;">
+            <h4 style="color:#991b1b;">✗ Стоп немедленно</h4>
+            <ul style="font-size:0.83rem;padding-left:20px;">
+                {% for s in rs.evaluation.negative_signs_stop_immediately %}<li>{{ s }}</li>{% endfor %}
+            </ul>
+        </div>
+        <div class="event-card" style="border-left:3px solid #6b7280;">
+            <h4 style="color:#374151;">— Без изменений</h4>
+            <p style="font-size:0.83rem;">{{ rs.evaluation.neutral_no_change.action }}</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

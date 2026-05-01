@@ -129,6 +129,7 @@ class SiteBuilder:
         self.stop_conditions = fert_raw.get('stop_conditions', [])
 
         self.care_data = load_yaml('care-data.yaml')
+        self.rotation = load_yaml('rotation-schedule.yaml').get('rotation_schedule', {})
 
         self.garden_trees = load_yaml_garden('trees.yaml').get('trees', {})
         self.garden_fertilizers = load_yaml_garden('garden-fertilizers.yaml').get('garden_fertilizers', {})
@@ -344,6 +345,7 @@ class SiteBuilder:
                 self._build_plants_catalog()
                 self._build_feeding_guide()
                 self._build_water_mixer()
+                self._build_rotation()
                 self._build_my_products()
                 self._build_plant_problems()
                 self._build_seasonal_care()
@@ -617,6 +619,23 @@ class SiteBuilder:
         ctx['calmag_protocol'] = self.water_req.get('calmag_protocol', {})
         html = self.env.get_template('pages/water-mixer.html').render(**ctx)
         self._write('water-mixer.html', html)
+
+    def _build_rotation(self):
+        ctx = self._base_ctx('rotation.html')
+        ctx['rotation'] = self.rotation
+        canisters = []
+        for letter, key, title in [
+            ('A', 'canister_a', 'Чувствительные'),
+            ('B', 'canister_b', 'Ароидные и стандартные'),
+            ('V', 'canister_v', 'Вариегатные'),
+            ('C', 'canister_c', 'Неприхотливые'),
+        ]:
+            data = self.rotation.get(key)
+            if data:
+                canisters.append({'letter': letter, 'title': title, 'data': data})
+        ctx['canisters'] = canisters
+        html = self.env.get_template('pages/rotation.html').render(**ctx)
+        self._write('rotation.html', html)
 
     def _build_my_products(self):
         ctx = self._base_ctx('my-products.html')
