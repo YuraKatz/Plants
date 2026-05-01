@@ -185,8 +185,13 @@
 
                 {% set proc = cdef.process %}
                 {% if proc.calmag_ppm is not none %}
-                <div class="process-block">
-                    <h4>📋 Пошаговый процесс замешки</h4>
+                {% set odd = cdef.stable_pattern.get('odd_polив') or cdef.stable_pattern.get('odd_poliv') %}
+                {% set even = cdef.stable_pattern.get('even_polив') or cdef.stable_pattern.get('even_poliv') %}
+                <h4 style="margin-top:14px;color:#1b4332;">📋 Flow замешки — отдельно для каждой композиции</h4>
+
+                {% macro flow_block(title, color, base_text, biostim_text, proc, ppm_max) %}
+                <div class="process-block" style="background:{{ color.bg }};border-color:{{ color.border }};">
+                    <h4 style="color:{{ color.text }};">{{ title }}</h4>
                     <div class="process-steps">
                         <div class="process-step">
                             <span class="step-num">1</span>
@@ -197,28 +202,65 @@
                         <div class="process-step">
                             <span class="step-num">2</span>
                             <div class="step-action">+ ATAMI CalMag</div>
-                            <div class="step-target">по каплям до <strong>{{ proc.calmag_ppm }} PPM</strong></div>
+                            <div class="step-target">до <strong>{{ proc.calmag_ppm }} PPM</strong></div>
                         </div>
                         <div class="process-arrow">→</div>
                         <div class="process-step">
                             <span class="step-num">3</span>
-                            <div class="step-action">+ Удобрение (по ротации)</div>
-                            <div class="step-target">до <strong>{{ proc.fert_growth }} PPM</strong>{% if proc.fert_blooming %}<br>цветение: <strong>{{ proc.fert_blooming }}</strong>{% endif %}{% if proc.fert_rest %}<br>покой: <strong>{{ proc.fert_rest }}</strong>{% endif %}</div>
+                            <div class="step-action">+ {{ base_text }}</div>
+                            <div class="step-target">приближаемся к <strong>{{ proc.fert_growth }} PPM</strong></div>
+                        </div>
+                        {% if biostim_text %}
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ {{ biostim_text }}</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>{{ ppm_max }}</strong></div>
+                        </div>
+                        {% endif %}
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">{{ 5 if biostim_text else 4 }}</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
                         </div>
                         <div class="process-arrow">→</div>
                         <div class="process-step">
-                            <span class="step-num">4</span>
-                            <div class="step-action">+ MultiZyme 1 мл/л<br>+ biostim (если в цикле)</div>
-                            <div class="step-target">PPM не должен подскочить выше max</div>
-                        </div>
-                        <div class="process-arrow">→</div>
-                        <div class="process-step">
-                            <span class="step-num">5</span>
+                            <span class="step-num">{{ 6 if biostim_text else 5 }}</span>
                             <div class="step-action">pH Down (Green Farmer)</div>
                             <div class="step-target">до <strong>pH {{ proc.ph_target }}</strong></div>
                         </div>
                     </div>
                 </div>
+                {% endmacro %}
+
+                {% if odd %}
+                {{ flow_block(
+                    '🟢 Минеральный mix' + (' + biostim' if odd.biostim and odd.biostim != 'НЕТ' else ''),
+                    {'bg':'#f0f7f4', 'border':'#cfe3d6', 'text':'#1b4332'},
+                    odd.base,
+                    odd.biostim if odd.biostim and odd.biostim != 'НЕТ' else '',
+                    proc, c.ppm_max
+                ) }}
+                {% endif %}
+                {% if even %}
+                {{ flow_block(
+                    '🟠 Органический mix' + (' + biostim' if even.biostim and even.biostim != 'НЕТ' else ''),
+                    {'bg':'#fff7ed', 'border':'#fed7aa', 'text':'#9a3412'},
+                    even.base,
+                    even.biostim if even.biostim and even.biostim != 'НЕТ' else '',
+                    proc, c.ppm_max
+                ) }}
+                {% endif %}
+                {% if not odd and not even %}
+                {{ flow_block(
+                    '📋 Базовая замешка',
+                    {'bg':'#f0f7f4', 'border':'#cfe3d6', 'text':'#1b4332'},
+                    'Удобрение (по ротации)',
+                    '',
+                    proc, c.ppm_max
+                ) }}
+                {% endif %}
                 {% endif %}
 
                 {% if cdef.stable_pattern %}
