@@ -163,6 +163,9 @@ water_requirements:
         rest: НЕ удобрять или 1/4 от инструкции
       plants:
         - Монстера альбо вариегата
+        - Монстера Aurea (жёлтая вариегата) — заказана
+        - Филодендрон 'Pink Princess' — заказан
+        - Сингониум 'Mojito' — на укоренении
       sensitivity_level: Высокая (по белым участкам)
       notes:
         - Высокий N → потеря белизны (больше зелёных листьев)
@@ -372,17 +375,38 @@ water_requirements:
       sensitivity: very_high
       notes: Чувствительна к солям и жёсткой воде. Мягкая RO вода обязательна. Опрыскивать только RO
 
-    syngonium:
-      plant_name: Сингониум ножколистный
+    syngonium_golden_allusion:
+      plant_name: Сингониум 'Golden Allusion'
       group: B
       sensitivity: low
-      notes: Аналогично эпипремнуму — неприхотлив, стабильность важнее точности
+      notes: Aurea-тип, равномерный жёлто-салатовый цвет — это сорт, не дефицит. Канистра B стандартно.
+
+    syngonium_mojito:
+      plant_name: Сингониум 'Mojito'
+      group: V
+      sensitivity: high
+      status: На укоренении (черенок без корней в LECA + RO)
+      notes: ФАЗА УКОРЕНЕНИЯ — только RO без добавок. После корней — канистра V (низкий N для вариегатности).
 
     monstera_albo_variegata:
       plant_name: Монстера альбо вариегата
       group: V
       sensitivity: high
       notes: Низкий N для сохранения вариегатности. PPM ниже обычной делициозы. Стабильность критична.
+
+    monstera_aurea:
+      plant_name: Монстера Aurea (жёлтая вариегата)
+      group: V
+      sensitivity: high
+      status: Заказана, ещё не получена
+      notes: Аналог Albo но с жёлтыми секторами. Те же правила — низкий N, стабильный PPM, без "стероидов".
+
+    philodendron_pink_princess:
+      plant_name: Филодендрон 'Pink Princess'
+      group: V
+      sensitivity: high
+      status: Заказан, ещё не получен (⌀12)
+      notes: Розовый пигмент (антоциан) сохраняется при низком N + ярком свете 10-15k lux. Обрезать полностью зелёные побеги.
 
   common_mistakes:
     - mistake: Добавлять удобрение ДО CalMag

@@ -995,14 +995,14 @@ plants:
     wick_watering:
       notes: Рекомендован (любит стабильную влажность)
       recommended: true
-  syngonium:
+  syngonium_golden_allusion:
     water_group: group_b
     feeding_group: aroids
     humidity:
       level: Средняя-высокая
       preferred_method: Увлажнитель/поддоны. Можно опрыскивать
       spraying: По сезону (чаще летом)
-    latin_name: Syngonium podophyllum
+    latin_name: Syngonium podophyllum 'Golden Allusion'
     lighting:
       direct_sun: false
       lux_max: 12000
@@ -1011,11 +1011,17 @@ plants:
       photoperiod_hours: 10-12
     lighting_score: 5
     humidity_score: 5
-    name: Сингониум ножколистный
+    name: Сингониум 'Golden Allusion'
     risks:
     - Устойчив
-    - На прямом солнце выгорает вариегатность
+    - Природный жёлто-салатовый цвет (НЕ путать с N-дефицитом)
+    - Признак истощения — мелкие новые листья и замедление роста, не цвет
     - Без опоры листья остаются мелкими и ювенильными
+    care_notes:
+    - Aurea-тип — равномерный жёлто-зелёный пигмент, это норма
+    - Не альбо-вариегата — низкий N не нужен
+    - Канистра B (обычная ароидная стратегия)
+    - Срезать сухие пожелтевшие листья у основания
     soil:
       alternative_mix: 2 (ароидная, фитильный)
       mix_name: ароидная (ручной)
@@ -1028,6 +1034,129 @@ plants:
     wick_watering:
       notes: Допустим
       recommended: true
+  monstera_aurea:
+    water_group: group_v
+    feeding_group: aroids_variegated
+    humidity:
+      level: Высокая
+      preferred_method: Увлажнитель воздуха, протирать листья
+      spraying: Регулярно мягкой RO водой
+    latin_name: Monstera deliciosa 'Aurea Variegata'
+    local_name: מונסטרה אוראה
+    lighting:
+      direct_sun: false
+      lux_max: 20000
+      lux_min: 8000
+      lux_optimal: 15000
+      photoperiod_hours: 12-14
+    lighting_score: 9
+    humidity_score: 7
+    name: Монстера Aurea (вариегата жёлтая)
+    status: Заказана, ещё не получена (среднего размера)
+    risks:
+    - Реверсия (избыток N → потеря жёлтых секторов)
+    - Жёлтые участки могут гореть на прямом солнце сильнее белых
+    - Дороже большинства, цена ошибки выше
+    - Молодые листья могут не показывать полную вариегацию
+    care_notes:
+    - Жёлтая (Aurea) вариегата — аналог Albo но с жёлтыми секторами
+    - Низкий N (избыток азота → потеря желтизны)
+    - Стабильный PPM, без "стероидов"
+    - Канистра V (PPM 100-130, pH 6.2)
+    - Опора (мох-стик) для лазящего роста
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные (вариегатные)
+    watering:
+      frequency: Умеренный
+      method: Ручной (контроль PPM)
+    wick_watering:
+      notes: Не рекомендуется (нужен контроль PPM)
+      recommended: false
+  philodendron_pink_princess:
+    water_group: group_v
+    feeding_group: aroids_variegated
+    humidity:
+      level: Высокая
+      preferred_method: Увлажнитель воздуха
+      spraying: Регулярно RO водой
+    latin_name: Philodendron erubescens 'Pink Princess'
+    local_name: פילודנדרון פינק פרינסס
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 6000
+      lux_optimal: 10000
+      photoperiod_hours: 12-14
+    lighting_score: 8
+    humidity_score: 8
+    name: Филодендрон 'Pink Princess'
+    status: Заказан, ещё не получен (горшок ⌀12)
+    risks:
+    - Реверсия (избыток N → потеря розового, листья становятся зелёными)
+    - Чёрные сегменты могут перевешивать растение → нужно балансировать обрезкой
+    - Розовые листы выгорают на ярком прямом солнце
+    - Дорогой, медленнорастущий
+    care_notes:
+    - Pink Princess — вариегата с тёмно-зелёными, чёрными и розовыми секторами
+    - Низкий N для сохранения розового пигмента (антоциан)
+    - Свет 10000-15000 lux способствует развитию розового
+    - Канистра V (PPM 100-130, pH 6.2)
+    - При появлении полностью зелёных побегов — обрезать выше последнего вариегатного листа
+    - Опора (мох-стик) для крупных взрослых листьев
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: ароидная (ручной)
+      mix_number: 1
+    type: Ароидные (вариегатные)
+    watering:
+      frequency: Умеренный
+      method: Ручной (контроль PPM)
+    wick_watering:
+      notes: Не рекомендуется (нужен контроль PPM)
+      recommended: false
+  syngonium_mojito:
+    water_group: group_v
+    feeding_group: aroids_variegated
+    humidity:
+      level: Высокая
+      preferred_method: Увлажнитель/поддоны
+      spraying: Регулярно RO водой
+    latin_name: Syngonium podophyllum 'Mojito'
+    lighting:
+      direct_sun: false
+      lux_max: 15000
+      lux_min: 4000
+      lux_optimal: 8000
+      photoperiod_hours: 12-14
+    lighting_score: 7
+    humidity_score: 7
+    name: Сингониум 'Mojito'
+    status: Черенок без корней (на укоренении в LECA + RO)
+    risks:
+    - Реверсия (избыток N → потеря зелёных брызг)
+    - Принесён с работы, без корней — критическая фаза укоренения
+    - На прямом солнце выгорает вариегатность
+    care_notes:
+    - "ФАЗА УКОРЕНЕНИЯ: только чистая RO в стакан, БЕЗ удобрений и biostim"
+    - "После корней 3-5 см — выбор: пересадка в субстрат (канистра V) или semi-hydro (V-hydro)"
+    - Mojito — настоящая вариегата (зелёные брызги по светлому фону)
+    - Низкий N для сохранения вариегатности (канистра V)
+    - Опора (мох-стик) для развития крупных взрослых листьев
+    soil:
+      alternative_mix: 2 (ароидная, фитильный)
+      mix_name: LECA / ароидная (ручной)
+      mix_number: 1
+    type: Ароидные (вариегатные)
+    watering:
+      frequency: Постоянно вода в LECA на дне (1-2 см) до укоренения
+      method: Semi-hydro / водное укоренение
+      notes: После укоренения — канистра V или V-hydro
+    wick_watering:
+      notes: Не применяется (semi-hydro по другому принципу)
+      recommended: false
   zamioculcas:
     water_group: group_c
     care_notes:
