@@ -113,6 +113,7 @@
     <div class="toc">
         <strong>Разделы:</strong>
         <a href="#constants">Константы</a>
+        <a href="#orchid">Орхидея</a>
         <a href="#moss-pole">Моховые столбы</a>
         <a href="#canister-a">A · Чувствительные</a>
         <a href="#canister-b">B · Ароидные</a>
@@ -122,6 +123,88 @@
         <a href="#events">События</a>
         <a href="#conflicts">Конфликты</a>
     </div>
+
+    {% if rs.excluded_from_canisters and rs.excluded_from_canisters.phalaenopsis %}
+    {% set orch = rs.excluded_from_canisters.phalaenopsis %}
+    <div class="constants-block" style="background:#fdf2f8;border-color:#fbcfe8;" id="orchid">
+        <h2 style="color:#9d174d;">🌸 Орхидея фаленопсис (вне канистр)</h2>
+        <p style="font-size:0.88rem;color:#444;margin-bottom:8px;"><strong>Почему отдельно:</strong> {{ orch.reason }}</p>
+        <p style="font-size:0.88rem;color:#444;margin-bottom:14px;"><strong>Метод:</strong> {{ orch.method }}</p>
+
+        <h3 style="font-size:0.95rem;color:#9d174d;margin:8px 0;">Цикл по фазам</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:14px;">
+            {% for phase_key, phase in orch.cycle.items() %}
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;text-transform:capitalize;">{{ phase_key }}:</strong><br>
+                <span style="font-size:0.85rem;">{{ phase.base }}</span><br>
+                <span style="font-size:0.78rem;color:#555;">PPM: {{ phase.ppm_target | default('—') }}</span><br>
+                <span style="font-size:0.78rem;color:#555;">Частота: {{ phase.frequency }}</span>
+                {% if phase.note %}<br><em style="font-size:0.78rem;color:#9d174d;">{{ phase.note }}</em>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3 style="font-size:0.95rem;color:#9d174d;margin:14px 0 8px;">VGI совместимость</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <thead>
+                <tr style="background:#fce7f3;">
+                    <th style="padding:6px 10px;text-align:left;">Продукт</th>
+                    <th style="padding:6px 10px;text-align:left;">Вердикт</th>
+                    <th style="padding:6px 10px;text-align:left;">Детали</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prod_key, vc in orch.vgi_compatibility.items() %}
+                {% set verdict = vc.verdict | upper %}
+                {% set color = '#065f46' if 'ДА' in verdict or 'ОК' in verdict else '#9a3412' if 'ОСТОРОЖНОСТЬЮ' in verdict or 'ТОЧЕЧНО' in verdict else '#991b1b' %}
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">{{ prod_key }}</td>
+                    <td style="padding:6px 10px;color:{{ color }};font-weight:700;">{{ vc.verdict }}</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+                        {% if vc.method %}{{ vc.method }}<br>{% endif %}
+                        {% if vc.dose %}Доза: {{ vc.dose }}<br>{% endif %}
+                        {% if vc.when %}Когда: {{ vc.when }}<br>{% endif %}
+                        {% if vc.skip_in %}Пропустить: {{ vc.skip_in }}<br>{% endif %}
+                        {% if vc.do_not %}<span style="color:#991b1b;">⚠ {{ vc.do_not }}</span><br>{% endif %}
+                        {% if vc.critical %}<span style="color:#991b1b;font-weight:600;">⚠ {{ vc.critical }}</span><br>{% endif %}
+                        {% if vc.temperature %}🌡 {{ vc.temperature }}<br>{% endif %}
+                        {% if vc.rationale %}<em>{{ vc.rationale }}</em>{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if orch.critical_factors %}
+        <h3 style="font-size:0.95rem;color:#9d174d;margin:16px 0 8px;">⚠ Критические факторы (Codex audit)</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+            {% set cf = orch.critical_factors %}
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">🚿 Промывка коры</strong><br>
+                <span style="font-size:0.83rem;">{{ cf.flush_routine.frequency }}</span><br>
+                <span style="font-size:0.83rem;">{{ cf.flush_routine.action }}</span><br>
+                <em style="font-size:0.78rem;color:#555;">{{ cf.flush_routine.reason }}</em>
+            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">⚗ Мочевинный азот</strong><br>
+                <span style="font-size:0.83rem;color:#991b1b;">{{ cf.urea_nitrogen.warning }}</span><br>
+                <span style="font-size:0.83rem;">{{ cf.urea_nitrogen.action }}</span>
+            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">💧 Качество воды</strong><br>
+                <span style="font-size:0.83rem;">pH: <strong>{{ cf.water_quality.ph_target }}</strong></span><br>
+                <span style="font-size:0.83rem;">Ca:Mg = {{ cf.water_quality.ca_mg_balance }}</span><br>
+                <span style="font-size:0.83rem;">PPM после CalMag: <strong>{{ cf.water_quality.tds_after_calmag }}</strong></span>
+            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">🔥 Риск ожога корней</strong><br>
+                <span style="font-size:0.83rem;">{{ cf.root_burn_risk.when }}</span><br>
+                <span style="font-size:0.83rem;color:#065f46;">✓ {{ cf.root_burn_risk.mitigation }}</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
 
     {% if rs.moss_pole_protocol %}
     {% set moss = rs.moss_pole_protocol %}
