@@ -133,6 +133,7 @@ class SiteBuilder:
 
         self.garden_trees = load_yaml_garden('trees.yaml').get('trees', {})
         self.garden_fertilizers = load_yaml_garden('garden-fertilizers.yaml').get('garden_fertilizers', {})
+        self.garden_pesticides = load_yaml_garden('garden-pesticides.yaml').get('garden_pesticides', {})
 
         self._load_i18n()
         return self
@@ -300,6 +301,9 @@ class SiteBuilder:
 
     def _base_ctx(self, page_name):
         """Common template context for all pages."""
+        # asset_root: prefix to reach root site assets (manifest.json, service-worker.js, icons/)
+        # ru pages live at /Plants/<page>, en/he at /Plants/{lang}/<page>
+        asset_root = '' if self._current_lang == 'ru' else '../'
         return {
             't': self._current_t,
             't_json': json.dumps(self._current_t, ensure_ascii=False),
@@ -307,6 +311,7 @@ class SiteBuilder:
             'dir': 'rtl' if self._current_lang == 'he' else '',
             'lang_links': self._lang_links(page_name),
             'current_page': page_name,
+            'asset_root': asset_root,
         }
 
     def _images_for_lang(self):
@@ -712,34 +717,6 @@ class SiteBuilder:
         html = self.env.get_template('pages/my-products.html').render(**ctx)
         self._write('my-products.html', html)
 
-    def _build_pests_diseases(self):
-        ctx = self._base_ctx('pests-diseases.html')
-        t = self._current_t
-        
-        pests_raw = load_yaml('pests-diseases.yaml')
-        translated_pests = []
-        for p in pests_raw.get('pests', []):
-            np = dict(p)
-            np['name'] = t.get('pest_data', {}).get(p.get('name', ''), p.get('name', ''))
-            np['symptoms'] = t.get('pest_data', {}).get(p.get('symptoms', ''), p.get('symptoms', ''))
-            np['treatment'] = t.get('pest_data', {}).get(p.get('treatment', ''), p.get('treatment', ''))
-            np['prevention'] = t.get('pest_data', {}).get(p.get('prevention', ''), p.get('prevention', ''))
-            translated_pests.append(np)
-            
-        translated_diseases = []
-        for d in pests_raw.get('diseases', []):
-            nd = dict(d)
-            nd['name'] = t.get('pest_data', {}).get(d.get('name', ''), d.get('name', ''))
-            nd['symptoms'] = t.get('pest_data', {}).get(d.get('symptoms', ''), d.get('symptoms', ''))
-            nd['treatment'] = t.get('pest_data', {}).get(d.get('treatment', ''), d.get('treatment', ''))
-            nd['prevention'] = t.get('pest_data', {}).get(d.get('prevention', ''), d.get('prevention', ''))
-            translated_diseases.append(nd)
-            
-        ctx['pests'] = translated_pests
-        ctx['diseases'] = translated_diseases
-        html = self.env.get_template('pages/pests-diseases.html').render(**ctx)
-        self._write('pests-diseases.html', html)
-
     def _build_plant_problems(self):
         ctx = self._base_ctx('plant-problems.html')
 
@@ -883,6 +860,7 @@ class SiteBuilder:
         ctx['trees'] = self.garden_trees
         ctx['tree_count'] = len(self.garden_trees)
         ctx['garden_fertilizers'] = self.garden_fertilizers
+        ctx['garden_pesticides'] = self.garden_pesticides
         html = self.env.get_template('pages/garden.html').render(**ctx)
         self._write('garden.html', html)
 
@@ -950,34 +928,24 @@ def _generate_api_json(b):
         )
         print(f'  [OK] api/{name}')
 
-    # --- index.json: directory of available endpoints ---
-    write_json('index.json', {
-        '_description': 'Machine-readable API for Plants Care Database. All data from YAML sources.',
-        '_base_url': 'https://yurakatz.github.io/Plants/api/',
-        'endpoints': {
-            'catalog.json': 'All 26 plants with full care data',
-            'soil-mixes.json': '14 soil mix recipes with components',
-            'water-groups.json': 'Water chemistry groups A/B/C with plant assignments',
-            'feeding.json': 'Feeding matrix, fertilizer products, doses',
-            'diagnostics.json': 'Per-plant symptom → cause → action',
-        }
-    })
-
     # --- catalog.json: all plants with care data ---
     catalog = {}
+    group_defs_all = b.water_req.get('water_groups', {})
     for pid, p in b.plants.items():
         entry = dict(p)
         entry['id'] = pid
-        # Add water group details
+        # Add water group details — read actual fields from water-requirements.yaml
         wg = p.get('water_group', '')
-        group_defs = b.water_req.get('water_groups', {})
-        if wg in group_defs:
-            gdef = group_defs[wg]
+        if wg in group_defs_all:
+            gdef = group_defs_all[wg]
             entry['water_details'] = {
                 'group': wg,
-                'target_ppm': gdef.get('target_ppm'),
-                'deviation': gdef.get('allowed_deviation'),
-                'ph_range': gdef.get('ph_range'),
+                'name': gdef.get('name', ''),
+                'after_calmag_ppm': gdef.get('after_calmag_ppm'),
+                'after_fertilizer_ppm': gdef.get('after_fertilizer_ppm', {}),
+                'ph_target': gdef.get('ph_target', ''),
+                'fertilizer_dose': gdef.get('fertilizer_dose', {}),
+                'sensitivity_level': gdef.get('sensitivity_level', ''),
             }
         # Add individual water sensitivity
         ind = b.water_req.get('individual_requirements', {}).get(pid, {})
@@ -1002,34 +970,68 @@ def _generate_api_json(b):
     for key, mix in b.soil_mixes.items():
         mixes[key] = dict(mix)
     write_json('soil-mixes.json', {
-        '_description': '14 soil mix recipes with component percentages and variants.',
+        '_description': f'{len(mixes)} soil mix recipes with component percentages and variants.',
         'mix_count': len(mixes),
         'mixes': mixes,
     })
 
     # --- water-groups.json ---
+    # Build groups dynamically from YAML — covers A, B, C, V, orchids, semi_hydro, carnivorous etc.
     groups = {}
-    group_defs = b.water_req.get('water_groups', {})
     individual = b.water_req.get('individual_requirements', {})
-    for gkey in ['group_a', 'group_b', 'group_c']:
-        gdef = group_defs.get(gkey, {})
-        letter = gkey[-1].upper()
-        plants_in_group = [
-            {'id': pid, 'name': pr.get('plant_name', pid), 'sensitivity': pr.get('sensitivity', '')}
-            for pid, pr in individual.items() if pr.get('group') == letter
-        ]
+    for gkey, gdef in group_defs_all.items():
+        # plant_ids in this group: from plants.yaml water_group field + from individual_requirements
+        plants_in_group = []
+        seen = set()
+        for pid, p in b.plants.items():
+            if p.get('water_group') == gkey and pid not in seen:
+                plants_in_group.append({
+                    'id': pid,
+                    'name': p.get('name', pid),
+                    'sensitivity': individual.get(pid, {}).get('sensitivity', ''),
+                })
+                seen.add(pid)
         groups[gkey] = {
-            'letter': letter,
             'name': gdef.get('name', ''),
-            'target_ppm': gdef.get('target_ppm'),
-            'allowed_deviation': gdef.get('allowed_deviation'),
-            'ph_range': gdef.get('ph_range', ''),
+            'color': gdef.get('color', ''),
+            'after_calmag_ppm': gdef.get('after_calmag_ppm'),
+            'after_fertilizer_ppm': gdef.get('after_fertilizer_ppm', {}),
+            'ph_target': gdef.get('ph_target', ''),
+            'fertilizer_dose': gdef.get('fertilizer_dose', {}),
+            'sensitivity_level': gdef.get('sensitivity_level', ''),
+            'notes': gdef.get('notes', []),
             'plants': plants_in_group,
         }
     write_json('water-groups.json', {
         '_description': 'Water chemistry groups with PPM/pH targets and plant assignments.',
+        'group_count': len(groups),
         'groups': groups,
-        'protocol': b.water_req.get('calmag_protocol', {}),
+        'mixing_protocol': b.water_req.get('mixing_protocol', {}),
+    })
+
+    # --- pesticides.json (was missing — garden-pesticides was loaded by user but not exported) ---
+    pesticides = b.garden_pesticides if hasattr(b, 'garden_pesticides') else {}
+    if pesticides:
+        write_json('pesticides.json', {
+            '_description': 'Pesticides catalog (Confidor, Nimbi, Biomectin, etc.) with active ingredients, target pests, application rules.',
+            'product_count': len(pesticides),
+            'pesticides': pesticides,
+        })
+
+    # --- index.json: directory of available endpoints (computed last with actual counts) ---
+    endpoints = {
+        'catalog.json': f'All {len(catalog)} plants with full care data',
+        'soil-mixes.json': f'{len(mixes)} soil mix recipes with components',
+        'water-groups.json': f'{len(groups)} water chemistry groups (A/B/C/V/orchids/semi-hydro/carnivorous) with plant assignments',
+        'feeding.json': 'Feeding matrix, fertilizer products, doses',
+        'diagnostics.json': 'Per-plant symptom → cause → action',
+    }
+    if pesticides:
+        endpoints['pesticides.json'] = f'{len(pesticides)} pesticides catalog (confidor/nimbi/biomectin etc.)'
+    write_json('index.json', {
+        '_description': 'Machine-readable API for Plants Care Database. All data from YAML sources.',
+        '_base_url': 'https://yurakatz.github.io/Plants/api/',
+        'endpoints': endpoints,
     })
 
     # --- feeding.json ---

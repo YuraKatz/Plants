@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Plants Care{% endblock %}</title>
+
+    {# PWA: manifest, theme, app-capable. asset_root prefixes paths under /Plants/ for en/he subpages. #}
+    <link rel="manifest" href="{{ asset_root }}manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="{{ asset_root }}icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset_root }}icons/icon-192.png">
     <style>
         /* === Common design system === */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -140,5 +149,16 @@
 {% endif %}
 {% block body %}{% endblock %}
 {% block scripts %}{% endblock %}
+
+{# PWA: register service worker on every page (was previously only on index.html). #}
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('{{ asset_root }}service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
 </body>
 </html>

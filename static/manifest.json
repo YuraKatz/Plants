@@ -2,7 +2,7 @@
   "name": "Plants Care Database",
   "short_name": "Plants Care",
   "description": "Comprehensive plant care system - watering, lighting, feeding, diagnostics",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#667eea",
@@ -64,21 +64,21 @@
       "name": "Каталог растений",
       "short_name": "Каталог",
       "description": "Открыть каталог растений",
-      "url": "/plants-catalog.html",
+      "url": "./plants-catalog.html",
       "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "Диагностика",
       "short_name": "Проблемы",
       "description": "Диагностика проблем растений",
-      "url": "/plant-problems.html",
+      "url": "./plant-problems.html",
       "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "Миксер воды",
       "short_name": "Миксер",
       "description": "Рецепты для канистр",
-      "url": "/water-mixer.html",
+      "url": "./water-mixer.html",
       "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     }
   ]

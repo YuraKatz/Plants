@@ -3,13 +3,8 @@
 {% block title %}{{ t.title_home }}{% endblock %}
 
 {% block head %}
+    {# PWA meta is in base.html now — only page-specific description here. #}
     <meta name="description" content="Comprehensive plant care system - watering, lighting, feeding, diagnostics">
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Plants Care">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
 
     <style>
         header { text-align: center; }
@@ -392,16 +387,6 @@
             if (e.key === '3') window.location.href = 'soil-groups.html';
         });
 
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(function(registration) {
-                        console.log('SW registered:', registration.scope);
-                    })
-                    .catch(function(error) {
-                        console.log('SW registration failed:', error);
-                    });
-            });
-        }
+        // SW registration is now in base.html — no per-page duplication needed.
     </script>
 {% endblock %}
