@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מאגר צמחים</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher { right: auto; left: 10px; }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
+    </style>
+    <meta name="description" content="Comprehensive plant care system - watering, lighting, feeding, diagnostics">
+
+    <style>
+        header { text-align: center; }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .nav-card {
+            display: block;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-decoration: none;
+            color: inherit;
+            background: #fff;
+            transition: border-color 0.2s;
+            border-left: 4px solid #ccc;
+        }
+        .nav-card:hover { border-color: #2d6a4f; background: #fafaf8; }
+        .nav-card.water { border-left-color: #4a90d9; }
+        .nav-card.light { border-left-color: #d4a843; }
+        .nav-card.soil { border-left-color: #52b788; }
+        .card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+        .card-description { color: #666; font-size: 0.88rem; line-height: 1.5; margin-bottom: 12px; }
+        .card-stats {
+            display: flex;
+            gap: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .stat-value { font-size: 1.1rem; font-weight: 600; color: #333; }
+        .stat-label { font-size: 0.78rem; color: #999; margin-top: 2px; }
+        .search-container { margin-bottom: 20px; }
+        #searchInput { width: 100%; }
+        .visitor-badge { margin-top: 8px; }
+        .visitor-badge img { height: 20px; }
+        .footer-links { margin-top: 10px; }
+        .footer-link {
+            color: #2d6a4f;
+            text-decoration: none;
+            margin: 0 8px;
+            font-size: 0.85rem;
+        }
+        .footer-link:hover { text-decoration: underline; }
+        @media (max-width: 768px) {
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../index.html" >RU</a>
+    <a href="../en/index.html" >EN</a>
+    <a href="../he/index.html" class="active">HE</a>
+</div>
+    <div class="container">
+        <header>
+            <h1>🌿 Plants Care Database</h1>
+            <p class="subtitle">מערכת מקיפה לטיפול בצמחים</p>
+        </header>
+
+        <div class="search-container">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 חיפוש צמח (שם, לטינית או סוג)..."
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="cards-grid">
+            <a href="plants-catalog.html" class="nav-card" style="grid-column: 1 / -1; border-left-color: #52b788;">
+                <div class="card-icon">🌿</div>
+                <div class="card-title">קטלוג צמחים</div>
+                <div class="card-description">
+                    כרטיסי טיפול מפורטים לכל צמח עם תמונות והמלצות.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">YAML</div>
+                        <div class="stat-label">מקור</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="water-groups.html" class="nav-card water">
+                <div class="card-icon">💧</div>
+                <div class="card-title">קבוצות מים</div>
+                <div class="card-description">
+                    מערכת RO Water + CalMag. קבוצות צמחים לפי דרישות PPM ו-pH.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">קבוצות</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="humidity-groups.html" class="nav-card" style="border-left-color: #26A69A;">
+                <div class="card-icon">💧</div>
+                <div class="card-title">קבוצות לחות</div>
+                <div class="card-description">
+                    צרכי לחות יחסיים (1-10). קבוצות צמחים לפי דרישות לחות.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">1-10</div>
+                        <div class="stat-label">קבוצות</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="lighting-score.html" class="nav-card" style="border-left-color: #FF9800;">
+                <div class="card-icon">☀️</div>
+                <div class="card-title">קבוצות תאורה</div>
+                <div class="card-description">
+                    צרכי אור יחסיים (1-10). קבוצות צמחים לפי דרישות אור.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">1-10</div>
+                        <div class="stat-label">קבוצות</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="soil-groups.html" class="nav-card soil">
+                <div class="card-icon">🌱</div>
+                <div class="card-title">תערובות אדמה</div>
+                <div class="card-description">
+                    מתכונים לתערובות אדמה לסוגי צמחים ושיטות השקיה שונים.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">17</div>
+                        <div class="stat-label">תערובות</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="feeding-guide.html" class="nav-card" style="border-left-color: #d4a843;">
+                <div class="card-icon">🧪</div>
+                <div class="card-title">דישון</div>
+                <div class="card-description">
+                    מה לעשות היום: מים + דשנים לפי עונה.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">קבוצות</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">עונות</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="water-mixer.html" class="nav-card" style="border-left-color: #4a90d9;">
+                <div class="card-icon">💧</div>
+                <div class="card-title">מיקסר מים</div>
+                <div class="card-description">
+                    מיכלים A/B/C: PPM, pH ומתכוני דשנים.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">מיכלים</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="rotation.html" class="nav-card" style="border-left-color: #c084fc;">
+                <div class="card-icon">🔄</div>
+                <div class="card-title">רוטציית דשנים</div>
+                <div class="card-description">
+                    אסטרטגיית החלפה בין בסיס וביוסטים בין מיכלים A/B/C/V עם הכנסת VGI בשלבים.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">מיכלים</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">VGI</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="my-products.html" class="nav-card" style="border-left-color: #7c5cbf;">
+                <div class="card-icon">🧪</div>
+                <div class="card-title">המוצרים שלי</div>
+                <div class="card-description">
+                    דשנים, תוספים ומווסתי pH.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">מוצרים</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">קטגוריות</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="plant-problems.html" class="nav-card" style="border-left-color: #c94050;">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">אבחון</div>
+                <div class="card-description">
+                    בעיות ופתרונות לכל צמח.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">60+</div>
+                        <div class="stat-label">פתרונות</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="seasonal-care.html" class="nav-card" style="border-left-color: #52b788;">
+                <div class="card-icon">📅</div>
+                <div class="card-title">טיפול עונתי</div>
+                <div class="card-description">
+                    איך לטפל בצמחים בעונות שונות.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">עונות</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">טיפים</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="propagation.html" class="nav-card" style="border-left-color: #7c5cbf;">
+                <div class="card-icon">🌱</div>
+                <div class="card-title">ריבוי</div>
+                <div class="card-description">
+                    שיטות ריבוי לכל צמח.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">שיטות</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">צמחים</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="garden.html" class="nav-card" style="border-left-color: #52b788;">
+                <div class="card-icon">🌳</div>
+                <div class="card-title">Сад — плодовые деревья</div>
+                <div class="card-description">
+                    Каталог садовых деревьев, удобрения для сада, сезонный уход.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">деревьев</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">WIP</div>
+                        <div class="stat-label">מקור</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="pests-diseases.html" class="nav-card" style="border-left-color: #c94050;">
+                <div class="card-icon">🐛</div>
+                <div class="card-title">מזיקים ומחלות</div>
+                <div class="card-description">
+                    זיהוי, טיפול ומניעה.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">מזיקים</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">מחלות</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="ai-link-section" style="text-align:center; margin: 30px 0 10px; padding: 15px; background: #f0f7f4; border-radius: 8px; border: 1px dashed #2d6a4f;">
+            <p style="margin: 0 0 8px; font-size: 0.9rem; color: #555;">הדביקו את הקישור בצ'אט AI (ChatGPT, Claude, Gemini) — והוא יידע את כל המידע מהאתר</p>
+            <button id="copyAiLink" onclick="copyLlmsLink()" style="padding: 8px 20px; background: #2d6a4f; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600;">
+                🤖 העתקת קישור ל-AI
+            </button>
+            <span id="copyAiOk" style="display:none; color: #2d6a4f; margin-left: 10px; font-weight: 600;">✅ הועתק!</span>
+        </div>
+
+        <footer>
+            <p>Plants Database v3.0 | PWA Ready</p>
+            <div class="visitor-badge">
+                <img src="https://visitor-badge.laobi.icu/badge?page_id=yurakatz.github.io-Plants&left_color=%23555555&right_color=%232d6a4f&left_text=visitors" alt="Visitor Count">
+            </div>
+        </footer>
+    </div>
+    <script>
+        function copyLlmsLink() {
+            var url = 'https://yurakatz.github.io/Plants/llms.txt';
+            navigator.clipboard.writeText(url).then(function() {
+                document.getElementById('copyAiOk').style.display = 'inline';
+                setTimeout(function() { document.getElementById('copyAiOk').style.display = 'none'; }, 3000);
+            });
+        }
+
+        var searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && this.value.trim()) {
+                window.location.href = 'plants-catalog.html?search=' + encodeURIComponent(this.value.trim());
+            }
+        });
+
+        var searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            var val = this.value.trim();
+            if (val.length >= 2) {
+                searchTimeout = setTimeout(function() {
+                    window.location.href = 'plants-catalog.html?search=' + encodeURIComponent(val);
+                }, 800);
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (document.activeElement === searchInput) return;
+            if (e.key === '0') window.location.href = 'plants-catalog.html';
+            if (e.key === '1') window.location.href = 'water-groups.html';
+            if (e.key === '2') window.location.href = 'lighting-score.html';
+            if (e.key === '3') window.location.href = 'soil-groups.html';
+        });
+
+        // SW registration is now in base.html — no per-page duplication needed.
+    </script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📅 טיפול עונתי - Plants Care</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher { right: auto; left: 10px; }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
+    </style>
+    <style>
+        header { text-align: center; }
+        .current-season {
+            text-align: center; padding: 20px; background: #333;
+            border-radius: 4px; color: white; margin-bottom: 30px;
+        }
+        .current-season .season-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; }
+        .current-season .season-dates { opacity: 0.9; }
+        .season-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .season-tab {
+            padding: 7px 16px; border: 1px solid #ccc; border-radius: 4px;
+            cursor: pointer; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 8px;
+        }
+        .season-tab.spring { background: #c6f6d5; color: #22543d; }
+        .season-tab.summer { background: #fef3c7; color: #92400e; }
+        .season-tab.autumn { background: #fed7aa; color: #9a3412; }
+        .season-tab.winter { background: #bee3f8; color: #2c5282; }
+        .season-tab.spring.active { background: #38a169; color: white; }
+        .season-tab.summer.active { background: #d69e2e; color: white; }
+        .season-tab.autumn.active { background: #dd6b20; color: white; }
+        .season-tab.winter.active { background: #3182ce; color: white; }
+        .season-content { display: none; }
+        .season-content.active { display: block; }
+        .season-header { text-align: center; padding: 20px; border-radius: 4px; margin-bottom: 30px; color: white; }
+        .season-header.spring { background: #2d6a4f; }
+        .season-header.summer { background: #b8860b; }
+        .season-header.autumn { background: #c05621; }
+        .season-header.winter { background: #4a6fa5; }
+        .season-header h2 { font-size: 1.2rem; margin-bottom: 10px; }
+        .season-header .dates { font-size: 1.1rem; opacity: 0.9; }
+        .care-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .care-card { background: white; border-radius: 6px; padding: 16px; border: 1px solid #e2e8f0; }
+        .care-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .care-icon { font-size: 1.3rem; }
+        .care-title { font-size: 1rem; font-weight: 700; color: #2d3748; }
+        .care-description { color: #4a5568; line-height: 1.6; margin-bottom: 15px; }
+        .care-tips { background: #f7fafc; border-radius: 4px; padding: 15px; }
+        .care-tips ul { list-style: none; }
+        .care-tips li { padding: 8px 0; border-bottom: 1px dashed #e2e8f0; display: flex; align-items: flex-start; gap: 10px; }
+        .care-tips li:last-child { border-bottom: none; }
+        .care-tips li::before { content: "\2022"; color: #48bb78; font-weight: bold; }
+        .warning-box { background: #fff5f5; border: 1px solid #fc8181; border-radius: 4px; padding: 20px; margin-top: 20px; }
+        .warning-box h4 { color: #c53030; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .warning-box p { color: #742a2a; }
+        .special-plants { background: #f7fafc; border-radius: 4px; padding: 25px; margin-top: 30px; }
+        .special-plants h3 { color: #2d3748; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .special-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .special-item { background: white; border-radius: 4px; padding: 15px; border-left: 4px solid #2d6a4f; }
+        .special-item .plant-name { font-weight: 600; color: #2d3748; margin-bottom: 8px; }
+        .special-item .plant-note { font-size: 0.9rem; color: #4a5568; }
+        .quick-ref { overflow-x: auto; margin-top: 30px; }
+        .quick-ref table { width: 100%; border-collapse: collapse; }
+        .quick-ref th { background: #2d3748; color: white; padding: 15px; text-align: left; }
+        .quick-ref td { padding: 12px 15px; border-bottom: 1px solid #e2e8f0; }
+        .intensity-high { color: #22543d; font-weight: 600; }
+        .intensity-medium { color: #744210; }
+        .intensity-low { color: #c53030; }
+        .intensity-none { color: #a0aec0; font-style: italic; }
+        @media (max-width: 768px) {
+            .season-tab { padding: 10px 15px; font-size: 0.85rem; }
+            .care-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../seasonal-care.html" >RU</a>
+    <a href="../en/seasonal-care.html" >EN</a>
+    <a href="../he/seasonal-care.html" class="active">HE</a>
+</div>
+    <div class="container">
+        <a href="index.html" class="nav-back">→ ראשי</a>
+        <header>
+            <h1>📅 טיפול עונתי</h1>
+            <p class="subtitle">לוח שנה לטיפול בצמחי בית</p>
+        </header>
+
+        <div class="current-season" id="currentSeason">
+            <div class="season-name">...טוען</div>
+            <div class="season-dates"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
+            <div style="background: #c05621; color: #fff; padding: 14px 20px; border-radius: 4px;">
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <span style="font-size: 2rem;">💡</span>
+                    <div>
+                        <strong style="font-size: 1.1rem;">יש מנורות 10+ שעות? התעלם מהעונות!</strong>
+                        <p style="margin-top: 8px; opacity: 0.95;">תחת תאורה מלאכותית, לצמחים תמיד יש 'קיץ'. השקה ודשן כמו בקיץ כל השנה. אין צורך לצמצם דבר.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="background: #4a6fa5; color: #fff; padding: 14px 20px; border-radius: 4px;">
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <span style="font-size: 2rem;">🏔️</span>
+                    <div>
+                        <strong style="font-size: 1.1rem;">רמת הגולן (קצרין): אקלים מיוחד!</strong>
+                        <p style="margin-top: 8px; opacity: 0.95;">החורף קר יותר מאשר במישור החוף (יש שלג!). הקיץ חם אך לא קיצוני. עצות לגבי חלונות קרים בחורף — רלוונטיות! האויבים העיקריים: אוויר יבש מחימום בחורף + מזגן בקיץ.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="season-tabs">
+            <button class="season-tab spring" data-season="spring">🌸 אביב</button>
+            <button class="season-tab summer" data-season="summer">☀️ קיץ</button>
+            <button class="season-tab autumn" data-season="autumn">🍂 סתיו</button>
+            <button class="season-tab winter" data-season="winter">❄️ חורף</button>
+        </div>
+
+        <div class="season-content" data-season="spring">
+            <div class="season-header spring">
+                <h2>🌸 אביב</h2>
+                <div class="dates">מרץ — מאי</div>
+            </div>
+            <div class="care-grid">
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">💧</span>
+                        <span class="care-title">השקיה</span>
+                    </div>
+                    <div class="care-description">העלו בהדרגה את כמות ההשקיה. הצמחים מתעוררים ומתחילים לצמוח באופן פעיל.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>השקו בבוקר</li>
+                            <li>בדקו לחות בתדירות גבוהה יותר</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">🧪</span>
+                        <span class="care-title">דישון</span>
+                    </div>
+                    <div class="care-description">התחילו להוסיף דשנים. תחילה 1/4 מינון, ואז עברו למינון מלא.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>דישון ראשון במרץ</li>
+                            <li>CalMag הוא חובה</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">🪴</span>
+                        <span class="care-title">מה לעשות</span>
+                    </div>
+                    <div class="care-description">זמן אידיאלי לארגון האוסף מחדש.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>העברה לאדמה טרייה</li>
+                            <li>גיזום וריבוי</li>
+                            <li>מקלחת לשטיפת אבק</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="season-content" data-season="summer">
+            <div class="season-header summer">
+                <h2>☀️ קיץ</h2>
+                <div class="dates">יוני — אוגוסט</div>
+            </div>
+            <div class="care-grid">
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">💧</span>
+                        <span class="care-title">השקיה</span>
+                    </div>
+                    <div class="care-description">שיא צריכת המים. המצע מתייבש מהר מאוד.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>השקיה 2-3 פעמים בשבוע</li>
+                            <li>עקבו אחר הפתילה</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">🧪</span>
+                        <span class="care-title">דישון</span>
+                    </div>
+                    <div class="care-description">הזנה קבועה לצמיחה פעילה. מינונים מקסימליים.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>כל השקיה היא הזנה</li>
+                            <li>כל פעם רביעית — שטיפה</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">☀️</span>
+                        <span class="care-title">אור</span>
+                    </div>
+                    <div class="care-description">סכנת כוויות שמש אפילו דרך הזכוכית.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>הצלילו חלונות דרומיים</li>
+                            <li>הרחיקו צמחים מהזכוכית</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">🌡️</span>
+                        <span class="care-title">טמפרטורה</span>
+                    </div>
+                    <div class="care-description">המזגן — הצלה לאנשים, סטרס לצמחים.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>שמרו מזרם אוויר קר</li>
+                            <li>העלו את לחות האוויר</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="season-content" data-season="autumn">
+            <div class="season-header autumn">
+                <h2>🍂 סתיו</h2>
+                <div class="dates">ספטמבר — נובמבר</div>
+            </div>
+            <div class="care-grid">
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">💧</span>
+                        <span class="care-title">השקיה</span>
+                    </div>
+                    <div class="care-description">האטה בתהליכים. האדמה מתייבשת זמן רב יותר.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>צמצמו את תדירות ההשקיה</li>
+                            <li>מנעו עמידת מים</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">🧪</span>
+                        <span class="care-title">דישון</span>
+                    </div>
+                    <div class="care-description">הכנה למנוחה. הפחתת הריכוז.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>מעבר ל-1/2 מינון</li>
+                            <li>הפחתת חנקן</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">🛠️</span>
+                        <span class="care-title">מה לעשות</span>
+                    </div>
+                    <div class="care-description">הכנה לחורף ולקור.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>טיפול נגד מזיקים</li>
+                            <li>הזזה מהחלונות</li>
+                            <li>בדיקת איטום חלונות</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="season-content" data-season="winter">
+            <div class="season-header winter">
+                <h2>❄️ חורף</h2>
+                <div class="dates">דצמבר — פברואר</div>
+            </div>
+            <div class="care-grid">
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">💧</span>
+                        <span class="care-title">השקיה</span>
+                    </div>
+                    <div class="care-description">צורך מינימלי. הסיכון העיקרי — ריקבון שורשים.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>רק לאחר ייבוש</li>
+                            <li>מים בטמפרטורת החדר</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">☀️</span>
+                        <span class="care-title">אור</span>
+                    </div>
+                    <div class="care-description">מחסור קטסטרופלי באור.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>תאורה משלימה 10-12 שעות</li>
+                            <li>הכי קרוב לחלון שאפשר</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="care-card">
+                    <div class="care-card-header">
+                        <span class="care-icon">🌡️</span>
+                        <span class="care-title">טמפרטורה</span>
+                    </div>
+                    <div class="care-description">קור מהזכוכית + חום יבש מרדיאטורים.</div>
+                    <div class="care-tips">
+                        <ul>
+                            <li>הרחיקו מרדיאטורים</li>
+                            <li>בודדו אדני חלונות</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>🛑 ⚠️ זהירות: רגליים רטובות + קור = מוות</h4>
+                <p>בחורף בקצרין על אדן החלון יכולים להיות +10°C. אם השורשים רטובים — הריקבון יתחיל תוך 24 שעות. השקו רק כשהמצע יבש!</p>
+            </div>
+            <div class="special-plants">
+                <h3>❄️ צמחים מיוחדים בחורף</h3>
+                <div class="special-grid">
+                    <div class="special-item">
+                        <div class="plant-name">אלוקסיה</div>
+                        <div class="plant-note">עלולה להשיר עלים ולהיכנס לתרדמת (פקעת). לא לזרוק!</div>
+                    </div>
+                    <div class="special-item">
+                        <div class="plant-name">שלומברגרה / </div>
+                        <div class="plant-note">השקיה פעם בחודש או פחות. חריפה קרה (+10...+15°C).</div>
+                    </div>
+                    <div class="special-item">
+                        <div class="plant-name">Adenium</div>
+                        <div class="plant-note">ייבוש מלא. נשירת עלים היא נורמלית.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-ref">
+            <h3>📊 מדריך מהיר לעצימות הטיפול</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>עונה</th>
+                        <th>צמיחה</th>
+                        <th>השקיה</th>
+                        <th>מזון</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🌸 אביב</td>
+                        <td class="intensity-medium">פעיל</td>
+                        <td class="intensity-medium">מתון</td>
+                        <td class="intensity-medium">חצי</td>
+                    </tr>
+                    <tr>
+                        <td>☀️ קיץ</td>
+                        <td class="intensity-high">פעיל</td>
+                        <td class="intensity-high">מקסימלי</td>
+                        <td class="intensity-high">מלא</td>
+                    </tr>
+                    <tr>
+                        <td>🍂 סתיו</td>
+                        <td class="intensity-medium">איטי</td>
+                        <td class="intensity-medium">מופחת</td>
+                        <td class="intensity-medium">חצי</td>
+                    </tr>
+                    <tr>
+                        <td>❄️ חורף</td>
+                        <td class="intensity-low">מנוחה</td>
+                        <td class="intensity-low">מינימום</td>
+                        <td class="intensity-none">ללא / מינ'</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script>
+    const seasonTabs = document.querySelectorAll('.season-tab');
+    const seasonContents = document.querySelectorAll('.season-content');
+    const currentSeasonEl = document.getElementById('currentSeason');
+
+    function getSeason() {
+        const month = new Date().getMonth();
+        if (month >= 2 && month <= 4) return 'spring';
+        if (month >= 5 && month <= 7) return 'summer';
+        if (month >= 8 && month <= 10) return 'autumn';
+        return 'winter';
+    }
+
+    function showSeason(season) {
+        seasonTabs.forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.season === season);
+        });
+        seasonContents.forEach(content => {
+            content.classList.toggle('active', content.dataset.season === season);
+        });
+    }
+
+    seasonTabs.forEach(tab => {
+        tab.addEventListener('click', () => showSeason(tab.dataset.season));
+    });
+
+    const currentSeason = getSeason();
+    showSeason(currentSeason);
+
+    const seasonNames = {
+        spring: "🌸 אביב",
+        summer: "☀️ קיץ",
+        autumn: "🍂 סתיו",
+        winter: "❄️ חורף"
+    };
+    
+    const seasonMonths = {
+        spring: "מרץ — מאי",
+        summer: "יוני — אוגוסט",
+        autumn: "ספטמבר — נובמבר",
+        winter: "דצמבר — פברואר"
+    };
+
+    if (currentSeasonEl) {
+        currentSeasonEl.querySelector('.season-name').textContent = "📅 " + seasonNames[currentSeason];
+        currentSeasonEl.querySelector('.season-dates').textContent = seasonMonths[currentSeason];
+    }
+</script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

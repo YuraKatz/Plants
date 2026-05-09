@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קבוצות תאורה</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher { right: auto; left: 10px; }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
+    </style>
+    <style>
+        .container { max-width: 1400px; }
+        .legend {
+            background: #f5f5f0;
+            padding: 16px;
+            border: 1px solid #e5e5e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .legend h3 { color: #333; margin-bottom: 10px; font-size: 0.95rem; }
+        .legend-bar {
+            display: flex;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 32px;
+        }
+        .legend-segment {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            font-size: 0.78rem;
+            color: #888;
+        }
+        .lighting-score-group {
+            margin-bottom: 28px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .group-header {
+            padding: 14px 20px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .group-title { font-size: 1.2rem; font-weight: 600; }
+        .group-params { display: flex; gap: 12px; font-size: 0.85rem; }
+        .param { background: rgba(255,255,255,0.18); padding: 4px 10px; border-radius: 3px; }
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            padding: 16px;
+            background: #fafaf8;
+        }
+        .plant-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+            cursor: pointer;
+        }
+        .plant-card:hover { border-color: #2d6a4f; }
+        .plant-card.hidden { display: none; }
+        .plant-image { width: 100%; height: 160px; object-fit: cover; background: #eee; }
+        .plant-image-placeholder {
+            width: 100%; height: 160px;
+            background: #eee;
+            display: none; align-items: center; justify-content: center;
+            flex-direction: column; color: #aaa; font-size: 0.85rem;
+            text-align: center; padding: 16px;
+        }
+        .placeholder-icon { font-size: 2rem; margin-bottom: 6px; opacity: 0.5; }
+        .plant-info { padding: 10px; }
+        .plant-name-ru { font-size: 0.95rem; font-weight: 600; color: #333; margin-bottom: 3px; }
+        .plant-name-en { font-size: 0.8rem; color: #888; font-style: italic; margin-bottom: 4px; }
+        .plant-score { font-size: 0.82rem; color: #555; margin-bottom: 3px; }
+        .score-value { font-weight: 600; color: #b8860b; }
+        .plant-score-secondary { font-size: 0.72rem; color: #999; margin-bottom: 3px; }
+        .plant-id {
+            font-size: 0.7rem; color: #aaa; font-family: monospace;
+            background: #f5f5f0; padding: 2px 6px; border-radius: 3px; display: inline-block;
+        }
+        @media (max-width: 768px) {
+            .group-title { font-size: 1.1rem; }
+            .group-params { flex-direction: column; gap: 4px; }
+            .plants-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .plant-image, .plant-image-placeholder { height: 120px; }
+        }
+        @media print { .plant-card { break-inside: avoid; } }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../lighting-score.html" >RU</a>
+    <a href="../en/lighting-score.html" >EN</a>
+    <a href="../he/lighting-score.html" class="active">HE</a>
+</div>
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-home">→ ראשי</a>
+            <h1>☀️ קבוצות תאורה</h1>
+            <p class="subtitle">צרכי אור יחסיים של הצמחים שלך (סולם 1-10)</p>
+        </header>
+
+        <div class="legend">
+            <h3>סולם צרכי אור</h3>
+            <div class="legend-bar">
+                <div class="legend-segment" style="background: #2196F3;">1</div>
+                <div class="legend-segment" style="background: #26A69A;">2</div>
+                <div class="legend-segment" style="background: #4CAF50;">3</div>
+                <div class="legend-segment" style="background: #66BB6A;">4</div>
+                <div class="legend-segment" style="background: #8BC34A;">5</div>
+                <div class="legend-segment" style="background: #CDDC39;">6</div>
+                <div class="legend-segment" style="background: #FFC107;">7</div>
+                <div class="legend-segment" style="background: #FF9800;">8</div>
+                <div class="legend-segment" style="background: #FF5722;">9</div>
+                <div class="legend-segment" style="background: #E91E63;">10</div>
+            </div>
+            <div class="legend-labels">
+                <span>1 — min</span>
+                <span>10 — max</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="חיפוש לפי שם או plant_id..."
+                autocomplete="off"
+            >
+            <button class="btn-print" onclick="window.print()">🖨️ הדפסה</button>
+        </div>
+
+        <div id="noResults" class="no-results">
+            לא נמצאו צמחים
+        </div>
+
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #E91E63;">
+                <div class="group-title">ציון 10/10</div>
+                <div class="group-params">
+                    <div class="param">1 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="קרוטון" data-id="croton">
+    <img src="../IMAGES/croton.jpg" alt="קרוטון" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">קרוטון</div>
+        <div class="plant-name-en">Codiaeum variegatum</div>
+        <div class="plant-score">☀️ <span class="score-value">10/10</span> — 10000 lux</div>
+        <div class="plant-score-secondary">💧 7/10 — Высокая</div>
+        <div class="plant-id">croton</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #FF5722;">
+                <div class="group-title">ציון 9/10</div>
+                <div class="group-params">
+                    <div class="param">3 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Монстера Aurea (вариегата жёлтая)" data-id="monstera_aurea">
+    <img src="../IMAGES/monstera_albo_variegata.jpg" alt="Монстера Aurea (вариегата жёлтая)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Монстера Aurea (вариегата жёлтая)</div>
+        <div class="plant-name-en">Monstera deliciosa 'Aurea Variegata'</div>
+        <div class="plant-score">☀️ <span class="score-value">9/10</span> — 15000 lux</div>
+        <div class="plant-score-secondary">💧 7/10 — Высокая</div>
+        <div class="plant-id">monstera_aurea</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Монстера альбо вариегата" data-id="monstera_albo_variegata">
+    <img src="../IMAGES/monstera_albo_variegata.jpg" alt="Монстера альбо вариегата" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Монстера альбо вариегата</div>
+        <div class="plant-name-en">Monstera deliciosa 'Albo Variegata'</div>
+        <div class="plant-score">☀️ <span class="score-value">9/10</span> — 15000 lux</div>
+        <div class="plant-score-secondary">💧 7/10 — Высокая</div>
+        <div class="plant-id">monstera_albo_variegata</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="גוזמניה" data-id="guzmania">
+    <img src="../IMAGES/guzmania.jpg" alt="גוזמניה" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">גוזמניה</div>
+        <div class="plant-name-en">Guzmania</div>
+        <div class="plant-score">☀️ <span class="score-value">9/10</span> — 10000 lux</div>
+        <div class="plant-score-secondary">💧 8/10 — Высокая</div>
+        <div class="plant-id">guzmania</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #FF9800;">
+                <div class="group-title">ציון 8/10</div>
+                <div class="group-params">
+                    <div class="param">2 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Филодендрон 'Pink Princess'" data-id="philodendron_pink_princess">
+    <img src="../IMAGES/philodendron_pink_princess.jpg" alt="Филодендрон 'Pink Princess'" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Филодендрон 'Pink Princess'</div>
+        <div class="plant-name-en">Philodendron erubescens 'Pink Princess'</div>
+        <div class="plant-score">☀️ <span class="score-value">8/10</span> — 10000 lux</div>
+        <div class="plant-score-secondary">💧 8/10 — Высокая</div>
+        <div class="plant-id">philodendron_pink_princess</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="ביגוניה מקולאטה" data-id="begonia_maculata">
+    <img src="../IMAGES/begonia_maculata.jpg" alt="ביגוניה מקולאטה" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">ביגוניה מקולאטה</div>
+        <div class="plant-name-en">Begonia maculata</div>
+        <div class="plant-score">☀️ <span class="score-value">8/10</span> — 9000 lux</div>
+        <div class="plant-score-secondary">💧 5/10 — Средняя-высокая</div>
+        <div class="plant-id">begonia_maculata</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #FFC107;">
+                <div class="group-title">ציון 7/10</div>
+                <div class="group-params">
+                    <div class="param">7 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Алоказия Регал Шилдс" data-id="alocasia_regal_shields">
+    <img src="../IMAGES/alocasia_regal_shields.jpg" alt="Алоказия Регал Шилдс" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Алоказия Регал Шилдс</div>
+        <div class="plant-name-en">Alocasia 'Regal Shields' (odora × reginula)</div>
+        <div class="plant-score">☀️ <span class="score-value">7/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 8/10 — Высокая (60-70%)</div>
+        <div class="plant-id">alocasia_regal_shields</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Сингониум 'Mojito'" data-id="syngonium_mojito">
+    <img src="../IMAGES/syngonium_mojito.jpg" alt="Сингониум 'Mojito'" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Сингониум 'Mojito'</div>
+        <div class="plant-name-en">Syngonium podophyllum 'Mojito'</div>
+        <div class="plant-score">☀️ <span class="score-value">7/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 7/10 — Высокая</div>
+        <div class="plant-id">syngonium_mojito</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="מונסטרה אדנסוני" data-id="monstera_adansonii">
+    <img src="../IMAGES/monstera_adansonii.jpeg" alt="מונסטרה אדנסוני" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">מונסטרה אדנסוני</div>
+        <div class="plant-name-en">Monstera adansonii</div>
+        <div class="plant-score">☀️ <span class="score-value">7/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 6/10 — Средняя-высокая</div>
+        <div class="plant-id">monstera_adansonii</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="מונסטרה דליסיוזה" data-id="monstera_deliciosa">
+    <img src="../IMAGES/monstera_deliciosa.jpg" alt="מונסטרה דליסיוזה" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">מונסטרה דליסיוזה</div>
+        <div class="plant-name-en">Monstera deliciosa</div>
+        <div class="plant-score">☀️ <span class="score-value">7/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 5/10 — Средняя-высокая</div>
+        <div class="plant-id">monstera_deliciosa</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="פילודנדרון סלו" data-id="philodendron_selloum">
+    <img src="../IMAGES/philodendron_selloum.jpg" alt="פילודנדרון סלו" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">פילודנדרון סלו</div>
+        <div class="plant-name-en">Philodendron bipinnatifidum (Thaumatophyllum bipinnatifidum)</div>
+        <div class="plant-score">☀️ <span class="score-value">7/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 6/10 — Средняя-высокая (50-70%)</div>
+        <div class="plant-id">philodendron_selloum</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="פילודנדרון קסאנדו" data-id="philodendron_xanadu">
+    <img src="../IMAGES/philodendron_xanadu.jpg" alt="פילודנדרון קסאנדו" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">פילודנדרון קסאנדו</div>
+        <div class="plant-name-en">Thaumatophyllum xanadu</div>
+        <div class="plant-score">☀️ <span class="score-value">7/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 5/10 — Средняя-высокая (50-70%)</div>
+        <div class="plant-id">philodendron_xanadu</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="פילודנדרון רחב-עלים" data-id="philodendron">
+    <img src="../IMAGES/philodendron_imperial.jpg" alt="פילודנדרון רחב-עלים" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">פילודנדרון רחב-עלים</div>
+        <div class="plant-name-en">Philodendron (типа Imperial Green)</div>
+        <div class="plant-score">☀️ <span class="score-value">7/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 6/10 — Средняя-высокая</div>
+        <div class="plant-id">philodendron</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #CDDC39;">
+                <div class="group-title">ציון 6/10</div>
+                <div class="group-params">
+                    <div class="param">5 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="אלוקסיה (פולי / אמזוניקה)" data-id="alocasia_amazonica">
+    <img src="../IMAGES/alocasia.jpg" alt="אלוקסיה (פולי / אמזוניקה)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">אלוקסיה (פולי / אמזוניקה)</div>
+        <div class="plant-name-en">Alocasia amazonica</div>
+        <div class="plant-score">☀️ <span class="score-value">6/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 8/10 — Высокая (60-70%)</div>
+        <div class="plant-id">alocasia_amazonica</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="אלוקסיה פריידק" data-id="alocasia_frydek">
+    <img src="../IMAGES/alocasia_frydek.jpg" alt="אלוקסיה פריידק" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">אלוקסיה פריידק</div>
+        <div class="plant-name-en">Alocasia micholitziana 'Frydek'</div>
+        <div class="plant-score">☀️ <span class="score-value">6/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 9/10 — Высокая (60-80%)</div>
+        <div class="plant-id">alocasia_frydek</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="אנטוריום" data-id="anthurium_andraeanum">
+    <img src="../IMAGES/anthurium.jpg" alt="אנטוריום" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">אנטוריום</div>
+        <div class="plant-name-en">Anthurium andraeanum</div>
+        <div class="plant-score">☀️ <span class="score-value">6/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 8/10 — Высокая (60-70%)</div>
+        <div class="plant-id">anthurium_andraeanum</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="אנטוריום קלרינרוויום" data-id="anthurium_clarinervium">
+    <img src="../IMAGES/anthurium_clarinervium.jpg" alt="אנטוריום קלרינרוויום" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">אנטוריום קלרינרוויום</div>
+        <div class="plant-name-en">Anthurium clarinervium</div>
+        <div class="plant-score">☀️ <span class="score-value">6/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 9/10 — Высокая (60-80%)</div>
+        <div class="plant-id">anthurium_clarinervium</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="סחלב פלאנופסיס" data-id="phalaenopsis">
+    <img src="../IMAGES/orchid.jpg" alt="סחלב פלאנופסיס" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">סחלב פלאנופסיס</div>
+        <div class="plant-name-en">Phalaenopsis</div>
+        <div class="plant-score">☀️ <span class="score-value">6/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 5/10 — Средняя-высокая</div>
+        <div class="plant-id">phalaenopsis</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #8BC34A;">
+                <div class="group-title">ציון 5/10</div>
+                <div class="group-params">
+                    <div class="param">5 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Сингониум 'Golden Allusion'" data-id="syngonium_golden_allusion">
+    <img src="../IMAGES/syngonium_golden_allusion.jpg" alt="Сингониум 'Golden Allusion'" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Сингониум 'Golden Allusion'</div>
+        <div class="plant-name-en">Syngonium podophyllum 'Golden Allusion'</div>
+        <div class="plant-score">☀️ <span class="score-value">5/10</span> — 6000 lux</div>
+        <div class="plant-score-secondary">💧 5/10 — Средняя-высокая</div>
+        <div class="plant-id">syngonium_golden_allusion</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="אפיפרמנום / סקינדפסוס" data-id="epipremnum">
+    <img src="../IMAGES/epipremnum.jpg" alt="אפיפרמנום / סקינדפסוס" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">אפיפרמנום / סקינדפסוס</div>
+        <div class="plant-name-en">Epipremnum aureum / Scindapsus</div>
+        <div class="plant-score">☀️ <span class="score-value">5/10</span> — 6000 lux</div>
+        <div class="plant-score-secondary">💧 3/10 — Средняя</div>
+        <div class="plant-id">epipremnum</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="דרצנה מרגינטה" data-id="dracaena_marginata">
+    <img src="../IMAGES/dracaena_marginata.jpg" alt="דרצנה מרגינטה" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">דרצנה מרגינטה</div>
+        <div class="plant-name-en">Dracaena marginata</div>
+        <div class="plant-score">☀️ <span class="score-value">5/10</span> — 6000 lux</div>
+        <div class="plant-score-secondary">💧 3/10 — Средняя</div>
+        <div class="plant-id">dracaena_marginata</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="דרצנה פרגרנס / דרמנסיס" data-id="dracaena_fragrans">
+    <img src="../IMAGES/dracaena_fragrans.jpg" alt="דרצנה פרגרנס / דרמנסיס" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">דרצנה פרגרנס / דרמנסיס</div>
+        <div class="plant-name-en">Dracaena fragrans / deremensis</div>
+        <div class="plant-score">☀️ <span class="score-value">5/10</span> — 6000 lux</div>
+        <div class="plant-score-secondary">💧 3/10 — Средняя</div>
+        <div class="plant-id">dracaena_fragrans</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="סנפוליה (סגלנית אפריקאית)" data-id="saintpaulia">
+    <img src="../IMAGES/saintpaulia.jpg" alt="סנפוליה (סגלנית אפריקאית)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">סנפוליה (סגלנית אפריקאית)</div>
+        <div class="plant-name-en">Saintpaulia ionantha</div>
+        <div class="plant-score">☀️ <span class="score-value">5/10</span> — 8000 lux</div>
+        <div class="plant-score-secondary">💧 4/10 — Средняя (50-60%)</div>
+        <div class="plant-id">saintpaulia</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #66BB6A;">
+                <div class="group-title">ציון 4/10</div>
+                <div class="group-params">
+                    <div class="param">1 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="ספטיפילום" data-id="spathiphyllum">
+    <img src="../IMAGES/spathiphyllum.jpg" alt="ספטיפילום" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">ספטיפילום</div>
+        <div class="plant-name-en">Spathiphyllum</div>
+        <div class="plant-score">☀️ <span class="score-value">4/10</span> — 6000 lux</div>
+        <div class="plant-score-secondary">💧 6/10 — Средняя-высокая</div>
+        <div class="plant-id">spathiphyllum</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #4CAF50;">
+                <div class="group-title">ציון 3/10</div>
+                <div class="group-params">
+                    <div class="param">3 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="אגלונמה מגוונת" data-id="aglaonema">
+    <img src="../IMAGES/aglaonema.jpeg" alt="אגלונמה מגוונת" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">אגלונמה מגוונת</div>
+        <div class="plant-name-en">Aglaonema</div>
+        <div class="plant-score">☀️ <span class="score-value">3/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 3/10 — Средняя</div>
+        <div class="plant-id">aglaonema</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="כלורופיטום" data-id="chlorophytum_comosum">
+    <img src="../IMAGES/chlorophytum.jpg" alt="כלורופיטום" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">כלורופיטום</div>
+        <div class="plant-name-en">Chlorophytum comosum</div>
+        <div class="plant-score">☀️ <span class="score-value">3/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 3/10 — Средняя</div>
+        <div class="plant-id">chlorophytum_comosum</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="שלומברגרה (קקטוס חג המולד)" data-id="schlumbergera">
+    <img src="../IMAGES/schlumbergera.jpg" alt="שלומברגרה (קקטוס חג המולד)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">שלומברגרה (קקטוס חג המולד)</div>
+        <div class="plant-name-en">Schlumbergera</div>
+        <div class="plant-score">☀️ <span class="score-value">3/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 2/10 — Средняя</div>
+        <div class="plant-id">schlumbergera</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #26A69A;">
+                <div class="group-title">ציון 2/10</div>
+                <div class="group-params">
+                    <div class="param">5 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="זמיוקולקס (עץ הדולר)" data-id="zamioculcas">
+    <img src="../IMAGES/zamioculcas.jpg" alt="זמיוקולקס (עץ הדולר)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">זמיוקולקס (עץ הדולר)</div>
+        <div class="plant-name-en">Zamioculcas zamiifolia</div>
+        <div class="plant-score">☀️ <span class="score-value">2/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 1/10 — Низкая-средняя</div>
+        <div class="plant-id">zamioculcas</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="חמדוריאה / דקל סלון" data-id="chamaedorea">
+    <img src="../IMAGES/chamaedorea.jpg" alt="חמדוריאה / דקל סלון" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">חמדוריאה / דקל סלון</div>
+        <div class="plant-name-en">Chamaedorea</div>
+        <div class="plant-score">☀️ <span class="score-value">2/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 7/10 — Высокая</div>
+        <div class="plant-id">chamaedorea</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="סנסיווריה (לשון החותנת)" data-id="sansevieria">
+    <img src="../IMAGES/sansevieria.jpg" alt="סנסיווריה (לשון החותנת)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">סנסיווריה (לשון החותנת)</div>
+        <div class="plant-name-en">Sansevieria trifasciata</div>
+        <div class="plant-score">☀️ <span class="score-value">2/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 1/10 — Низкая-средняя</div>
+        <div class="plant-id">sansevieria</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="קלתאה אורנטה" data-id="calathea_ornata">
+    <img src="../IMAGES/calathea_ornata.jpg" alt="קלתאה אורנטה" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">קלתאה אורנטה</div>
+        <div class="plant-name-en">Calathea ornata</div>
+        <div class="plant-score">☀️ <span class="score-value">2/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 8/10 — Высокая (60-70%)</div>
+        <div class="plant-id">calathea_ornata</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="קלתאה לנסיפוליה" data-id="calathea_lancifolia">
+    <img src="../IMAGES/calathea_lancifolia.jpg" alt="קלתאה לנסיפוליה" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">קלתאה לנסיפוליה</div>
+        <div class="plant-name-en">Calathea lancifolia</div>
+        <div class="plant-score">☀️ <span class="score-value">2/10</span> — 5000 lux</div>
+        <div class="plant-score-secondary">💧 8/10 — Высокая (60-70%)</div>
+        <div class="plant-id">calathea_lancifolia</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="lighting-score-group">
+            <div class="group-header" style="background: #2196F3;">
+                <div class="group-title">ציון 1/10</div>
+                <div class="group-params">
+                    <div class="param">2 צמחים</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="סלגינלה מרטנס" data-id="selaginella">
+    <img src="../IMAGES/selaginella.jpg" alt="סלגינלה מרטנס" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">סלגינלה מרטנס</div>
+        <div class="plant-name-en">Selaginella martensii</div>
+        <div class="plant-score">☀️ <span class="score-value">1/10</span> — 4000 lux</div>
+        <div class="plant-score-secondary">💧 10/10 — Очень высокая (70-90%)</div>
+        <div class="plant-id">selaginella</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="שרך (נפרולפיס)" data-id="nephrolepis">
+    <img src="../IMAGES/nephrolepis.jpeg" alt="שרך (נפרולפיס)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>אין תמונה</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">שרך (נפרולפיס)</div>
+        <div class="plant-name-en">Nephrolepis exaltata</div>
+        <div class="plant-score">☀️ <span class="score-value">1/10</span> — 4000 lux</div>
+        <div class="plant-score-secondary">💧 10/10 — Высокая (60-80%)</div>
+        <div class="plant-id">nephrolepis</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        var searchInput = document.getElementById('searchInput');
+        var plantCards = document.querySelectorAll('.plant-card');
+        var noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            var searchTerm = this.value.toLowerCase().trim();
+            var visibleCount = 0;
+
+            plantCards.forEach(function(card) {
+                var name = card.getAttribute('data-name').toLowerCase();
+                var id = card.getAttribute('data-id').toLowerCase();
+
+                if (name.indexOf(searchTerm) !== -1 || id.indexOf(searchTerm) !== -1) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            noResults.style.display = (visibleCount === 0 && searchTerm !== '') ? 'block' : 'none';
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                this.dispatchEvent(new Event('input'));
+                this.blur();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && e.target !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

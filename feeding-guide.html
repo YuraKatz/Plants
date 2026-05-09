@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Руководство по подкормкам</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+    </style>
+    <style>
+        .container { max-width: 1400px; }
+        header { text-align: center; }
+        .nav-row {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+        }
+        .nav-mixer {
+            padding: 7px 16px; background: #2d6a4f; color: #fff;
+            border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 14px;
+        }
+        .nav-mixer:hover { background: #1b4332; }
+        .season-indicator {
+            display: inline-block; padding: 6px 16px; border-radius: 4px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+            font-size: 0.95rem; margin-top: 8px;
+        }
+        .season-growth { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+        .season-slow { background: #fef3c7; color: #78350f; border: 1px solid #fbbf24; }
+        .legend {
+            background: #f5f5f0; padding: 16px; border: 1px solid #e5e5e0;
+            border-radius: 4px; margin-bottom: 20px;
+        }
+        .legend h3 { margin-bottom: 10px; color: #333; font-size: 0.95rem; }
+        .legend-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+        .dose-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 42px; padding: 3px 8px; border-radius: 3px;
+            font-weight: 700; font-size: 0.8rem;
+        }
+        .dose-full { background: #d1fae5; color: #065f46; }
+        .dose-half { background: #fef3c7; color: #78350f; }
+        .dose-quarter { background: #ffedd5; color: #9a3412; }
+        .dose-eighth { background: #fee2e2; color: #991b1b; }
+        .dose-forbidden { background: #fee2e2; color: #991b1b; }
+        .dose-top { background: #e0e7ff; color: #3730a3; }
+        .matrix-container { overflow-x: auto; margin-bottom: 28px; }
+        .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .matrix-table th {
+            background: #333; color: #fff; padding: 8px 6px;
+            text-align: center; font-weight: 600; font-size: 0.8rem;
+        }
+        .matrix-table th:first-child { text-align: left; min-width: 180px; }
+        .matrix-table td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #e5e5e0; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .matrix-table tr:hover { background: #fafaf8; }
+        .matrix-table .plant-cell { display: flex; align-items: center; gap: 8px; }
+        .matrix-table .plant-thumb { width: 36px; height: 36px; border-radius: 4px; object-fit: cover; }
+        .matrix-table .plant-info { display: flex; flex-direction: column; }
+        .matrix-table .plant-name { font-weight: 600; color: #333; font-size: 0.85rem; }
+        .matrix-table .plant-latin { font-size: 0.72rem; color: #888; font-style: italic; }
+        .water-rules {
+            margin-top: 28px; padding: 20px; background: #eff6ff;
+            border-radius: 4px; border-left: 4px solid #3b82f6;
+        }
+        .water-rules h2 { color: #1e40af; margin: 0 0 12px 0; font-size: 1.1rem; }
+        .water-rules ul { list-style: none; }
+        .water-rules li { margin-bottom: 8px; font-size: 0.9rem; }
+        .water-rules li b { color: #1e40af; }
+        .fertilizer-info {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px; margin-top: 16px;
+        }
+        .fertilizer-card {
+            background: #f5f5f0; padding: 16px; border-radius: 4px;
+            border-left: 3px solid #2d6a4f;
+        }
+        .fertilizer-card h4 { color: #333; margin-bottom: 6px; font-size: 0.95rem; }
+        .fertilizer-card p { font-size: 0.85rem; color: #555; }
+        @media (max-width: 768px) {
+            .legend-grid { flex-direction: column; }
+            .matrix-table { font-size: 0.78rem; }
+            .matrix-table .plant-thumb { width: 28px; height: 28px; }
+        }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="feeding-guide.html" class="active">RU</a>
+    <a href="en/feeding-guide.html" >EN</a>
+    <a href="he/feeding-guide.html" >HE</a>
+</div>
+    <div class="container">
+        <div class="nav-row">
+            <a href="index.html" class="nav-back">← Главная</a>
+            <a href="water-mixer.html" class="nav-mixer">🧪 Миксер канистр</a>
+        </div>
+        <header>
+            <h1>Руководство по подкормкам</h1>
+            <div id="seasonIndicator" class="season-indicator" data-season-growth="Режим: РОСТ (Весна/Лето)" data-season-slow="Режим: ПОКОЙ (Осень/Зима)">Режим: ЗАГРУЗКА...</div>
+        </header>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h3>Обозначения дозировок</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <span class="dose-badge dose-full">100%</span>
+                    <span>Полная доза</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-half">1/2</span>
+                    <span>Половина дозы</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-quarter">1/4</span>
+                    <span>Четверть дозы</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-eighth">1/8</span>
+                    <span>Минимальная доза</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-top">top</span>
+                    <span>Только сверху</span>
+                </div>
+                <div class="legend-item">
+                    <span class="dose-badge dose-forbidden">—</span>
+                    <span>Запрещено</span>
+                </div>
+            </div>
+            <div style="margin-top: 15px; padding: 12px; background: #ebf8ff; border-radius: 8px; text-align: center;">
+                <a href="water-mixer.html" style="color: #2b6cb0; text-decoration: none; font-weight: 500;">
+                    💧 Точные дозировки в мл/л → Миксер воды
+                </a>
+            </div>
+        </div>
+
+        <!-- Matrix Table -->
+        <h2>Таблица подкормок</h2>
+        <div class="matrix-container">
+            <table class="matrix-table" id="matrixTable">
+                <thead>
+                    <tr>
+                        <th>Растение</th>
+                        <th>Universal</th>
+                        <th>Flowering</th>
+                        <th>Multicote</th>
+                    </tr>
+                </thead>
+                <tbody id="matrixBody">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Fertilizer Info -->
+        <h2>Удобрения</h2>
+        <div class="fertilizer-info">
+            <div class="fertilizer-card">
+                <h4>Flower Universal</h4>
+                <p>Универсальное жидкое удобрение NPK 5-5-7. Подходит для большинства растений в период активного роста.</p>
+            </div>
+            <div class="fertilizer-card">
+                <h4>Flower Flowering</h4>
+                <p>Удобрение для цветущих растений с повышенным содержанием фосфора и калия. Стимулирует цветение.</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #805ad5;">
+                <h4>Ecogan Multicote</h4>
+                <p>Гранулированное удобрение пролонгированного действия. НЕ использовать на фитильном поливе!</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #9f7aea;">
+                <h4>Flower Orchids 0-17-7</h4>
+                <p>Специальное удобрение для орхидей в фазе цветения. 0% азота, 17% фосфора — только для цветения!</p>
+            </div>
+        </div>
+
+        <!-- Additives -->
+        <h2>Добавки</h2>
+        <div class="fertilizer-info">
+            <div class="fertilizer-card" style="border-left-color: #9f7aea;">
+                <h4>🍄 DYNOMYCO Spark</h4>
+                <p>Микориза + бактерии Bacillus + гуминовая кислота. 1 ч.л. на 4 л, каждые 1-2 недели. Для укоренения и пересадки.</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #68d391;">
+                <h4>⬆️ BioBizz Bio·Up</h4>
+                <p>Органический pH Up на гуминовых кислотах. 0.1 мл/л = +0.1 pH. Не вредит микоризе!</p>
+            </div>
+            <div class="fertilizer-card" style="border-left-color: #fc8181;">
+                <h4>⬇️ Green Farmer pH-</h4>
+                <p>Минеральный pH Down. По каплям до нужного значения. Использовать с осторожностью.</p>
+            </div>
+        </div>
+
+        <!-- Water Rules -->
+        <div class="water-rules">
+            <h2>Правила полива (всегда)</h2>
+            <ul>
+                <li><b>Cal-Mag:</b> Используйте только с RO (осмос) водой для предотвращения дефицита минералов.</li>
+                <li><b>pH:</b> Регулируйте в конце, после всех добавок. Bio·Up для повышения (органика), pH- для понижения.</li>
+                <li><b>DYNOMYCO:</b> После применения НЕ вносить фосфорные удобрения — высокий P подавляет микоризу.</li>
+                <li><b>Multicote:</b> Запрещён для растений на фитильном поливе — вымывается и вызывает ожог корней.</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var t = {"nav_home": "← Главная", "title_home": "База данных растений", "title_soil": "Грунтовые смеси", "title_water": "Группы воды", "title_lighting": "Группы освещения", "title_catalog": "Каталог растений", "title_feeding": "Руководство по подкормкам", "title_mixer": "Миксер воды и удобрений", "title_products": "Мои препараты", "title_problems": "Диагностика проблем", "title_seasonal": "Сезонный уход", "title_propagation": "Размножение", "title_tracker": "Протокол полива", "title_pests": "Вредители и болезни", "btn_print": "🖨️ Печать", "btn_all_plants": "← Все растения", "btn_parts": "📐 Части", "btn_percentages": "📐 Проценты", "no_image": "Нет изображения", "index_title": "🌿 Plants Care Database", "index_subtitle": "Комплексная система ухода за растениями", "index_search": "🔍 Поиск растения (название, латынь или тип)...", "card_catalog": "Каталог растений", "card_catalog_desc": "Подробные карточки ухода для каждого растения с фотографиями и рекомендациями.", "card_water": "Группы воды", "card_water_desc": "Система RO Water + CalMag. Группы растений по требованиям к PPM и pH.", "card_lighting": "Группы освещения", "card_lighting_desc": "Группировка на основе Lux. Группы растений по требованиям к уровню света.", "card_humidity": "Группы влажности", "card_humidity_desc": "Относительные потребности во влажности (1-10). Группировка растений по требовательности к влажности.", "card_lighting_score": "Группы освещения", "card_lighting_score_desc": "Относительные потребности в свете (1-10). Группировка растений по требовательности к освещению.", "card_soil": "Грунтовые смеси", "card_soil_desc": "Рецепты грунтовых смесей для различных типов растений и методов полива.", "card_feeding": "Подкормки", "card_feeding_desc": "Что делать сегодня: вода + удобрения по сезону.", "card_mixer": "Миксер воды", "card_mixer_desc": "Канистры A/B/C: PPM, pH и рецепты удобрений.", "card_tracker": "Трекер полива", "card_tracker_desc": "Отслеживание поливов и промывок.", "card_products": "Мои препараты", "card_products_desc": "Удобрения, добавки и регуляторы pH.", "card_diagnostics": "Диагностика", "card_diagnostics_desc": "Проблемы и решения для каждого растения.", "card_seasonal": "Сезонный уход", "card_seasonal_desc": "Как ухаживать за растениями в разное время года.", "card_propagation": "Размножение", "card_propagation_desc": "Методы размножения для каждого растения.", "card_pests": "Вредители и болезни", "card_pests_desc": "Определение, лечение и профилактика.", "card_rotation": "Ротация удобрений", "card_rotation_desc": "Стратегия чередования базы и biostim по канистрам A/B/C/V с фазированным вводом VGI.", "rotation_title": "🔄 Ротация удобрений и биостимуляторов", "rotation_subtitle": "Стратегия ротации по канистрам A/B/C/V с фазированным вводом VGI", "footer_text": "Plants Database v3.0 | PWA Ready", "ai_link_desc": "Вставьте эту ссылку в чат с AI (ChatGPT, Claude, Gemini) — и он будет знать всю информацию сайта", "ai_link_btn": "🤖 Скопировать ссылку для AI", "ai_link_copied": "✅ Скопировано!", "stat_plants": "Растений", "stat_source": "Источник", "stat_groups": "Групп", "stat_mixes": "Смесей", "stat_seasons": "Сезона", "stat_canisters": "Канистры", "stat_cycle": "Цикл", "stat_products": "Препаратов", "stat_categories": "Категории", "stat_solutions": "Решений", "stat_tips": "Совета", "stat_methods": "Методов", "stat_pests_count": "Вредителей", "stat_diseases": "Болезни", "unit_ml": "мл", "unit_l": "л", "unit_tsp": "ч.л.", "unit_g": "г", "unit_cm": "см", "unit_months": "мес.", "additive": "Добавка", "fertilizer": "Удобрение", "ph_regulator": "Регулятор pH", "Жидкое удобрение для всех видов": "Жидкое удобрение для всех видов", "Минеральное удобрение для цветения": "Минеральное удобрение для цветения", "Добавка Ca и Mg": "Добавка Ca и Mg", "Регулятор pH (органический)": "Регулятор pH (органический)", "Минеральное удобрение": "Минеральное удобрение", "Инокулянт (грибы и бактерии)": "Инокулянт (грибы и бактерии)", "Регулятор pH (минеральный)": "Регулятор pH (минеральный)", "Универсальное жидкое удобрение": "Универсальное жидкое удобрение", "Специальное для орхидей": "Специальное для орхидей", "Для РО воды": "Для РО воды", "Органический pH Up": "Органический pH Up", "Гранулы длительного действия": "Гранулы длительного действия", "Микориза и бактерии": "Микориза и бактерии", "Минеральный pH Down": "Минеральный pH Down", "pest_isolate": "ИЗОЛИРУЙТЕ!", "pest_isolate_desc": "Немедленно отделите пораженное растение от остальных!", "pest_symptoms": "Симптомы", "pest_treatment": "Лечение", "pest_prevention": "Профилактика", "pest_emergency": "Экстренно", "soil_title": "🌱 Грунтовые смеси", "soil_subtitle": "Рецепты грунтовых смесей для комнатных растений", "soil_search": "Поиск по названию смеси или растению...", "soil_no_results": "Смеси не найдены", "soil_variant": "Вариант", "soil_composition": "Состав", "soil_suitable_for": "Подходит для:", "soil_humus_allowed": "Можно добавить гумус", "soil_humus_not_allowed": "Гумус не рекомендуется", "soil_humus_replaces": "вместо части", "water_title": "💧 Группы воды", "water_subtitle": "RO Water + CalMag System for Indoor Plants", "water_search": "Поиск по названию или plant_id...", "water_no_results": "Растения не найдены", "water_btn_mixer": "🧪 Миксер удобрений", "water_pure_ro": "ТОЛЬКО чистый RO", "water_no_additives": "Без добавок!", "water_carnivorous": "Хищные", "water_group_a": "Group A - Очень мягкая вода", "water_group_orchids": "🌺 Орхидеи - Минимальный PPM", "water_group_b": "Group B - Средняя минерализация", "water_group_c": "Group C - Чуть более насыщенная", "water_group_special": "Хищные - ТОЛЬКО чистый RO", "water_target": "target", "lighting_title": "☀️ Группы освещения", "lighting_subtitle": "Lux-Based Light Requirements for Indoor Plants", "lighting_search": "Поиск по названию или plant_id...", "lighting_no_results": "Растения не найдены", "lighting_legend_title": "Группы по освещению", "lighting_photoperiod": "Фотопериод", "lighting_low": "Low Light - Теневыносливые", "lighting_low_desc": "непрямой свет, северные окна", "lighting_medium": "Medium Light - Средний свет", "lighting_medium_desc": "яркий рассеянный свет", "lighting_bright": "Bright Light - Яркий свет", "lighting_bright_desc": "прямое солнце, южные окна", "feeding_title": "Руководство по подкормкам", "feeding_legend_title": "Обозначения дозировок", "feeding_dose_full": "Полная доза", "feeding_dose_half": "Половина дозы", "feeding_dose_quarter": "Четверть дозы", "feeding_dose_min": "Минимальная доза", "feeding_dose_top": "Только сверху", "feeding_dose_forbidden": "Запрещено", "feeding_mixer_link": "💧 Точные дозировки в мл/л → Миксер воды", "feeding_table_title": "Таблица подкормок", "feeding_col_plant": "Растение", "feeding_season_growth": "Режим: РОСТ (Весна/Лето)", "feeding_season_slow": "Режим: ПОКОЙ (Осень/Зима)", "feeding_season_loading": "Режим: ЗАГРУЗКА...", "feeding_btn_mixer": "🧪 Миксер канистр", "mixer_title": "Миксер воды и удобрений", "mixer_subtitle": "Смешивай правильно — по PPM и сезону", "mixer_btn_print": "🖨️ Печать рецепта", "mixer_group_a": "Чувствительные", "mixer_group_b": "Ароидные и стандартные", "mixer_group_c": "Неприхотливые", "mixer_banner_light": "💡 Искусственное освещение = всегда сезон роста", "mixer_tip_flush_title": "Каждый 4-й полив — БЕЗ удобрений!", "mixer_tip_flush_desc": "Промывка от накопления солей. Та же канистра, но без добавок.", "mixer_tip_ph_title": "pH мерить через 2-3 минуты", "mixer_tip_ph_desc": "После добавления удобрений подожди — микроэлементы растворяются не сразу, pH может упасть на 0.2-0.4.", "mixer_tip_ppm_title": "PPM ±10-15 — это норма", "mixer_tip_ppm_desc": "78/120/152 — ориентиры, не догма. Если растение бодрое, корни белые — всё ок.", "mixer_tip_order_title": "Порядок: CalMag → PPM → удобрение → pH", "mixer_tip_order_desc": "Подробнее — в гайде ниже ↓", "mixer_guide_btn_open": "📖 Как правильно смешивать воду (нажми чтобы открыть)", "mixer_guide_btn_close": "📖 Как правильно смешивать воду (нажми чтобы скрыть)", "mixer_guide_title": "🔬 Пошаговый гайд: как готовить воду", "mixer_step_1_title": "💧 RO вода", "mixer_step_1_desc": "Начинаем с чистой осмос-воды. PPM должен быть близок к нулю (0-10).", "mixer_step_2_title": "🧂 Добавь CalMag", "mixer_step_2_desc": "Доведи PPM до целевого значения группы: A≈80, B≈120, C≈150.", "mixer_step_2_hint": "💡 Эта база одинаковая для промывки и подкормки!", "mixer_step_3_title": "🧪 Добавь удобрение", "mixer_step_3_desc": "PPM вырастет на 50-150 — это нормально! Удобрение = соли = PPM выше. Не надо корректировать.", "mixer_step_4_title": "⏱️ Подожди 2-3 минуты", "mixer_step_4_desc": "Микроэлементы растворяются не сразу. pH может упасть на 0.2-0.4 после полного растворения.", "mixer_step_5_title": "📊 Измерь и скорректируй pH", "mixer_step_5_desc": "Целевой pH: 5.8-6.5 (в зависимости от группы). Корректируй pH ПОСЛЕДНИМ — после всех добавок.", "mixer_step_final_title": "🎉 Готово!", "mixer_step_final_desc": "Вода готова к поливу. PPM после удобрения: 130-300 — это норма.", "mixer_ppm_why_title": "📊 Почему PPM после удобрения выше — и это OK", "mixer_ppm_why_desc": "Целевой PPM (80/120/150) — это база CalMag. Удобрение добавляется СВЕРХУ:", "mixer_ppm_total_ok": "✓ OK", "mixer_ppm_with_fert": "PPM + удобр.", "mixer_flush_vs_feed_title": "🚿 Промывка vs 🧪 Подкормка", "mixer_flush_title": "Промывка (каждый 4-й)", "mixer_feed_title": "Подкормка", "mixer_flush_vs_feed_hint": "☝️ CalMag база одинаковая, pH всегда в конце!", "mixer_ph_logic_title": "🧪 Что происходит с pH", "mixer_ph_logic_desc": "CalMag поднимает pH, удобрение опускает. Поэтому мерь pH только ПОСЛЕ добавления всего — один раз в конце.", "mixer_ph_logic_adjust": "Корректируй!", "mixer_dionaea_warning_title": "⚠️ Дионея — особый случай!", "mixer_dionaea_warning_desc": "Используй воду из канистры A, но БЕЗ УДОБРЕНИЙ. Ещё лучше — чистый RO (PPM < 50). Любые добавки убивают растение!", "mixer_fert_info_title": "🧪 Удобрения FLOWER", "mixer_fert_universal_desc": "Универсальное для всех растений", "mixer_fert_flowering_desc": "Для цветущих растений (больше калия)", "mixer_fert_orchids_desc": "Только для орхидей в цветении!", "mixer_fert_orchids_hint": "0% азота — максимум фосфора для цветков", "mixer_fert_which_title": "Для каких растений", "mixer_fert_group_flowering": "🌸 Flowering ИЛИ Universal", "mixer_fert_group_flowering_desc": "Цветущие — можно чередовать или Flowering для стимуляции цветов", "mixer_fert_group_orchids": "🪻 Орхидеи — специальный режим", "mixer_fert_group_orchids_desc": "Доза 1/8! Разные удобрения для разных фаз", "mixer_fert_orchids_growth": "Рост листьев/корней:", "mixer_fert_orchids_bloom": "Цветение:", "mixer_fert_group_universal": "🌿 Только Universal", "mixer_fert_group_universal_desc": "Декоративно-лиственные — Flowering им не нужен", "mixer_fert_group_none": "⚠️ Без удобрений", "mixer_dosage_table_title": "📏 Дозировки FLOWER (шприц)", "mixer_dosage_base_note": "Базовая доза: 6 мл/л (6:1000)", "mixer_dosage_hack_title": "💉 Лайфхак для точности 1/8:", "mixer_dosage_hack_desc": "Разведи 6 мл в 1 л воды = концентрат. Из него бери 125 мл на литр = точная доза 1/8.", "mixer_multicote_title": "🔵 Гранулы Multicote (Ecogan)", "mixer_multicote_desc": "Удобрение длительного действия — медленно высвобождается 3-6 месяцев", "mixer_multicote_stat_dose": "Сколько", "mixer_multicote_stat_when": "Когда", "mixer_multicote_stat_freq": "Как часто", "mixer_multicote_dose_val": "3-5 г на 1 л грунта", "mixer_multicote_dose_hint": "~1 чайная ложка на горшок 15 см", "mixer_multicote_when_val": "При пересадке", "mixer_multicote_when_hint": "Или сверху (top dressing) весной", "mixer_multicote_freq_val": "Раз раз в 3-6 мес", "mixer_multicote_freq_hint": "Зависит от типа гранул", "mixer_multicote_warning": "⚠️ НЕЛЬЗЯ для фитильного полива!", "mixer_multicote_warning_desc": "Гранулы вымываются и обжигают корни. Только верхний полив!", "mixer_multicote_combo_title": "🔀 Совмещение с жидкими (FLOWER)", "mixer_multicote_combo_1": "✅ Можно использовать вместе", "mixer_multicote_combo_2": "⚡ Уменьши жидкое до 1/2 дозы (3 мл/л)", "mixer_multicote_combo_3": "📊 Следи за состоянием листьев — при ожогах убери жидкое", "mixer_multicote_no_wick": "НЕ для фитиля!", "mixer_dynomyco_title": "🍄 DYNOMYCO Spark (Микориза + бактерии)", "mixer_dynomyco_desc": "3-в-1 инокулянт: микоризные грибы + бактерии Bacillus + гуминовая кислота", "mixer_dynomyco_dose_val": "1 ч.л. (~3 г) на 4 л", "mixer_dynomyco_dose_hint": "Тщательно размешать", "mixer_dynomyco_when_val": "Каждые 1-2 недели", "mixer_dynomyco_when_hint": "До 6 применений на растение", "mixer_dynomyco_target_val": "Корни + питание", "mixer_dynomyco_target_hint": "Пересадка, укоренение, вегетация", "mixer_dynomyco_inside_title": "🧬 Что внутри", "mixer_dynomyco_myco": "Микоризные грибы:", "mixer_dynomyco_bacteria": "Бактерии Bacillus (10M CFU/г):", "mixer_dynomyco_humin": "+ Гуминовая кислота 90% (из леонардита)", "mixer_dynomyco_phosphorus_warning": "⚠️ Важно: НЕ добавлять фосфорные удобрения!", "mixer_dynomyco_phosphorus_desc": "После DYNOMYCO избегай стартовых P-удобрений — высокий фосфор подавляет развитие микоризы.", "mixer_dynomyco_usage_title": "💡 Когда использовать", "mixer_dynomyco_usage_1": "✅ При пересадке (полить после посадки)", "mixer_dynomyco_usage_2": "✅ При проращивании семян", "mixer_dynomyco_usage_3": "✅ При укоренении черенков", "mixer_dynomyco_usage_4": "✅ Каждые 1-2 недели в вегетацию", "mixer_dynomyco_storage_title": "📦 Хранение", "mixer_dynomyco_storage_desc": "Тёмное, сухое место • 5-25°C • Не замораживать • Срок годности: 09/2027", "mixer_ph_regulators_title": "⚗️ Регуляторы pH", "mixer_ph_regulators_desc": "Корректировка кислотности воды — последний шаг перед поливом", "mixer_ph_down_title": "⬇️ Green Farmer pH-", "mixer_ph_down_desc": "Понижает pH (минеральный)", "mixer_ph_up_title": "⬆️ BioBizz Bio·Up", "mixer_ph_up_desc": "Повышает pH (органический, OMRI)", "mixer_ph_apply": "Применение:", "mixer_ph_down_apply_desc": "По каплям до нужного pH", "mixer_ph_up_apply_desc": "0.1 мл/л = +0.1 pH", "mixer_ph_warning_skin": "⚠️ Осторожно с кожей и глазами", "mixer_ph_warning_safe": "✅ Не вредит микоризе и бактериям", "mixer_ph_targets_title": "🎯 Целевые значения pH", "mixer_ph_bio_up_title": "💡 Bio·Up — когда выбрать органику", "mixer_ph_bio_up_1": "✅ Работаешь с микоризой (DYNOMYCO)", "mixer_ph_bio_up_2": "✅ Используешь живые почвы", "mixer_ph_bio_up_3": "✅ Органические субстраты", "mixer_ph_bio_up_4": "✅ Мягкая вода (часто нужно поднять pH)", "mixer_ph_bio_up_desc": "Bio·Up на основе гуминовых кислот — не убивает полезные микроорганизмы!", "products_title": "🧪 Мои препараты", "products_subtitle": "Полная информация о всех удобрениях и добавках", "products_tab_all": "Все", "products_tab_fertilizers": "Удобрения", "products_tab_additives": "Добавки", "products_tab_ph": "pH регуляторы", "products_summary_title": "📊 Итого в арсенале", "products_total": "Всего препаратов", "problems_title": "Диагностика растений", "problems_subtitle": "Выберите растение для диагностики проблем", "seasonal_title": "📅 Сезонный уход", "seasonal_subtitle": "Календарь ухода за комнатными растениями", "propagation_title": "🌱 Размножение растений", "propagation_subtitle": "Методы и инструкции по размножению", "tracker_title": "Протокол полива", "tracker_subtitle": "RO + CalMag + Удобрения", "pests_title": "🐛 Вредители и болезни", "pests_subtitle": "Определение, лечение и профилактика", "catalog_title": "Каталог растений", "catalog_subtitle": "Полный справочник по уходу за комнатными растениями", "catalog_search": "Поиск по названию, латыни или типу...", "catalog_filter_label": "Сложность:", "catalog_filter_all": "Все", "catalog_filter_easy": "Легко", "catalog_filter_medium": "Средне", "catalog_filter_hard": "Сложно", "catalog_filter_expert": "Эксперт", "catalog_no_results": "Растения не найдены", "catalog_facts_title": "Интересные факты", "catalog_problems_title": "Проблемы и симптомы", "catalog_wick_ok": "Фитиль: ДА", "catalog_wick_no": "Фитиль: НЕТ", "catalog_manual": "ручной", "catalog_wick": "фитиль", "catalog_flowering_title": "Цветущее", "catalog_no_photo": "Нет фото", "catalog_label_lighting": "Свет", "catalog_label_humidity": "Влажность", "catalog_label_watering": "Полив", "catalog_label_soil": "Грунт", "catalog_label_method": "Метод:", "catalog_wick_suitable": "Подходит для фитиля", "catalog_wick_not": "Не рекомендуется для фитиля", "catalog_moss_needed": "Нужна опора", "catalog_moss_optional": "Опора опционально", "catalog_water_ro_calmag": "Cal-Mag (RO) + корр. pH", "catalog_water_ro_only": "Только RO (TDS < 10)", "catalog_feeding_forbidden": "ЗАПРЕЩЕНО", "catalog_feeding_none": "БЕЗ удобрений", "catalog_feeding_full": "Полная доза", "catalog_feeding_half": "Половина дозы", "catalog_feeding_quarter": "Четверть дозы", "catalog_feeding_min": "Минимальная доза", "catalog_feeding_top": "Только подкормка", "catalog_feeding_label": "Питание", "catalog_water_label": "Вода", "catalog_difficulty_label": "Сложность ухода:", "catalog_difficulty_easy": "Лёгкая", "catalog_difficulty_medium": "Средняя", "catalog_difficulty_hard": "Сложная", "catalog_difficulty_expert": "Экспертная", "fert_universal_short": "Универсал", "fert_flowering_short": "Цветение", "fert_multicote_short": "Мультикот", "group_sensitive": "Чувствительные (A)", "group_aroids": "Ароидные (B)", "group_undemanding": "Неприхотливые (C)", "feeding_section_fertilizers": "Удобрения", "feeding_section_additives": "Добавки", "feeding_section_rules": "Правила полива (всегда)", "feeding_group_aroids": "Ароидные", "feeding_group_sensitive": "Чувствительные", "feeding_group_orchids": "Орхидеи", "feeding_group_general": "Общие комнатные", "feeding_group_carnivorous": "Хищные", "feeding_wick_forbidden": "Запрещено на фитиле", "fert_universal_desc": "Универсальное жидкое удобрение NPK 5-5-7. Подходит для большинства растений в период активного роста.", "fert_flowering_desc": "Удобрение для цветущих растений с повышенным содержанием фосфора и калия. Стимулирует цветение.", "fert_multicote_desc": "Гранулированное удобрение пролонгированного действия. НЕ использовать на фитильном поливе!", "fert_orchids_desc": "Специальное удобрение для орхидей в фазе цветения. 0% азота, 17% фосфора — только для цветения!", "fert_dynomyco_desc": "Микориза + бактерии Bacillus + гуминовая кислота. 1 ч.л. на 4 л, каждые 1-2 недели. Для укоренения и пересадки.", "fert_bioup_desc": "Органический pH Up на гуминовых кислотах. 0.1 мл/л = +0.1 pH. Не вредит микоризе!", "fert_phdown_desc": "Минеральный pH Down. По каплям до нужного значения. Использовать с осторожностью.", "fert_rule_calmag": "Используйте только с RO (осмос) водой для предотвращения дефицита минералов.", "fert_rule_ph": "Регулируйте в конце, после всех добавок. Bio·Up для повышения (органика), pH- для понижения.", "fert_rule_dynomyco": "После применения НЕ вносить фосфорные удобрения — высокий P подавляет микоризу.", "fert_rule_multicote": "Запрещён для растений на фитильном поливе — вымывается и вызывает ожог корней.", "tracker_recipe": "1. Рецепт на 1 литр", "tracker_col_group": "Группа", "tracker_flush_note": "* Промывка — без Universal", "tracker_calc_group": "Группа:", "tracker_calc_liters": "Литры:", "tracker_reference": "2. Справочник растений по группам", "tracker_additives": "3. Добавки", "tracker_procedure": "4. Порядок приготовления", "tracker_log": "5. Журнал поливов", "tracker_stat_total": "Всего", "tracker_stat_feeds": "Удобрений", "tracker_stat_flushes": "Промывок", "tracker_col_date": "Дата", "tracker_col_type": "Тип", "tracker_col_notes": "Примечания", "seasonal_spring": "🌸 Весна", "seasonal_summer": "☀️ Лето", "seasonal_autumn": "🍂 Осень", "seasonal_winter": "❄️ Зима", "seasonal_loading": "Загрузка...", "seasonal_banner_light_title": "Есть лампы 10+ часов? Игнорируй сезоны!", "seasonal_banner_light_desc": "При искусственном освещении у растений всегда \"лето\". Поливай и удобряй как летом круглый год. Сокращать ничего не нужно.", "seasonal_banner_kazrin_title": "Голаны (Кацрин): особый климат!", "seasonal_banner_kazrin_desc": "Зима холоднее чем на побережье (бывает снег!). Лето жаркое но не экстремальное. Советы про холодные окна зимой — актуальны! Главные враги: сухой воздух от отопления зимой + кондиционер летом.", "seasonal_spring_months": "Март — Май", "seasonal_summer_months": "Июнь — Август", "seasonal_autumn_months": "Сентябрь — Ноябрь", "seasonal_winter_months": "Декабрь — Февраль", "seasonal_label_watering": "Полив", "seasonal_label_feeding": "Подкормка", "seasonal_label_lighting": "Свет", "seasonal_label_temperature": "Температура", "seasonal_label_tasks": "Что делать", "seasonal_spring_watering_desc": "Постепенно увеличивайте полив. Растения просыпаются и начинают активно расти.", "seasonal_spring_watering_1": "Поливайте утром", "seasonal_spring_watering_2": "Проверяйте влажность чаще", "seasonal_spring_feeding_desc": "Начинайте вносить удобрения. Сначала 1/4 дозы, затем переходите на полную.", "seasonal_spring_feeding_1": "Первая подкормка в марте", "seasonal_spring_feeding_2": "CalMag обязателен", "seasonal_spring_tasks_desc": "Идеальное время для приведения коллекции в порядок.", "seasonal_spring_tasks_1": "Пересадка в свежий грунт", "seasonal_spring_tasks_2": "Обрезка и размножение", "seasonal_spring_tasks_3": "Душ для смыва пыли", "seasonal_summer_watering_desc": "Пик потребления воды. Субстрат высыхает очень быстро.", "seasonal_summer_watering_1": "Полив 2-3 раза в неделю", "seasonal_summer_watering_2": "Следите за фитилем", "seasonal_summer_feeding_desc": "Регулярное питание для активного роста. Максимальные дозы.", "seasonal_summer_feeding_1": "Каждый полив — еда", "seasonal_summer_feeding_2": "Каждый 4-й — промывка", "seasonal_summer_lighting_desc": "Опасность солнечных ожогов даже через стекло.", "seasonal_summer_lighting_1": "Притеняйте южные окна", "seasonal_summer_lighting_2": "Уберите растения от стекла", "seasonal_summer_temp_desc": "Кондиционер — спасение для людей, стресс для растений.", "seasonal_summer_temp_1": "Берегите от ледяного потока", "seasonal_summer_temp_2": "Повышайте влажность воздуха", "seasonal_autumn_watering_desc": "Замедление процессов. Грунт сохнет дольше.", "seasonal_autumn_watering_1": "Сокращайте частоту полива", "seasonal_autumn_watering_2": "Не допускайте застоя воды", "seasonal_autumn_feeding_desc": "Подготовка к покою. Снижение концентрации.", "seasonal_autumn_feeding_1": "Переход на 1/2 дозы", "seasonal_autumn_feeding_2": "Уменьшение азота", "seasonal_autumn_tasks_desc": "Подготовка к зиме и холодам.", "seasonal_autumn_tasks_1": "Обработка от вредителей", "seasonal_autumn_tasks_2": "Перестановка от окон", "seasonal_autumn_tasks_3": "Проверка утепления окон", "seasonal_winter_watering_desc": "Минимальная потребность. Главный риск — гниль корней.", "seasonal_winter_watering_1": "Только после просушки", "seasonal_winter_watering_2": "Вода комнатной температуры", "seasonal_winter_lighting_desc": "Катастрофическая нехватка света.", "seasonal_winter_lighting_1": "Досветка 10-12 часов", "seasonal_winter_lighting_2": "Максимально близко к окну", "seasonal_winter_temp_desc": "Холод от стекла + сухой жар от батарей.", "seasonal_winter_temp_1": "Уберите от батарей", "seasonal_winter_temp_2": "Утепляйте подоконники", "seasonal_winter_warning_title": "⚠️ Внимание: Мокрые ноги + холод = Смерть", "seasonal_winter_warning_desc": "Зимой в Кацрине на подоконнике может быть +10°C. Если при этом корни мокрые — гниль начнется за 24 часа. Поливайте только когда субстрат сухой!", "seasonal_special_plants_title": "Особые растения зимой", "seasonal_note_alocasia": "Может сбросить листья и уйти в спячку (клубень). Не выбрасывать!", "seasonal_note_cactus": "Полив раз в месяц или реже. Холодная зимовка (+10...+15°C).", "seasonal_note_adenium": "Полная просушка. Сброс листьев — норма.", "seasonal_quick_ref_title": "Краткий справочник интенсивности ухода", "seasonal_ref_col_season": "Сезон", "seasonal_ref_col_growth": "Рост", "seasonal_ref_col_watering": "Полив", "seasonal_ref_col_feeding": "Еда", "seasonal_val_active": "Активный", "seasonal_val_max": "Максимальный", "seasonal_val_full": "Полная", "seasonal_val_moderate": "Умеренный", "seasonal_val_half": "Половина", "seasonal_val_slow": "Замедлен", "seasonal_val_low": "Снижен", "seasonal_val_dormant": "Покой", "seasonal_val_min": "Минимум", "seasonal_val_none": "Нет / Min", "propagation_best_time": "🌸 Лучшее время для размножения: Весна — Начало лета", "propagation_tab_water": "💧 В воде", "propagation_tab_soil": "🌱 В грунте", "propagation_tab_division": "✂️ Деление", "propagation_tab_airlayer": "🌿 Воздушные отводки", "propagation_tab_offsets": "👶 Детки", "propagation_steps_title": "Пошаговая инструкция", "propagation_plants_title": "Подходит для растений", "propagation_tips_title": "Советы эксперта", "propagation_water_desc": "Самый простой и наглядный способ. Подходит для большинства лиан и ароидных.", "propagation_water_step_1": "Отрежьте черенок с 1-2 узлами (откуда растут листья).", "propagation_water_step_2": "Удалите нижние листья, чтобы они не гнили в воде.", "propagation_water_step_3": "Поместите в воду. Добавьте кусочек древесного угля.", "propagation_water_step_4": "Ждите корней 2-5 см, затем сажайте в легкий грунт.", "propagation_water_tip_1": "Используйте темную емкость — корни любят темноту.", "propagation_water_tip_2": "Меняйте воду раз в неделю.", "propagation_soil_desc": "Для растений, которые плохо переносят воду или имеют нежные корни.", "propagation_soil_step_1": "Подготовьте черенок и дайте срезу подсохнуть 30-60 мин.", "propagation_soil_step_2": "Обмакните срез в Корневин (опционально).", "propagation_soil_step_3": "Посадите в легкую смесь (торф + перлит 50/50).", "propagation_soil_step_4": "Накройте пакетом или банкой для создания теплички.", "propagation_soil_tip_1": "Проветривайте тепличку каждый день.", "propagation_soil_tip_2": "Не заливайте — грунт должен быть лишь слегка влажным.", "propagation_division_desc": "Для кустовых растений, образующих розетки или имеющих корневища.", "propagation_division_step_1": "Достаньте растение из горшка и очистите корни от земли.", "propagation_division_step_2": "Аккуратно разделите куст руками или острым ножом.", "propagation_division_step_3": "У каждой части должны быть свои корни и точка роста.", "propagation_division_step_4": "Рассадите в отдельные горшки.", "propagation_division_tip_1": "Присыпьте срезы углем или корицей.", "propagation_division_tip_2": "Первую неделю держите в тени.", "propagation_airlayer_desc": "Для крупных древовидных растений (фикусы, монстеры), чтобы получить сразу большое растение.", "propagation_airlayer_step_1": "Сделайте надрез на стебле или снимите кольцо коры.", "propagation_airlayer_step_2": "Оберните влажным мхом сфагнумом.", "propagation_airlayer_step_3": "Закрепите сверху пленкой, чтобы мох не высыхал.", "propagation_airlayer_step_4": "Когда корни заполнят пленку, отрежьте и посадите.", "propagation_airlayer_tip_1": "Используйте мох, смоченный в растворе стимулятора.", "propagation_airlayer_tip_2": "Метод позволяет сохранить вариегатность.", "propagation_offsets_desc": "Для растений, которые сами выпускают \"деток\" на усах или у основания.", "propagation_offsets_step_1": "Дождитесь, пока у детки появятся свои зачатки корней.", "propagation_offsets_step_2": "Отрежьте детку от материнского растения.", "propagation_offsets_step_3": "Посадите в маленький горшочек с легким грунтом.", "propagation_offsets_step_4": "Первое время поддерживайте высокую влажность.", "propagation_offsets_tip_1": "Не отделяйте слишком маленьких деток.", "propagation_offsets_tip_2": "Хлорофитум можно укоренять прямо не отрезая от уса.", "pests_emergency_title": "🚨 При обнаружении вредителей", "pests_symptoms_title": "🔍 Быстрое определение по симптомам", "lang_ru": "RU", "lang_en": "EN", "lang_he": "HE", "Высокая (60-70%)": "Высокая (60-70%)", "Плодовые лианы": "Плодовые лианы", "Ручной": "Ручной", "Ароидные (бархатные)": "Ароидные (бархатные)", "Высокая (60-80%)": "Высокая (60-80%)", "Антуриум": "Антуриум", "Ароидные цветущие": "Ароидные цветущие", "Ручной/Фитиль*": "Ручной/Фитиль*", "Антуриум кларинервиум": "Антуриум кларинервиум", "Бегония макулата": "Бегония макулата", "Декоративно-цветущие": "Декоративно-цветущие", "Средняя-высокая": "Средняя-высокая", "Калатея лансифолия": "Калатея лансифолия", "Калатея орната": "Калатея орната", "Высокая": "Высокая", "Хамедорея / пальма комнатная": "Хамедорея / пальма комнатная", "Декоративнолистные": "Декоративнолистные", "Кротон": "Кротон", "Пестролистные": "Пестролистные", "Поддон (постоянно)": "Поддон (постоянно)", "Хищные": "Хищные", "Драцена фрагранс / деременсис": "Драцена фрагранс / деременсис", "Драцена маргината": "Драцена маргината", "Эпипремнум / сциндапсус": "Эпипремнум / сциндапсус", "Бромелиевые": "Бромелиевые", "В розетку": "В розетку", "Монстера адансони": "Монстера адансони", "Монстера делициоза": "Монстера делициоза", "Орхидея фаленопсис": "Орхидея фаленопсис", "Эпифитные орхидеи": "Эпифитные орхидеи", "Филодендрон крупнолистный": "Филодендрон крупнолистный", "Ароидные (древовидные)": "Ароидные (древовидные)", "Средняя-высокая (50-70%)": "Средняя-высокая (50-70%)", "Филодендрон Селлоу": "Филодендрон Селлоу", "Низкая-средняя": "Низкая-средняя", "Сансевиерия (Щучий хвост)": "Сансевиерия (Щучий хвост)", "Эпифитные кактусы": "Эпифитные кактусы", "Фитиль": "Фитиль", "Замиокулькас (Долларовое дерево)": "Замиокулькас (Долларовое дерево)", "Керамзитовые шарики (ARLITA)": "Керамзитовые шарики (ARLITA)", "Кокос гас (крупная фракция)": "Кокос гас (крупная фракция)", "Кокос дак (мелкая фракция)": "Кокос дак (мелкая фракция)", "Bark (кора)": "Bark (кора сосны)", "Перлит (тип 4, лёгкий)": "Перлит (тип 4, лёгкий)", "Сфагнум (мох)": "Сфагнум (мох)", "Для бархатных антуриумов": "Для бархатных антуриумов", "Для клубневых ароидных": "Для клубневых ароидных", "Для бегоний": "Для бегоний", "Для эпифитов (бромелиевые, лесные кактусы)": "Для эпифитов (бромелиевые, лесные кактусы)", "Универсальная лёгкая (ручной полив)": "Универсальная лёгкая (ручной полив)", "Универсальная лёгкая (фитильный полив)": "Универсальная лёгкая (фитильный полив)", "Аглаонема пестролистная": "Аглаонема пестролистная", "Ароидные": "Ароидные", "Ручной/Фитиль": "Ручной/Фитиль", "Средняя": "Средняя", "Алоказия (Polly / Amazonica)": "Алоказия (Polly / Amazonica)", "Алоказия Фрайдек": "Алоказия Фрайдек", "Антуриум Андреанум": "Антуриум Андреанум", "Антуриум Кларинервиум": "Антуриум Кларинервиум", "Бегония Макулата": "Бегония Макулата", "Гузмания": "Гузмания", "Дионея (Венерина мухоловка)": "Дионея (Венерина мухоловка)", "Хищные растения": "Хищные растения", "Драцена Маргината": "Драцена Маргината", "Ложные пальмы": "Ложные пальмы", "Драцена Фрагранс / Деремская": "Драцена Фрагранс / Деремская", "Эпипремнум золотистый / Сциндапсус": "Эпипремнум золотистый / Сциндапсус", "Лианы": "Лианы", "Замиокулькас": "Замиокулькас", "Ароидные (суккулентные)": "Ароидные (суккулентные)", "Калатея Лансифолия": "Калатея Лансифолия", "Марантовые": "Марантовые", "Калатея Орната": "Калатея Орната", "Монстера Адансони": "Монстера Адансони", "Монстера Делициоза": "Монстера Делициоза", "Папоротник (Нефролепис)": "Папоротник (Нефролепис)", "Папоротники": "Папоротники", "Орхидея Фаленопсис": "Орхидея Фаленопсис", "Эпифиты": "Эпифиты", "Специальный субстрат": "Специальный субстрат", "Высокая (70-80%)": "Высокая (70-80%)", "Филодендрон (типа Imperial Green)": "Филодендрон (типа Imperial Green)", "Филодендрон Селлоу (Бипиннатифидум)": "Филодендрон Селлоу (Бипиннатифидум)", "Сансевиерия": "Сансевиерия", "Суккуленты": "Суккуленты", "Геснериевые": "Геснериевые", "Шлюмбергера (Декабрист)": "Шлюмбергера (Декабрист)", "Лесные кактусы": "Лесные кактусы", "Спатифиллум": "Спатифиллум", "Хамедорея (Горная пальма)": "Хамедорея (Горная пальма)", "Пальмы": "Пальмы", "Хлорофитум": "Хлорофитум", "Травянистые многолетники": "Травянистые многолетники", "Сенполия (узамбарская фиалка)": "Сенполия (узамбарская фиалка)", "Селагинелла Мартенса (плаунок)": "Селагинелла Мартенса (плаунок)", "Сингониум ножколистный": "Сингониум ножколистный", "Декоративно-цветущие (геснериевые)": "Декоративно-цветущие (геснериевые)", "Плауновидные": "Плауновидные", "Ароидные (лианы)": "Ароидные (лианы)", "Для сенполий / геснериевых": "Для сенполий / геснериевых", "Очень высокая (70-90%)": "Очень высокая (70-90%)", "Средняя (50-60%)": "Средняя (50-60%)", "Ароидная (ручной полив)": "Ароидная (ручной полив)", "Ароидная (фитильный полив)": "Ароидная (фитильный полив)", "Марантовые (ручной полив)": "Марантовые (ручной полив)", "Марантовые (фитильный полив)": "Марантовые (фитильный полив)", "Для орхидей": "Для орхидей", "Для пальм": "Для пальм", "Для папоротников": "Для папоротников", "Для суккулентов/сансевиерии": "Для суккулентов/сансевиерии", "Для хищных растений": "Для хищных растений", "Универсальный грунт Premium": "Универсальный грунт Premium", "Древесный уголь": "Древесный уголь", "Перлит": "Перлит", "Вермикулит": "Вермикулит", "Кора хвойных (мелкая)": "Кора хвойных (мелкая)", "Мох сфагнум": "Мох сфагнум", "Песок (крупный)": "Песок (крупный)", "Цеолит / Лечуза Пон": "Цеолит / Лечуза Пон", "Торф кислый (без удобрений)": "Торф кислый (без удобрений)", "Желтеющие листья": "Желтеющие листья", "Желтеют нижние листья": "Желтеют нижние листья", "Грунт постоянно влажный": "Грунт постоянно влажный", "Вялые, мягкие листья": "Вялые, мягкие листья", "Желтеют старые листья снизу": "Желтеют старые листья снизу", "Замедленный рост": "Замедленный рост", "Бледная окраска новых листьев": "Бледная окраска новых листьев", "Жилки остаются зелёными": "Жилки остаются зелёными", "Желтеет межжилковое пространство": "Желтеет межжилковое пространство", "Начинается с молодых листьев": "Начинается с молодых листьев", "Коричневые кончики листьев": "Коричневые кончики листьев", "Сухой воздух в помещении": "Сухой воздух в помещении", "Кончики сухие и хрустящие": "Кончики сухие и хрустящие", "Проблема усиливается зимой": "Проблема усиливается зимой", "Белый налёт на поверхности грунта": "Белый налёт на поверхности грунта", "Используется водопроводная вода": "Используется водопроводная вода", "Кончики коричневые по всему растению": "Кончики коричневые по всему растению", "Недавно вносились удобрения": "Недавно вносились удобрения", "PPM воды выше нормы": "PPM воды выше нормы", "Края листьев \"обожжённые\"": "Края листьев \"обожжённые\"", "Вялые, поникшие листья": "Вялые, поникшие листья", "Грунт сухой на ощупь": "Грунт сухой на ощупь", "Листья мягкие, но не желтые": "Листья мягкие, но не желтые", "Восстанавливается после полива": "Восстанавливается после полива", "Грунт влажный, но листья вялые": "Грунт влажный, но листья вялые", "Запах гнили от грунта": "Запах гнили от грунта", "Не восстанавливается после полива": "Не восстанавливается после полива", "Резко изменилась температура": "Резко изменилась температура", "Сквозняк или холодный воздух": "Сквозняк или холодный воздух", "Внезапное начало": "Внезапное начало", "Белый или желтоватый налёт": "Белый или желтоватый налёт", "Вода не фильтруется": "Вода не фильтруется", "PPM воды высокий (>200)": "PPM воды высокий (>200)", "Налёт появляется регулярно": "Налёт появляется регулярно", "Налёт пушистый, не твёрдый": "Налёт пушистый, не твёрдый", "Плохая вентиляция": "Плохая вентиляция", "Гниение корней": "Гниение корней", "Грунт постоянно мокрый": "Грунт постоянно мокрый", "Запах гнили": "Запах гнили", "Вялые листья при влажном грунте": "Вялые листья при влажном грунте", "lighting_low_name": "Low Light - Теневыносливые", "lighting_medium_name": "Medium Light - Средний свет", "lighting_bright_name": "Bright Light - Яркий свет", "lighting_period_10_12": "10-12 ч", "lighting_period_10_14": "10-14 ч", "title_humidity": "Группы влажности", "humidity_title": "💧 Группы влажности (относительные)", "humidity_subtitle": "Относительные потребности во влажности ваших растений (шкала 1-10)", "humidity_search": "Поиск по названию или plant_id...", "humidity_no_results": "Растения не найдены", "humidity_legend_title": "Шкала потребности во влажности", "humidity_score_label": "Балл", "title_lighting_score": "Группы освещения", "lighting_score_title": "☀️ Группы освещения", "lighting_score_subtitle": "Относительные потребности в свете ваших растений (шкала 1-10)", "lighting_score_search": "Поиск по названию или plant_id...", "lighting_score_no_results": "Растения не найдены", "lighting_score_legend_title": "Шкала потребности в свете", "lighting_score_label": "Балл", "water_group_names": {"Группа A": "Группа A", "Группа B": "Группа B", "Группа C": "Группа C", "Специальная": "Специальная", "Philodendron (типа Imperial Green)": "Philodendron (типа Imperial Green)", "Monstera deliciosa": "Monstera deliciosa", "Epipremnum aureum / Scindapsus": "Epipremnum aureum / Scindapsus", "Aglaonema": "Aglaonema", "Chamaedorea": "Chamaedorea", "Chlorophytum comosum": "Chlorophytum comosum", "Actinidia deliciosa": "Actinidia deliciosa", "Dracaena marginata": "Dracaena marginata", "Dracaena fragrans / deremensis": "Dracaena fragrans / deremensis", "Codiaeum variegatum": "Codiaeum variegatum", "Sansevieria trifasciata": "Sansevieria trifasciata", "Zamioculcas zamiifolia": "Zamioculcas zamiifolia", "Schlumbergera": "Schlumbergera", "Dionaea muscipula": "Dionaea muscipula", "Calathea lancifolia": "Calathea lancifolia", "Calathea ornata": "Calathea ornata", "Spathiphyllum": "Spathiphyllum", "Phalaenopsis": "Phalaenopsis", "Guzmania": "Guzmania", "Alocasia amazonica": "Alocasia amazonica", "Alocasia micholitziana 'Frydek'": "Alocasia micholitziana 'Frydek'", "Anthurium andraeanum": "Anthurium andraeanum", "Nephrolepis exaltata": "Nephrolepis exaltata", "Anthurium clarinervium": "Anthurium clarinervium", "Begonia maculata": "Begonia maculata"}, "soil_names": {"Ароидная": "Ароидная", "Марантовая": "Марантовая", "Универсальная лёгкая": "Универсальная лёгкая", "Пальмовая": "Пальмовая", "Бромелиевая": "Бромелиевая", "Для бегоний и фиалок": "Для бегоний и фиалок", "Орхидейная": "Орхидейная", "Суккулентная": "Суккулентная", "Для хищных": "Для хищных"}, "soil_subtitles": {"mix_1": "Для ароидных растений с ручным поливом", "mix_2": "Для ароидных растений на фитиле", "mix_3": "Для марантовых растений с ручным поливом", "mix_4": "Для марантовых растений на фитиле", "mix_5": "Универсальная лёгкая смесь", "mix_5f": "Универсальная лёгкая на фитиле", "mix_6": "Для пальм с ручным поливом", "mix_7": "Для эпифитов: бромелиевые и лесные кактусы", "mix_8": "Для бегоний и фиалок", "mix_9": "Субстрат для эпифитных орхидей", "mix_10": "Влагоёмкая смесь для папоротников", "mix_11": "Быстросохнущая смесь с отличным дренажом", "mix_12": "Очень воздушный, крупнофракционный субстрат", "mix_13": "Воздушный субстрат для клубневых, снижает риск гнили", "mix_carnivorous": "БЕЗ УДОБРЕНИЙ! Только чистый субстрат"}, "soil_notes": {"Использовать только чистый дистиллят или RO-воду": "Использовать только чистый дистиллят или RO-воду", "Никаких удобрений в субстрат!": "Никаких удобрений в субстрат!", "Следить за pH — должен быть низким (3.5-4.5)": "Следить за pH — должен быть низким (3.5-4.5)"}, "soil_variants": {"Для фитиля (рыхлый)": "Для фитиля (рыхлый)", "Ручной полив (влагоёмкий)": "Ручной полив (влагоёмкий)", "Для аглаонемы": "Для аглаонемы"}, "components": {"Верховой торф (без удобрений!)": "Верховой торф (без удобрений!)", "Кокосовые чипсы": "Кокосовые чипсы", "Кокосовое волокно": "Кокосовое волокно", "Серамис": "Серамис", "Кора сосны (мелкая фракция)": "Кора сосны (мелкая фракция)", "Кора сосны (средняя фракция)": "Кора сосны (средняя фракция)", "Лечуза Пон (или аналог)": "Лечуза Пон (или аналог)", "Песок (крупнозернистый)": "Песок (крупнозернистый)", "Кислотный торф": "Кислотный торф", "Смесь Premium + Кокос": "Смесь Premium + Кокос", "Биогумус (добавка!)": "Биогумус (добавка!)", "Разрыхлители (Перлит/Серамис)": "Разрыхлители (Перлит/Серамис)", "Чистый кислотный торф": "Чистый кислотный торф"}, "fert_names": {"Bio·Bizz Bio·Grow": "Bio·Bizz Bio·Grow", "Bio·Bizz Bio·Bloom": "Bio·Bizz Bio·Bloom", "Bio·Bizz Calmag": "Bio·Bizz Calmag", "Bio·Bizz Bio·Up": "Bio·Bizz Bio·Up", "Orchids FLOWER 0-17-7": "Orchids FLOWER 0-17-7", "DYNOMYCO": "DYNOMYCO", "General Hydroponics pH- Down": "General Hydroponics pH- Down"}, "fert_descs": {"Активный рост листьев": "Активный рост листьев", "BLOOM / FLOWER (только репродуктивная фаза)": "BLOOM / FLOWER (только репродуктивная фаза)", "Восполнение Ca и Mg в RO воде": "Восполнение Ca и Mg в RO воде", "Bio·Up: повышает pH (органика, 0.1 мл/л = +0.1 pH)": "Bio·Up: повышает pH (органика, 0.1 мл/л = +0.1 pH)", "Orchids 0-17-7: только для орхидей в цветении": "Orchids 0-17-7: только для орхидей в цветении", "DYNOMYCO: 1 ч.л. на 4 л, при пересадке/укоренении, НЕ с фосфором!": "DYNOMYCO: 1 ч.л. на 4 л, при пересадке/укоренении, НЕ с фосфором!", "pH-: понижает pH (минеральный)": "pH-: понижает pH (минеральный)"}, "trouble_symptoms": {"Желтеющие нижние листья": "Желтеющие нижние листья", "Коричневые сухие кончики": "Коричневые сухие кончики", "Листья теряют тургор (вялые)": "Листья теряют тургор (вялые)", "Белый налёт на грунте": "Белый налёт на грунте"}, "trouble_causes": {"Перелив или недостаток азота": "Перелив или недостаток азота", "Низкая влажность или ожог солями": "Низкая влажность или ожог солями", "Недолив или гниль корней": "Недолив или гниль корней", "Плохая вентиляция или переувлажнение": "Плохая вентиляция или переувлажнение"}, "trouble_solutions": {"Отрегулировать полив, проверить корни": "Отрегулировать полив, проверить корни", "Повысить влажность, пролить почву чистой водой": "Повысить влажность, пролить почву чистой водой", "Полить или проверить корни на гниль": "Полить или проверить корни на гниль", "Уменьшить полив, рыхлить верхний слой": "Уменьшить полив, рыхлить верхний слой"}, "pest_data": {"Паутинный клещ": "Паутинный клещ", "Мелкие точки, паутинка": "Мелкие точки, паутинка", "Душ, акарициды (Фитоверм)": "Душ, акарициды (Фитоверм)", "Влажность, регулярный осмотр": "Влажность, регулярный осмотр", "Корневая гниль": "Корневая гниль", "Вялость, черные корни": "Вялость, черные корни", "Фунгициды, пересадка": "Фунгициды, пересадка", "Правильный дренаж, не переливать": "Правильный дренаж, не переливать"}, "plant_names": null, "plant_types": {"Аглаонема": "Аглаонема", "Алоказия": "Алоказия", "Бегония": "Бегония", "Драцена": "Драцена", "Калатея": "Калатея", "Монстера": "Монстера", "Орхидея": "Орхидея", "Пальма": "Пальма", "Папоротник": "Папоротник", "Филодендрон": "Филодендрон", "Шлюмбергера": "Шлюмбергера", "Эпипремнум": "Эпипремнум", "Монстера (на фитиле)": "Монстера (на фитиле)", "Филодендрон (на фитиле)": "Филодендрон (на фитиле)", "Калатея (только при очень внимательном контроле!)": "Калатея (только при очень внимательном контроле!)"}, "humidity_levels": null, "watering_frequencies": {"Регулярный": "Регулярный", "Умеренный": "Умеренный", "С просушкой верхнего слоя": "С просушкой верхнего слоя", "С полной просушкой субстрата между поливами": "С полной просушкой субстрата между поливами", "Постоянная влажность": "Постоянная влажность", "Редкий": "Редкий"}, "watering_methods": null, "care_notes": {"Субстрат лишь для опоры": "Субстрат лишь для опоры", "Спасён с работы — требует реабилитации": "Спасён с работы — требует реабилитации", "Обрезать жёлтые листья у основания": "Обрезать жёлтые листья у основания", "Крупные рассечённые листья собирают пыль — протирать": "Крупные рассечённые листья собирают пыль — протирать", "Фитиль обеспечивает стабильную влажность": "Фитиль обеспечивает стабильную влажность", "Не опрыскивать!": "Не опрыскивать!", "Использовать только RO воду (группа A)": "Использовать только RO воду (группа A)", "Контролировать влажность грунта": "Контролировать влажность грунта", "Бархатные листья НЕ опрыскивать напрямую": "Бархатные листья НЕ опрыскивать напрямую", "Если сбросила все листья — НЕ выбрасывать, клубень жив": "Если сбросила все листья — НЕ выбрасывать, клубень жив", "Стабильность важнее частоты полива": "Стабильность важнее частоты полива", "Только дистиллят или чистый RO": "Только дистиллят или чистый RO", "Питание только через ловушки (живые насекомые)": "Питание только через ловушки (живые насекомые)", "Регулярно опрыскивать": "Регулярно опрыскивать", "Беречь от сквозняков и батарей": "Беречь от сквозняков и батарей", "Крайне неприхотлива": "Крайне неприхотлива", "Лучше недолить, чем перелить": "Лучше недолить, чем перелить", "Крайне неприхотлив": "Крайне неприхотлив", "Толстые клубни запасают воду": "Толстые клубни запасают воду", "Эпифитный кактус — нужен рыхлый субстрат как для бромелиевых": "Эпифитный кактус — нужен рыхлый субстрат как для бромелиевых", "Для цветения нужен короткий световой день (8-10 часов) осенью": "Для цветения нужен короткий световой день (8-10 часов) осенью", "Не переставлять во время бутонизации": "Не переставлять во время бутонизации", "Не опрыскивать! Вода на листьях вызывает пятна": "Не опрыскивать! Вода на листьях вызывает пятна", "Идеальна для фитильного полива": "Идеальна для фитильного полива", "Цветёт круглый год при хорошем освещении": "Цветёт круглый год при хорошем освещении", "Нужна опора — это лиана": "Нужна опора — это лиана", "Предпочитает кислую почву (pH 5.5-6.5)": "Предпочитает кислую почву (pH 5.5-6.5)", "Для плодоношения нужны мужское и женское растения": "Для плодоношения нужны мужское и женское растения", "НА РЕАНИМАЦИИ — щадящий режим ухода": "НА РЕАНИМАЦИИ — щадящий режим ухода", "Требует очень рыхлый, воздушный субстрат с большим количеством коры": "Требует очень рыхлый, воздушный субстрат с большим количеством коры", "Горшок с хорошим дренажом обязателен": "Горшок с хорошим дренажом обязателен", "Обязательно прозрачный горшок": "Обязательно прозрачный горшок", "Субстрат должен быстро просыхать": "Субстрат должен быстро просыхать", "Корни должны дышать": "Корни должны дышать"}, "risks": {"Поливать только в розетку": "Поливать только в розетку", "Чувствительна к переливу": "Чувствительна к переливу", "Не любит пересыхание": "Не любит пересыхание", "Следить за переливом": "Следить за переливом", "Устойчив": "Устойчив", "Желтеющие нижние листья при переливе": "Желтеющие нижние листья при переливе", "Нужна опора при высоком росте": "Нужна опора при высоком росте", "Сухие кончики при низкой влажности": "Сухие кончики при низкой влажности", "Устойчива": "Устойчива", "Любит стабильную влажность": "Любит стабильную влажность", "КРИТИЧНО - гниль при переливе": "КРИТИЧНО - гниль при переливе", "КРИТИЧНО - гниль корней": "КРИТИЧНО - гниль корней", "Устойчив к ошибкам в уходе": "Устойчив к ошибкам в уходе", "КРИТИЧНО - чувствительна к переливу": "КРИТИЧНО - чувствительна к переливу", "Чувствительна к солям в воде": "Чувствительна к солям в воде", "КРИТИЧНО - гниль клубня при переливе": "КРИТИЧНО - гниль клубня при переливе", "Может уйти в спячку зимой": "Может уйти в спячку зимой", "Чувствителен к качеству воды": "Чувствителен к качеству воды", "Гниль корней при застое воды": "Гниль корней при застое воды", "КРИТИЧНО - любые удобрения в почву убивают растение": "КРИТИЧНО - любые удобрения в почву убивают растение", "КРИТИЧНО - обычная вода из крана убивает растение": "КРИТИЧНО - обычная вода из крана убивает растение", "Гниль при переливе": "Гниль при переливе", "Застой воды = гибель": "Застой воды = гибель", "Гниль клубня при переливе": "Гниль клубня при переливе", "Опадание бутонов при перестановке или сквозняке": "Опадание бутонов при перестановке или сквозняке", "Гниль при попадании воды на листья": "Гниль при попадании воды на листья", "Чувствительна к хлору в воде": "Чувствительна к хлору в воде", "Не любит щелочные почвы": "Не любит щелочные почвы", "Нуждается в очень ярком освещении": "Нуждается в очень ярком освещении", "Не переносит плотный субстрат": "Не переносит плотный субстрат"}};
+        var plantsData = {
+  "settings": {
+    "current_season": "growth"
+  },
+  "feeding_matrix": {
+    "aroids": {
+      "growth": {
+        "flower_universal": "allowed",
+        "flower_flowering": "allowed (only for actively blooming plants)",
+        "ecogan_multicote": "restricted (only for stable mature plants)",
+        "atami_calmag": "base water additive in RO system; extra only if deficiency confirmed",
+        "dynomyco_spark": "allowed (transplant / rooting / early vegetative stage)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/2 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "restricted (reduce frequency)"
+      }
+    },
+    "aroids_variegated": {
+      "growth": {
+        "flower_universal": "restricted (1/4 dose) — снижаем N, иначе теряется вариегатность",
+        "flower_flowering": "restricted (1/4 dose, only when actively blooming) — N даже в цветении опасен",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "allowed (transplant / rooting only, not routine)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/4 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "forbidden"
+      }
+    },
+    "sensitive": {
+      "growth": {
+        "flower_universal": "restricted (1/4 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "allowed (transplant / rooting only, not routine)"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "forbidden"
+      }
+    },
+    "orchids": {
+      "growth": {
+        "flower_universal": "restricted (very weak, vegetative only)",
+        "flower_flowering": "forbidden",
+        "flower_orchids": "allowed (only during blooming)",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (minimal, via base water only)",
+        "dynomyco_spark": "forbidden"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "flower_orchids": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (via base water only)",
+        "dynomyco_spark": "forbidden"
+      }
+    },
+    "carnivorous": {
+      "growth": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "forbidden",
+        "dynomyco_spark": "forbidden",
+        "note": "RO-only / keep TDS very low"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "forbidden",
+        "dynomyco_spark": "forbidden",
+        "note": "RO-only / keep TDS very low"
+      }
+    },
+    "general_houseplants": {
+      "growth": {
+        "flower_universal": "allowed",
+        "flower_flowering": "allowed (only for actively blooming plants)",
+        "ecogan_multicote": "restricted (only for stable mature plants)",
+        "atami_calmag": "base water additive if using RO",
+        "dynomyco_spark": "allowed (transplant / rooting / recovery)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/2 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive if using RO",
+        "dynomyco_spark": "forbidden"
+      }
+    }
+  },
+  "plants": {
+    "aglaonema": {
+      "name": "Аглаонема пестролистная",
+      "latin": "Aglaonema",
+      "group": "aroids",
+      "wick": true
+    },
+    "alocasia_amazonica": {
+      "name": "Алоказия (Polly / Amazonica)",
+      "latin": "Alocasia amazonica",
+      "group": "sensitive",
+      "wick": false
+    },
+    "alocasia_frydek": {
+      "name": "Алоказия Фрайдек",
+      "latin": "Alocasia micholitziana 'Frydek'",
+      "group": "sensitive",
+      "wick": false
+    },
+    "alocasia_regal_shields": {
+      "name": "Алоказия Регал Шилдс",
+      "latin": "Alocasia 'Regal Shields' (odora × reginula)",
+      "group": "sensitive",
+      "wick": false
+    },
+    "anthurium_andraeanum": {
+      "name": "Антуриум",
+      "latin": "Anthurium andraeanum",
+      "group": "sensitive",
+      "wick": false
+    },
+    "anthurium_clarinervium": {
+      "name": "Антуриум кларинервиум",
+      "latin": "Anthurium clarinervium",
+      "group": "sensitive",
+      "wick": false
+    },
+    "begonia_maculata": {
+      "name": "Бегония макулата",
+      "latin": "Begonia maculata",
+      "group": "general_houseplants",
+      "wick": false
+    },
+    "calathea_lancifolia": {
+      "name": "Калатея лансифолия",
+      "latin": "Calathea lancifolia",
+      "group": "sensitive",
+      "wick": true
+    },
+    "calathea_ornata": {
+      "name": "Калатея орната",
+      "latin": "Calathea ornata",
+      "group": "sensitive",
+      "wick": true
+    },
+    "chamaedorea": {
+      "name": "Хамедорея / пальма комнатная",
+      "latin": "Chamaedorea",
+      "group": "general_houseplants",
+      "wick": false
+    },
+    "chlorophytum_comosum": {
+      "name": "Хлорофитум",
+      "latin": "Chlorophytum comosum",
+      "group": "general_houseplants",
+      "wick": true
+    },
+    "croton": {
+      "name": "Кротон",
+      "latin": "Codiaeum variegatum",
+      "group": "general_houseplants",
+      "wick": false
+    },
+    "dionaea": {
+      "name": "Дионея (Венерина мухоловка)",
+      "latin": "Dionaea muscipula",
+      "group": "carnivorous",
+      "wick": false
+    },
+    "dracaena_fragrans": {
+      "name": "Драцена фрагранс / деременсис",
+      "latin": "Dracaena fragrans / deremensis",
+      "group": "general_houseplants",
+      "wick": false
+    },
+    "dracaena_marginata": {
+      "name": "Драцена маргината",
+      "latin": "Dracaena marginata",
+      "group": "general_houseplants",
+      "wick": false
+    },
+    "epipremnum": {
+      "name": "Эпипремнум / сциндапсус",
+      "latin": "Epipremnum aureum / Scindapsus",
+      "group": "aroids",
+      "wick": true
+    },
+    "guzmania": {
+      "name": "Гузмания",
+      "latin": "Guzmania",
+      "group": "sensitive",
+      "wick": false
+    },
+    "monstera_adansonii": {
+      "name": "Монстера адансони",
+      "latin": "Monstera adansonii",
+      "group": "aroids",
+      "wick": true
+    },
+    "monstera_deliciosa": {
+      "name": "Монстера делициоза",
+      "latin": "Monstera deliciosa",
+      "group": "aroids",
+      "wick": true
+    },
+    "monstera_albo_variegata": {
+      "name": "Монстера альбо вариегата",
+      "latin": "Monstera deliciosa 'Albo Variegata'",
+      "group": "aroids_variegated",
+      "wick": false
+    },
+    "nephrolepis": {
+      "name": "Папоротник (Нефролепис)",
+      "latin": "Nephrolepis exaltata",
+      "group": "sensitive",
+      "wick": true
+    },
+    "phalaenopsis": {
+      "name": "Орхидея фаленопсис",
+      "latin": "Phalaenopsis",
+      "group": "orchids",
+      "wick": false
+    },
+    "philodendron": {
+      "name": "Филодендрон крупнолистный",
+      "latin": "Philodendron (типа Imperial Green)",
+      "group": "aroids",
+      "wick": true
+    },
+    "philodendron_selloum": {
+      "name": "Филодендрон Селлоу",
+      "latin": "Philodendron bipinnatifidum (Thaumatophyllum bipinnatifidum)",
+      "group": "aroids",
+      "wick": false
+    },
+    "philodendron_xanadu": {
+      "name": "Филодендрон Ксанаду",
+      "latin": "Thaumatophyllum xanadu",
+      "group": "aroids",
+      "wick": false
+    },
+    "saintpaulia": {
+      "name": "Сенполия (узамбарская фиалка)",
+      "latin": "Saintpaulia ionantha",
+      "group": "general_houseplants",
+      "wick": true
+    },
+    "sansevieria": {
+      "name": "Сансевиерия (Щучий хвост)",
+      "latin": "Sansevieria trifasciata",
+      "group": "general_houseplants",
+      "wick": false
+    },
+    "schlumbergera": {
+      "name": "Шлюмбергера (Декабрист)",
+      "latin": "Schlumbergera",
+      "group": "general_houseplants",
+      "wick": false
+    },
+    "selaginella": {
+      "name": "Селагинелла Мартенса (плаунок)",
+      "latin": "Selaginella martensii",
+      "group": "sensitive",
+      "wick": true
+    },
+    "spathiphyllum": {
+      "name": "Спатифиллум",
+      "latin": "Spathiphyllum",
+      "group": "aroids",
+      "wick": true
+    },
+    "syngonium_golden_allusion": {
+      "name": "Сингониум 'Golden Allusion'",
+      "latin": "Syngonium podophyllum 'Golden Allusion'",
+      "group": "aroids",
+      "wick": true
+    },
+    "monstera_aurea": {
+      "name": "Монстера Aurea (вариегата жёлтая)",
+      "latin": "Monstera deliciosa 'Aurea Variegata'",
+      "group": "aroids_variegated",
+      "wick": false
+    },
+    "philodendron_pink_princess": {
+      "name": "Филодендрон 'Pink Princess'",
+      "latin": "Philodendron erubescens 'Pink Princess'",
+      "group": "aroids_variegated",
+      "wick": false
+    },
+    "syngonium_mojito": {
+      "name": "Сингониум 'Mojito'",
+      "latin": "Syngonium podophyllum 'Mojito'",
+      "group": "aroids_variegated",
+      "wick": false
+    },
+    "zamioculcas": {
+      "name": "Замиокулькас (Долларовое дерево)",
+      "latin": "Zamioculcas zamiifolia",
+      "group": "general_houseplants",
+      "wick": false
+    }
+  }
+};
+
+        var imageMap = {
+  "aglaonema": "IMAGES/aglaonema.jpeg",
+  "alocasia_amazonica": "IMAGES/alocasia.jpg",
+  "alocasia_frydek": "IMAGES/alocasia_frydek.jpg",
+  "alocasia_regal_shields": "IMAGES/alocasia_regal_shields.jpg",
+  "anthurium_andraeanum": "IMAGES/anthurium.jpg",
+  "anthurium_clarinervium": "IMAGES/anthurium_clarinervium.jpg",
+  "begonia_maculata": "IMAGES/begonia_maculata.jpg",
+  "calathea_lancifolia": "IMAGES/calathea_lancifolia.jpg",
+  "calathea_ornata": "IMAGES/calathea_ornata.jpg",
+  "chamaedorea": "IMAGES/chamaedorea.jpg",
+  "chlorophytum_comosum": "IMAGES/chlorophytum.jpg",
+  "croton": "IMAGES/croton.jpg",
+  "dionaea": "IMAGES/dionaea.jpg",
+  "dracaena_fragrans": "IMAGES/dracaena_fragrans.jpg",
+  "dracaena_marginata": "IMAGES/dracaena_marginata.jpg",
+  "epipremnum": "IMAGES/epipremnum.jpg",
+  "guzmania": "IMAGES/guzmania.jpg",
+  "monstera_adansonii": "IMAGES/monstera_adansonii.jpeg",
+  "monstera_deliciosa": "IMAGES/monstera_deliciosa.jpg",
+  "nephrolepis": "IMAGES/nephrolepis.jpeg",
+  "phalaenopsis": "IMAGES/orchid.jpg",
+  "philodendron": "IMAGES/philodendron_imperial.jpg",
+  "philodendron_selloum": "IMAGES/philodendron_selloum.jpg",
+  "philodendron_xanadu": "IMAGES/philodendron_xanadu.jpg",
+  "saintpaulia": "IMAGES/saintpaulia.jpg",
+  "sansevieria": "IMAGES/sansevieria.jpg",
+  "schlumbergera": "IMAGES/schlumbergera.jpg",
+  "selaginella": "IMAGES/selaginella.jpg",
+  "spathiphyllum": "IMAGES/spathiphyllum.jpg",
+  "syngonium_golden_allusion": "IMAGES/syngonium_golden_allusion.jpg",
+  "syngonium_mojito": "IMAGES/syngonium_mojito.jpg",
+  "monstera_albo_variegata": "IMAGES/monstera_albo_variegata.jpg",
+  "monstera_aurea": "IMAGES/monstera_albo_variegata.jpg",
+  "philodendron_pink_princess": "IMAGES/philodendron_pink_princess.jpg",
+  "zamioculcas": "IMAGES/zamioculcas.jpg"
+};
+
+        // Season indicator
+        var season = plantsData.settings.current_season;
+        var indicator = document.getElementById('seasonIndicator');
+        if (season === 'growth') {
+            indicator.textContent = indicator.getAttribute('data-season-growth');
+            indicator.className = 'season-indicator season-growth';
+        } else {
+            indicator.textContent = indicator.getAttribute('data-season-slow');
+            indicator.className = 'season-indicator season-slow';
+        }
+
+        // Build matrix table
+        function getDoseBadge(status, isWick, fertType) {
+            // Multicote forbidden for wick watering plants
+            if (fertType === 'ecogan_multicote' && isWick) {
+                return '<span class="dose-badge dose-forbidden" title="' + t.feeding_wick_forbidden + '">—</span>';
+            }
+
+            if (status === 'forbidden') {
+                return '<span class="dose-badge dose-forbidden">—</span>';
+            } else if (status === 'allowed') {
+                return '<span class="dose-badge dose-full">100%</span>';
+            } else if (status === '1/2') {
+                return '<span class="dose-badge dose-half">1/2</span>';
+            } else if (status === '1/4') {
+                return '<span class="dose-badge dose-quarter">1/4</span>';
+            } else if (status === '1/8') {
+                return '<span class="dose-badge dose-eighth">1/8</span>';
+            } else if (status === 'top') {
+                return '<span class="dose-badge dose-top">top</span>';
+            }
+            return '<span class="dose-badge dose-full">100%</span>';
+        }
+
+        var tbody = document.getElementById('matrixBody');
+
+        // Sort plants by group for better organization
+        var groupOrder = ['aroids', 'sensitive', 'orchids', 'general_houseplants', 'carnivorous'];
+        var sortedPlants = Object.entries(plantsData.plants).sort(function(a, b) {
+            return groupOrder.indexOf(a[1].group) - groupOrder.indexOf(b[1].group);
+        });
+
+        var currentGroup = '';
+        sortedPlants.forEach(function(entry) {
+            var id = entry[0];
+            var plant = entry[1];
+            var matrix = plantsData.feeding_matrix[plant.group][season];
+            var img = imageMap[id] || '';
+
+            // Add group separator
+            if (plant.group !== currentGroup) {
+                currentGroup = plant.group;
+                var groupNames = {
+                    aroids: t.feeding_group_aroids,
+                    sensitive: t.feeding_group_sensitive,
+                    orchids: t.feeding_group_orchids,
+                    general_houseplants: t.feeding_group_general,
+                    carnivorous: t.feeding_group_carnivorous
+                };
+                var groupRow = document.createElement('tr');
+                groupRow.innerHTML = '<td colspan="4" style="background: #edf2f7; font-weight: 700; color: #4a5568; padding: 8px 12px;">' + groupNames[currentGroup] + '</td>';
+                tbody.appendChild(groupRow);
+            }
+
+            var row = document.createElement('tr');
+            row.innerHTML = '<td>' +
+                    '<div class="plant-cell">' +
+                        '<img src="' + img + '" class="plant-thumb" alt="' + plant.name + '" onerror="this.style.display=\'none\'">' +
+                        '<div class="plant-info">' +
+                            '<span class="plant-name">' + plant.name + '</span>' +
+                            '<span class="plant-latin">' + plant.latin + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</td>' +
+                '<td>' + getDoseBadge(matrix.flower_universal, plant.wick, 'flower_universal') + '</td>' +
+                '<td>' + getDoseBadge(matrix.flower_flowering, plant.wick, 'flower_flowering') + '</td>' +
+                '<td>' + getDoseBadge(matrix.ecogan_multicote, plant.wick, 'ecogan_multicote') + '</td>';
+            tbody.appendChild(row);
+        });
+    </script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

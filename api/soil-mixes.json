@@ -1,0 +1,741 @@
+{
+  "_description": "17 soil mix recipes with component percentages and variants.",
+  "mix_count": 17,
+  "mixes": {
+    "mix_1": {
+      "number": 1,
+      "name": "Ароидная (ручной полив)",
+      "watering_type": "ручной",
+      "airiness_level": "medium",
+      "rot_risk_if_overwatered": "medium",
+      "suitable_for": [
+        "Монстера",
+        "Филодендрон",
+        "Эпипремнум",
+        "Аглаонема",
+        "Сингониум"
+      ],
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 45
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 15
+        },
+        {
+          "component": "Перлит",
+          "percentage": 15
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 10
+        },
+        {
+          "component": "Bark (кора)",
+          "percentage": 10
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 5
+        }
+      ],
+      "optional_humus": {
+        "allowed": true,
+        "percentage": "5-10",
+        "replaces": "Универсальный грунт Premium",
+        "note": "Свой компостный гумус вместо части универсального грунта (45% -> 35-40%)"
+      }
+    },
+    "mix_1l": {
+      "number": "1-Л",
+      "name": "Ароидная облегчённая (для чувствительных к застою)",
+      "watering_type": "ручной",
+      "airiness_level": "high",
+      "rot_risk_if_overwatered": "low",
+      "suitable_for": [
+        "Антуриум",
+        "Филодендрон Ксанаду"
+      ],
+      "notes": [
+        "Более воздушный субстрат, чем стандартная ароидная смесь Mix",
+        "Для растений, чувствительных к застою воды и гнили корней",
+        "Universal снижен до 20% — достаточно для питания без лишней влаги"
+      ],
+      "composition": [
+        {
+          "component": "Bark (кора)",
+          "percentage": 25
+        },
+        {
+          "component": "Перлит",
+          "percentage": 25
+        },
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 20
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 15
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 10
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 5
+        }
+      ],
+      "optional_humus": {
+        "allowed": true,
+        "percentage": 5,
+        "replaces": "Универсальный грунт Premium",
+        "note": "Только 5% — универсального и так мало (20%), не снижать больше"
+      }
+    },
+    "mix_2": {
+      "number": 2,
+      "name": "Ароидная (фитильный полив)",
+      "watering_type": "фитильный",
+      "airiness_level": "medium",
+      "rot_risk_if_overwatered": "high",
+      "suitable_for": [
+        "Спатифиллум",
+        "Монстера (на фитиле)",
+        "Филодендрон (на фитиле)"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Фитильный полив — гумус слишком влагоёмкий, риск застоя и гнили"
+      },
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 35
+        },
+        {
+          "component": "Перлит",
+          "percentage": 25
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 15
+        },
+        {
+          "component": "Bark (кора)",
+          "percentage": 10
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 10
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 5
+        }
+      ]
+    },
+    "mix_3": {
+      "number": 3,
+      "name": "Марантовые (ручной полив)",
+      "watering_type": "ручной",
+      "airiness_level": "low",
+      "rot_risk_if_overwatered": "high",
+      "suitable_for": [
+        "Калатея лансифолия",
+        "Калатея орната"
+      ],
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 40
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 25
+        },
+        {
+          "component": "Вермикулит",
+          "percentage": 15
+        },
+        {
+          "component": "Перлит",
+          "percentage": 10
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 10
+        }
+      ],
+      "optional_humus": {
+        "allowed": true,
+        "percentage": 5,
+        "replaces": "Универсальный грунт Premium",
+        "note": "Немного, осторожно — марантовые любят влагу, но гумус добавит ещё влагоёмкости"
+      }
+    },
+    "mix_4": {
+      "number": 4,
+      "name": "Марантовые (фитильный полив)",
+      "watering_type": "фитильный",
+      "airiness_level": "low",
+      "rot_risk_if_overwatered": "high",
+      "suitable_for": [
+        "Калатея (только при очень внимательном контроле!)"
+      ],
+      "warnings": [
+        "КРИТИЧНО - Следить за застоем воды!",
+        "Кору не использовать или максимум 5%"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Фитильный полив — гумус слишком влагоёмкий"
+      },
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 35
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 25
+        },
+        {
+          "component": "Перлит",
+          "percentage": 20
+        },
+        {
+          "component": "Вермикулит",
+          "percentage": 15
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 5
+        }
+      ]
+    },
+    "mix_5": {
+      "number": 5,
+      "name": "Универсальная лёгкая (ручной полив)",
+      "watering_type": "ручной",
+      "airiness_level": "low",
+      "rot_risk_if_overwatered": "medium",
+      "suitable_for": [
+        "Драцена маргината",
+        "Драцена фрагранс",
+        "Кротон",
+        "Хлорофитум"
+      ],
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 55
+        },
+        {
+          "component": "Перлит",
+          "percentage": 20
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 10
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 15
+        }
+      ],
+      "optional_humus": {
+        "allowed": true,
+        "percentage": "5-10",
+        "replaces": "Универсальный грунт Premium",
+        "note": "Универсального много (55%), есть откуда забрать (55% -> 45-50%)"
+      }
+    },
+    "mix_5f": {
+      "number": "5-Ф",
+      "name": "Универсальная лёгкая (фитильный полив)",
+      "watering_type": "фитильный",
+      "airiness_level": "medium",
+      "rot_risk_if_overwatered": "medium",
+      "suitable_for": [
+        "Кротон (на фитиле)"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Фитильный полив — гумус слишком влагоёмкий"
+      },
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 45
+        },
+        {
+          "component": "Перлит",
+          "percentage": 25
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 15
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 10
+        },
+        {
+          "component": "Bark (кора)",
+          "percentage": 5
+        }
+      ]
+    },
+    "mix_6": {
+      "number": 6,
+      "name": "Для пальм",
+      "watering_type": "ручной",
+      "airiness_level": "low",
+      "rot_risk_if_overwatered": "medium",
+      "suitable_for": [
+        "Хамедорея"
+      ],
+      "notes": [
+        "Фитильный полив не рекомендуется — пальмы чувствительны к переливу"
+      ],
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 55
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 15
+        },
+        {
+          "component": "Перлит",
+          "percentage": 10
+        },
+        {
+          "component": "Вермикулит",
+          "percentage": 10
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 10
+        }
+      ],
+      "optional_humus": {
+        "allowed": true,
+        "percentage": 5,
+        "replaces": "Универсальный грунт Premium",
+        "note": "Немного, заменить часть универсального (55% -> 50%)"
+      }
+    },
+    "mix_7": {
+      "number": 7,
+      "name": "Для эпифитов (бромелиевые, лесные кактусы)",
+      "watering_type": "ручной",
+      "airiness_level": "very_high",
+      "rot_risk_if_overwatered": "low",
+      "suitable_for": [
+        "Гузмания",
+        "Шлюмбергера (Декабрист)"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Эпифитный субстрат без земли — гумус не нужен, нарушит структуру"
+      },
+      "notes": [
+        "Для бромелиевых: основной полив в розетку, субстрат лишь для опоры",
+        "Для лесных кактусов: рыхлый быстро просыхающий субстрат"
+      ],
+      "composition": [
+        {
+          "component": "Bark (кора)",
+          "percentage": 45
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 20
+        },
+        {
+          "component": "Перлит",
+          "percentage": 15
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 10
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 10
+        }
+      ]
+    },
+    "mix_8": {
+      "number": 8,
+      "name": "Для бегоний",
+      "watering_type": "ручной",
+      "airiness_level": "medium",
+      "rot_risk_if_overwatered": "medium",
+      "suitable_for": [
+        "Бегония макулата"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Бегонии критично чувствительны к переливу, гумус добавит влагоёмкости"
+      },
+      "notes": [
+        "Фитильный полив НЕ рекомендуется — критичный риск гнили",
+        "Universal снижен до 30% — бегонии критично чувствительны к переливу",
+        "Добавлена кора для аэрации, вермикулит снижен"
+      ],
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 30
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 15
+        },
+        {
+          "component": "Перлит",
+          "percentage": 20
+        },
+        {
+          "component": "Bark (кора)",
+          "percentage": 15
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 10
+        },
+        {
+          "component": "Вермикулит",
+          "percentage": 5
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 5
+        }
+      ]
+    },
+    "mix_9": {
+      "number": 9,
+      "name": "Для орхидей",
+      "watering_type": "ручной",
+      "airiness_level": "very_high",
+      "rot_risk_if_overwatered": "low",
+      "suitable_for": [
+        "Орхидея фаленопсис"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Чистый эпифитный субстрат, никакой земли/гумуса"
+      },
+      "critical_requirements": {
+        "pot_type": "Прозрачный горшок ОБЯЗАТЕЛЬНО!",
+        "pot_reason": "Корни фаленопсис участвуют в фотосинтезе и нуждаются в свете",
+        "control": "Прозрачный горшок позволяет контролировать состояние корней и влажность субстрата"
+      },
+      "warnings": [
+        "Субстрат должен быстро просыхать, корни должны дышать",
+        "Фитильный полив категорически не подходит",
+        "Полная просушка между поливами",
+        "При повышенной влажности воздуха процент мха можно уменьшать"
+      ],
+      "watering_method": [
+        "Замачивание",
+        "Пролив по краю"
+      ],
+      "composition": [
+        {
+          "component": "Bark (кора)",
+          "percentage": "60-70"
+        },
+        {
+          "component": "Сфагнум (мох)",
+          "percentage": "15-20"
+        },
+        {
+          "component": "Перлит",
+          "percentage": "10-15"
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": "5-10",
+          "notes": "Для дополнительной сорбции"
+        }
+      ]
+    },
+    "mix_10": {
+      "number": 10,
+      "name": "Для папоротников",
+      "watering_type": "ручной",
+      "airiness_level": "medium",
+      "rot_risk_if_overwatered": "medium",
+      "suitable_for": [
+        "Нефролепис",
+        "Селагинелла (плаунок)",
+        "Другие папоротники"
+      ],
+      "optional_humus": {
+        "allowed": true,
+        "percentage": 5,
+        "replaces": "Универсальный грунт Premium",
+        "note": "Папоротники любят органику (35% -> 30%)"
+      },
+      "notes": [
+        "Папоротники любят постоянно влажный, но не мокрый грунт",
+        "Фитильный полив не рекомендуется — риск переувлажнения"
+      ],
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 35
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 25
+        },
+        {
+          "component": "Перлит",
+          "percentage": 15
+        },
+        {
+          "component": "Вермикулит",
+          "percentage": 10
+        },
+        {
+          "component": "Сфагнум (мох)",
+          "percentage": 10
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 5
+        }
+      ]
+    },
+    "mix_11": {
+      "number": 11,
+      "name": "Для суккулентов/сансевиерии",
+      "watering_type": "ручной",
+      "airiness_level": "high",
+      "rot_risk_if_overwatered": "low",
+      "suitable_for": [
+        "Сансевиерия",
+        "Замиокулькас (ZZ plant)",
+        "Суккуленты"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Суккулентам нужна бедная сухая почва, гумус добавит лишнее питание и влагу"
+      },
+      "notes": [
+        "Очень хороший дренаж — главное требование",
+        "Фитильный полив категорически не подходит",
+        "Полная просушка между поливами"
+      ],
+      "composition": [
+        {
+          "component": "Универсальный грунт Premium",
+          "percentage": 45
+        },
+        {
+          "component": "Перлит",
+          "percentage": 40
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 10
+        },
+        {
+          "component": "Туф/керамзит",
+          "percentage": 5
+        }
+      ]
+    },
+    "mix_12": {
+      "number": 12,
+      "name": "Для бархатных антуриумов (без универсального грунта)",
+      "watering_type": "ручной",
+      "airiness_level": "very_high",
+      "rot_risk_if_overwatered": "low",
+      "suitable_for": [
+        "Антуриум кларинервиум",
+        "Другие бархатные антуриумы"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Биогумус 10% уже в рецепте — дополнительный гумус не нужен"
+      },
+      "notes": [
+        "Очень воздушный, крупнофракционный субстрат — ключевое требование",
+        "Без универсального грунта — слишком плотный и влагоёмкий для бархатных",
+        "Биогумус даёт мягкое питание без лишней влаги",
+        "Фитильный полив категорически не подходит — риск гнили клубня",
+        "Горшок с крупными дренажными отверстиями обязателен"
+      ],
+      "composition": [
+        {
+          "component": "Bark (кора)",
+          "percentage": 35
+        },
+        {
+          "component": "Перлит",
+          "percentage": 25
+        },
+        {
+          "component": "Сфагнум (мох)",
+          "percentage": 10
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 10
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 10
+        },
+        {
+          "component": "Биогумус",
+          "percentage": 10
+        }
+      ]
+    },
+    "mix_13": {
+      "number": 13,
+      "name": "Для клубневых ароидных (алоказии)",
+      "watering_type": "ручной",
+      "airiness_level": "very_high",
+      "rot_risk_if_overwatered": "low",
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Биогумус 5% уже в рецепте — дополнительный гумус не нужен"
+      },
+      "suitable_for": [
+        "Алоказия Regal Shields",
+        "Алоказия (Polly / Amazonica)",
+        "Алоказия Фрайдек",
+        "Алоказия Black Velvet",
+        "Другие клубневые (corm-based) алоказии"
+      ],
+      "notes": [
+        "Архетип грунта для алоказий: воздушная смесь как база, влагоёмкие компоненты — только понемногу",
+        "Без универсального грунта — он долго держит влагу, мало воздуха у корней, выше шанс подгнивания",
+        "Кора — каркас и воздух, перлит — аэрация, кокос крупный — немного влаги без болота",
+        "Биогумус — немного питания (не база), уголь — стабилизатор среды",
+        "Фитильный полив не рекомендуется"
+      ],
+      "warnings": [
+        "НЕ использовать: вермикулит + биогумус вместе, тяжёлую мелкую смесь, большой горшок с мокрым субстратом"
+      ],
+      "adjustments": {
+        "small_corms": "Для деток/маленьких клубней — чуть больше мелкой фракции или чаще полив",
+        "dry_conditions": "При очень сухом воздухе (<40%) — можно добавить немного влагоёмкости",
+        "rehab": "При реанимации — отдельный режим (semi-dry), этот микс не применяется"
+      },
+      "composition": [
+        {
+          "component": "Bark (кора)",
+          "percentage": 35
+        },
+        {
+          "component": "Перлит",
+          "percentage": 30
+        },
+        {
+          "component": "Кокос гас (крупная фракция)",
+          "percentage": 15
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 5
+        },
+        {
+          "component": "Биогумус",
+          "percentage": 5
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 10
+        }
+      ]
+    },
+    "mix_14": {
+      "number": 14,
+      "name": "Для сенполий / геснериевых (фиалок)",
+      "watering_type": "ручной / фитильный",
+      "airiness_level": "high",
+      "rot_risk_if_overwatered": "medium",
+      "suitable_for": [
+        "Сенполия (узамбарская фиалка)",
+        "Стрептокарпус",
+        "Другие геснериевые"
+      ],
+      "notes": [
+        "Фитильный полив рекомендован — сенполии не любят попадание воды на листья",
+        "Лёгкий, слабокислый, воздушный субстрат",
+        "Торф — основа, перлит и вермикулит обеспечивают воздух и влагоудержание",
+        "Уголь для стабилизации среды"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Торф уже обеспечивает органическую базу; гумус повышает риск гнили черешков"
+      },
+      "composition": [
+        {
+          "component": "Торф верховой (кислый)",
+          "percentage": 50
+        },
+        {
+          "component": "Перлит",
+          "percentage": 25
+        },
+        {
+          "component": "Вермикулит",
+          "percentage": 15
+        },
+        {
+          "component": "Кокос дак (мелкая фракция)",
+          "percentage": 5
+        },
+        {
+          "component": "Древесный уголь",
+          "percentage": 5
+        }
+      ]
+    },
+    "mix_carnivorous": {
+      "name": "Для хищных растений",
+      "watering_type": "поддон",
+      "airiness_level": "medium",
+      "rot_risk_if_overwatered": "medium",
+      "plant_ids": [
+        "dionaea"
+      ],
+      "suitable_for": [
+        "Дионея (Венерина мухоловка)"
+      ],
+      "optional_humus": {
+        "allowed": false,
+        "reason": "Категорически нет — любые удобрения/органика убивают хищные растения"
+      },
+      "warnings": [
+        "КРИТИЧНО — любые удобрения убивают растение",
+        "Использовать ТОЛЬКО дистиллят или чистый RO (TDS < 10)"
+      ],
+      "composition": [
+        {
+          "component": "Торф кислый (без удобрений)",
+          "percentage": 70
+        },
+        {
+          "component": "Перлит",
+          "percentage": 30
+        }
+      ]
+    }
+  }
+}

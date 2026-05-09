@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌱 Plant Propagation - Plants Care</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../propagation.html" >RU</a>
+    <a href="../en/propagation.html" class="active">EN</a>
+    <a href="../he/propagation.html" >HE</a>
+</div>
+    <div class="container">
+        <a href="index.html" class="nav-back">← Home</a>
+        <header>
+            <h1>🌱 Plant Propagation</h1>
+            <p class="subtitle">Propagation methods and instructions</p>
+        </header>
+
+        <div class="best-time">
+            <h3>🌸 Best time for propagation: Spring — Early summer</h3>
+        </div>
+
+        <div class="method-tabs">
+            <button class="method-tab" data-method="water">💧 In water</button>
+            <button class="method-tab" data-method="soil">🌱 In soil</button>
+            <button class="method-tab" data-method="division">✂️ Division</button>
+            <button class="method-tab" data-method="airlayer">🌿 Air layering</button>
+            <button class="method-tab" data-method="offsets">👶 Offsets</button>
+        </div>
+
+        <div class="method-section" data-method="water">
+            <div class="method-header">
+                <h2><span>💧</span> 💧 In water</h2>
+                <div class="description">The simplest and most visual method. Suitable for most vines and aroids.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Step-by-Step Instructions</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Cut a cutting with 1-2 nodes (where leaves grow).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Remove lower leaves so they don't rot in water.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Place in water. Add a piece of charcoal.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Wait for 2-5 cm roots, then plant in light soil.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Suitable for plants</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/monstera_deliciosa.jpg" alt="Monstera deliciosa">
+                        <div class="name">Monstera deliciosa</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/epipremnum.jpg" alt="Pothos / Scindapsus">
+                        <div class="name">Pothos / Scindapsus</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/philodendron_imperial.jpg" alt="Large-leaf Philodendron">
+                        <div class="name">Large-leaf Philodendron</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/aglaonema.jpeg" alt="Aglaonema (Variegated)">
+                        <div class="name">Aglaonema (Variegated)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Expert Tips</h3>
+                <ul>
+                    <li>Use a dark container — roots love darkness.</li>
+                    <li>Change water once a week.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="soil">
+            <div class="method-header">
+                <h2><span>🌱</span> 🌱 In soil</h2>
+                <div class="description">For plants that don't tolerate water well or have delicate roots.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Step-by-Step Instructions</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Prepare cutting and let the cut dry for 30-60 min.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Dip the cut in rooting hormone (optional).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Plant in a light mix (peat + perlite 50/50).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Cover with a bag or jar to create a greenhouse.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Suitable for plants</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/begonia_maculata.jpg" alt="Begonia maculata">
+                        <div class="name">Begonia maculata</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/dracaena_marginata.jpg" alt="Dracaena marginata">
+                        <div class="name">Dracaena marginata</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Expert Tips</h3>
+                <ul>
+                    <li>Ventilate the greenhouse every day.</li>
+                    <li>Do not overwater — soil should be only slightly moist.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="division">
+            <div class="method-header">
+                <h2><span>✂️</span> ✂️ Division</h2>
+                <div class="description">For bushy plants that form rosettes or have rhizomes.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Step-by-Step Instructions</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Remove plant from pot and clean soil from roots.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Carefully divide the bush by hand or with a sharp knife.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Each part should have its own roots and growth point.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Plant in separate pots.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Suitable for plants</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/spathiphyllum.jpg" alt="Peace Lily (Spathiphyllum)">
+                        <div class="name">Peace Lily (Spathiphyllum)</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/calathea_lancifolia.jpg" alt="Calathea lancifolia">
+                        <div class="name">Calathea lancifolia</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/anthurium.jpg" alt="Anthurium">
+                        <div class="name">Anthurium</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/sansevieria.jpg" alt="Snake Plant">
+                        <div class="name">Snake Plant</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Expert Tips</h3>
+                <ul>
+                    <li>Dust cuts with charcoal or cinnamon.</li>
+                    <li>Keep in shade for the first week.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="airlayer">
+            <div class="method-header">
+                <h2><span>🌿</span> 🌿 Air layering</h2>
+                <div class="description">For large woody plants (ficus, monstera) to get a large plant immediately.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Step-by-Step Instructions</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Make a cut on the stem or remove a ring of bark.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Wrap with moist sphagnum moss.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Secure with plastic wrap so the moss doesn't dry out.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">When roots fill the wrap, cut and plant.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Suitable for plants</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/monstera_deliciosa.jpg" alt="Monstera deliciosa">
+                        <div class="name">Monstera deliciosa</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/philodendron_selloum.jpg" alt="Philodendron selloum">
+                        <div class="name">Philodendron selloum</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Expert Tips</h3>
+                <ul>
+                    <li>Use moss soaked in stimulant solution.</li>
+                    <li>Method helps preserve variegation.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="offsets">
+            <div class="method-header">
+                <h2><span>👶</span> 👶 Offsets</h2>
+                <div class="description">For plants that produce 'babies' on runners or at the base.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Step-by-Step Instructions</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Wait until the offset has its own root nubs.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Cut the offset from the mother plant.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Plant in a small pot with light soil.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Maintain high humidity initially.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Suitable for plants</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/chlorophytum.jpg" alt="Spider Plant (Chlorophytum)">
+                        <div class="name">Spider Plant (Chlorophytum)</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/sansevieria.jpg" alt="Snake Plant">
+                        <div class="name">Snake Plant</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/guzmania.jpg" alt="Guzmania">
+                        <div class="name">Guzmania</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Expert Tips</h3>
+                <ul>
+                    <li>Don't separate offsets that are too small.</li>
+                    <li>Chlorophytum can be rooted without cutting from the runner.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        header { text-align: center; }
+        .best-time { background: #2d6a4f; color: white; padding: 14px 20px; border-radius: 4px; text-align: center; margin-bottom: 30px; }
+        .method-tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        .method-tab { padding: 7px 16px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+        .method-tab.active { background: #2d6a4f; color: #fff; border-color: #2d6a4f; }
+        .method-section { display: none; margin-bottom: 40px; }
+        .method-section.active { display: block; }
+        .method-header { background: #333; color: white; padding: 16px; border-radius: 4px; margin-bottom: 25px; }
+        .method-header h2 { font-size: 1.15rem; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+        .steps-container { background: #f5f5f0; border-radius: 4px; padding: 25px; margin-bottom: 25px; }
+        .step { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #e2e8f0; }
+        .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .step-number { width: 28px; height: 28px; background: #2d6a4f; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .plants-mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 15px; }
+        .plant-mini-card { background: white; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; text-align: center; }
+        .plant-mini-card img { width: 100%; height: 80px; object-fit: cover; }
+        .plant-mini-card .name { padding: 8px; font-size: 0.8rem; font-weight: 600; }
+        .tips-box { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 20px; margin-top: 30px; border-radius: 4px; }
+        .tips-box h3 { color: #2c5282; margin-bottom: 15px; }
+        .tips-box ul { list-style: none; }
+        .tips-box li { margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
+        .tips-box li::before { content: "💡"; }
+    </style>
+<script>
+    const tabs = document.querySelectorAll('.method-tab');
+    const sections = document.querySelectorAll('.method-section');
+    function showMethod(method) {
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.method === method));
+        sections.forEach(s => s.classList.toggle('active', s.dataset.method === method));
+    }
+    tabs.forEach(t => t.addEventListener('click', () => showMethod(t.dataset.method)));
+    showMethod('water');
+</script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

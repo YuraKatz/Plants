@@ -1,0 +1,12 @@
+{
+  "_description": "Machine-readable API for Plants Care Database. All data from YAML sources.",
+  "_base_url": "https://yurakatz.github.io/Plants/api/",
+  "endpoints": {
+    "catalog.json": "All 35 plants with full care data",
+    "soil-mixes.json": "17 soil mix recipes with components",
+    "water-groups.json": "7 water chemistry groups (A/B/C/V/orchids/semi-hydro/carnivorous) with plant assignments",
+    "feeding.json": "Feeding matrix, fertilizer products, doses",
+    "diagnostics.json": "Per-plant symptom → cause → action",
+    "pesticides.json": "3 pesticides catalog (confidor/nimbi/biomectin etc.)"
+  }
+}

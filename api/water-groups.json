@@ -1,0 +1,351 @@
+{
+  "_description": "Water chemistry groups with PPM/pH targets and plant assignments.",
+  "group_count": 7,
+  "groups": {
+    "group_a": {
+      "name": "Чувствительные",
+      "color": "red",
+      "after_calmag_ppm": 50,
+      "after_fertilizer_ppm": {
+        "growth": "80-100",
+        "rest": 50
+      },
+      "ph_target": "5.8-6.3",
+      "fertilizer_dose": {
+        "growth": "1/4 от инструкции (Universal)",
+        "rest": "НЕ удобрять"
+      },
+      "sensitivity_level": "Очень высокая",
+      "notes": [],
+      "plants": [
+        {
+          "id": "alocasia_amazonica",
+          "name": "Алоказия (Polly / Amazonica)",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "alocasia_frydek",
+          "name": "Алоказия Фрайдек",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "alocasia_regal_shields",
+          "name": "Алоказия Регал Шилдс",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "anthurium_andraeanum",
+          "name": "Антуриум",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "anthurium_clarinervium",
+          "name": "Антуриум кларинервиум",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "calathea_lancifolia",
+          "name": "Калатея лансифолия",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "calathea_ornata",
+          "name": "Калатея орната",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "guzmania",
+          "name": "Гузмания",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "nephrolepis",
+          "name": "Папоротник (Нефролепис)",
+          "sensitivity": "high"
+        },
+        {
+          "id": "selaginella",
+          "name": "Селагинелла Мартенса (плаунок)",
+          "sensitivity": "very_high"
+        },
+        {
+          "id": "spathiphyllum",
+          "name": "Спатифиллум",
+          "sensitivity": "very_high"
+        }
+      ]
+    },
+    "group_orchids": {
+      "name": "Орхидеи",
+      "color": "purple",
+      "after_calmag_ppm": 30,
+      "after_fertilizer_ppm": {
+        "growth": "60-80",
+        "blooming": "80-100",
+        "rest": 30
+      },
+      "ph_target": "5.5-6.0",
+      "fertilizer_dose": {
+        "growth": "1/8 от инструкции (Universal — вегетация)",
+        "blooming": "Orchid fertilizer (по инструкции, слабая доза)",
+        "rest": "НЕ удобрять"
+      },
+      "sensitivity_level": "Очень высокая",
+      "notes": [
+        "Орхидеи требуют самый низкий PPM",
+        "CalMag минимально — только базовые минералы",
+        "При цветении использовать удобрение для орхидей вместо универсального",
+        "Полив методом замачивания 15-20 минут",
+        "Не допускать накопления солей в субстрате"
+      ],
+      "plants": [
+        {
+          "id": "phalaenopsis",
+          "name": "Орхидея фаленопсис",
+          "sensitivity": "very_high"
+        }
+      ]
+    },
+    "group_b": {
+      "name": "Ароидные и стандартные",
+      "color": "blue",
+      "after_calmag_ppm": 60,
+      "after_fertilizer_ppm": {
+        "growth": "120-150",
+        "rest": "60-80"
+      },
+      "ph_target": "6.0-6.5",
+      "fertilizer_dose": {
+        "growth": "1/2 от инструкции (Universal)",
+        "rest": "1/4 от инструкции или НЕ удобрять"
+      },
+      "sensitivity_level": "Средняя",
+      "notes": [],
+      "plants": [
+        {
+          "id": "aglaonema",
+          "name": "Аглаонема пестролистная",
+          "sensitivity": "medium"
+        },
+        {
+          "id": "begonia_maculata",
+          "name": "Бегония макулата",
+          "sensitivity": "medium"
+        },
+        {
+          "id": "chamaedorea",
+          "name": "Хамедорея / пальма комнатная",
+          "sensitivity": "medium"
+        },
+        {
+          "id": "chlorophytum_comosum",
+          "name": "Хлорофитум",
+          "sensitivity": "low"
+        },
+        {
+          "id": "epipremnum",
+          "name": "Эпипремнум / сциндапсус",
+          "sensitivity": "low"
+        },
+        {
+          "id": "monstera_adansonii",
+          "name": "Монстера адансони",
+          "sensitivity": "low"
+        },
+        {
+          "id": "monstera_deliciosa",
+          "name": "Монстера делициоза",
+          "sensitivity": "low"
+        },
+        {
+          "id": "philodendron",
+          "name": "Филодендрон крупнолистный",
+          "sensitivity": "low"
+        },
+        {
+          "id": "philodendron_selloum",
+          "name": "Филодендрон Селлоу",
+          "sensitivity": "low"
+        },
+        {
+          "id": "philodendron_xanadu",
+          "name": "Филодендрон Ксанаду",
+          "sensitivity": "low"
+        },
+        {
+          "id": "saintpaulia",
+          "name": "Сенполия (узамбарская фиалка)",
+          "sensitivity": "medium"
+        },
+        {
+          "id": "syngonium_golden_allusion",
+          "name": "Сингониум 'Golden Allusion'",
+          "sensitivity": "low"
+        }
+      ]
+    },
+    "group_c": {
+      "name": "Неприхотливые",
+      "color": "green",
+      "after_calmag_ppm": 80,
+      "after_fertilizer_ppm": {
+        "growth": "150-200",
+        "rest": "80-100"
+      },
+      "ph_target": "6.2-6.7",
+      "fertilizer_dose": {
+        "growth": "1/2 от инструкции (Universal)",
+        "rest": "НЕ удобрять"
+      },
+      "sensitivity_level": "Низкая",
+      "notes": [],
+      "plants": [
+        {
+          "id": "croton",
+          "name": "Кротон",
+          "sensitivity": "medium"
+        },
+        {
+          "id": "dracaena_fragrans",
+          "name": "Драцена фрагранс / деременсис",
+          "sensitivity": "low"
+        },
+        {
+          "id": "dracaena_marginata",
+          "name": "Драцена маргината",
+          "sensitivity": "low"
+        },
+        {
+          "id": "sansevieria",
+          "name": "Сансевиерия (Щучий хвост)",
+          "sensitivity": "very_low"
+        },
+        {
+          "id": "schlumbergera",
+          "name": "Шлюмбергера (Декабрист)",
+          "sensitivity": "low"
+        },
+        {
+          "id": "zamioculcas",
+          "name": "Замиокулькас (Долларовое дерево)",
+          "sensitivity": "very_low"
+        }
+      ]
+    },
+    "group_semi_hydro": {
+      "name": "Semi-Hydro",
+      "color": "orange",
+      "after_calmag_ppm": 60,
+      "after_fertilizer_ppm": {
+        "growth": "150-180",
+        "rest": "80-100"
+      },
+      "ph_target": "5.5-6.0",
+      "fertilizer_dose": {
+        "growth": "1/2 от инструкции (Universal) — каждый долив",
+        "rest": "1/4 от инструкции"
+      },
+      "sensitivity_level": "Средняя",
+      "notes": [
+        "В semi-hydro удобрение нужно КАЖДЫЙ раз при доливе воды",
+        "Субстрат инертный — нет питательных веществ кроме того что в воде",
+        "pH ниже чем в грунте — минералы в субстрате (цеолит, лава) работают лучше при 5.5-6.0",
+        "Раз в месяц промывать субстрат чистой RO водой для удаления солей",
+        "При переводе из грунта — первые 2-3 недели только CalMag без удобрений"
+      ],
+      "plants": []
+    },
+    "group_v": {
+      "name": "Вариегатные",
+      "color": "white",
+      "after_calmag_ppm": 50,
+      "after_fertilizer_ppm": {
+        "growth": "100-130",
+        "rest": "70-90"
+      },
+      "ph_target": "6.0-6.3",
+      "fertilizer_dose": {
+        "growth": "0.4 мл/л Universal (между 1/2 и 1/4) — снижаем N",
+        "rest": "НЕ удобрять или 1/4 от инструкции"
+      },
+      "sensitivity_level": "Высокая (по белым участкам)",
+      "notes": [
+        "Высокий N → потеря белизны (больше зелёных листьев)",
+        "PPM ниже чем у обычной делициозы — белые участки не работают на питание",
+        "Свет критичен — 12ч+ досветки оптимально",
+        "НЕ применять \"стероиды\" / повышенный PPM",
+        "KF-IRON осторожно — может вызвать тёмные пятна на белых участках",
+        "KF-MACROBOOST не применять — нарушит баланс N/K"
+      ],
+      "plants": [
+        {
+          "id": "monstera_albo_variegata",
+          "name": "Монстера альбо вариегата",
+          "sensitivity": "high"
+        },
+        {
+          "id": "monstera_aurea",
+          "name": "Монстера Aurea (вариегата жёлтая)",
+          "sensitivity": "high"
+        },
+        {
+          "id": "philodendron_pink_princess",
+          "name": "Филодендрон 'Pink Princess'",
+          "sensitivity": "high"
+        },
+        {
+          "id": "syngonium_mojito",
+          "name": "Сингониум 'Mojito'",
+          "sensitivity": "high"
+        }
+      ]
+    },
+    "group_carnivorous": {
+      "name": "Хищные",
+      "color": "black",
+      "after_calmag_ppm": 0,
+      "after_fertilizer_ppm": {
+        "growth": 0,
+        "rest": 0
+      },
+      "ph_target": "5.0-5.5",
+      "fertilizer_dose": {
+        "growth": "НИЧЕГО! Только чистый RO",
+        "rest": "НИЧЕГО! Только чистый RO"
+      },
+      "sensitivity_level": "Критическая",
+      "notes": [
+        "НИКАКИХ добавок в воду",
+        "Только чистый RO (TDS < 10)",
+        "Любые минералы/удобрения убивают растение"
+      ],
+      "plants": []
+    }
+  },
+  "mixing_protocol": {
+    "step_1": {
+      "action": "Налить RO воду",
+      "target_ppm": 0,
+      "note": "Чистая осмос-вода, TDS метр должен показывать 0-10"
+    },
+    "step_2": {
+      "action": "Добавить CalMag (ATAMI CALMAG)",
+      "method": "По каплям, измеряя PPM",
+      "note": "Довести до базового PPM группы"
+    },
+    "step_3": {
+      "action": "Добавить удобрение",
+      "method": "По каплям/дозе, измеряя PPM",
+      "note": "Довести до целевого PPM группы (в сезон роста)"
+    },
+    "step_4": {
+      "action": "Скорректировать pH",
+      "method": "pH Down (Green Farmer) по каплям",
+      "note": "Довести до целевого pH группы"
+    },
+    "step_5": {
+      "action": "Перемешать и полить",
+      "note": "Использовать сразу, не хранить долго"
+    }
+  }
+}

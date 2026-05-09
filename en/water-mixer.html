@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water & Fertilizer Mixer - Plants Care</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+    </style>
+    <style>
+        header { text-align: center; }
+        .canisters-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .canister-card { border: 1px solid #ddd; border-radius: 6px; overflow: hidden; background: #fff; border-left: 4px solid #ddd; }
+        .canister-card.canister-a { border-left-color: #4a90d9; }
+        .canister-card.canister-b { border-left-color: #2d6a4f; }
+        .canister-card.canister-c { border-left-color: #888; }
+        .canister-header { padding: 14px; color: #fff; text-align: center; }
+        .canister-a .canister-header { background: #4a6fa5; }
+        .canister-b .canister-header { background: #2d6a4f; }
+        .canister-c .canister-header { background: #666; }
+        .canister-letter { font-size: 2rem; font-weight: 800; margin-bottom: 2px; }
+        .canister-title { font-size: 0.95rem; font-weight: 600; opacity: 0.9; }
+        .canister-params { display: flex; justify-content: center; gap: 16px; padding: 10px; background: #fafaf8; border-bottom: 1px solid #e5e5e0; }
+        .param { text-align: center; }
+        .param-value { font-size: 1.2rem; font-weight: 700; color: #333; }
+        .param-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+        .recipe-group { background: #fafaf8; border-radius: 4px; padding: 12px; margin-bottom: 10px; border: 1px solid #e5e5e0; }
+        .recipe-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd; }
+        .recipe-dose { font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 0.82rem; }
+        .dose-full { background: #d1fae5; color: #065f46; }
+        .dose-half { background: #fef3c7; color: #78350f; }
+        .dose-quarter { background: #ffedd5; color: #9a3412; }
+        .dose-eighth { background: #fee2e2; color: #991b1b; }
+        .dose-none { background: #fee2e2; color: #991b1b; }
+        .plants-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+        .plant-card-mini { border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: #fff; position: relative; text-align: center; }
+        .plant-mini-image { width: 100%; height: 80px; object-fit: cover; }
+        .plant-mini-name { padding: 6px; font-size: 0.75rem; font-weight: 600; }
+        .tip-card { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 4px; background: #fff; border: 1px solid #e5e5e0; margin-bottom: 8px; }
+        .tip-card.flush { border-left: 3px solid #3b82f6; background: #eff6ff; }
+        .tip-card.ph { border-left: 3px solid #d97706; background: #fffbeb; }
+        .tip-card.ppm { border-left: 3px solid #2d6a4f; background: #ecfdf5; }
+        .tip-card.order { border-left: 3px solid #7c3aed; background: #f5f3ff; }
+        .toggle-guide { display: block; width: 100%; padding: 10px; background: #2d6a4f; color: #fff; border: none; border-radius: 4px; font-size: 0.9rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .mixing-guide { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 20px; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .step-number { width: 32px; height: 32px; background: #2d6a4f; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .step-number.check { background: #059669; }
+        .multicote-section { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 16px; margin-top: 16px; border-left: 3px solid #3b82f6; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .ppm-table { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; }
+        .ppm-cell { background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e5e5e0; }
+        .ppm-cell .label { font-size: 0.72rem; color: #888; }
+        .ppm-cell .value { font-weight: 700; }
+        .ppm-cell .note { font-size: 0.68rem; color: #2d6a4f; }
+        @media (max-width: 768px) { .ppm-table { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../water-mixer.html" >RU</a>
+    <a href="../en/water-mixer.html" class="active">EN</a>
+    <a href="../he/water-mixer.html" >HE</a>
+</div>
+    <div class="container">
+        <a href="index.html" class="nav-back">← Home</a>
+        <header>
+            <h1>Water & Fertilizer Mixer</h1>
+            <p class="subtitle">Mix it right — by PPM and season</p>
+        </header>
+
+        <div style="background: #2d6a4f; color: #fff; padding: 10px 16px; border-radius: 4px; text-align: center; margin-bottom: 16px;">
+            <strong>💡 Artificial Light = Growth Season Always</strong>
+        </div>
+
+        <div class="pro-tips" style="max-width: 700px; margin: 0 auto 20px;">
+            <div class="tip-card flush">
+                <span>🚿</span>
+                <div><strong>Every 4th Watering — NO Fertilizer!</strong><p>Flush to prevent salt buildup. Same canister, but no additives.</p></div>
+            </div>
+            <div class="tip-card ph">
+                <span>⏱️</span>
+                <div><strong>Measure pH after 2-3 minutes</strong><p>Wait after adding fertilizers — micronutrients don't dissolve instantly, pH may drop by 0.2-0.4.</p></div>
+            </div>
+            <div class="tip-card ppm">
+                <span>📊</span>
+                <div><strong>PPM ±10-15 is normal</strong><p>78/120/152 are guides, not dogmas. If the plant is healthy and roots are white, everything is fine.</p></div>
+            </div>
+            <div class="tip-card order">
+                <span>📋</span>
+                <div><strong>Order: CalMag → PPM → Fertilizer → pH</strong><p>More details in the guide below ↓</p></div>
+            </div>
+        </div>
+
+        <button class="toggle-guide" id="toggleGuideBtn" onclick="toggleGuide()">📖 How to mix water correctly (click to open)</button>
+
+        <div class="mixing-guide" id="mixingGuide" style="display: none;">
+            <h2>🔬 Step-by-Step Guide: Preparing Water</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; gap: 15px;">
+                    <div class="step-number">1</div>
+                    <div><h4>💧 RO Water</h4><p>Start with pure RO water. PPM should be near zero (0-10).</p></div>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="step-number">2</div>
+                    <div><h4>🧂 Add CalMag</h4><p>Bring PPM to the target group value: A≈80, B≈120, C≈150.</p><p style="color: #48bb78; font-size: 0.85rem;">💡 This base is the same for flushing and feeding!</p></div>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="step-number">3</div>
+                    <div><h4>🧪 Add Fertilizer</h4><p>PPM will rise by 50-150 — this is normal! Fertilizer = salts = higher PPM. No need to adjust.</p></div>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="step-number">4</div>
+                    <div><h4>⏱️ Wait 2-3 minutes</h4><p>Micronutrients don't dissolve instantly. pH may drop by 0.2-0.4 after full dissolution.</p></div>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="step-number">5</div>
+                    <div><h4>📊 Measure and adjust pH</h4><p>Target pH: 5.8-6.5 (depending on the group). Adjust pH LAST — after all additives.</p></div>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="step-number check">✓</div>
+                    <div><h4>🎉 Ready!</h4><p>Water is ready for use. PPM after fertilizer: 130-300 is normal.</p></div>
+                </div>
+            </div>
+
+            <div style="background: #eff6ff; padding: 15px; border-radius: 4px; border-left: 4px solid #3b82f6; margin-top: 20px;">
+                <h4 style="color: #1e40af; margin-bottom: 10px;">📊 Why PPM after fertilizer is higher — and it's OK</h4>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Target PPM (80/120/150) is the CalMag base. Fertilizer is added ON TOP:</p>
+                <div class="ppm-table">
+                    <div class="ppm-cell"><div class="label">RO</div><div class="value">~0</div></div>
+                    <div class="ppm-cell"><div class="label">+ CalMag</div><div class="value">80-150</div><div class="note">← target</div></div>
+                    <div class="ppm-cell"><div class="label">+ Fert</div><div class="value">+50-150</div></div>
+                    <div class="ppm-cell"><div class="label">Total</div><div class="value">130-300</div><div class="note">✓ OK</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="canisters-grid">
+            <div class="canister-card canister-a">
+                <div class="canister-header">
+                    <div class="canister-letter">A</div>
+                    <div class="canister-title">Sensitive</div>
+                </div>
+                <div class="canister-params">
+                    <div class="param">
+                        <div class="param-value"> ± </div>
+                        <div class="param-label">PPM (target )</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value"></div>
+                        <div class="param-label">pH</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value">≤ 110</div>
+                        <div class="param-label">PPM + fert</div>
+                    </div>
+                </div>
+                <div style="padding: 16px;">
+                    <button style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;" onclick="window.print()">🖨️ Print Recipe</button>
+                </div>
+            </div>
+            <div class="canister-card canister-b">
+                <div class="canister-header">
+                    <div class="canister-letter">B</div>
+                    <div class="canister-title">Aroids & Standard</div>
+                </div>
+                <div class="canister-params">
+                    <div class="param">
+                        <div class="param-value"> ± </div>
+                        <div class="param-label">PPM (target )</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value"></div>
+                        <div class="param-label">pH</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value">≤ 160</div>
+                        <div class="param-label">PPM + fert</div>
+                    </div>
+                </div>
+                <div style="padding: 16px;">
+                    <button style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;" onclick="window.print()">🖨️ Print Recipe</button>
+                </div>
+            </div>
+            <div class="canister-card canister-c">
+                <div class="canister-header">
+                    <div class="canister-letter">C</div>
+                    <div class="canister-title">Hardy</div>
+                </div>
+                <div class="canister-params">
+                    <div class="param">
+                        <div class="param-value"> ± </div>
+                        <div class="param-label">PPM (target )</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value"></div>
+                        <div class="param-label">pH</div>
+                    </div>
+                    <div class="param">
+                        <div class="param-value">≤ 200</div>
+                        <div class="param-label">PPM + fert</div>
+                    </div>
+                </div>
+                <div style="padding: 16px;">
+                    <button style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;" onclick="window.print()">🖨️ Print Recipe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="multicote-section">
+            <h3>🔵 Multicote Granules (Ecogan)</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Controlled release fertilizer — slowly releases over 3-6 months</p>
+            <div style="background: #fef2f2; border: 1px solid #ef4444; padding: 12px; border-radius: 4px;">
+                <strong style="color: #b91c1c;">⚠️ DO NOT use for wick watering!</strong>
+                <p style="font-size: 0.85rem; margin-top: 4px;">Granules wash out and burn roots. Top watering only!</p>
+            </div>
+        </div>
+    </div>
+<script>
+    function toggleGuide() {
+        const g = document.getElementById('mixingGuide');
+        const b = document.getElementById('toggleGuideBtn');
+        const isOpen = g.style.display !== 'none';
+        g.style.display = isOpen ? 'none' : 'block';
+        b.textContent = isOpen ? "📖 How to mix water correctly (click to open)" : "📖 How to mix water correctly (click to close)";
+    }
+</script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

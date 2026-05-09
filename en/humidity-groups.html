@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humidity Groups</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+    </style>
+    <style>
+        .container { max-width: 1400px; }
+        .legend {
+            background: #f5f5f0;
+            padding: 16px;
+            border: 1px solid #e5e5e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .legend h3 { color: #333; margin-bottom: 10px; font-size: 0.95rem; }
+        .legend-bar {
+            display: flex;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 32px;
+        }
+        .legend-segment {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            font-size: 0.78rem;
+            color: #888;
+        }
+        .humidity-group {
+            margin-bottom: 28px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .group-header {
+            padding: 14px 20px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .group-title { font-size: 1.2rem; font-weight: 600; }
+        .group-params { display: flex; gap: 12px; font-size: 0.85rem; }
+        .param { background: rgba(255,255,255,0.18); padding: 4px 10px; border-radius: 3px; }
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            padding: 16px;
+            background: #fafaf8;
+        }
+        .plant-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+            cursor: pointer;
+        }
+        .plant-card:hover { border-color: #2d6a4f; }
+        .plant-card.hidden { display: none; }
+        .plant-image { width: 100%; height: 160px; object-fit: cover; background: #eee; }
+        .plant-image-placeholder {
+            width: 100%; height: 160px;
+            background: #eee;
+            display: none; align-items: center; justify-content: center;
+            flex-direction: column; color: #aaa; font-size: 0.85rem;
+            text-align: center; padding: 16px;
+        }
+        .placeholder-icon { font-size: 2rem; margin-bottom: 6px; opacity: 0.5; }
+        .plant-info { padding: 10px; }
+        .plant-name-ru { font-size: 0.95rem; font-weight: 600; color: #333; margin-bottom: 3px; }
+        .plant-name-en { font-size: 0.8rem; color: #888; font-style: italic; margin-bottom: 4px; }
+        .plant-score { font-size: 0.82rem; color: #555; margin-bottom: 3px; }
+        .score-value { font-weight: 600; color: #4a6fa5; }
+        .plant-score-secondary { font-size: 0.72rem; color: #999; margin-bottom: 3px; }
+        .plant-id {
+            font-size: 0.7rem; color: #aaa; font-family: monospace;
+            background: #f5f5f0; padding: 2px 6px; border-radius: 3px; display: inline-block;
+        }
+        @media (max-width: 768px) {
+            .group-title { font-size: 1.1rem; }
+            .group-params { flex-direction: column; gap: 4px; }
+            .plants-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .plant-image, .plant-image-placeholder { height: 120px; }
+        }
+        @media print { .plant-card { break-inside: avoid; } }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../humidity-groups.html" >RU</a>
+    <a href="../en/humidity-groups.html" class="active">EN</a>
+    <a href="../he/humidity-groups.html" >HE</a>
+</div>
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-home">← Home</a>
+            <h1>💧 Humidity Groups (Relative)</h1>
+            <p class="subtitle">Relative humidity needs of your plants (scale 1-10)</p>
+        </header>
+
+        <div class="legend">
+            <h3>Humidity Needs Scale</h3>
+            <div class="legend-bar">
+                <div class="legend-segment" style="background: #2196F3;">1</div>
+                <div class="legend-segment" style="background: #26A69A;">2</div>
+                <div class="legend-segment" style="background: #4CAF50;">3</div>
+                <div class="legend-segment" style="background: #66BB6A;">4</div>
+                <div class="legend-segment" style="background: #8BC34A;">5</div>
+                <div class="legend-segment" style="background: #CDDC39;">6</div>
+                <div class="legend-segment" style="background: #FFC107;">7</div>
+                <div class="legend-segment" style="background: #FF9800;">8</div>
+                <div class="legend-segment" style="background: #FF5722;">9</div>
+                <div class="legend-segment" style="background: #E91E63;">10</div>
+            </div>
+            <div class="legend-labels">
+                <span>1 — min</span>
+                <span>10 — max</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by name or plant_id..."
+                autocomplete="off"
+            >
+            <button class="btn-print" onclick="window.print()">🖨️ Print</button>
+        </div>
+
+        <div id="noResults" class="no-results">
+            No plants found
+        </div>
+
+        <div class="humidity-group">
+            <div class="group-header" style="background: #E91E63;">
+                <div class="group-title">Score 10/10</div>
+                <div class="group-params">
+                    <div class="param">2 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Fern (Nephrolepis)" data-id="nephrolepis">
+    <img src="../IMAGES/nephrolepis.jpeg" alt="Fern (Nephrolepis)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Fern (Nephrolepis)</div>
+        <div class="plant-name-en">Nephrolepis exaltata</div>
+        <div class="plant-score">💧 <span class="score-value">10/10</span> — Высокая (60-80%)</div>
+        <div class="plant-score-secondary">☀️ 1/10 — 4000 lux</div>
+        <div class="plant-id">nephrolepis</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Spikemoss (Selaginella martensii)" data-id="selaginella">
+    <img src="../IMAGES/selaginella.jpg" alt="Spikemoss (Selaginella martensii)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Spikemoss (Selaginella martensii)</div>
+        <div class="plant-name-en">Selaginella martensii</div>
+        <div class="plant-score">💧 <span class="score-value">10/10</span> — Очень высокая (70-90%)</div>
+        <div class="plant-score-secondary">☀️ 1/10 — 4000 lux</div>
+        <div class="plant-id">selaginella</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #FF5722;">
+                <div class="group-title">Score 9/10</div>
+                <div class="group-params">
+                    <div class="param">2 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Alocasia Frydek" data-id="alocasia_frydek">
+    <img src="../IMAGES/alocasia_frydek.jpg" alt="Alocasia Frydek" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Alocasia Frydek</div>
+        <div class="plant-name-en">Alocasia micholitziana 'Frydek'</div>
+        <div class="plant-score">💧 <span class="score-value">9/10</span> — Высокая (60-80%)</div>
+        <div class="plant-score-secondary">☀️ 6/10 — 8000 lux</div>
+        <div class="plant-id">alocasia_frydek</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Anthurium clarinervium" data-id="anthurium_clarinervium">
+    <img src="../IMAGES/anthurium_clarinervium.jpg" alt="Anthurium clarinervium" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Anthurium clarinervium</div>
+        <div class="plant-name-en">Anthurium clarinervium</div>
+        <div class="plant-score">💧 <span class="score-value">9/10</span> — Высокая (60-80%)</div>
+        <div class="plant-score-secondary">☀️ 6/10 — 8000 lux</div>
+        <div class="plant-id">anthurium_clarinervium</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #FF9800;">
+                <div class="group-title">Score 8/10</div>
+                <div class="group-params">
+                    <div class="param">7 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Alocasia (Polly / Amazonica)" data-id="alocasia_amazonica">
+    <img src="../IMAGES/alocasia.jpg" alt="Alocasia (Polly / Amazonica)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Alocasia (Polly / Amazonica)</div>
+        <div class="plant-name-en">Alocasia amazonica</div>
+        <div class="plant-score">💧 <span class="score-value">8/10</span> — Высокая (60-70%)</div>
+        <div class="plant-score-secondary">☀️ 6/10 — 8000 lux</div>
+        <div class="plant-id">alocasia_amazonica</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Anthurium" data-id="anthurium_andraeanum">
+    <img src="../IMAGES/anthurium.jpg" alt="Anthurium" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Anthurium</div>
+        <div class="plant-name-en">Anthurium andraeanum</div>
+        <div class="plant-score">💧 <span class="score-value">8/10</span> — Высокая (60-70%)</div>
+        <div class="plant-score-secondary">☀️ 6/10 — 8000 lux</div>
+        <div class="plant-id">anthurium_andraeanum</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Calathea lancifolia" data-id="calathea_lancifolia">
+    <img src="../IMAGES/calathea_lancifolia.jpg" alt="Calathea lancifolia" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Calathea lancifolia</div>
+        <div class="plant-name-en">Calathea lancifolia</div>
+        <div class="plant-score">💧 <span class="score-value">8/10</span> — Высокая (60-70%)</div>
+        <div class="plant-score-secondary">☀️ 2/10 — 5000 lux</div>
+        <div class="plant-id">calathea_lancifolia</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Calathea ornata" data-id="calathea_ornata">
+    <img src="../IMAGES/calathea_ornata.jpg" alt="Calathea ornata" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Calathea ornata</div>
+        <div class="plant-name-en">Calathea ornata</div>
+        <div class="plant-score">💧 <span class="score-value">8/10</span> — Высокая (60-70%)</div>
+        <div class="plant-score-secondary">☀️ 2/10 — 5000 lux</div>
+        <div class="plant-id">calathea_ornata</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Guzmania" data-id="guzmania">
+    <img src="../IMAGES/guzmania.jpg" alt="Guzmania" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Guzmania</div>
+        <div class="plant-name-en">Guzmania</div>
+        <div class="plant-score">💧 <span class="score-value">8/10</span> — Высокая</div>
+        <div class="plant-score-secondary">☀️ 9/10 — 10000 lux</div>
+        <div class="plant-id">guzmania</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Алоказия Регал Шилдс" data-id="alocasia_regal_shields">
+    <img src="../IMAGES/alocasia_regal_shields.jpg" alt="Алоказия Регал Шилдс" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Алоказия Регал Шилдс</div>
+        <div class="plant-name-en">Alocasia 'Regal Shields' (odora × reginula)</div>
+        <div class="plant-score">💧 <span class="score-value">8/10</span> — Высокая (60-70%)</div>
+        <div class="plant-score-secondary">☀️ 7/10 — 8000 lux</div>
+        <div class="plant-id">alocasia_regal_shields</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Филодендрон 'Pink Princess'" data-id="philodendron_pink_princess">
+    <img src="../IMAGES/philodendron_pink_princess.jpg" alt="Филодендрон 'Pink Princess'" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Филодендрон 'Pink Princess'</div>
+        <div class="plant-name-en">Philodendron erubescens 'Pink Princess'</div>
+        <div class="plant-score">💧 <span class="score-value">8/10</span> — Высокая</div>
+        <div class="plant-score-secondary">☀️ 8/10 — 10000 lux</div>
+        <div class="plant-id">philodendron_pink_princess</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #FFC107;">
+                <div class="group-title">Score 7/10</div>
+                <div class="group-params">
+                    <div class="param">5 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Chamaedorea / Indoor palm" data-id="chamaedorea">
+    <img src="../IMAGES/chamaedorea.jpg" alt="Chamaedorea / Indoor palm" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Chamaedorea / Indoor palm</div>
+        <div class="plant-name-en">Chamaedorea</div>
+        <div class="plant-score">💧 <span class="score-value">7/10</span> — Высокая</div>
+        <div class="plant-score-secondary">☀️ 2/10 — 5000 lux</div>
+        <div class="plant-id">chamaedorea</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Croton" data-id="croton">
+    <img src="../IMAGES/croton.jpg" alt="Croton" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Croton</div>
+        <div class="plant-name-en">Codiaeum variegatum</div>
+        <div class="plant-score">💧 <span class="score-value">7/10</span> — Высокая</div>
+        <div class="plant-score-secondary">☀️ 10/10 — 10000 lux</div>
+        <div class="plant-id">croton</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Монстера Aurea (вариегата жёлтая)" data-id="monstera_aurea">
+    <img src="../IMAGES/monstera_albo_variegata.jpg" alt="Монстера Aurea (вариегата жёлтая)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Монстера Aurea (вариегата жёлтая)</div>
+        <div class="plant-name-en">Monstera deliciosa 'Aurea Variegata'</div>
+        <div class="plant-score">💧 <span class="score-value">7/10</span> — Высокая</div>
+        <div class="plant-score-secondary">☀️ 9/10 — 15000 lux</div>
+        <div class="plant-id">monstera_aurea</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Монстера альбо вариегата" data-id="monstera_albo_variegata">
+    <img src="../IMAGES/monstera_albo_variegata.jpg" alt="Монстера альбо вариегата" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Монстера альбо вариегата</div>
+        <div class="plant-name-en">Monstera deliciosa 'Albo Variegata'</div>
+        <div class="plant-score">💧 <span class="score-value">7/10</span> — Высокая</div>
+        <div class="plant-score-secondary">☀️ 9/10 — 15000 lux</div>
+        <div class="plant-id">monstera_albo_variegata</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Сингониум 'Mojito'" data-id="syngonium_mojito">
+    <img src="../IMAGES/syngonium_mojito.jpg" alt="Сингониум 'Mojito'" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Сингониум 'Mojito'</div>
+        <div class="plant-name-en">Syngonium podophyllum 'Mojito'</div>
+        <div class="plant-score">💧 <span class="score-value">7/10</span> — Высокая</div>
+        <div class="plant-score-secondary">☀️ 7/10 — 8000 lux</div>
+        <div class="plant-id">syngonium_mojito</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #CDDC39;">
+                <div class="group-title">Score 6/10</div>
+                <div class="group-params">
+                    <div class="param">4 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Large-leaf Philodendron" data-id="philodendron">
+    <img src="../IMAGES/philodendron_imperial.jpg" alt="Large-leaf Philodendron" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Large-leaf Philodendron</div>
+        <div class="plant-name-en">Philodendron (типа Imperial Green)</div>
+        <div class="plant-score">💧 <span class="score-value">6/10</span> — Средняя-высокая</div>
+        <div class="plant-score-secondary">☀️ 7/10 — 8000 lux</div>
+        <div class="plant-id">philodendron</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Monstera adansonii" data-id="monstera_adansonii">
+    <img src="../IMAGES/monstera_adansonii.jpeg" alt="Monstera adansonii" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Monstera adansonii</div>
+        <div class="plant-name-en">Monstera adansonii</div>
+        <div class="plant-score">💧 <span class="score-value">6/10</span> — Средняя-высокая</div>
+        <div class="plant-score-secondary">☀️ 7/10 — 8000 lux</div>
+        <div class="plant-id">monstera_adansonii</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Peace Lily (Spathiphyllum)" data-id="spathiphyllum">
+    <img src="../IMAGES/spathiphyllum.jpg" alt="Peace Lily (Spathiphyllum)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Peace Lily (Spathiphyllum)</div>
+        <div class="plant-name-en">Spathiphyllum</div>
+        <div class="plant-score">💧 <span class="score-value">6/10</span> — Средняя-высокая</div>
+        <div class="plant-score-secondary">☀️ 4/10 — 6000 lux</div>
+        <div class="plant-id">spathiphyllum</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Philodendron selloum" data-id="philodendron_selloum">
+    <img src="../IMAGES/philodendron_selloum.jpg" alt="Philodendron selloum" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Philodendron selloum</div>
+        <div class="plant-name-en">Philodendron bipinnatifidum (Thaumatophyllum bipinnatifidum)</div>
+        <div class="plant-score">💧 <span class="score-value">6/10</span> — Средняя-высокая (50-70%)</div>
+        <div class="plant-score-secondary">☀️ 7/10 — 8000 lux</div>
+        <div class="plant-id">philodendron_selloum</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #8BC34A;">
+                <div class="group-title">Score 5/10</div>
+                <div class="group-params">
+                    <div class="param">5 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Begonia maculata" data-id="begonia_maculata">
+    <img src="../IMAGES/begonia_maculata.jpg" alt="Begonia maculata" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Begonia maculata</div>
+        <div class="plant-name-en">Begonia maculata</div>
+        <div class="plant-score">💧 <span class="score-value">5/10</span> — Средняя-высокая</div>
+        <div class="plant-score-secondary">☀️ 8/10 — 9000 lux</div>
+        <div class="plant-id">begonia_maculata</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Monstera deliciosa" data-id="monstera_deliciosa">
+    <img src="../IMAGES/monstera_deliciosa.jpg" alt="Monstera deliciosa" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Monstera deliciosa</div>
+        <div class="plant-name-en">Monstera deliciosa</div>
+        <div class="plant-score">💧 <span class="score-value">5/10</span> — Средняя-высокая</div>
+        <div class="plant-score-secondary">☀️ 7/10 — 8000 lux</div>
+        <div class="plant-id">monstera_deliciosa</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Phalaenopsis orchid" data-id="phalaenopsis">
+    <img src="../IMAGES/orchid.jpg" alt="Phalaenopsis orchid" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Phalaenopsis orchid</div>
+        <div class="plant-name-en">Phalaenopsis</div>
+        <div class="plant-score">💧 <span class="score-value">5/10</span> — Средняя-высокая</div>
+        <div class="plant-score-secondary">☀️ 6/10 — 8000 lux</div>
+        <div class="plant-id">phalaenopsis</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Philodendron Xanadu" data-id="philodendron_xanadu">
+    <img src="../IMAGES/philodendron_xanadu.jpg" alt="Philodendron Xanadu" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Philodendron Xanadu</div>
+        <div class="plant-name-en">Thaumatophyllum xanadu</div>
+        <div class="plant-score">💧 <span class="score-value">5/10</span> — Средняя-высокая (50-70%)</div>
+        <div class="plant-score-secondary">☀️ 7/10 — 8000 lux</div>
+        <div class="plant-id">philodendron_xanadu</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Сингониум 'Golden Allusion'" data-id="syngonium_golden_allusion">
+    <img src="../IMAGES/syngonium_golden_allusion.jpg" alt="Сингониум 'Golden Allusion'" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Сингониум 'Golden Allusion'</div>
+        <div class="plant-name-en">Syngonium podophyllum 'Golden Allusion'</div>
+        <div class="plant-score">💧 <span class="score-value">5/10</span> — Средняя-высокая</div>
+        <div class="plant-score-secondary">☀️ 5/10 — 6000 lux</div>
+        <div class="plant-id">syngonium_golden_allusion</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #66BB6A;">
+                <div class="group-title">Score 4/10</div>
+                <div class="group-params">
+                    <div class="param">1 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="African Violet (Saintpaulia)" data-id="saintpaulia">
+    <img src="../IMAGES/saintpaulia.jpg" alt="African Violet (Saintpaulia)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">African Violet (Saintpaulia)</div>
+        <div class="plant-name-en">Saintpaulia ionantha</div>
+        <div class="plant-score">💧 <span class="score-value">4/10</span> — Средняя (50-60%)</div>
+        <div class="plant-score-secondary">☀️ 5/10 — 8000 lux</div>
+        <div class="plant-id">saintpaulia</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #4CAF50;">
+                <div class="group-title">Score 3/10</div>
+                <div class="group-params">
+                    <div class="param">5 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Aglaonema (Variegated)" data-id="aglaonema">
+    <img src="../IMAGES/aglaonema.jpeg" alt="Aglaonema (Variegated)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Aglaonema (Variegated)</div>
+        <div class="plant-name-en">Aglaonema</div>
+        <div class="plant-score">💧 <span class="score-value">3/10</span> — Средняя</div>
+        <div class="plant-score-secondary">☀️ 3/10 — 5000 lux</div>
+        <div class="plant-id">aglaonema</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Dracaena fragrans / deremensis" data-id="dracaena_fragrans">
+    <img src="../IMAGES/dracaena_fragrans.jpg" alt="Dracaena fragrans / deremensis" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Dracaena fragrans / deremensis</div>
+        <div class="plant-name-en">Dracaena fragrans / deremensis</div>
+        <div class="plant-score">💧 <span class="score-value">3/10</span> — Средняя</div>
+        <div class="plant-score-secondary">☀️ 5/10 — 6000 lux</div>
+        <div class="plant-id">dracaena_fragrans</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Dracaena marginata" data-id="dracaena_marginata">
+    <img src="../IMAGES/dracaena_marginata.jpg" alt="Dracaena marginata" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Dracaena marginata</div>
+        <div class="plant-name-en">Dracaena marginata</div>
+        <div class="plant-score">💧 <span class="score-value">3/10</span> — Средняя</div>
+        <div class="plant-score-secondary">☀️ 5/10 — 6000 lux</div>
+        <div class="plant-id">dracaena_marginata</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Pothos / Scindapsus" data-id="epipremnum">
+    <img src="../IMAGES/epipremnum.jpg" alt="Pothos / Scindapsus" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Pothos / Scindapsus</div>
+        <div class="plant-name-en">Epipremnum aureum / Scindapsus</div>
+        <div class="plant-score">💧 <span class="score-value">3/10</span> — Средняя</div>
+        <div class="plant-score-secondary">☀️ 5/10 — 6000 lux</div>
+        <div class="plant-id">epipremnum</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="Spider Plant (Chlorophytum)" data-id="chlorophytum_comosum">
+    <img src="../IMAGES/chlorophytum.jpg" alt="Spider Plant (Chlorophytum)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Spider Plant (Chlorophytum)</div>
+        <div class="plant-name-en">Chlorophytum comosum</div>
+        <div class="plant-score">💧 <span class="score-value">3/10</span> — Средняя</div>
+        <div class="plant-score-secondary">☀️ 3/10 — 5000 lux</div>
+        <div class="plant-id">chlorophytum_comosum</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #26A69A;">
+                <div class="group-title">Score 2/10</div>
+                <div class="group-params">
+                    <div class="param">1 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Christmas Cactus (Schlumbergera)" data-id="schlumbergera">
+    <img src="../IMAGES/schlumbergera.jpg" alt="Christmas Cactus (Schlumbergera)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Christmas Cactus (Schlumbergera)</div>
+        <div class="plant-name-en">Schlumbergera</div>
+        <div class="plant-score">💧 <span class="score-value">2/10</span> — Средняя</div>
+        <div class="plant-score-secondary">☀️ 3/10 — 5000 lux</div>
+        <div class="plant-id">schlumbergera</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="humidity-group">
+            <div class="group-header" style="background: #2196F3;">
+                <div class="group-title">Score 1/10</div>
+                <div class="group-params">
+                    <div class="param">2 Plants</div>
+                </div>
+            </div>
+            <div class="plants-grid">
+                <div class="plant-card" data-name="Snake Plant" data-id="sansevieria">
+    <img src="../IMAGES/sansevieria.jpg" alt="Snake Plant" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">Snake Plant</div>
+        <div class="plant-name-en">Sansevieria trifasciata</div>
+        <div class="plant-score">💧 <span class="score-value">1/10</span> — Низкая-средняя</div>
+        <div class="plant-score-secondary">☀️ 2/10 — 5000 lux</div>
+        <div class="plant-id">sansevieria</div>
+    </div>
+</div>
+
+                <div class="plant-card" data-name="ZZ Plant (Zamioculcas)" data-id="zamioculcas">
+    <img src="../IMAGES/zamioculcas.jpg" alt="ZZ Plant (Zamioculcas)" class="plant-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="plant-image-placeholder">
+        <div class="placeholder-icon">🌿</div>
+        <div>No image</div>
+    </div>
+    <div class="plant-info">
+        <div class="plant-name-ru">ZZ Plant (Zamioculcas)</div>
+        <div class="plant-name-en">Zamioculcas zamiifolia</div>
+        <div class="plant-score">💧 <span class="score-value">1/10</span> — Низкая-средняя</div>
+        <div class="plant-score-secondary">☀️ 2/10 — 5000 lux</div>
+        <div class="plant-id">zamioculcas</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        var searchInput = document.getElementById('searchInput');
+        var plantCards = document.querySelectorAll('.plant-card');
+        var noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            var searchTerm = this.value.toLowerCase().trim();
+            var visibleCount = 0;
+
+            plantCards.forEach(function(card) {
+                var name = card.getAttribute('data-name').toLowerCase();
+                var id = card.getAttribute('data-id').toLowerCase();
+
+                if (name.indexOf(searchTerm) !== -1 || id.indexOf(searchTerm) !== -1) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            noResults.style.display = (visibleCount === 0 && searchTerm !== '') ? 'block' : 'none';
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                this.dispatchEvent(new Event('input'));
+                this.blur();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && e.target !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

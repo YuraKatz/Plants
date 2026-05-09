@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Грунтовые смеси</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+    </style>
+    <style>
+        .container { max-width: 1400px; }
+        .soil-group {
+            margin-bottom: 28px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .group-header {
+            padding: 14px 20px;
+            background: #2d6a4f;
+            color: #fff;
+        }
+        .group-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 4px; }
+        .group-subtitle { font-size: 0.85rem; opacity: 0.85; }
+        .mix-content { padding: 20px; background: #fafaf8; }
+        .composition {
+            background: #fff;
+            padding: 16px;
+            border: 1px solid #e5e5e0;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+        .composition h4 { color: #333; margin-bottom: 10px; font-size: 0.95rem; }
+        .component {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            background: #f5f5f0;
+            border-radius: 3px;
+        }
+        .component-name { color: #444; font-size: 0.9rem; }
+        .component-percentage { font-weight: 600; color: #2d6a4f; font-size: 0.9rem; min-width: 45px; text-align: right; }
+        .component-parts { font-weight: 600; color: #6b46c1; font-size: 0.85rem; margin-left: 8px; min-width: 45px; text-align: right; }
+        .parts-ratio {
+            background: #f0ecf8;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #553c9a;
+            font-size: 0.88rem;
+        }
+        .plants-list {
+            background: #fff;
+            padding: 16px;
+            border: 1px solid #e5e5e0;
+            border-radius: 4px;
+        }
+        .plants-list h4 { color: #333; margin-bottom: 10px; font-size: 0.95rem; }
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 10px;
+        }
+        .plant-card-mini {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+            cursor: pointer;
+        }
+        .plant-card-mini:hover { border-color: #2d6a4f; }
+        .plant-mini-image { width: 100%; height: 100px; object-fit: cover; background: #eee; }
+        .plant-mini-info { padding: 8px; }
+        .plant-mini-name { font-size: 0.85rem; font-weight: 600; color: #333; }
+        .plant-mini-latin { font-size: 0.72rem; color: #888; font-style: italic; margin-top: 2px; }
+        .variants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .mix-notes { margin-top: 12px; }
+        .note {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 4px;
+            background: #f5f5f0;
+            color: #555;
+            font-size: 0.88rem;
+        }
+        .note.warning {
+            background: #fef2f2;
+            color: #b91c1c;
+            border-left: 3px solid #ef4444;
+        }
+        @media (max-width: 768px) {
+            .group-title { font-size: 1.1rem; }
+            .variants { grid-template-columns: 1fr; }
+            .plants-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="soil-groups.html" class="active">RU</a>
+    <a href="en/soil-groups.html" >EN</a>
+    <a href="he/soil-groups.html" >HE</a>
+</div>
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-home">← Главная</a>
+            <h1>🌱 Грунтовые смеси</h1>
+            <p class="subtitle">Рецепты грунтовых смесей для комнатных растений</p>
+        </header>
+
+        <div class="controls">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Поиск по названию смеси или растению..."
+                autocomplete="off"
+            >
+            <button class="btn-print" onclick="window.print()">🖨️ Печать</button>
+        </div>
+
+        <div id="noResults" class="no-results">
+            Смеси не найдены
+        </div>
+
+        <div class="soil-group" data-search="ароидная (ручной полив) монстера филодендрон эпипремнум аглаонема сингониум аглаонема пестролистная эпипремнум / сциндапсус монстера адансони монстера делициоза монстера альбо вариегата филодендрон крупнолистный филодендрон селлоу сингониум 'golden allusion' монстера aurea (вариегата жёлтая) филодендрон 'pink princess' сингониум 'mojito'">
+    <div class="group-header">
+        <div class="group-title">Mix #1 - Ароидная (ручной полив)
+        </div>
+        <div class="group-subtitle">Для ароидных растений с ручным поливом</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">45%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#f0fdf4; border-left:3px solid #22c55e;">
+                Можно добавить гумус: 5-10%
+                (вместо части Универсальный грунт Premium)
+                <br><small>Свой компостный гумус вместо части универсального грунта (45% -> 35-40%)</small>
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/aglaonema.jpeg" class="plant-mini-image" alt="Аглаонема пестролистная" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Аглаонема пестролистная</div>
+                        <div class="plant-mini-latin">Aglaonema</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/epipremnum.jpg" class="plant-mini-image" alt="Эпипремнум / сциндапсус" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Эпипремнум / сциндапсус</div>
+                        <div class="plant-mini-latin">Epipremnum aureum / Scindapsus</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_adansonii.jpeg" class="plant-mini-image" alt="Монстера адансони" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера адансони</div>
+                        <div class="plant-mini-latin">Monstera adansonii</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_deliciosa.jpg" class="plant-mini-image" alt="Монстера делициоза" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера делициоза</div>
+                        <div class="plant-mini-latin">Monstera deliciosa</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_albo_variegata.jpg" class="plant-mini-image" alt="Монстера альбо вариегата" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера альбо вариегата</div>
+                        <div class="plant-mini-latin">Monstera deliciosa 'Albo Variegata'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/philodendron_imperial.jpg" class="plant-mini-image" alt="Филодендрон крупнолистный" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Филодендрон крупнолистный</div>
+                        <div class="plant-mini-latin">Philodendron (типа Imperial Green)</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/philodendron_selloum.jpg" class="plant-mini-image" alt="Филодендрон Селлоу" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Филодендрон Селлоу</div>
+                        <div class="plant-mini-latin">Philodendron bipinnatifidum (Thaumatophyllum bipinnatifidum)</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/syngonium_golden_allusion.jpg" class="plant-mini-image" alt="Сингониум 'Golden Allusion'" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Сингониум 'Golden Allusion'</div>
+                        <div class="plant-mini-latin">Syngonium podophyllum 'Golden Allusion'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_albo_variegata.jpg" class="plant-mini-image" alt="Монстера Aurea (вариегата жёлтая)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера Aurea (вариегата жёлтая)</div>
+                        <div class="plant-mini-latin">Monstera deliciosa 'Aurea Variegata'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/philodendron_pink_princess.jpg" class="plant-mini-image" alt="Филодендрон 'Pink Princess'" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Филодендрон 'Pink Princess'</div>
+                        <div class="plant-mini-latin">Philodendron erubescens 'Pink Princess'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/syngonium_mojito.jpg" class="plant-mini-image" alt="Сингониум 'Mojito'" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Сингониум 'Mojito'</div>
+                        <div class="plant-mini-latin">Syngonium podophyllum 'Mojito'</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <div class="soil-group" data-search="ароидная облегчённая (для чувствительных к застою) антуриум филодендрон ксанаду антуриум филодендрон ксанаду">
+    <div class="group-header">
+        <div class="group-title">Mix #1-Л - Ароидная облегчённая (для чувствительных к застою)
+        </div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">20%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#f0fdf4; border-left:3px solid #22c55e;">
+                Можно добавить гумус: 5%
+                (вместо части Универсальный грунт Premium)
+                <br><small>Только 5% — универсального и так мало (20%), не снижать больше</small>
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/anthurium.jpg" class="plant-mini-image" alt="Антуриум" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Антуриум</div>
+                        <div class="plant-mini-latin">Anthurium andraeanum</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/philodendron_xanadu.jpg" class="plant-mini-image" alt="Филодендрон Ксанаду" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Филодендрон Ксанаду</div>
+                        <div class="plant-mini-latin">Thaumatophyllum xanadu</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Более воздушный субстрат, чем стандартная ароидная смесь Mix</div>
+            <div class="note">Для растений, чувствительных к застою воды и гнили корней</div>
+            <div class="note">Universal снижен до 20% — достаточно для питания без лишней влаги</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="ароидная (фитильный полив) спатифиллум монстера (на фитиле) филодендрон (на фитиле) антуриум эпипремнум / сциндапсус монстера адансони монстера делициоза монстера альбо вариегата филодендрон крупнолистный спатифиллум сингониум 'golden allusion' монстера aurea (вариегата жёлтая) филодендрон 'pink princess' сингониум 'mojito'">
+    <div class="group-header">
+        <div class="group-title">Mix #2 - Ароидная (фитильный полив)
+        </div>
+        <div class="group-subtitle">Для ароидных растений на фитиле</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">35%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Фитильный полив — гумус слишком влагоёмкий, риск застоя и гнили
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/anthurium.jpg" class="plant-mini-image" alt="Антуриум" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Антуриум</div>
+                        <div class="plant-mini-latin">Anthurium andraeanum</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/epipremnum.jpg" class="plant-mini-image" alt="Эпипремнум / сциндапсус" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Эпипремнум / сциндапсус</div>
+                        <div class="plant-mini-latin">Epipremnum aureum / Scindapsus</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_adansonii.jpeg" class="plant-mini-image" alt="Монстера адансони" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера адансони</div>
+                        <div class="plant-mini-latin">Monstera adansonii</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_deliciosa.jpg" class="plant-mini-image" alt="Монстера делициоза" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера делициоза</div>
+                        <div class="plant-mini-latin">Monstera deliciosa</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_albo_variegata.jpg" class="plant-mini-image" alt="Монстера альбо вариегата" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера альбо вариегата</div>
+                        <div class="plant-mini-latin">Monstera deliciosa 'Albo Variegata'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/philodendron_imperial.jpg" class="plant-mini-image" alt="Филодендрон крупнолистный" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Филодендрон крупнолистный</div>
+                        <div class="plant-mini-latin">Philodendron (типа Imperial Green)</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/spathiphyllum.jpg" class="plant-mini-image" alt="Спатифиллум" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Спатифиллум</div>
+                        <div class="plant-mini-latin">Spathiphyllum</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/syngonium_golden_allusion.jpg" class="plant-mini-image" alt="Сингониум 'Golden Allusion'" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Сингониум 'Golden Allusion'</div>
+                        <div class="plant-mini-latin">Syngonium podophyllum 'Golden Allusion'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/monstera_albo_variegata.jpg" class="plant-mini-image" alt="Монстера Aurea (вариегата жёлтая)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Монстера Aurea (вариегата жёлтая)</div>
+                        <div class="plant-mini-latin">Monstera deliciosa 'Aurea Variegata'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/philodendron_pink_princess.jpg" class="plant-mini-image" alt="Филодендрон 'Pink Princess'" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Филодендрон 'Pink Princess'</div>
+                        <div class="plant-mini-latin">Philodendron erubescens 'Pink Princess'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/syngonium_mojito.jpg" class="plant-mini-image" alt="Сингониум 'Mojito'" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Сингониум 'Mojito'</div>
+                        <div class="plant-mini-latin">Syngonium podophyllum 'Mojito'</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <div class="soil-group" data-search="марантовые (ручной полив) калатея лансифолия калатея орната калатея лансифолия калатея орната">
+    <div class="group-header">
+        <div class="group-title">Mix #3 - Марантовые (ручной полив)
+        </div>
+        <div class="group-subtitle">Для марантовых растений с ручным поливом</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">40%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Вермикулит</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#f0fdf4; border-left:3px solid #22c55e;">
+                Можно добавить гумус: 5%
+                (вместо части Универсальный грунт Premium)
+                <br><small>Немного, осторожно — марантовые любят влагу, но гумус добавит ещё влагоёмкости</small>
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/calathea_lancifolia.jpg" class="plant-mini-image" alt="Калатея лансифолия" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Калатея лансифолия</div>
+                        <div class="plant-mini-latin">Calathea lancifolia</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/calathea_ornata.jpg" class="plant-mini-image" alt="Калатея орната" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Калатея орната</div>
+                        <div class="plant-mini-latin">Calathea ornata</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <div class="soil-group" data-search="марантовые (фитильный полив) калатея (только при очень внимательном контроле!) калатея лансифолия калатея орната">
+    <div class="group-header">
+        <div class="group-title">Mix #4 - Марантовые (фитильный полив)
+        </div>
+        <div class="group-subtitle">Для марантовых растений на фитиле</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">35%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">20%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Вермикулит</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Фитильный полив — гумус слишком влагоёмкий
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/calathea_lancifolia.jpg" class="plant-mini-image" alt="Калатея лансифолия" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Калатея лансифолия</div>
+                        <div class="plant-mini-latin">Calathea lancifolia</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/calathea_ornata.jpg" class="plant-mini-image" alt="Калатея орната" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Калатея орната</div>
+                        <div class="plant-mini-latin">Calathea ornata</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note warning">КРИТИЧНО - Следить за застоем воды!</div>
+            <div class="note warning">Кору не использовать или максимум 5%</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="универсальная лёгкая (ручной полив) драцена маргината драцена фрагранс кротон хлорофитум хлорофитум кротон драцена фрагранс / деременсис драцена маргината">
+    <div class="group-header">
+        <div class="group-title">Mix #5 - Универсальная лёгкая (ручной полив)
+        </div>
+        <div class="group-subtitle">Универсальная лёгкая смесь</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">55%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">20%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#f0fdf4; border-left:3px solid #22c55e;">
+                Можно добавить гумус: 5-10%
+                (вместо части Универсальный грунт Premium)
+                <br><small>Универсального много (55%), есть откуда забрать (55% -> 45-50%)</small>
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/chlorophytum.jpg" class="plant-mini-image" alt="Хлорофитум" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Хлорофитум</div>
+                        <div class="plant-mini-latin">Chlorophytum comosum</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/croton.jpg" class="plant-mini-image" alt="Кротон" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Кротон</div>
+                        <div class="plant-mini-latin">Codiaeum variegatum</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/dracaena_fragrans.jpg" class="plant-mini-image" alt="Драцена фрагранс / деременсис" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Драцена фрагранс / деременсис</div>
+                        <div class="plant-mini-latin">Dracaena fragrans / deremensis</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/dracaena_marginata.jpg" class="plant-mini-image" alt="Драцена маргината" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Драцена маргината</div>
+                        <div class="plant-mini-latin">Dracaena marginata</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <div class="soil-group" data-search="универсальная лёгкая (фитильный полив) кротон (на фитиле) хлорофитум">
+    <div class="group-header">
+        <div class="group-title">Mix #5-Ф - Универсальная лёгкая (фитильный полив)
+        </div>
+        <div class="group-subtitle">Универсальная лёгкая на фитиле</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">45%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Фитильный полив — гумус слишком влагоёмкий
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/chlorophytum.jpg" class="plant-mini-image" alt="Хлорофитум" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Хлорофитум</div>
+                        <div class="plant-mini-latin">Chlorophytum comosum</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для пальм хамедорея хамедорея / пальма комнатная">
+    <div class="group-header">
+        <div class="group-title">Mix #6 - Для пальм
+        </div>
+        <div class="group-subtitle">Для пальм с ручным поливом</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">55%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Вермикулит</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#f0fdf4; border-left:3px solid #22c55e;">
+                Можно добавить гумус: 5%
+                (вместо части Универсальный грунт Premium)
+                <br><small>Немного, заменить часть универсального (55% -> 50%)</small>
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/chamaedorea.jpg" class="plant-mini-image" alt="Хамедорея / пальма комнатная" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Хамедорея / пальма комнатная</div>
+                        <div class="plant-mini-latin">Chamaedorea</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Фитильный полив не рекомендуется — пальмы чувствительны к переливу</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для эпифитов (бромелиевые, лесные кактусы) гузмания шлюмбергера (декабрист) гузмания шлюмбергера (декабрист)">
+    <div class="group-header">
+        <div class="group-title">Mix #7 - Для эпифитов (бромелиевые, лесные кактусы)
+        </div>
+        <div class="group-subtitle">Для эпифитов: бромелиевые и лесные кактусы</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">45%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">20%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Эпифитный субстрат без земли — гумус не нужен, нарушит структуру
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/guzmania.jpg" class="plant-mini-image" alt="Гузмания" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Гузмания</div>
+                        <div class="plant-mini-latin">Guzmania</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/schlumbergera.jpg" class="plant-mini-image" alt="Шлюмбергера (Декабрист)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Шлюмбергера (Декабрист)</div>
+                        <div class="plant-mini-latin">Schlumbergera</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Для бромелиевых: основной полив в розетку, субстрат лишь для опоры</div>
+            <div class="note">Для лесных кактусов: рыхлый быстро просыхающий субстрат</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для бегоний бегония макулата бегония макулата">
+    <div class="group-header">
+        <div class="group-title">Mix #8 - Для бегоний
+        </div>
+        <div class="group-subtitle">Для бегоний и фиалок</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">30%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">20%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Вермикулит</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Бегонии критично чувствительны к переливу, гумус добавит влагоёмкости
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/begonia_maculata.jpg" class="plant-mini-image" alt="Бегония макулата" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Бегония макулата</div>
+                        <div class="plant-mini-latin">Begonia maculata</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Фитильный полив НЕ рекомендуется — критичный риск гнили</div>
+            <div class="note">Universal снижен до 30% — бегонии критично чувствительны к переливу</div>
+            <div class="note">Добавлена кора для аэрации, вермикулит снижен</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для орхидей орхидея фаленопсис орхидея фаленопсис">
+    <div class="group-header">
+        <div class="group-title">Mix #9 - Для орхидей
+        </div>
+        <div class="group-subtitle">Субстрат для эпифитных орхидей</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">60-70%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Сфагнум (мох)</span>
+                    <span class="component-percentage">15-20%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">10-15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">5-10%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Чистый эпифитный субстрат, никакой земли/гумуса
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/orchid.jpg" class="plant-mini-image" alt="Орхидея фаленопсис" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Орхидея фаленопсис</div>
+                        <div class="plant-mini-latin">Phalaenopsis</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note warning">Прозрачный горшок ОБЯЗАТЕЛЬНО!</div>
+            <div class="note warning">Субстрат должен быстро просыхать, корни должны дышать</div>
+            <div class="note warning">Фитильный полив категорически не подходит</div>
+            <div class="note warning">Полная просушка между поливами</div>
+            <div class="note warning">При повышенной влажности воздуха процент мха можно уменьшать</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для папоротников нефролепис селагинелла (плаунок) другие папоротники папоротник (нефролепис) селагинелла мартенса (плаунок)">
+    <div class="group-header">
+        <div class="group-title">Mix #10 - Для папоротников
+        </div>
+        <div class="group-subtitle">Влагоёмкая смесь для папоротников</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">35%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Вермикулит</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Сфагнум (мох)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#f0fdf4; border-left:3px solid #22c55e;">
+                Можно добавить гумус: 5%
+                (вместо части Универсальный грунт Premium)
+                <br><small>Папоротники любят органику (35% -> 30%)</small>
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/nephrolepis.jpeg" class="plant-mini-image" alt="Папоротник (Нефролепис)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Папоротник (Нефролепис)</div>
+                        <div class="plant-mini-latin">Nephrolepis exaltata</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/selaginella.jpg" class="plant-mini-image" alt="Селагинелла Мартенса (плаунок)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Селагинелла Мартенса (плаунок)</div>
+                        <div class="plant-mini-latin">Selaginella martensii</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Папоротники любят постоянно влажный, но не мокрый грунт</div>
+            <div class="note">Фитильный полив не рекомендуется — риск переувлажнения</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для суккулентов/сансевиерии сансевиерия замиокулькас (zz plant) суккуленты сансевиерия (щучий хвост) замиокулькас (долларовое дерево)">
+    <div class="group-header">
+        <div class="group-title">Mix #11 - Для суккулентов/сансевиерии
+        </div>
+        <div class="group-subtitle">Быстросохнущая смесь с отличным дренажом</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Универсальный грунт Premium</span>
+                    <span class="component-percentage">45%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">40%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Туф/керамзит</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Суккулентам нужна бедная сухая почва, гумус добавит лишнее питание и влагу
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/sansevieria.jpg" class="plant-mini-image" alt="Сансевиерия (Щучий хвост)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Сансевиерия (Щучий хвост)</div>
+                        <div class="plant-mini-latin">Sansevieria trifasciata</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/zamioculcas.jpg" class="plant-mini-image" alt="Замиокулькас (Долларовое дерево)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Замиокулькас (Долларовое дерево)</div>
+                        <div class="plant-mini-latin">Zamioculcas zamiifolia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Очень хороший дренаж — главное требование</div>
+            <div class="note">Фитильный полив категорически не подходит</div>
+            <div class="note">Полная просушка между поливами</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для бархатных антуриумов (без универсального грунта) антуриум кларинервиум другие бархатные антуриумы антуриум кларинервиум">
+    <div class="group-header">
+        <div class="group-title">Mix #12 - Для бархатных антуриумов (без универсального грунта)
+        </div>
+        <div class="group-subtitle">Очень воздушный, крупнофракционный субстрат</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">35%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Сфагнум (мох)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Биогумус</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Биогумус 10% уже в рецепте — дополнительный гумус не нужен
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/anthurium_clarinervium.jpg" class="plant-mini-image" alt="Антуриум кларинервиум" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Антуриум кларинервиум</div>
+                        <div class="plant-mini-latin">Anthurium clarinervium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Очень воздушный, крупнофракционный субстрат — ключевое требование</div>
+            <div class="note">Без универсального грунта — слишком плотный и влагоёмкий для бархатных</div>
+            <div class="note">Биогумус даёт мягкое питание без лишней влаги</div>
+            <div class="note">Фитильный полив категорически не подходит — риск гнили клубня</div>
+            <div class="note">Горшок с крупными дренажными отверстиями обязателен</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для клубневых ароидных (алоказии) алоказия regal shields алоказия (polly / amazonica) алоказия фрайдек алоказия black velvet другие клубневые (corm-based) алоказии алоказия (polly / amazonica) алоказия фрайдек алоказия регал шилдс">
+    <div class="group-header">
+        <div class="group-title">Mix #13 - Для клубневых ароидных (алоказии)
+        </div>
+        <div class="group-subtitle">Воздушный субстрат для клубневых, снижает риск гнили</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Bark (кора)</span>
+                    <span class="component-percentage">35%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">30%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос гас (крупная фракция)</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Биогумус</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">10%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Биогумус 5% уже в рецепте — дополнительный гумус не нужен
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/alocasia.jpg" class="plant-mini-image" alt="Алоказия (Polly / Amazonica)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Алоказия (Polly / Amazonica)</div>
+                        <div class="plant-mini-latin">Alocasia amazonica</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/alocasia_frydek.jpg" class="plant-mini-image" alt="Алоказия Фрайдек" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Алоказия Фрайдек</div>
+                        <div class="plant-mini-latin">Alocasia micholitziana 'Frydek'</div>
+                    </div>
+                </div>
+                <div class="plant-card-mini">
+                    <img src="IMAGES/alocasia_regal_shields.jpg" class="plant-mini-image" alt="Алоказия Регал Шилдс" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Алоказия Регал Шилдс</div>
+                        <div class="plant-mini-latin">Alocasia 'Regal Shields' (odora × reginula)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note warning">НЕ использовать: вермикулит + биогумус вместе, тяжёлую мелкую смесь, большой горшок с мокрым субстратом</div>
+            <div class="note">Архетип грунта для алоказий: воздушная смесь как база, влагоёмкие компоненты — только понемногу</div>
+            <div class="note">Без универсального грунта — он долго держит влагу, мало воздуха у корней, выше шанс подгнивания</div>
+            <div class="note">Кора — каркас и воздух, перлит — аэрация, кокос крупный — немного влаги без болота</div>
+            <div class="note">Биогумус — немного питания (не база), уголь — стабилизатор среды</div>
+            <div class="note">Фитильный полив не рекомендуется</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для сенполий / геснериевых (фиалок) сенполия (узамбарская фиалка) стрептокарпус другие геснериевые сенполия (узамбарская фиалка)">
+    <div class="group-header">
+        <div class="group-title">Mix #14 - Для сенполий / геснериевых (фиалок)
+        </div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Торф верховой (кислый)</span>
+                    <span class="component-percentage">50%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">25%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Вермикулит</span>
+                    <span class="component-percentage">15%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Кокос дак (мелкая фракция)</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Древесный уголь</span>
+                    <span class="component-percentage">5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Торф уже обеспечивает органическую базу; гумус повышает риск гнили черешков
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/saintpaulia.jpg" class="plant-mini-image" alt="Сенполия (узамбарская фиалка)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Сенполия (узамбарская фиалка)</div>
+                        <div class="plant-mini-latin">Saintpaulia ionantha</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note">Фитильный полив рекомендован — сенполии не любят попадание воды на листья</div>
+            <div class="note">Лёгкий, слабокислый, воздушный субстрат</div>
+            <div class="note">Торф — основа, перлит и вермикулит обеспечивают воздух и влагоудержание</div>
+            <div class="note">Уголь для стабилизации среды</div>
+        </div>
+    </div>
+</div>
+
+        <div class="soil-group" data-search="для хищных растений дионея (венерина мухоловка) дионея (венерина мухоловка)">
+    <div class="group-header">
+        <div class="group-title">Для хищных растений
+        </div>
+        <div class="group-subtitle">БЕЗ УДОБРЕНИЙ! Только чистый субстрат</div>
+    </div>
+    <div class="mix-content">
+        <div class="variants">
+            <div class="composition">
+                <h4>Состав</h4>
+                <div class="component">
+                    <span class="component-name">Торф кислый (без удобрений)</span>
+                    <span class="component-percentage">70%</span>
+                </div>
+                <div class="component">
+                    <span class="component-name">Перлит</span>
+                    <span class="component-percentage">30%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note" style="background:#fef2f2; border-left:3px solid #ef4444;">
+                Гумус не рекомендуется
+                — Категорически нет — любые удобрения/органика убивают хищные растения
+            </div>
+        </div>
+
+        <div class="plants-list">
+            <h4>Подходит для:</h4>
+            <div class="plants-grid">
+                <div class="plant-card-mini">
+                    <img src="IMAGES/dionaea.jpg" class="plant-mini-image" alt="Дионея (Венерина мухоловка)" loading="lazy">
+                    <div class="plant-mini-info">
+                        <div class="plant-mini-name">Дионея (Венерина мухоловка)</div>
+                        <div class="plant-mini-latin">Dionaea muscipula</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mix-notes">
+            <div class="note warning">КРИТИЧНО — любые удобрения убивают растение</div>
+            <div class="note warning">Использовать ТОЛЬКО дистиллят или чистый RO (TDS < 10)</div>
+        </div>
+    </div>
+</div>
+
+    </div>
+    <script>
+        var searchInput = document.getElementById('searchInput');
+        var soilGroups = document.querySelectorAll('.soil-group');
+        var noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            var searchTerm = this.value.toLowerCase().trim();
+            var visibleCount = 0;
+
+            soilGroups.forEach(function(group) {
+                var searchText = group.getAttribute('data-search').toLowerCase();
+                var titleText = group.querySelector('.group-title').textContent.toLowerCase();
+
+                if (searchText.includes(searchTerm) || titleText.includes(searchTerm)) {
+                    group.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = (visibleCount === 0 && searchTerm !== '') ? 'block' : 'none';
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                this.dispatchEvent(new Event('input'));
+                this.blur();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && e.target !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+
+        function gcd(a, b) {
+            while (b) { var t = b; b = a % b; a = t; }
+            return a;
+        }
+
+        function gcdArray(arr) {
+            return arr.reduce(function(a, b) { return gcd(a, b); });
+        }
+
+        function calcParts() {
+            document.querySelectorAll('.composition').forEach(function(comp) {
+                var percentEls = comp.querySelectorAll('.component-percentage');
+                var percents = Array.from(percentEls).map(function(el) { return parseInt(el.textContent); });
+
+                if (percents.some(isNaN) || percents.length === 0) return;
+
+                var g = gcdArray(percents);
+                var parts = percents.map(function(p) { return p / g; });
+
+                percentEls.forEach(function(el, i) {
+                    if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('component-parts')) {
+                        var span = document.createElement('span');
+                        span.className = 'component-parts';
+                        span.textContent = '(' + parts[i] + ' ч.)';
+                        el.after(span);
+                    }
+                });
+
+                var h4 = comp.querySelector('h4');
+                if (h4 && !(h4.nextElementSibling && h4.nextElementSibling.classList.contains('parts-ratio'))) {
+                    var names = Array.from(comp.querySelectorAll('.component-name')).map(function(el) {
+                        var name = el.textContent;
+                        if (name.indexOf('Универсальный грунт') !== -1 || name.indexOf('Premium') !== -1) return 'Грунт';
+                        if (name.indexOf('гас') !== -1 || name.indexOf('Coarse') !== -1 || name.indexOf('גס') !== -1) return 'Кокос-гас';
+                        if (name.indexOf('дак') !== -1 || name.indexOf('Fine') !== -1 || name.indexOf('דק') !== -1) return 'Кокос-дак';
+                        if (name.indexOf('Bark') !== -1 || name.indexOf('bark') !== -1 || name.indexOf('בארק') !== -1) return 'Кора';
+                        if (name.indexOf('уголь') !== -1 || name.indexOf('Charcoal') !== -1 || name.indexOf('פחם') !== -1) return 'Уголь';
+                        if (name.indexOf('Сфагнум') !== -1 || name.indexOf('Sphagnum') !== -1 || name.indexOf('ספגנום') !== -1) return 'Мох';
+                        if (name.indexOf('Перлит') !== -1 || name.indexOf('Perlite') !== -1 || name.indexOf('פרליט') !== -1) return 'Перлит';
+                        if (name.indexOf('Вермикулит') !== -1 || name.indexOf('Vermiculite') !== -1 || name.indexOf('ורמיקוליט') !== -1) return 'Вермикулит';
+                        if (name.indexOf('Туф') !== -1 || name.indexOf('Tuff') !== -1 || name.indexOf('טוף') !== -1) return 'Туф';
+                        if (name.indexOf('Верховой торф') !== -1) return 'Торф';
+                        if (name.indexOf('Листовой') !== -1) return 'Перегной';
+                        return name;
+                    });
+                    var ratioDiv = document.createElement('div');
+                    ratioDiv.className = 'parts-ratio';
+                    ratioDiv.textContent = '📐 ' + names.map(function(n, i) { return n + ': ' + parts[i]; }).join(' : ');
+                    h4.after(ratioDiv);
+                }
+            });
+        }
+
+        // Auto-calculate parts on page load
+        calcParts();
+    </script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

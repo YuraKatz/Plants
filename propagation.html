@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌱 Размножение растений - Plants Care</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="propagation.html" class="active">RU</a>
+    <a href="en/propagation.html" >EN</a>
+    <a href="he/propagation.html" >HE</a>
+</div>
+    <div class="container">
+        <a href="index.html" class="nav-back">← Главная</a>
+        <header>
+            <h1>🌱 Размножение растений</h1>
+            <p class="subtitle">Методы и инструкции по размножению</p>
+        </header>
+
+        <div class="best-time">
+            <h3>🌸 Лучшее время для размножения: Весна — Начало лета</h3>
+        </div>
+
+        <div class="method-tabs">
+            <button class="method-tab" data-method="water">💧 В воде</button>
+            <button class="method-tab" data-method="soil">🌱 В грунте</button>
+            <button class="method-tab" data-method="division">✂️ Деление</button>
+            <button class="method-tab" data-method="airlayer">🌿 Воздушные отводки</button>
+            <button class="method-tab" data-method="offsets">👶 Детки</button>
+        </div>
+
+        <div class="method-section" data-method="water">
+            <div class="method-header">
+                <h2><span>💧</span> 💧 В воде</h2>
+                <div class="description">Самый простой и наглядный способ. Подходит для большинства лиан и ароидных.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Пошаговая инструкция</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Отрежьте черенок с 1-2 узлами (откуда растут листья).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Удалите нижние листья, чтобы они не гнили в воде.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Поместите в воду. Добавьте кусочек древесного угля.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Ждите корней 2-5 см, затем сажайте в легкий грунт.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Подходит для растений</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/monstera_deliciosa.jpg" alt="Монстера делициоза">
+                        <div class="name">Монстера делициоза</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/epipremnum.jpg" alt="Эпипремнум / сциндапсус">
+                        <div class="name">Эпипремнум / сциндапсус</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/philodendron_imperial.jpg" alt="Филодендрон крупнолистный">
+                        <div class="name">Филодендрон крупнолистный</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/aglaonema.jpeg" alt="Аглаонема пестролистная">
+                        <div class="name">Аглаонема пестролистная</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Советы эксперта</h3>
+                <ul>
+                    <li>Используйте темную емкость — корни любят темноту.</li>
+                    <li>Меняйте воду раз в неделю.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="soil">
+            <div class="method-header">
+                <h2><span>🌱</span> 🌱 В грунте</h2>
+                <div class="description">Для растений, которые плохо переносят воду или имеют нежные корни.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Пошаговая инструкция</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Подготовьте черенок и дайте срезу подсохнуть 30-60 мин.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Обмакните срез в Корневин (опционально).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Посадите в легкую смесь (торф + перлит 50/50).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Накройте пакетом или банкой для создания теплички.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Подходит для растений</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/begonia_maculata.jpg" alt="Бегония макулата">
+                        <div class="name">Бегония макулата</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/dracaena_marginata.jpg" alt="Драцена маргината">
+                        <div class="name">Драцена маргината</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Советы эксперта</h3>
+                <ul>
+                    <li>Проветривайте тепличку каждый день.</li>
+                    <li>Не заливайте — грунт должен быть лишь слегка влажным.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="division">
+            <div class="method-header">
+                <h2><span>✂️</span> ✂️ Деление</h2>
+                <div class="description">Для кустовых растений, образующих розетки или имеющих корневища.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Пошаговая инструкция</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Достаньте растение из горшка и очистите корни от земли.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Аккуратно разделите куст руками или острым ножом.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">У каждой части должны быть свои корни и точка роста.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Рассадите в отдельные горшки.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Подходит для растений</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/spathiphyllum.jpg" alt="Спатифиллум">
+                        <div class="name">Спатифиллум</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/calathea_lancifolia.jpg" alt="Калатея лансифолия">
+                        <div class="name">Калатея лансифолия</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/anthurium.jpg" alt="Антуриум">
+                        <div class="name">Антуриум</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/sansevieria.jpg" alt="Сансевиерия (Щучий хвост)">
+                        <div class="name">Сансевиерия (Щучий хвост)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Советы эксперта</h3>
+                <ul>
+                    <li>Присыпьте срезы углем или корицей.</li>
+                    <li>Первую неделю держите в тени.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="airlayer">
+            <div class="method-header">
+                <h2><span>🌿</span> 🌿 Воздушные отводки</h2>
+                <div class="description">Для крупных древовидных растений (фикусы, монстеры), чтобы получить сразу большое растение.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Пошаговая инструкция</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Сделайте надрез на стебле или снимите кольцо коры.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Оберните влажным мхом сфагнумом.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Закрепите сверху пленкой, чтобы мох не высыхал.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Когда корни заполнят пленку, отрежьте и посадите.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Подходит для растений</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/monstera_deliciosa.jpg" alt="Монстера делициоза">
+                        <div class="name">Монстера делициоза</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/philodendron_selloum.jpg" alt="Филодендрон Селлоу">
+                        <div class="name">Филодендрон Селлоу</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Советы эксперта</h3>
+                <ul>
+                    <li>Используйте мох, смоченный в растворе стимулятора.</li>
+                    <li>Метод позволяет сохранить вариегатность.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="offsets">
+            <div class="method-header">
+                <h2><span>👶</span> 👶 Детки</h2>
+                <div class="description">Для растений, которые сами выпускают "деток" на усах или у основания.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 Пошаговая инструкция</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Дождитесь, пока у детки появятся свои зачатки корней.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Отрежьте детку от материнского растения.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Посадите в маленький горшочек с легким грунтом.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Первое время поддерживайте высокую влажность.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 Подходит для растений</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/chlorophytum.jpg" alt="Хлорофитум">
+                        <div class="name">Хлорофитум</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/sansevieria.jpg" alt="Сансевиерия (Щучий хвост)">
+                        <div class="name">Сансевиерия (Щучий хвост)</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="IMAGES/guzmania.jpg" alt="Гузмания">
+                        <div class="name">Гузмания</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 Советы эксперта</h3>
+                <ul>
+                    <li>Не отделяйте слишком маленьких деток.</li>
+                    <li>Хлорофитум можно укоренять прямо не отрезая от уса.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        header { text-align: center; }
+        .best-time { background: #2d6a4f; color: white; padding: 14px 20px; border-radius: 4px; text-align: center; margin-bottom: 30px; }
+        .method-tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        .method-tab { padding: 7px 16px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+        .method-tab.active { background: #2d6a4f; color: #fff; border-color: #2d6a4f; }
+        .method-section { display: none; margin-bottom: 40px; }
+        .method-section.active { display: block; }
+        .method-header { background: #333; color: white; padding: 16px; border-radius: 4px; margin-bottom: 25px; }
+        .method-header h2 { font-size: 1.15rem; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+        .steps-container { background: #f5f5f0; border-radius: 4px; padding: 25px; margin-bottom: 25px; }
+        .step { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #e2e8f0; }
+        .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .step-number { width: 28px; height: 28px; background: #2d6a4f; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .plants-mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 15px; }
+        .plant-mini-card { background: white; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; text-align: center; }
+        .plant-mini-card img { width: 100%; height: 80px; object-fit: cover; }
+        .plant-mini-card .name { padding: 8px; font-size: 0.8rem; font-weight: 600; }
+        .tips-box { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 20px; margin-top: 30px; border-radius: 4px; }
+        .tips-box h3 { color: #2c5282; margin-bottom: 15px; }
+        .tips-box ul { list-style: none; }
+        .tips-box li { margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
+        .tips-box li::before { content: "💡"; }
+    </style>
+<script>
+    const tabs = document.querySelectorAll('.method-tab');
+    const sections = document.querySelectorAll('.method-section');
+    function showMethod(method) {
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.method === method));
+        sections.forEach(s => s.classList.toggle('active', s.dataset.method === method));
+    }
+    tabs.forEach(t => t.addEventListener('click', () => showMethod(t.dataset.method)));
+    showMethod('water');
+</script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

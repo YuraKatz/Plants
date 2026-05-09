@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔄 Ротация удобрений и биостимуляторов - Plants Care</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+    </style>
+<style>
+    header { text-align: center; }
+    .rot-meta { background: #f0f7f4; border: 1px solid #cfe3d6; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+    .rot-meta p { margin: 4px 0; font-size: 0.9rem; color: #444; }
+    .rot-meta strong { color: #1b4332; }
+
+    .constants-block { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+    .constants-block h2 { margin-top: 0; color: #78350f; }
+    .const-item { padding: 8px 0; border-bottom: 1px dashed #e5d9b6; font-size: 0.9rem; }
+    .const-item:last-child { border-bottom: none; }
+    .const-item .const-name { font-weight: 700; color: #78350f; }
+
+    .canisters-grid { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
+    .canister-card { border: 1px solid #ddd; border-radius: 6px; overflow: hidden; background: #fff; border-left: 5px solid #ddd; }
+    .canister-card.canister-a { border-left-color: #4a90d9; }
+    .canister-card.canister-b { border-left-color: #2d6a4f; }
+    .canister-card.canister-c { border-left-color: #888; }
+    .canister-card.canister-v { border-left-color: #c084fc; }
+
+    .canister-header { padding: 14px 18px; color: #fff; }
+    .canister-a .canister-header { background: #4a6fa5; }
+    .canister-b .canister-header { background: #2d6a4f; }
+    .canister-c .canister-header { background: #666; }
+    .canister-v .canister-header { background: #7c3aed; }
+    .canister-letter { font-size: 1.5rem; font-weight: 800; }
+    .canister-title { font-size: 0.95rem; opacity: 0.9; }
+
+    .canister-params { display: flex; flex-wrap: wrap; gap: 12px; padding: 12px 18px; background: #fafaf8; border-bottom: 1px solid #e5e5e0; }
+    .param { text-align: center; min-width: 80px; }
+    .param-value { font-size: 1.05rem; font-weight: 700; color: #333; }
+    .param-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+
+    .canister-body { padding: 16px 18px; }
+    .strategy-note { background: #f5f3ff; border-left: 3px solid #7c3aed; padding: 10px 14px; border-radius: 4px; font-size: 0.88rem; margin-bottom: 14px; white-space: pre-line; }
+
+    .plants-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-bottom: 14px; }
+    .plant-card-mini { border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: #fff; text-align: center; position: relative; }
+    .plant-mini-image { width: 100%; height: 80px; object-fit: cover; background: #f5f5f0; }
+    .plant-mini-name { padding: 6px; font-size: 0.72rem; font-weight: 600; line-height: 1.25; }
+    .plant-status { position: absolute; top: 4px; right: 4px; background: rgba(124,58,237,0.92); color: #fff; padding: 1px 6px; border-radius: 3px; font-size: 0.65rem; font-weight: 700; }
+    .plant-status.ordered { background: rgba(217,119,6,0.92); }
+    .plant-status.rooting { background: rgba(45,106,79,0.92); }
+
+    .recipe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .recipe-card { background: #fafaf8; border: 1px solid #e5e5e0; border-radius: 6px; padding: 12px 14px; }
+    .recipe-card.mineral { border-left: 3px solid #2d6a4f; }
+    .recipe-card.organic { border-left: 3px solid #d97706; }
+    .recipe-card h4 { font-size: 0.92rem; color: #1b4332; margin-bottom: 6px; }
+    .recipe-card .recipe-base { font-weight: 700; font-size: 0.88rem; }
+    .recipe-card .recipe-biostim { color: #b91c1c; font-weight: 600; font-size: 0.85rem; margin-top: 4px; }
+    .recipe-card .recipe-biostim.none { color: #888; font-weight: 400; }
+    .process-block { background: #f0f7f4; border: 1px solid #cfe3d6; border-radius: 6px; padding: 12px 14px; margin-top: 14px; }
+    .process-block h4 { color: #1b4332; margin-bottom: 10px; font-size: 0.95rem; }
+    .process-steps { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+    .process-step { flex: 1 1 130px; min-width: 130px; background: #fff; border: 1px solid #d1ddd6; border-radius: 4px; padding: 8px 10px; position: relative; }
+    .process-step .step-num { position: absolute; top: -8px; left: -8px; width: 22px; height: 22px; background: #2d6a4f; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; }
+    .process-step .step-action { font-size: 0.82rem; font-weight: 600; color: #1b4332; margin-bottom: 4px; padding-left: 14px; }
+    .process-step .step-target { font-size: 0.78rem; color: #555; padding-left: 14px; }
+    .process-step .step-target strong { color: #2d6a4f; font-size: 0.9rem; }
+    .process-arrow { display: flex; align-items: center; color: #2d6a4f; font-size: 1.2rem; }
+    @media (max-width: 600px) { .process-arrow { display: none; } }
+    .recipe-rule { background: #ecfdf5; border-left: 3px solid #10b981; padding: 8px 12px; border-radius: 4px; margin-top: 10px; font-size: 0.85rem; }
+    .recipe-rule strong { color: #065f46; }
+
+    .cautions { background: #fef2f2; border: 1px solid #fecaca; border-radius: 4px; padding: 10px 14px; margin-top: 12px; }
+    .cautions h4 { color: #991b1b; margin-bottom: 6px; font-size: 0.9rem; }
+    .cautions ul { padding-left: 20px; font-size: 0.83rem; color: #4a1a1a; }
+    .cautions li { padding: 2px 0; }
+
+    .timeline-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; }
+    .timeline-table th { background: #2d6a4f; color: #fff; padding: 8px 10px; text-align: left; }
+    .timeline-table td { padding: 8px 10px; border-bottom: 1px solid #e5e5e0; vertical-align: top; }
+    .timeline-table tr:nth-child(even) td { background: #fafaf8; }
+
+    .conflict-card { background: #fff; border: 1px solid #fecaca; border-left: 3px solid #ef4444; border-radius: 4px; padding: 10px 14px; margin-bottom: 8px; }
+    .conflict-card h4 { color: #991b1b; font-size: 0.92rem; margin-bottom: 4px; }
+    .conflict-card p { font-size: 0.83rem; margin: 2px 0; }
+    .conflict-card .conflict-action { font-weight: 600; color: #2d6a4f; }
+
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+    .event-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px 14px; }
+    .event-card h4 { color: #1b4332; margin-bottom: 6px; font-size: 0.95rem; }
+    .event-card p { font-size: 0.83rem; margin: 3px 0; }
+
+    .toc { background: #fff; border: 1px solid #e5e5e0; border-radius: 6px; padding: 12px 18px; margin-bottom: 20px; }
+    .toc a { display: inline-block; margin: 4px 8px 4px 0; padding: 4px 10px; background: #f0f7f4; border-radius: 4px; font-size: 0.85rem; text-decoration: none; }
+    .toc a:hover { background: #d1fae5; }
+
+    @media (max-width: 600px) {
+        .recipe-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="rotation.html" class="active">RU</a>
+    <a href="en/rotation.html" >EN</a>
+    <a href="he/rotation.html" >HE</a>
+</div>
+<div class="container">
+    <a href="index.html" class="nav-back">← Главная</a>
+    <header>
+        <h1>🔄 Ротация удобрений и биостимуляторов</h1>
+        <p class="subtitle">Стратегия ротации по канистрам A/B/C/V с фазированным вводом VGI</p>
+    </header>
+
+
+    <div class="rot-meta">
+        <p><strong>Принцип:</strong> Один биостимулятор за полив, не stacking. Чередование минеральной
+и органической базы. Тест каждого нового VGI продукта 4 недели
+перед расширением на другие канистры.
+</p>
+    </div>
+
+    <div class="toc">
+        <strong>Разделы:</strong>
+        <a href="#constants">Константы</a>
+        <a href="#orchid">Орхидея</a>
+        <a href="#moss-pole">Моховые столбы</a>
+        <a href="#canister-a">A · Чувствительные</a>
+        <a href="#canister-b">B · Ароидные</a>
+        <a href="#canister-v">V · Вариегатные</a>
+        <a href="#canister-c">C · Неприхотливые</a>
+        <a href="#timeline">Ввод VGI</a>
+        <a href="#events">События</a>
+        <a href="#conflicts">Конфликты</a>
+    </div>
+
+    <div class="constants-block" style="background:#fdf2f8;border-color:#fbcfe8;" id="orchid">
+        <h2 style="color:#9d174d;">🌸 Орхидея фаленопсис (вне канистр)</h2>
+        <p style="font-size:0.88rem;color:#444;margin-bottom:8px;"><strong>Почему отдельно:</strong> Замачивание, низкий PPM, эпифит с велеменовыми корнями, особый цикл цветение/покой</p>
+        <p style="font-size:0.88rem;color:#444;margin-bottom:14px;"><strong>Метод:</strong> Замачивание горшка в раствор 10-15 мин, потом дать стечь</p>
+
+        <h3 style="font-size:0.95rem;color:#9d174d;margin:8px 0;">Цикл по фазам</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:14px;">
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;text-transform:capitalize;">growth:</strong><br>
+                <span style="font-size:0.85rem;">ecogan_orchids 7-3-7 (1/4 дозы)</span><br>
+                <span style="font-size:0.78rem;color:#555;">PPM: 60-100</span><br>
+                <span style="font-size:0.78rem;color:#555;">Частота: Раз в 7-10 дней</span>
+            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;text-transform:capitalize;">bloom:</strong><br>
+                <span style="font-size:0.85rem;">flower_orchids 0-17-7 (1/4 дозы)</span><br>
+                <span style="font-size:0.78rem;color:#555;">PPM: 80-120</span><br>
+                <span style="font-size:0.78rem;color:#555;">Частота: Раз в 7-10 дней</span>
+<br><em style="font-size:0.78rem;color:#9d174d;">Высокий P + K для цветоноса</em>            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;text-transform:capitalize;">rest:</strong><br>
+                <span style="font-size:0.85rem;">Только RO + минимум CalMag (PPM 20-30)</span><br>
+                <span style="font-size:0.78rem;color:#555;">PPM: —</span><br>
+                <span style="font-size:0.78rem;color:#555;">Частота: Реже — раз в 14-21 день</span>
+            </div>
+        </div>
+
+        <h3 style="font-size:0.95rem;color:#9d174d;margin:14px 0 8px;">VGI совместимость</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <thead>
+                <tr style="background:#fce7f3;">
+                    <th style="padding:6px 10px;text-align:left;">Продукт</th>
+                    <th style="padding:6px 10px;text-align:left;">Вердикт</th>
+                    <th style="padding:6px 10px;text-align:left;">Детали</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">kf_leon</td>
+                    <td style="padding:6px 10px;color:#9a3412;font-weight:700;">С ОСТОРОЖНОСТЬЮ</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+Доза: 0.3-0.5 мл/л в раствор замачивания<br>Когда: Только в фазу активного роста, НЕ каждый полив (раз в 2-3 замачивания)<br>Пропустить: Цветение, покой<br><em>Для эпифита важнее низкий PPM и режим, чем биостим. Орг. содержание на коре в застойной среде = риск бактерий/плесени</em>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">kf_serfico</td>
+                    <td style="padding:6px 10px;color:#9a3412;font-weight:700;">С ОСТОРОЖНОСТЬЮ как foliar</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+Лёгкое опрыскивание воздушных корней 0.5-1% раствор<br>Когда: В фазу активного роста, раз в 3-4 недели<br><span style="color:#991b1b;">⚠ НЕ лить в замачивание (риск загнивания корней)</span><br><em>Велемен впитывает частично, но это НЕ надёжный путь питания — рассматривать как мягкую обработку, не как кормление</em>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">kf_macroboost</td>
+                    <td style="padding:6px 10px;color:#991b1b;font-weight:700;">НЕТ</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+<em>NPK 1.3-0-4.5 без фосфора. flower_orchids 0-17-7 лучше для цветения</em>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">kf_iron</td>
+                    <td style="padding:6px 10px;color:#991b1b;font-weight:700;">НЕТ</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+<em>Хелат вслепую рискованно. Желтизна у орхидеи чаще = другой дефицит, избыток воды или старение, не Fe</em>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">kf_guard</td>
+                    <td style="padding:6px 10px;color:#991b1b;font-weight:700;">ВНЕ СХЕМЫ</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+Только при вредителях, разово, опрыскивание ЛИСТЬЕВ<br>Пропустить: Активное цветение, не использовать как регулярную профилактику<br><span style="color:#991b1b;font-weight:600;">⚠ НЕ наносить на цветы — оставит масляные пятна</span><br>🌡 t < 24°C<br>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">kf_10</td>
+                    <td style="padding:6px 10px;color:#991b1b;font-weight:700;">НЕТ</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+<em>Без явной орхидейной логики, дублирует LEON</em>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">flower_bio_gel</td>
+                    <td style="padding:6px 10px;color:#991b1b;font-weight:700;">НЕТ</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+<em>Высокая солевая нагрузка и органика для эпифита в коре = риск засаливания и ожога корней. Дело не в N=10, а в общей концентрации</em>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">hg_multizyme</td>
+                    <td style="padding:6px 10px;color:#065f46;font-weight:700;">ОК</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+Доза: 1 мл/л в замачивание<br><em>Помогает разложению старой ткани корней. Не критично, но не вредно</em>                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #fce7f3;">
+                    <td style="padding:6px 10px;font-weight:600;">dynomyco</td>
+                    <td style="padding:6px 10px;color:#991b1b;font-weight:700;">СКОРЕЕ НЕТ</td>
+                    <td style="padding:6px 10px;font-size:0.78rem;color:#555;">
+<em>Фаленопсис обычно не AMF-растение, ему нужны специфические orchid mycorrhizae (Rhizoctonia-class). Generic AMF из DYNOMYCO часто бесполезен для орхидей</em>                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="font-size:0.95rem;color:#9d174d;margin:16px 0 8px;">⚠ Критические факторы (Codex audit)</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">🚿 Промывка коры</strong><br>
+                <span style="font-size:0.83rem;">Раз в 4-6 замачиваний</span><br>
+                <span style="font-size:0.83rem;">Замочить только в чистом RO без удобрений на 10-15 мин</span><br>
+                <em style="font-size:0.78rem;color:#555;">Вымыть соли из коры/мха — главный риск при замачивании-кормлении</em>
+            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">⚗ Мочевинный азот</strong><br>
+                <span style="font-size:0.83rem;color:#991b1b;">Орхидея чувствительна к мочевинному азоту (urea N)</span><br>
+                <span style="font-size:0.83rem;">Проверять состав удобрения — N должен быть в форме NO3 или NH4, не urea</span>
+            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">💧 Качество воды</strong><br>
+                <span style="font-size:0.83rem;">pH: <strong>5.5-6.0 (узкий коридор для phalaenopsis)</strong></span><br>
+                <span style="font-size:0.83rem;">Ca:Mg = Важен баланс — Ca:Mg ~ 3:1, не превышать</span><br>
+                <span style="font-size:0.83rem;">PPM после CalMag: <strong>30-50 PPM до удобрения</strong></span>
+            </div>
+            <div style="background:#fff;border:1px solid #fbcfe8;border-left:3px solid #ec4899;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9d174d;">🔥 Риск ожога корней</strong><br>
+                <span style="font-size:0.83rem;">Любая органика/биостим в застойной воде замачивания</span><br>
+                <span style="font-size:0.83rem;color:#065f46;">✓ Время замачивания не более 15 мин, обязательно дать стечь полностью</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="constants-block" style="background:#ecfdf5;border-color:#bbf7d0;" id="moss-pole">
+        <h2 style="color:#065f46;">🪴 Моховые столбы (drip-ёмкость)</h2>
+        <p style="font-size:0.88rem;color:#444;margin-bottom:8px;white-space:pre-line;">Юра использует моховые столбы с drip-ёмкостью сверху для лазящих
+ароидных (монстера, филодендрон) и вариегатных. Вода капает в мох
+постоянно, поэтому концентрация должна быть НИЖЕ обычного полива
+в горшок (воздушные корни 24/7 в растворе).
+</p>
+        <p style="font-size:0.9rem;font-weight:600;color:#065f46;margin-bottom:10px;">На мох заливаем канистру с НА ОДИН УРОВЕНЬ НИЖЕ концентрации,
+чем для растения. Не мешаем отдельный раствор — используем уже
+готовую более мягкую канистру.
+</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
+            <div style="background:#fff;border:1px solid #d1ddd6;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#1b4332;">Ароидные с мохстиком:</strong><br>
+                <span style="font-size:0.85rem;">В горшок → канистра <strong>B (120-150 PPM)</strong></span><br>
+                <span style="font-size:0.85rem;">На мох → канистра <strong>A (80-100 PPM)</strong></span><br>
+                <span style="font-size:0.78rem;color:#555;">В 1.5 раза меньше соли на мхе → меньше засаливания и ожогов воздушных корней</span>
+            </div>
+            <div style="background:#fff;border:1px solid #d1ddd6;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#1b4332;">Вариегатные с мохстиком:</strong><br>
+                <span style="font-size:0.85rem;">В горшок → канистра <strong>V (100-130 PPM)</strong></span><br>
+                <span style="font-size:0.85rem;">На мох → канистра <strong>V (тот же — он уже умеренный)</strong></span><br>
+                <span style="font-size:0.78rem;color:#555;">RO+CalMag без ферта если хочется ещё мягче</span>
+            </div>
+            <div style="background:#fff;border:1px solid #d97706;border-radius:4px;padding:10px 12px;">
+                <strong style="color:#9a3412;">🚿 Промывка мха:</strong><br>
+                <span style="font-size:0.85rem;">Раз в 1-2 месяца → Пролить столб 0.5-1 л чистого RO сверху, без CalMag и без ферта</span><br>
+                <span style="font-size:0.78rem;color:#555;">Вымыть накопившиеся соли из мха</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="constants-block" id="constants">
+        <h2>⚙️ Константы — в КАЖДЫЙ полив всех канистр</h2>
+        <div class="const-item">
+            <span class="const-name">atami_calmag:</span>
+<span>База RO-протокола</span> · По каплям до базового PPM группы                <div style="font-size:0.8rem;color:#991b1b;margin-top:4px;">⚠ Не применять: dionaea (только чистый RO)</div>
+        </div>
+        <div class="const-item">
+            <span class="const-name">hg_multizyme:</span>
+<span>Энзимная база (стандарт Юры)</span> · <strong>1 мл/л в лейку</strong>                <div style="font-size:0.8rem;color:#991b1b;margin-top:4px;">⚠ Не применять: dionaea, При поливе с DYNOMYCO (разводить во времени — энзимы могут вредить микоризе)</div>
+        </div>
+        <div class="const-item">
+            <span class="const-name">green_farmer_ph_down:</span>
+<span>Финальный pH в коридор группы</span> · По каплям после всех добавок        </div>
+    </div>
+
+    <div class="canisters-grid">
+        <div class="canister-card canister-a" id="canister-a">
+            <div class="canister-header">
+                <div class="canister-letter">A</div>
+                <div class="canister-title">Чувствительные</div>
+            </div>
+            <div class="canister-params">
+                <div class="param"><div class="param-value">78</div><div class="param-label">PPM target</div></div>
+                <div class="param"><div class="param-value">80-110</div><div class="param-label">PPM + fert</div></div>
+                <div class="param"><div class="param-value">≤ 120</div><div class="param-label">PPM max</div></div>
+                <div class="param"><div class="param-value">5.85</div><div class="param-label">pH</div></div>
+                <div class="param"><div class="param-value" style="font-size:0.85rem;">0.25 мл/л (1/4 от инструкции)</div><div class="param-label">Universal</div></div>
+            </div>
+            <div class="canister-body">
+                <h4 style="font-size:0.88rem; color:#555; margin: 10px 0 6px;">Растения (11):</h4>
+                <div class="plants-grid">
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/calathea_lancifolia.jpg" alt="Калатея лансифолия" loading="lazy">
+                        <div class="plant-mini-name">Калатея лансифолия</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/calathea_ornata.jpg" alt="Калатея орната" loading="lazy">
+                        <div class="plant-mini-name">Калатея орната</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/spathiphyllum.jpg" alt="Спатифиллум" loading="lazy">
+                        <div class="plant-mini-name">Спатифиллум</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/guzmania.jpg" alt="Гузмания" loading="lazy">
+                        <div class="plant-mini-name">Гузмания</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/alocasia.jpg" alt="Алоказия (Polly / Amazonica)" loading="lazy">
+                        <div class="plant-mini-name">Алоказия (Polly / Amazonica)</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/alocasia_frydek.jpg" alt="Алоказия Фрайдек" loading="lazy">
+                        <div class="plant-mini-name">Алоказия Фрайдек</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/alocasia_regal_shields.jpg" alt="Алоказия Регал Шилдс" loading="lazy">
+                        <div class="plant-mini-name">Алоказия Регал Шилдс</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/anthurium.jpg" alt="Антуриум" loading="lazy">
+                        <div class="plant-mini-name">Антуриум</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/anthurium_clarinervium.jpg" alt="Антуриум кларинервиум" loading="lazy">
+                        <div class="plant-mini-name">Антуриум кларинервиум</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/nephrolepis.jpeg" alt="Папоротник (Нефролепис)" loading="lazy">
+                        <div class="plant-mini-name">Папоротник (Нефролепис)</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/selaginella.jpg" alt="Селагинелла Мартенса (плаунок)" loading="lazy">
+                        <div class="plant-mini-name">Селагинелла Мартенса (плаунок)</div>
+                    </div>
+                </div>
+
+                <div class="strategy-note"><strong>Ввод biostim:</strong> LEON вводить ТОЛЬКО после 3-4 успешных замесов с LEON на канистре B.
+До подтверждения на B — на канистре A только базовая ротация без VGI.
+Доза LEON на A — половинная (1 мл/л) из-за чувствительности.
+</div>
+
+                <h4 style="margin-top:14px;color:#1b4332;">📋 Flow замешки — отдельно для каждой композиции</h4>
+
+
+                                <div class="process-block" style="background:#f0f7f4;border-color:#cfe3d6;">
+                    <h4 style="color:#1b4332;">🟢 Минеральный mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>50 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_universal 0.25 мл/л</div>
+                            <div class="step-target">приближаемся к <strong>80-100 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ KF-LEON 1 мл/л</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>120</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 5.8-6.3</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="process-block" style="background:#fff7ed;border-color:#fed7aa;">
+                    <h4 style="color:#9a3412;">🟠 Органический mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>50 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_bio_gel 0.5 нажатия/л</div>
+                            <div class="step-target">приближаемся к <strong>80-100 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ НЕТ или SERFICO 1 мл/л (после теста на B)</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>120</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 5.8-6.3</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h4 style="margin-top:14px;color:#1b4332;">🧪 Рецепт ротации (стабильный)</h4>
+                <div class="recipe-grid">
+                    <div class="recipe-card mineral">
+                        <h4>🟢 Минеральный mix</h4>
+                        <div class="recipe-base">flower_universal 0.25 мл/л</div>
+                        <div class="recipe-biostim">+ KF-LEON 1 мл/л</div>
+                    </div>
+                    <div class="recipe-card organic">
+                        <h4>🟠 Органический mix</h4>
+                        <div class="recipe-base">flower_bio_gel 0.5 нажатия/л</div>
+                        <div class="recipe-biostim">+ НЕТ или SERFICO 1 мл/л (после теста на B)</div>
+                    </div>
+                </div>
+                <div class="recipe-rule">
+                    <strong>Правило чередования:</strong> при каждой новой замешке — переключайся между минеральным и органическим mix. Каждый 4-й замес — без biostim (reset, оценка состояния).
+                </div>
+
+
+
+
+                <div class="cautions">
+                    <h4>⚠ Предостережения</h4>
+                    <ul><li>Селагинелла — самая чувствительная. Возможно держать отдельно или ВСЕГДА давать без biostim.</li><li>Нефролепис — НЕ применять KF-GUARD (масла повреждают вайи)</li><li>При признаках Fe-хлороза на калатеях — точечно KF-IRON 1-2 мл/л</li></ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="canister-card canister-b" id="canister-b">
+            <div class="canister-header">
+                <div class="canister-letter">B</div>
+                <div class="canister-title">Ароидные и стандартные</div>
+            </div>
+            <div class="canister-params">
+                <div class="param"><div class="param-value">120</div><div class="param-label">PPM target</div></div>
+                <div class="param"><div class="param-value">120-150</div><div class="param-label">PPM + fert</div></div>
+                <div class="param"><div class="param-value">≤ 180</div><div class="param-label">PPM max</div></div>
+                <div class="param"><div class="param-value">6.3</div><div class="param-label">pH</div></div>
+                <div class="param"><div class="param-value" style="font-size:0.85rem;">0.5 мл/л (1/2 от инструкции — водные требования)</div><div class="param-label">Universal</div></div>
+            </div>
+            <div class="canister-body">
+                <h4 style="font-size:0.88rem; color:#555; margin: 10px 0 6px;">Декоративные (10):</h4>
+                <div class="plants-grid">
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/monstera_deliciosa.jpg" alt="Монстера делициоза" loading="lazy">
+                        <div class="plant-mini-name">Монстера делициоза</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/monstera_adansonii.jpeg" alt="Монстера адансони" loading="lazy">
+                        <div class="plant-mini-name">Монстера адансони</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/philodendron_imperial.jpg" alt="Филодендрон крупнолистный" loading="lazy">
+                        <div class="plant-mini-name">Филодендрон крупнолистный</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/philodendron_selloum.jpg" alt="Филодендрон Селлоу" loading="lazy">
+                        <div class="plant-mini-name">Филодендрон Селлоу</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/philodendron_xanadu.jpg" alt="Филодендрон Ксанаду" loading="lazy">
+                        <div class="plant-mini-name">Филодендрон Ксанаду</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/epipremnum.jpg" alt="Эпипремнум / сциндапсус" loading="lazy">
+                        <div class="plant-mini-name">Эпипремнум / сциндапсус</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/aglaonema.jpeg" alt="Аглаонема пестролистная" loading="lazy">
+                        <div class="plant-mini-name">Аглаонема пестролистная</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/chamaedorea.jpg" alt="Хамедорея / пальма комнатная" loading="lazy">
+                        <div class="plant-mini-name">Хамедорея / пальма комнатная</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/chlorophytum.jpg" alt="Хлорофитум" loading="lazy">
+                        <div class="plant-mini-name">Хлорофитум</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/syngonium_golden_allusion.jpg" alt="Сингониум 'Golden Allusion'" loading="lazy">
+                        <div class="plant-mini-name">Сингониум 'Golden Allusion'</div>
+                    </div>
+                </div>
+                <h4 style="font-size:0.88rem; color:#555; margin: 10px 0 6px;">Цветущие (2):</h4>
+                <div class="plants-grid">
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/begonia_maculata.jpg" alt="Бегония макулата" loading="lazy">
+                        <div class="plant-mini-name">Бегония макулата</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/saintpaulia.jpg" alt="Сенполия (узамбарская фиалка)" loading="lazy">
+                        <div class="plant-mini-name">Сенполия (узамбарская фиалка)</div>
+                    </div>
+                </div>
+
+                <div class="strategy-note"><strong>Ввод biostim:</strong> Канистра B — главная тестовая. Здесь вводим каждый новый VGI ПЕРВЫМ.
+Оцениваем 3-4 замеса (наблюдаем за ростом, тургором, изменениями PPM
+в субстрате), и только потом расширяем на канистры A и V.
+</div>
+
+                <h4 style="margin-top:14px;color:#1b4332;">📋 Flow замешки — отдельно для каждой композиции</h4>
+
+
+                                <div class="process-block" style="background:#f0f7f4;border-color:#cfe3d6;">
+                    <h4 style="color:#1b4332;">🟢 Минеральный mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>60 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_universal 0.5 мл/л</div>
+                            <div class="step-target">приближаемся к <strong>120-150 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ KF-LEON 2 мл/л</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>180</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 6.0-6.5</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="process-block" style="background:#fff7ed;border-color:#fed7aa;">
+                    <h4 style="color:#9a3412;">🟠 Органический mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>60 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_bio_gel 0.5 нажатия/л</div>
+                            <div class="step-target">приближаемся к <strong>120-150 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ KF-SERFICO 2 мл/л</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>180</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 6.0-6.5</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h4 style="margin-top:14px;color:#1b4332;">🧪 Рецепт ротации (стабильный)</h4>
+                <div class="recipe-grid">
+                    <div class="recipe-card mineral">
+                        <h4>🟢 Минеральный mix</h4>
+                        <div class="recipe-base">flower_universal 0.5 мл/л</div>
+                        <div class="recipe-biostim">+ KF-LEON 2 мл/л</div>
+                    </div>
+                    <div class="recipe-card organic">
+                        <h4>🟠 Органический mix</h4>
+                        <div class="recipe-base">flower_bio_gel 0.5 нажатия/л</div>
+                        <div class="recipe-biostim">+ KF-SERFICO 2 мл/л</div>
+                    </div>
+                </div>
+                <div class="recipe-rule">
+                    <strong>Правило чередования:</strong> при каждой новой замешке — переключайся между минеральным и органическим mix. Каждый 4-й замес — без biostim (reset, оценка состояния).
+                </div>
+
+                <div class="recipe-rule" style="background:#fce7f3;border-left-color:#ec4899;">
+                    <strong>🌸 Цветение:</strong> Заменить flower_universal на flower_flowering 0.5 мл/л в этот полив
+<br>Раз в 2 месяца поверх — KF-MACROBOOST 5-10 мл/л для удержания цветения                </div>
+
+
+
+                <div class="cautions">
+                    <h4>⚠ Предостережения</h4>
+                    <ul><li>При вводе LEON — итоговый PPM может вырасти на 10-20, проверять TDS-метром</li><li>Бегония и сенполия в цветении — переключать на flower_flowering, не пропускать удобрение</li></ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="canister-card canister-v" id="canister-v">
+            <div class="canister-header">
+                <div class="canister-letter">V</div>
+                <div class="canister-title">Вариегатные</div>
+            </div>
+            <div class="canister-params">
+                <div class="param"><div class="param-value">110</div><div class="param-label">PPM target</div></div>
+                <div class="param"><div class="param-value">100-130</div><div class="param-label">PPM + fert</div></div>
+                <div class="param"><div class="param-value">≤ 140</div><div class="param-label">PPM max</div></div>
+                <div class="param"><div class="param-value">6.2</div><div class="param-label">pH</div></div>
+                <div class="param"><div class="param-value" style="font-size:0.85rem;">0.4 мл/л (между 1/2 и 1/4 — снижаем N для сохранения вариегатности)</div><div class="param-label">Universal</div></div>
+            </div>
+            <div class="canister-body">
+                <h4 style="font-size:0.88rem; color:#555; margin: 10px 0 6px;">Растения (4):</h4>
+                <div class="plants-grid">
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/monstera_albo_variegata.jpg" alt="Монстера альбо вариегата" loading="lazy">
+                        <div class="plant-mini-name">Монстера альбо вариегата</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/monstera_albo_variegata.jpg" alt="Монстера Aurea (вариегата жёлтая)" loading="lazy">
+<span class="plant-status Заказана, ещё не получена (среднего размера)">Заказана, ещё не получена (среднего размера)</span>                        <div class="plant-mini-name">Монстера Aurea (вариегата жёлтая)</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/philodendron_pink_princess.jpg" alt="Филодендрон 'Pink Princess'" loading="lazy">
+<span class="plant-status Заказан, ещё не получен (горшок ⌀12)">Заказан, ещё не получен (горшок ⌀12)</span>                        <div class="plant-mini-name">Филодендрон 'Pink Princess'</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/syngonium_mojito.jpg" alt="Сингониум 'Mojito'" loading="lazy">
+<span class="plant-status Черенок без корней (на укоренении в LECA + RO)">Черенок без корней (на укоренении в LECA + RO)</span>                        <div class="plant-mini-name">Сингониум 'Mojito'</div>
+                    </div>
+                </div>
+
+                <div class="strategy-note"><strong>Ввод biostim:</strong> VGI на канистре V вводить ТОЛЬКО после подтверждения на канистре B.
+KF-LEON в сниженной дозе (1.5 мл/л вместо 2 мл/л).
+KF-MACROBOOST НЕ применять (нарушит баланс N/K).
+KF-IRON только при подтверждённом Fe-хлорозе на ЗЕЛЁНЫХ участках.
+</div>
+                <div class="strategy-note" style="background:#fef3c7;border-left-color:#d97706;">Вариегатные растения требуют ОБРАТНУЮ стратегию от "стероидов".
+Высокий N → потеря белизны (растение делает больше зелёного хлорофилла).
+Свет 12ч+ Юры — идеален. PPM держим ниже обычной делициозы.
+Стабильность важнее агрессивного роста.
+</div>
+
+                <h4 style="margin-top:14px;color:#1b4332;">📋 Flow замешки — отдельно для каждой композиции</h4>
+
+
+                                <div class="process-block" style="background:#f0f7f4;border-color:#cfe3d6;">
+                    <h4 style="color:#1b4332;">🟢 Минеральный mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>50 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_universal 0.4 мл/л</div>
+                            <div class="step-target">приближаемся к <strong>100-130 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ KF-LEON 1.5 мл/л</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>140</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 6.0-6.3</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="process-block" style="background:#fff7ed;border-color:#fed7aa;">
+                    <h4 style="color:#9a3412;">🟠 Органический mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>50 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_bio_gel 0.4 нажатия/л</div>
+                            <div class="step-target">приближаемся к <strong>100-130 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ KF-SERFICO 1.5 мл/л (после теста на B)</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>140</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 6.0-6.3</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h4 style="margin-top:14px;color:#1b4332;">🧪 Рецепт ротации (стабильный)</h4>
+                <div class="recipe-grid">
+                    <div class="recipe-card mineral">
+                        <h4>🟢 Минеральный mix</h4>
+                        <div class="recipe-base">flower_universal 0.4 мл/л</div>
+                        <div class="recipe-biostim">+ KF-LEON 1.5 мл/л</div>
+                    </div>
+                    <div class="recipe-card organic">
+                        <h4>🟠 Органический mix</h4>
+                        <div class="recipe-base">flower_bio_gel 0.4 нажатия/л</div>
+                        <div class="recipe-biostim">+ KF-SERFICO 1.5 мл/л (после теста на B)</div>
+                    </div>
+                </div>
+                <div class="recipe-rule">
+                    <strong>Правило чередования:</strong> при каждой новой замешке — переключайся между минеральным и органическим mix. Каждый 4-й замес — без biostim (reset, оценка состояния).
+                </div>
+
+
+
+
+                <div class="cautions">
+                    <h4>⚠ Предостережения</h4>
+                    <ul><li>Молодые листья могут не показывать вариегацию — это нормально</li><li>Полностью белые листья усыхают (норма) — не лечить удобрениями</li><li>НЕ применять KF-MACROBOOST (нет фосфора, нарушит баланс)</li><li>KF-IRON осторожно — может оставить тёмные пятна на белых участках</li><li>Опора (мох-стик) для лазящего роста и крупных листьев с фенестрациями</li><li>Если видишь общую слабость, мелкие листья, вытягивание — НЕ снижать N дальше, это уже истощение</li><li>Органические biostim (LEON, SERFICO, Bio Gel) могут НЕ полностью отражаться на TDS — следить и по листу/субстрату</li></ul>
+                </div>
+
+                <div class="cautions" style="background:#fee2e2;">
+                    <h4>🚫 Не применять</h4>
+                    <ul><li>kf_macroboost (NPK 1.3-0-4.5 несбалансирован для вариегатной)</li><li>silicon_liquid в полную дозу (pH ломается, для вариегатной нестабильность опасна)</li><li>npk_20_20_20 (слишком концентрированное)</li><li>стероидный режим канистры D Boost (увеличит зелёную массу, потеряешь вариегацию)</li></ul>
+                </div>
+            </div>
+        </div>
+        <div class="canister-card canister-c" id="canister-c">
+            <div class="canister-header">
+                <div class="canister-letter">C</div>
+                <div class="canister-title">Неприхотливые</div>
+            </div>
+            <div class="canister-params">
+                <div class="param"><div class="param-value">152</div><div class="param-label">PPM target</div></div>
+                <div class="param"><div class="param-value">150-200</div><div class="param-label">PPM + fert</div></div>
+                <div class="param"><div class="param-value">≤ 220</div><div class="param-label">PPM max</div></div>
+                <div class="param"><div class="param-value">6.62</div><div class="param-label">pH</div></div>
+                <div class="param"><div class="param-value" style="font-size:0.85rem;">0.5 мл/л</div><div class="param-label">Universal</div></div>
+            </div>
+            <div class="canister-body">
+                <h4 style="font-size:0.88rem; color:#555; margin: 10px 0 6px;">Обычные (4):</h4>
+                <div class="plants-grid">
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/dracaena_marginata.jpg" alt="Драцена маргината" loading="lazy">
+                        <div class="plant-mini-name">Драцена маргината</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/dracaena_fragrans.jpg" alt="Драцена фрагранс / деременсис" loading="lazy">
+                        <div class="plant-mini-name">Драцена фрагранс / деременсис</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/croton.jpg" alt="Кротон" loading="lazy">
+                        <div class="plant-mini-name">Кротон</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/schlumbergera.jpg" alt="Шлюмбергера (Декабрист)" loading="lazy">
+                        <div class="plant-mini-name">Шлюмбергера (Декабрист)</div>
+                    </div>
+                </div>
+                <h4 style="font-size:0.88rem; color:#555; margin: 10px 0 6px;">Суккуленты (C-succ) (2):</h4>
+                <div class="plants-grid">
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/sansevieria.jpg" alt="Сансевиерия (Щучий хвост)" loading="lazy">
+                        <div class="plant-mini-name">Сансевиерия (Щучий хвост)</div>
+                    </div>
+                    <div class="plant-card-mini">
+                        <img class="plant-mini-image" src="IMAGES/zamioculcas.jpg" alt="Замиокулькас (Долларовое дерево)" loading="lazy">
+                        <div class="plant-mini-name">Замиокулькас (Долларовое дерево)</div>
+                    </div>
+                </div>
+
+                <div class="strategy-note"><strong>Ввод biostim:</strong> Канистра C — самая толерантная. LEON можно вводить параллельно
+с канистрой B (полная доза 2 мл/л). Здесь же тестируются
+эксперименты — Silicon точечно для крупнолистных.
+</div>
+
+                <h4 style="margin-top:14px;color:#1b4332;">📋 Flow замешки — отдельно для каждой композиции</h4>
+
+
+                                <div class="process-block" style="background:#f0f7f4;border-color:#cfe3d6;">
+                    <h4 style="color:#1b4332;">🟢 Минеральный mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>80 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_universal 0.5 мл/л</div>
+                            <div class="step-target">приближаемся к <strong>150-200 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ KF-LEON 2 мл/л</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>220</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 6.2-6.7</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="process-block" style="background:#fff7ed;border-color:#fed7aa;">
+                    <h4 style="color:#9a3412;">🟠 Органический mix + biostim</h4>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <span class="step-num">1</span>
+                            <div class="step-action">RO вода</div>
+                            <div class="step-target"><strong>0 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">2</span>
+                            <div class="step-action">+ ATAMI CalMag</div>
+                            <div class="step-target">до <strong>80 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">3</span>
+                            <div class="step-action">+ flower_bio_gel 0.5 нажатия/л</div>
+                            <div class="step-target">приближаемся к <strong>150-200 PPM</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step" style="border-color:#fca5a5;">
+                            <span class="step-num" style="background:#b91c1c;">4</span>
+                            <div class="step-action">+ KF-SERFICO 2 мл/л</div>
+                            <div class="step-target">+10-20 PPM<br>контроль ≤ <strong>220</strong></div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">5</span>
+                            <div class="step-action">+ MultiZyme 1 мл/л</div>
+                            <div class="step-target">мин. вклад в PPM</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-step">
+                            <span class="step-num">6</span>
+                            <div class="step-action">pH Down (Green Farmer)</div>
+                            <div class="step-target">до <strong>pH 6.2-6.7</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h4 style="margin-top:14px;color:#1b4332;">🧪 Рецепт ротации (стабильный)</h4>
+                <div class="recipe-grid">
+                    <div class="recipe-card mineral">
+                        <h4>🟢 Минеральный mix</h4>
+                        <div class="recipe-base">flower_universal 0.5 мл/л</div>
+                        <div class="recipe-biostim">+ KF-LEON 2 мл/л</div>
+                    </div>
+                    <div class="recipe-card organic">
+                        <h4>🟠 Органический mix</h4>
+                        <div class="recipe-base">flower_bio_gel 0.5 нажатия/л</div>
+                        <div class="recipe-biostim">+ KF-SERFICO 2 мл/л</div>
+                    </div>
+                </div>
+                <div class="recipe-rule">
+                    <strong>Правило чередования:</strong> при каждой новой замешке — переключайся между минеральным и органическим mix. Каждый 4-й замес — без biostim (reset, оценка состояния).
+                </div>
+
+
+                <div class="recipe-rule" style="background:#f3f4f6;border-left-color:#6b7280;">
+                    <strong>🌵 Подгруппа C-succ (суккуленты):</strong>
+                    PPM: 120-140 (вместо 150-200) ·
+                    Кормление: Каждый 2-3 полив с удобрением, остальные — только RO + CalMag
+                </div>
+
+                <div class="recipe-rule" style="background:#fef3c7;border-left-color:#d97706;">
+                    <strong>❄ Шлюмбергера (Сентябрь-февраль):</strong>
+                    <span style="white-space:pre-line;">Поверх обычной ротации канистры C — раз в 2 недели для шлюмбергеры
+отдельно: KF-MACROBOOST 10 мл/л (K без P + L-пролин для холодового
+стресса).
+</span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <h2 id="timeline">📅 Порядок ввода VGI продуктов</h2>
+    <p style="font-size:0.88rem;color:#555;margin-bottom:8px;">
+        Не календарь, а последовательность: каждый новый biostim вводится после 3-4 успешных замесов с предыдущим. Сначала на канистрах B и C (толерантные), потом на A (чувствительные) и V (вариегатные).
+    </p>
+    <table class="timeline-table">
+        <thead>
+            <tr>
+                <th>Этап</th>
+                <th>Продукт</th>
+                <th>Канистры</th>
+                <th>Доза / условие</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><strong>KF-LEON</strong></td>
+                    <td>B, C (параллельно)</td>
+                    <td>
+2 мл/л<br>Оценка через 3-4 замеса<br>Пропустить: A, V (ждём результаты на B)                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>KF-LEON</strong></td>
+                    <td>A (после подтверждения на B)</td>
+                    <td>
+1 мл/л (половинная для чувствительных)                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>KF-LEON</strong></td>
+                    <td>V</td>
+                    <td>
+1.5 мл/л (сниженная для вариегатных)                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>KF-SERFICO</strong></td>
+                    <td>B, C</td>
+                    <td>
+2 мл/л<br>Пропустить: A, V                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>KF-SERFICO</strong></td>
+                    <td>A, V</td>
+                    <td>
+1-1.5 мл/л<br>Условие: Если не было реакции в B/C                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>KF-IRON</strong></td>
+                    <td>—</td>
+                    <td>
+<br>Условие: ТОЛЬКО при подтверждённом Fe-хлорозе (молодые листья жёлтые, прожилки зелёные)<br>Не для: Сансевиерия, замиокулькас, дионея                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>KF-MACROBOOST</strong></td>
+                    <td>— · target: Шлюмбергера (главный, осень-зима), сенполия в цветении, антуриум, спатифиллум, бегония</td>
+                    <td>
+<br>Отдельно от ротации — по растению в фазе цветения                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>KF-GUARD</strong></td>
+                    <td>—</td>
+                    <td>
+<br>Опрыскивание при первых признаках вредителей или карантин нового растения<br>⚠ НЕ добавлять в полив, только опрыскивание<br>🌡 Не применять при t выше 24°C                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>KF-10</strong></td>
+                    <td>—</td>
+                    <td>
+<br>Можно использовать как замену Bio Gel в ротации, если хочется варьировать<br>Вердикт: Низкий приоритет — дублирует flower_bio_gel                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>KF GARDEN & BALCONY</strong></td>
+                    <td>—</td>
+                    <td>
+<br>Лежит для будущих балконных горшков на улице<br>Вердикт: Не для комнатных в RO-протоколе                    </td>
+                </tr>
+        </tbody>
+    </table>
+
+    <h2 id="events">⚡ Событийные оверлеи (вне ротации)</h2>
+    <div class="events-grid">
+        <div class="event-card">
+            <h4>Repotting</h4>
+            <p><strong>При пересадке растения</strong></p>
+                <p>💊 Препараты:</p>
+                <ul style="font-size:0.82rem;padding-left:20px;">
+<li>dynomyco_spark — заселение микоризы (одноразово)</li><li>kf_serfico — стимуляция корней в первые поливы (после ввода)</li>                </ul>
+<p style="white-space:pre-line;font-size:0.82rem;color:#555;">Полив 1 после пересадки: RO + CalMag + DYNOMYCO 1 ч.л./4 л
+(без удобрений, без MultiZyme)
+Полив 2-4: обычная ротация + KF-SERFICO для поддержки корней
+</p>                <p style="color:#991b1b;font-size:0.8rem;">⚠ Конфликты:</p>
+                <ul style="font-size:0.78rem;color:#991b1b;padding-left:20px;">
+<li>НЕ совмещать DYNOMYCO с фосфорными удобрениями (flower_orchids, NPK 20-20-20 в высокой дозе)</li><li>В полив с DYNOMYCO — БЕЗ MultiZyme (энзимы могут вредить гифам)</li>                </ul>
+        </div>
+        <div class="event-card">
+            <h4>Propagation</h4>
+            <p><strong>Черенкование</strong></p>
+                <p>💊 Препараты:</p>
+                <ul style="font-size:0.82rem;padding-left:20px;">
+<li>rootech_cloning_gel на срез черенка</li><li>kf_serfico в воду для опрыскивания молодого растения</li>                </ul>
+        </div>
+        <div class="event-card">
+            <h4>Pest Treatment</h4>
+            <p><strong>При обнаружении вредителей или карантин нового растения</strong></p>
+<p>💊 kf_guard 10-20 мл/л опрыскивание (НЕ в полив)</p><p>📅 2 раза с интервалом 5 дней при первичной обработке, далее раз в месяц профилактически</p><p>🌡 Только при t < 24°C, утро/вечер</p>                <p style="color:#991b1b;font-size:0.8rem;">⚠ Не для:
+dionaea (хищное), nephrolepis (масла повреждают), phalaenopsis в цветении (на цветы — не наносить), saintpaulia (опушённые листья), schlumbergera в цветении                </p>
+        </div>
+        <div class="event-card">
+            <h4>Fe Chlorosis</h4>
+            <p><strong>Подтверждённый дефицит железа (молодые листья жёлтые, прожилки зелёные)</strong></p>
+<p>💊 kf_iron 2-3 мл/л в полив</p><p>🔍 Проверить что это именно Fe (молодые листья), а не N (общая желтизна снизу) или Mg (старые листья межжилковая)</p>                <p style="color:#991b1b;font-size:0.8rem;">⚠ Не для:
+Сансевиерия, замиокулькас, дионея, здоровые растения                </p>
+        </div>
+        <div class="event-card">
+            <h4>Flowering Phase</h4>
+            <p><strong>Цветение растения (бегония, сенполия, антуриум, спатифиллум, гузмания, шлюмбергера, фаленопсис)</strong></p>
+<p>🔄 flower_universal → flower_flowering 0.5 мл/л</p><p>K+: kf_macroboost 5-10 мл/л  · Раз в 2-4 недели в активную фазу цветения</p>        </div>
+    </div>
+
+    <h2 id="conflicts">🚫 Правила несовместимости</h2>
+    <div class="conflict-card">
+        <h4>Dynomyco With Phosphorus</h4>
+        <p><strong>Причина:</strong> Высокий фосфор разрушает микоризу</p>
+            <p><strong>Избегать:</strong></p>
+            <ul style="font-size:0.82rem;padding-left:20px;">
+<li>DYNOMYCO + flower_orchids (0-17-7)</li><li>DYNOMYCO + NPK 20-20-20 в высокой дозе</li>            </ul>
+<p class="conflict-action">✓ DYNOMYCO давать в отдельный полив без фосфорных удобрений</p>    </div>
+    <div class="conflict-card">
+        <h4>Multizyme With Dynomyco</h4>
+        <p><strong>Причина:</strong> Энзимы могут переваривать гифы микоризы</p>
+<p class="conflict-action">✓ При поливе DYNOMYCO исключить MultiZyme</p>    </div>
+    <div class="conflict-card">
+        <h4>Silicon With Stable Ph</h4>
+        <p><strong>Причина:</strong> Силикат калия (концентрат pH 11-12) резко повышает pH раствора</p>
+<p class="conflict-action">✓ Использовать точечно, измерять pH после добавления, не каждый полив</p><p style="color:#991b1b;">Не в канистре: Канистра A (буфер слишком мал для коррекции)</p>    </div>
+    <div class="conflict-card">
+        <h4>Kf Macroboost Decorative</h4>
+        <p><strong>Причина:</strong> NPK 1.3-0-4.5 — нет фосфора, мало азота, для зелёной массы бесполезно</p>
+<p class="conflict-action">✓ Только цветущим в фазе цветения, не в общую ротацию</p>    </div>
+    <div class="conflict-card">
+        <h4>Kf Iron Succulents</h4>
+        <p><strong>Причина:</strong> Избыток железа токсичен</p>
+<p><strong>Избегать:</strong> С, а, н, с, е, в, и, е, р, и, я, ,,  , з, а, м, и, о, к, у, л, ь, к, а, с</p>    </div>
+    <div class="conflict-card">
+        <h4>Kf Guard In Water</h4>
+        <p><strong>Причина:</strong> KF-GUARD — это инсектицид (40% масла нима), не удобрение</p>
+<p class="conflict-action">✓ Только опрыскивание, не в канистру</p>    </div>
+
+    <h2>📊 Оценка эффекта при вводе нового препарата</h2>
+    <div class="events-grid">
+        <div class="event-card" style="border-left:3px solid #10b981;">
+            <h4 style="color:#065f46;">✓ Признаки успеха (через 3-4 замеса)</h4>
+            <ul style="font-size:0.83rem;padding-left:20px;">
+<li>Новый прирост листьев активнее</li><li>Лучше тургор</li><li>Темнее зелёный цвет (не путать с переизбытком N)</li><li>Меньше реакции на стресс (жара, переезд)</li>            </ul>
+        </div>
+        <div class="event-card" style="border-left:3px solid #ef4444;">
+            <h4 style="color:#991b1b;">✗ Стоп немедленно</h4>
+            <ul style="font-size:0.83rem;padding-left:20px;">
+<li>Желтизна или некроз новых листьев</li><li>Опадание молодых листьев</li><li>Изменение текстуры субстрата</li><li>Резкий рост PPM в субстрате (белый налёт)</li>            </ul>
+        </div>
+        <div class="event-card" style="border-left:3px solid #6b7280;">
+            <h4 style="color:#374151;">— Без изменений</h4>
+            <p style="font-size:0.83rem;">Возможно эффект минимален на стабильном RO. Можно прекратить или оставить как страховку.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌱 ריבוי צמחים - Plants Care</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher { right: auto; left: 10px; }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../propagation.html" >RU</a>
+    <a href="../en/propagation.html" >EN</a>
+    <a href="../he/propagation.html" class="active">HE</a>
+</div>
+    <div class="container">
+        <a href="index.html" class="nav-back">→ ראשי</a>
+        <header>
+            <h1>🌱 ריבוי צמחים</h1>
+            <p class="subtitle">שיטות והוראות לריבוי</p>
+        </header>
+
+        <div class="best-time">
+            <h3>🌸 הזמן הטוב ביותר לריבוי: אביב — תחילת קיץ</h3>
+        </div>
+
+        <div class="method-tabs">
+            <button class="method-tab" data-method="water">💧 במים</button>
+            <button class="method-tab" data-method="soil">🌱 באדמה</button>
+            <button class="method-tab" data-method="division">✂️ חלוקה</button>
+            <button class="method-tab" data-method="airlayer">🌿 הברכה אווירית</button>
+            <button class="method-tab" data-method="offsets">👶 ייחורים</button>
+        </div>
+
+        <div class="method-section" data-method="water">
+            <div class="method-header">
+                <h2><span>💧</span> 💧 במים</h2>
+                <div class="description">השיטה הפשוטה והחזותית ביותר. מתאים לרוב המטפסים והארואידים.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 הוראות שלב אחר שלב</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">חתכו ייחור עם 1-2 מפרקים (מהם צומחים העלים).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">הסירו עלים תחתונים כדי שלא ירקבו במים.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">הניחו במים. הוסיפו חתיכת פחם עץ.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">המתנו לשורשים של 2-5 ס"מ, ואז שתלו במצע קל.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 מתאים לצמחים</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/monstera_deliciosa.jpg" alt="מונסטרה דליסיוזה">
+                        <div class="name">מונסטרה דליסיוזה</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/epipremnum.jpg" alt="אפיפרמנום / סקינדפסוס">
+                        <div class="name">אפיפרמנום / סקינדפסוס</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/philodendron_imperial.jpg" alt="פילודנדרון רחב-עלים">
+                        <div class="name">פילודנדרון רחב-עלים</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/aglaonema.jpeg" alt="אגלונמה מגוונת">
+                        <div class="name">אגלונמה מגוונת</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 טיפים מהמומחה</h3>
+                <ul>
+                    <li>השתמשו בכלי כהה — שורשים אוהבים חושך.</li>
+                    <li>החליפו מים פעם בשבוע.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="soil">
+            <div class="method-header">
+                <h2><span>🌱</span> 🌱 באדמה</h2>
+                <div class="description">לצמחים שאינם סובלים מים היטב או בעלי שורשים עדינים.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 הוראות שלב אחר שלב</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">הכינו את הייחור ותנו לחתך להתייבש 30-60 דקות.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">טבלו את החתך בהורמון השרשה (אופציונלי).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">שתלו בתערובת קלה (כבול + פרליט 50/50).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">כסו בשקית או צנצנת ליצירת חממה.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 מתאים לצמחים</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/begonia_maculata.jpg" alt="ביגוניה מקולאטה">
+                        <div class="name">ביגוניה מקולאטה</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/dracaena_marginata.jpg" alt="דרצנה מרגינטה">
+                        <div class="name">דרצנה מרגינטה</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 טיפים מהמומחה</h3>
+                <ul>
+                    <li>אווררו את החממה בכל יום.</li>
+                    <li>אל תציפו — המצע צריך להיות לח מעט בלבד.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="division">
+            <div class="method-header">
+                <h2><span>✂️</span> ✂️ חלוקה</h2>
+                <div class="description">לצמחים שיחיים היוצרים שושנות או בעלי קני שורש.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 הוראות שלב אחר שלב</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">הוציאו את הצמח מהעציץ ונקו את השורשים מאדמה.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">חלקו בזהירות את השיח בידיים או בסכין חדה.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">לכל חלק חייבים להיות שורשים משלו ונקודת צמיחה.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">שתלו בעציצים נפרדים.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 מתאים לצמחים</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/spathiphyllum.jpg" alt="ספטיפילום">
+                        <div class="name">ספטיפילום</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/calathea_lancifolia.jpg" alt="קלתאה לנסיפוליה">
+                        <div class="name">קלתאה לנסיפוליה</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/anthurium.jpg" alt="אנטוריום">
+                        <div class="name">אנטוריום</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/sansevieria.jpg" alt="סנסיווריה (לשון החותנת)">
+                        <div class="name">סנסיווריה (לשון החותנת)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 טיפים מהמומחה</h3>
+                <ul>
+                    <li>פזרו פחם או קינמון על החתכים.</li>
+                    <li>שמרו בצל בשבוע הראשון.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="airlayer">
+            <div class="method-header">
+                <h2><span>🌿</span> 🌿 הברכה אווירית</h2>
+                <div class="description">לצמחים דמויי עץ גדולים (פיקוסים, מונסטרה), לקבלת צמח גדול מיד.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 הוראות שלב אחר שלב</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">עשו חתך בגבעול או הסירו טבעת של קליפת עץ.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">עטפו בטחב ספגנום לח.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">קבעו מעל ניילון נצמד כדי שהטחב לא יתייבש.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">כשהשורשים ימלאו את הניילון, חתכו ושתלו.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 מתאים לצמחים</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/monstera_deliciosa.jpg" alt="מונסטרה דליסיוזה">
+                        <div class="name">מונסטרה דליסיוזה</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/philodendron_selloum.jpg" alt="פילודנדרון סלו">
+                        <div class="name">פילודנדרון סלו</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 טיפים מהמומחה</h3>
+                <ul>
+                    <li>השתמשו בטחב ספוג בתמיסת מעורר השרשה.</li>
+                    <li>השיטה מאפשרת לשמר את המגוון (וריאגציה).</li>
+                </ul>
+            </div>
+        </div>
+        <div class="method-section" data-method="offsets">
+            <div class="method-header">
+                <h2><span>👶</span> 👶 ייחורים</h2>
+                <div class="description">לצמחים שמוציאים בעצמם "תינוקות" על שלוחות או בבסיס.</div>
+            </div>
+
+            <div class="steps-container">
+                <h3>📋 הוראות שלב אחר שלב</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">המתנו עד שלתינוק יופיעו התחלות שורשים משלו.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">חתכו את התינוק מצמח האם.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">שתלו בעציץ קטן עם מצע קל.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">שמרו על לחות גבוהה בתקופה הראשונה.</div>
+                </div>
+            </div>
+
+            <div class="plants-section">
+                <h3>🌿 מתאים לצמחים</h3>
+                <div class="plants-mini-grid">
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/chlorophytum.jpg" alt="כלורופיטום">
+                        <div class="name">כלורופיטום</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/sansevieria.jpg" alt="סנסיווריה (לשון החותנת)">
+                        <div class="name">סנסיווריה (לשון החותנת)</div>
+                    </div>
+                    <div class="plant-mini-card">
+                        <img src="../IMAGES/guzmania.jpg" alt="גוזמניה">
+                        <div class="name">גוזמניה</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <h3>💡 טיפים מהמומחה</h3>
+                <ul>
+                    <li>אל תפרידו תינוקות קטנים מדי.</li>
+                    <li>כלורופיטום ניתן להשריש ישירות בלי לנתק מהשלוחה.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        header { text-align: center; }
+        .best-time { background: #2d6a4f; color: white; padding: 14px 20px; border-radius: 4px; text-align: center; margin-bottom: 30px; }
+        .method-tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        .method-tab { padding: 7px 16px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+        .method-tab.active { background: #2d6a4f; color: #fff; border-color: #2d6a4f; }
+        .method-section { display: none; margin-bottom: 40px; }
+        .method-section.active { display: block; }
+        .method-header { background: #333; color: white; padding: 16px; border-radius: 4px; margin-bottom: 25px; }
+        .method-header h2 { font-size: 1.15rem; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+        .steps-container { background: #f5f5f0; border-radius: 4px; padding: 25px; margin-bottom: 25px; }
+        .step { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #e2e8f0; }
+        .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .step-number { width: 28px; height: 28px; background: #2d6a4f; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .plants-mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 15px; }
+        .plant-mini-card { background: white; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; text-align: center; }
+        .plant-mini-card img { width: 100%; height: 80px; object-fit: cover; }
+        .plant-mini-card .name { padding: 8px; font-size: 0.8rem; font-weight: 600; }
+        .tips-box { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 20px; margin-top: 30px; border-radius: 4px; }
+        .tips-box h3 { color: #2c5282; margin-bottom: 15px; }
+        .tips-box ul { list-style: none; }
+        .tips-box li { margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
+        .tips-box li::before { content: "💡"; }
+    </style>
+<script>
+    const tabs = document.querySelectorAll('.method-tab');
+    const sections = document.querySelectorAll('.method-section');
+    function showMethod(method) {
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.method === method));
+        sections.forEach(s => s.classList.toggle('active', s.dataset.method === method));
+    }
+    tabs.forEach(t => t.addEventListener('click', () => showMethod(t.dataset.method)));
+    showMethod('water');
+</script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,1597 @@
+{
+  "_description": "Per-plant diagnostics: symptom → cause → action. Plus fun facts.",
+  "common_symptoms": {
+    "yellow_leaves": {
+      "description": "Жёлтые листья",
+      "most_common_cause": "overwatering",
+      "affected_systems": [
+        "watering"
+      ],
+      "default_actions": [
+        "Проверить влажность грунта",
+        "Сократить полив",
+        "Проверить дренаж"
+      ]
+    },
+    "brown_tips": {
+      "description": "Коричневые кончики листьев",
+      "most_common_cause": "hard_water",
+      "affected_systems": [
+        "watering"
+      ],
+      "default_actions": [
+        "Проверить TDS воды",
+        "Использовать RO воду по группе растения"
+      ]
+    },
+    "brown_edges": {
+      "description": "Коричневые края листьев",
+      "most_common_cause": "low_humidity",
+      "affected_systems": [
+        "environment"
+      ],
+      "default_actions": [
+        "Повысить влажность (увлажнитель / поддон с керамзитом)"
+      ]
+    },
+    "leaf_drop": {
+      "description": "Опадание листьев",
+      "most_common_cause": "stress",
+      "affected_systems": [
+        "environment"
+      ],
+      "default_actions": [
+        "Не перемещать растение",
+        "Проверить температуру и сквозняки"
+      ]
+    },
+    "pale_leaves": {
+      "description": "Бледные / тусклые листья",
+      "most_common_cause": "low_light",
+      "affected_systems": [
+        "lighting"
+      ],
+      "default_actions": [
+        "Переставить ближе к свету",
+        "Проверить лк-метром"
+      ]
+    },
+    "soft_stem": {
+      "description": "Мягкий ствол / стебель",
+      "most_common_cause": "root_rot",
+      "affected_systems": [
+        "watering",
+        "soil"
+      ],
+      "severity": "critical",
+      "default_actions": [
+        "Срочно извлечь из горшка",
+        "Проверить корни",
+        "Обрезать гниль, пересадить в свежий субстрат"
+      ]
+    },
+    "spider_mites": {
+      "description": "Паутинный клещ",
+      "most_common_cause": "low_humidity",
+      "affected_systems": [
+        "environment",
+        "pests"
+      ],
+      "default_actions": [
+        "Обработать акарицидом",
+        "Повысить влажность",
+        "Регулярно осматривать"
+      ]
+    },
+    "no_blooming": {
+      "description": "Не цветёт",
+      "most_common_cause": "low_light",
+      "affected_systems": [
+        "lighting",
+        "feeding"
+      ],
+      "default_actions": [
+        "Увеличить освещённость",
+        "Проверить подкормку для цветения"
+      ]
+    },
+    "sunburn": {
+      "description": "Коричневые пятна (ожог)",
+      "most_common_cause": "direct_sun",
+      "affected_systems": [
+        "lighting"
+      ],
+      "default_actions": [
+        "Убрать от прямого солнца",
+        "Притенить"
+      ]
+    }
+  },
+  "plants": {
+    "monstera_deliciosa": {
+      "plant_name": "Монстера делициоза",
+      "facts": [
+        "Дырки в листьях помогают выдержать тропические ливни",
+        "В природе плоды съедобны и пахнут ананасом",
+        "Может вырасти до 20 метров в джунглях"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "yellow_leaves",
+          "causes": [
+            "overwatering",
+            "low_light"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering",
+            "lighting"
+          ],
+          "actions": [
+            "Проверить влажность грунта",
+            "Переставить ближе к свету"
+          ]
+        },
+        {
+          "symptom": "no_fenestrations",
+          "description": "Нет дырок в листьях",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Увеличить освещённость до 8000+ лк"
+          ]
+        },
+        {
+          "symptom": "sunburn",
+          "causes": [
+            "direct_sun"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Убрать от прямого солнца"
+          ]
+        }
+      ]
+    },
+    "monstera_adansonii": {
+      "plant_name": "Монстера адансони",
+      "facts": [
+        "Называют 'швейцарский сыр' за форму отверстий",
+        "Быстро растёт — до 30 см в месяц летом",
+        "Отлично смотрится в подвесных кашпо"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "yellow_leaves",
+          "description": "Желтеют нижние листья",
+          "causes": [
+            "natural_aging"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Обрезать старые листья у основания"
+          ]
+        },
+        {
+          "symptom": "no_fenestrations",
+          "description": "Мелкие листья без дырок",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Увеличить освещённость"
+          ]
+        },
+        {
+          "symptom": "brown_edges",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Повысить влажность до 60%+"
+          ]
+        }
+      ]
+    },
+    "philodendron": {
+      "plant_name": "Филодендрон крупнолистный",
+      "facts": [
+        "Название означает 'любящий деревья' (греч.)",
+        "Более 400 видов в семействе",
+        "Очищает воздух от формальдегида"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "leggy_growth",
+          "description": "Вытянутые стебли",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Переставить ближе к свету"
+          ]
+        },
+        {
+          "symptom": "yellow_leaves",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Сократить полив",
+            "Проверить дренаж"
+          ]
+        },
+        {
+          "symptom": "small_leaves",
+          "description": "Мелкие листья",
+          "causes": [
+            "nutrient_deficiency"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "feeding"
+          ],
+          "actions": [
+            "Подкормить по графику feeding_group"
+          ]
+        }
+      ]
+    },
+    "philodendron_selloum": {
+      "plant_name": "Филодендрон Селлоу",
+      "facts": [
+        "В природе вырастает до 3-5 метров в ширину",
+        "Листья глубоко рассечённые — до 40-50 см длиной",
+        "Переклассифицирован в род Thaumatophyllum"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "yellow_leaves",
+          "description": "Много жёлтых листьев",
+          "causes": [
+            "overwatering",
+            "root_bound"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering",
+            "soil"
+          ],
+          "actions": [
+            "Проверить корни — не пора ли пересаживать",
+            "Сократить полив"
+          ]
+        },
+        {
+          "symptom": "wilting",
+          "description": "Листья поникли",
+          "causes": [
+            "underwatering",
+            "low_light"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering",
+            "lighting"
+          ],
+          "actions": [
+            "Полить",
+            "Проверить освещённость"
+          ]
+        },
+        {
+          "symptom": "brown_edges",
+          "causes": [
+            "low_humidity",
+            "sunburn"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment",
+            "lighting"
+          ],
+          "actions": [
+            "Повысить влажность",
+            "Убрать от прямого солнца"
+          ]
+        }
+      ]
+    },
+    "philodendron_xanadu": {
+      "plant_name": "Филодендрон Ксанаду",
+      "facts": [
+        "Компактный древовидный филодендрон — не лиана",
+        "Переклассифицирован в род Thaumatophyllum",
+        "Хорошо кустится при ярком рассеянном свете"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "yellow_leaves",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Просушить верхний слой на 2-3 см",
+            "Проверить дренаж"
+          ]
+        },
+        {
+          "symptom": "leggy_growth",
+          "description": "Вытянутые черешки",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Увеличить освещённость до 8000 лк"
+          ]
+        }
+      ]
+    },
+    "epipremnum": {
+      "plant_name": "Эпипремнум / сциндапсус",
+      "facts": [
+        "Одно из самых неубиваемых растений",
+        "Может расти в воде годами",
+        "NASA включило в список очистителей воздуха"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "variegation_loss",
+          "description": "Потеря пестроты",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Переставить ближе к свету"
+          ]
+        },
+        {
+          "symptom": "soft_stem",
+          "description": "Гниль стебля",
+          "causes": [
+            "overwatering",
+            "cold"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering",
+            "environment"
+          ],
+          "actions": [
+            "Срочно просушить",
+            "Обрезать гнилые части",
+            "Проверить температуру (не ниже 15°C)"
+          ]
+        },
+        {
+          "symptom": "sunburn",
+          "causes": [
+            "direct_sun"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Убрать от прямого солнца"
+          ]
+        }
+      ]
+    },
+    "aglaonema": {
+      "plant_name": "Аглаонема пестролистная",
+      "facts": [
+        "Считается символом удачи в Азии",
+        "Выживает при минимальном освещении",
+        "Существует более 100 сортов"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "curling_leaves",
+          "description": "Скручиваются листья",
+          "causes": [
+            "cold",
+            "draft"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Убрать от сквозняков",
+            "Проверить температуру (не ниже 16°C)"
+          ]
+        },
+        {
+          "symptom": "pale_leaves",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Переставить ближе к свету"
+          ]
+        },
+        {
+          "symptom": "brown_tips",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Повысить влажность воздуха"
+          ]
+        }
+      ]
+    },
+    "spathiphyllum": {
+      "plant_name": "Спатифиллум",
+      "facts": [
+        "'Женское счастье' — популярное название",
+        "Цветёт белыми 'парусами' круглый год",
+        "Сигнализирует о жажде поникшими листьями"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "no_blooming",
+          "causes": [
+            "low_light",
+            "nutrient_deficiency"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting",
+            "feeding"
+          ],
+          "actions": [
+            "Увеличить освещённость",
+            "Подкормить удобрением для цветения"
+          ]
+        },
+        {
+          "symptom": "brown_tips",
+          "causes": [
+            "hard_water"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Использовать только RO воду (группа A, 80 ppm)"
+          ]
+        },
+        {
+          "symptom": "yellow_leaves",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Сократить полив",
+            "Проверить дренаж"
+          ]
+        }
+      ]
+    },
+    "calathea_lancifolia": {
+      "plant_name": "Калатея лансифолия",
+      "facts": [
+        "Листья складываются на ночь как в молитве",
+        "Узоры на листьях уникальны как отпечатки",
+        "Родом из бразильских тропиков"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "brown_edges",
+          "causes": [
+            "low_humidity",
+            "hard_water"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "watering"
+          ],
+          "actions": [
+            "Повысить влажность до 60%+",
+            "Использовать только RO воду (группа A, 80 ppm)"
+          ]
+        },
+        {
+          "symptom": "curling_leaves",
+          "description": "Скручиваются листья",
+          "causes": [
+            "underwatering"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Полить",
+            "Проверить влажность грунта"
+          ]
+        },
+        {
+          "symptom": "pale_pattern",
+          "description": "Бледнеют узоры",
+          "causes": [
+            "too_much_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Убрать от яркого света"
+          ]
+        }
+      ]
+    },
+    "calathea_ornata": {
+      "plant_name": "Калатея орната",
+      "facts": [
+        "Розовые полоски с возрастом белеют",
+        "Листья двигаются за солнцем в течение дня",
+        "Одна из самых красивых калатей"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "brown_edges",
+          "causes": [
+            "hard_water"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Обязательно RO вода (группа A, 80 ppm)!"
+          ]
+        },
+        {
+          "symptom": "pale_leaves",
+          "description": "Тусклые листья",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Повысить влажность до 60%+"
+          ]
+        },
+        {
+          "symptom": "spider_mites",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "pests"
+          ],
+          "actions": [
+            "Обработать акарицидом",
+            "Повысить влажность"
+          ]
+        }
+      ]
+    },
+    "alocasia_amazonica": {
+      "plant_name": "Алоказия (Polly / Amazonica)",
+      "facts": [
+        "'Африканская маска' — народное название",
+        "Может уйти в спячку зимой и сбросить листья",
+        "Клубень выживает даже без листьев"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "leaf_drop",
+          "description": "Опали все листья",
+          "causes": [
+            "dormancy"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "НЕ выбрасывать! Клубень жив",
+            "Сократить полив до минимума",
+            "Ждать новых ростков"
+          ]
+        },
+        {
+          "symptom": "yellow_spots",
+          "description": "Жёлтые пятна",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Проверить влажность грунта",
+            "Просушить"
+          ]
+        },
+        {
+          "symptom": "spider_mites",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "pests"
+          ],
+          "actions": [
+            "Обработать акарицидом",
+            "Повысить влажность"
+          ]
+        }
+      ]
+    },
+    "alocasia_frydek": {
+      "plant_name": "Алоказия Фрайдек",
+      "facts": [
+        "Бархатные стреловидные листья с белыми жилками",
+        "Родом из Филиппин",
+        "Имеет клубень — может пережить полную потерю листьев"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "leaf_drop",
+          "description": "Опали все листья",
+          "causes": [
+            "dormancy"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "НЕ выбрасывать! Клубень жив",
+            "Сократить полив до минимума"
+          ]
+        },
+        {
+          "symptom": "yellow_spots",
+          "description": "Жёлтые пятна",
+          "causes": [
+            "overwatering",
+            "dense_soil"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "watering",
+            "soil"
+          ],
+          "actions": [
+            "Проверить грунт — должен быть mix_13 (клубневые ароидные)",
+            "Просушить"
+          ]
+        },
+        {
+          "symptom": "spider_mites",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "pests"
+          ],
+          "actions": [
+            "Главный враг бархатных листьев!",
+            "Обработать акарицидом",
+            "Повысить влажность"
+          ]
+        }
+      ]
+    },
+    "alocasia_regal_shields": {
+      "plant_name": "Алоказия Регал Шилдс",
+      "facts": [
+        "Гибрид Alocasia odora × Alocasia reginula",
+        "Крупные тёмно-зелёные листья с бордовой изнанкой",
+        "Более выносливая, чем большинство алоказий"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "leaf_drop",
+          "description": "Опали листья",
+          "causes": [
+            "dormancy"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "НЕ выбрасывать! Клубень жив",
+            "Сократить полив до минимума",
+            "Ждать новых ростков"
+          ]
+        },
+        {
+          "symptom": "yellow_spots",
+          "description": "Жёлтые пятна",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Проверить влажность грунта",
+            "Просушить"
+          ]
+        },
+        {
+          "symptom": "spider_mites",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "pests"
+          ],
+          "actions": [
+            "Обработать акарицидом",
+            "Повысить влажность"
+          ]
+        }
+      ]
+    },
+    "anthurium_andraeanum": {
+      "plant_name": "Антуриум",
+      "facts": [
+        "'Цветок' — это на самом деле лист (покрывало)",
+        "Цветёт почти круглый год",
+        "Символ гостеприимства на Гавайях"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "no_blooming",
+          "causes": [
+            "low_light",
+            "cold"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting",
+            "environment"
+          ],
+          "actions": [
+            "Увеличить освещённость",
+            "Проверить температуру (оптимально 20-25°C)"
+          ]
+        },
+        {
+          "symptom": "green_flowers",
+          "description": "Зелёные цветы",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Увеличить освещённость"
+          ]
+        },
+        {
+          "symptom": "brown_spots",
+          "description": "Коричневые пятна",
+          "causes": [
+            "bacterial_infection"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Изолировать растение",
+            "Обрезать поражённые листья",
+            "Обработать фунгицидом"
+          ]
+        }
+      ]
+    },
+    "anthurium_clarinervium": {
+      "plant_name": "Антуриум кларинервиум",
+      "facts": [
+        "Бархатные листья с контрастными белыми жилками",
+        "Растёт на скалах в Мексике (литофит)",
+        "Имеет толстый клубень для запаса влаги"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "yellow_leaves",
+          "causes": [
+            "overwatering",
+            "dense_soil"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "watering",
+            "soil"
+          ],
+          "actions": [
+            "Проверить грунт — должен быть mix_12 (бархатные антуриумы)",
+            "Просушить верхний слой"
+          ]
+        },
+        {
+          "symptom": "brown_edges",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Повысить влажность до 60-80%"
+          ]
+        },
+        {
+          "symptom": "tuber_rot",
+          "description": "Гниль клубня",
+          "causes": [
+            "overwatering",
+            "dense_soil"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering",
+            "soil"
+          ],
+          "actions": [
+            "Срочно извлечь из горшка",
+            "Обрезать гниль",
+            "Пересадить в mix_12 с хорошим дренажом"
+          ]
+        }
+      ]
+    },
+    "guzmania": {
+      "plant_name": "Гузмания",
+      "facts": [
+        "Цветёт один раз в жизни, затем даёт деток",
+        "Воду наливают в розетку, не в грунт",
+        "Относится к семейству ананасовых"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "mother_dying",
+          "description": "Материнское растение умирает",
+          "causes": [
+            "natural_lifecycle"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Норма после цветения!",
+            "Дождаться деток",
+            "Отделить деток когда вырастут до 1/3 размера мамы"
+          ]
+        },
+        {
+          "symptom": "rosette_rot",
+          "description": "Гниёт розетка",
+          "causes": [
+            "cold_water",
+            "cold"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering",
+            "environment"
+          ],
+          "actions": [
+            "Слить воду из розетки",
+            "Проверить температуру (не ниже 18°C)"
+          ]
+        },
+        {
+          "symptom": "pale_leaves",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Увеличить освещённость"
+          ]
+        }
+      ]
+    },
+    "nephrolepis": {
+      "plant_name": "Папоротник (Нефролепис)",
+      "facts": [
+        "Один из древнейших видов растений (300 млн лет)",
+        "Идеальный очиститель воздуха",
+        "Любит ванную комнату с окном"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "leaf_shedding",
+          "description": "Осыпаются листочки",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Сухой воздух — главная причина!",
+            "Повысить влажность до 60%+",
+            "Регулярно опрыскивать"
+          ]
+        },
+        {
+          "symptom": "yellow_fronds",
+          "description": "Жёлтые вайи",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Сократить полив",
+            "Проверить дренаж"
+          ]
+        },
+        {
+          "symptom": "brown_spores",
+          "description": "Коричневые споры снизу листа",
+          "causes": [
+            "natural"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Это норма! Споры — репродуктивные органы"
+          ]
+        }
+      ]
+    },
+    "phalaenopsis": {
+      "plant_name": "Орхидея фаленопсис",
+      "facts": [
+        "Может цвести 3-6 месяцев подряд",
+        "Корни фотосинтезируют — не закапывайте!",
+        "В природе растёт на деревьях, не в земле"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "no_blooming",
+          "causes": [
+            "no_temperature_drop"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Обеспечить перепад дневной/ночной температуры (5-7°C)",
+            "Сократить полив на 2-3 недели"
+          ]
+        },
+        {
+          "symptom": "yellow_lower_leaves",
+          "description": "Жёлтые листья снизу",
+          "causes": [
+            "natural_aging"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Норма — 1-2 листа в год"
+          ]
+        },
+        {
+          "symptom": "root_rot",
+          "description": "Гнилые корни",
+          "causes": [
+            "overwatering",
+            "dense_substrate"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering",
+            "soil"
+          ],
+          "actions": [
+            "Извлечь из горшка",
+            "Обрезать мягкие/коричневые корни",
+            "Пересадить в свежую кору (mix_9)"
+          ]
+        }
+      ]
+    },
+    "dracaena_marginata": {
+      "plant_name": "Драцена маргината",
+      "facts": [
+        "'Драконово дерево' — из-за красного сока",
+        "Живёт десятилетиями",
+        "Очищает воздух от бензола и ксилола"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "brown_tips",
+          "causes": [
+            "hard_water_fluoride"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Чувствительна к фтору!",
+            "Использовать RO воду (группа C, 150 ppm)"
+          ]
+        },
+        {
+          "symptom": "lower_leaf_drop",
+          "description": "Опадают нижние листья",
+          "causes": [
+            "natural_aging"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Норма с возрастом"
+          ]
+        },
+        {
+          "symptom": "soft_stem",
+          "causes": [
+            "root_rot"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Срочно проверить корни",
+            "Просушить или пересадить"
+          ]
+        }
+      ]
+    },
+    "dracaena_fragrans": {
+      "plant_name": "Драцена фрагранс / деременсис",
+      "facts": [
+        "Цветёт очень редко, но аромат сильный",
+        "Может вырасти до 2 метров дома",
+        "Одна из лучших для офисов"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "brown_spots",
+          "description": "Коричневые пятна",
+          "causes": [
+            "hard_water_fluoride"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Избыток фтора в воде!",
+            "Использовать RO воду (группа C, 150 ppm)"
+          ]
+        },
+        {
+          "symptom": "pale_leaves",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Переставить ближе к свету"
+          ]
+        },
+        {
+          "symptom": "soft_stem",
+          "causes": [
+            "root_rot"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Срочно проверить корни!",
+            "Пересадить в свежий субстрат"
+          ]
+        }
+      ]
+    },
+    "croton": {
+      "plant_name": "Кротон",
+      "facts": [
+        "Чем больше света — тем ярче краски",
+        "Млечный сок ядовит — осторожно!",
+        "Не любит перемещений — сбрасывает листья"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "leaf_drop",
+          "causes": [
+            "relocation_stress"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Стресс от переезда!",
+            "Не перемещать повторно",
+            "Подождать адаптации 2-3 недели"
+          ]
+        },
+        {
+          "symptom": "pale_colors",
+          "description": "Тусклые цвета",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Увеличить освещённость (кротон любит яркий свет)"
+          ]
+        },
+        {
+          "symptom": "spider_mites",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "pests"
+          ],
+          "actions": [
+            "Обработать акарицидом",
+            "Повысить влажность"
+          ]
+        }
+      ]
+    },
+    "sansevieria": {
+      "plant_name": "Сансевиерия (Щучий хвост)",
+      "facts": [
+        "'Тёщин язык' — выживает при любом уходе",
+        "Выделяет кислород ночью (идеально для спальни)",
+        "Может месяц без полива"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "soft_leaves",
+          "description": "Мягкие листья",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Перелив! Срочно просушите",
+            "Извлечь и проверить корни",
+            "Не поливать минимум 2 недели"
+          ]
+        },
+        {
+          "symptom": "pale_leaves",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "info",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Можно добавить света (но выживет и так)"
+          ]
+        },
+        {
+          "symptom": "no_growth",
+          "description": "Не растёт",
+          "causes": [
+            "natural"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Нормально — сансевиерия очень медленная"
+          ]
+        }
+      ]
+    },
+    "begonia_maculata": {
+      "plant_name": "Бегония макулата",
+      "facts": [
+        "'Крыло ангела' — за форму листьев",
+        "Серебряные точки — естественный узор",
+        "Цветёт розовыми гроздьями"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "leaf_drop",
+          "causes": [
+            "draft",
+            "stress"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Убрать от сквозняков",
+            "Стабилизировать условия"
+          ]
+        },
+        {
+          "symptom": "powdery_mildew",
+          "description": "Мучнистая роса",
+          "causes": [
+            "poor_ventilation"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "pests"
+          ],
+          "actions": [
+            "Улучшить вентиляцию",
+            "Обработать фунгицидом",
+            "НЕ опрыскивать листья!"
+          ]
+        },
+        {
+          "symptom": "leggy_growth",
+          "description": "Вытягивается",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Прищипнуть для кустистости",
+            "Увеличить освещённость"
+          ]
+        }
+      ]
+    },
+    "chamaedorea": {
+      "plant_name": "Хамедорея / пальма комнатная",
+      "facts": [
+        "Одна из немногих пальм для дома",
+        "Очень теневынослива",
+        "Может цвести жёлтыми метёлками"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "brown_tips",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Повысить влажность",
+            "Можно устраивать душ"
+          ]
+        },
+        {
+          "symptom": "yellow_leaves",
+          "causes": [
+            "overwatering",
+            "cold"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering",
+            "environment"
+          ],
+          "actions": [
+            "Сократить полив",
+            "Проверить температуру"
+          ]
+        },
+        {
+          "symptom": "spider_mites",
+          "causes": [
+            "low_humidity"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment",
+            "pests"
+          ],
+          "actions": [
+            "Осматривать регулярно!",
+            "Обработать акарицидом"
+          ]
+        }
+      ]
+    },
+    "chlorophytum_comosum": {
+      "plant_name": "Хлорофитум",
+      "facts": [
+        "Чемпион по очистке воздуха (NASA)",
+        "Даёт 'деток' на длинных усах",
+        "Практически неубиваем"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "brown_tips",
+          "causes": [
+            "hard_water"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Использовать RO воду (группа B, 120 ppm)"
+          ]
+        },
+        {
+          "symptom": "pale_leaves",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "low",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Переставить ближе к свету"
+          ]
+        },
+        {
+          "symptom": "no_babies",
+          "description": "Нет деток",
+          "causes": [
+            "young_plant"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Растение ещё молодое — ждите"
+          ]
+        }
+      ]
+    },
+    "dionaea": {
+      "plant_name": "Дионея (Венерина мухоловка)",
+      "facts": [
+        "Ловушка срабатывает за 0.1 секунды",
+        "Переваривает насекомых 5-12 дней",
+        "ОБЯЗАТЕЛЬНА холодная зимовка 3-4 месяца!"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "black_traps",
+          "description": "Чернеют ловушки",
+          "causes": [
+            "post_feeding"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Норма после переваривания",
+            "Обрезать чёрные ловушки"
+          ]
+        },
+        {
+          "symptom": "death_after_1_2_years",
+          "description": "Погибает через 1-2 года",
+          "causes": [
+            "no_dormancy"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Не было зимовки!",
+            "Обеспечить 3-4 месяца при 2-10°C"
+          ]
+        },
+        {
+          "symptom": "weak_traps",
+          "description": "Слабые ловушки",
+          "causes": [
+            "low_light"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "lighting"
+          ],
+          "actions": [
+            "Нужно прямое солнце 12-14 часов"
+          ]
+        }
+      ]
+    },
+    "zamioculcas": {
+      "plant_name": "Замиокулькас (Долларовое дерево)",
+      "facts": [
+        "'Долларовое дерево' — считается символом богатства",
+        "Может месяцами обходиться без полива",
+        "Растёт очень медленно, но живёт десятилетиями"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "yellow_leaves",
+          "causes": [
+            "overwatering"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Перелив! Просушите грунт полностью",
+            "Не поливать минимум 2-3 недели"
+          ]
+        },
+        {
+          "symptom": "no_growth",
+          "description": "Не растёт",
+          "causes": [
+            "natural"
+          ],
+          "severity": "info",
+          "affected_systems": [],
+          "actions": [
+            "Нормально — ZZ очень медленный"
+          ]
+        },
+        {
+          "symptom": "soft_stem",
+          "causes": [
+            "root_rot"
+          ],
+          "severity": "critical",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Гниль от переувлажнения",
+            "Срочно проверить клубень"
+          ]
+        }
+      ]
+    },
+    "schlumbergera": {
+      "plant_name": "Шлюмбергера (Декабрист)",
+      "facts": [
+        "Цветёт зимой, за что получил имя 'Декабрист'",
+        "Эпифит из бразильских тропических лесов",
+        "Может жить более 30 лет и передаваться по наследству"
+      ],
+      "diagnostics": [
+        {
+          "symptom": "no_blooming",
+          "causes": [
+            "no_rest_period"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "lighting",
+            "environment"
+          ],
+          "actions": [
+            "Обеспечить период покоя осенью",
+            "Короткий световой день (8-10 часов)",
+            "Снизить температуру и полив"
+          ]
+        },
+        {
+          "symptom": "bud_drop",
+          "description": "Опадают бутоны",
+          "causes": [
+            "relocation",
+            "draft"
+          ],
+          "severity": "high",
+          "affected_systems": [
+            "environment"
+          ],
+          "actions": [
+            "Не переставляйте во время бутонизации!",
+            "Убрать от сквозняков"
+          ]
+        },
+        {
+          "symptom": "wilting_segments",
+          "description": "Вялые сегменты",
+          "causes": [
+            "overwatering",
+            "underwatering"
+          ],
+          "severity": "medium",
+          "affected_systems": [
+            "watering"
+          ],
+          "actions": [
+            "Проверить влажность грунта",
+            "При переливе — просушить",
+            "При недоливе — полить"
+          ]
+        }
+      ]
+    }
+  }
+}

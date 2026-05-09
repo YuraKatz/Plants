@@ -1,0 +1,156 @@
+{
+  "_description": "Feeding matrix, fertilizer products, and dosing rules.",
+  "feeding_matrix": {
+    "aroids": {
+      "growth": {
+        "flower_universal": "allowed",
+        "flower_flowering": "allowed (only for actively blooming plants)",
+        "ecogan_multicote": "restricted (only for stable mature plants)",
+        "atami_calmag": "base water additive in RO system; extra only if deficiency confirmed",
+        "dynomyco_spark": "allowed (transplant / rooting / early vegetative stage)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/2 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "restricted (reduce frequency)"
+      }
+    },
+    "aroids_variegated": {
+      "growth": {
+        "flower_universal": "restricted (1/4 dose) — снижаем N, иначе теряется вариегатность",
+        "flower_flowering": "restricted (1/4 dose, only when actively blooming) — N даже в цветении опасен",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "allowed (transplant / rooting only, not routine)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/4 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "forbidden"
+      }
+    },
+    "sensitive": {
+      "growth": {
+        "flower_universal": "restricted (1/4 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "allowed (transplant / rooting only, not routine)"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive in RO system",
+        "dynomyco_spark": "forbidden"
+      }
+    },
+    "orchids": {
+      "growth": {
+        "flower_universal": "restricted (very weak, vegetative only)",
+        "flower_flowering": "forbidden",
+        "flower_orchids": "allowed (only during blooming)",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (minimal, via base water only)",
+        "dynomyco_spark": "forbidden"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "flower_orchids": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "allowed (via base water only)",
+        "dynomyco_spark": "forbidden"
+      }
+    },
+    "carnivorous": {
+      "growth": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "forbidden",
+        "dynomyco_spark": "forbidden",
+        "note": "RO-only / keep TDS very low"
+      },
+      "slow": {
+        "flower_universal": "forbidden",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "forbidden",
+        "dynomyco_spark": "forbidden",
+        "note": "RO-only / keep TDS very low"
+      }
+    },
+    "general_houseplants": {
+      "growth": {
+        "flower_universal": "allowed",
+        "flower_flowering": "allowed (only for actively blooming plants)",
+        "ecogan_multicote": "restricted (only for stable mature plants)",
+        "atami_calmag": "base water additive if using RO",
+        "dynomyco_spark": "allowed (transplant / rooting / recovery)"
+      },
+      "slow": {
+        "flower_universal": "restricted (1/2 dose)",
+        "flower_flowering": "forbidden",
+        "ecogan_multicote": "forbidden",
+        "atami_calmag": "base water additive if using RO",
+        "dynomyco_spark": "forbidden"
+      }
+    }
+  },
+  "settings": {
+    "current_season": "growth"
+  },
+  "ppm_limits": {
+    "principle": "Удобрения увеличивают общий ppm раствора",
+    "rule": "Общий ppm (вода + удобрения) не должен превышать",
+    "limits": {
+      "group_a": {
+        "target_max": 110,
+        "absolute_max": 120
+      },
+      "group_b": {
+        "target_max": 160,
+        "absolute_max": 180
+      },
+      "group_c": {
+        "target_max": 200,
+        "absolute_max": 220
+      },
+      "group_v": {
+        "target_max": 130,
+        "absolute_max": 140
+      }
+    },
+    "integration": {
+      "calmag": "Входит в базовый ppm воды",
+      "fertilizers": "Добавляются поверх — увеличивают ppm",
+      "measure": "Всегда измерять итоговый ppm после добавления удобрений"
+    }
+  },
+  "default_feeding": {
+    "growth": {
+      "frequency": "1 раз в 2 недели",
+      "fertilizer": "flower_universal",
+      "dose": {
+        "group_a": "1/4 от инструкции",
+        "group_b": "1/2 от инструкции",
+        "group_c": "1/2 от инструкции"
+      }
+    },
+    "slow": {
+      "frequency": "0-1 раз в месяц",
+      "fertilizer": "минимально или не удобрять"
+    }
+  },
+  "stop_conditions": [
+    "Пересадка < 2 недель назад — не удобрять",
+    "Растение в стрессе — не удобрять",
+    "Признаки перелива — не удобрять",
+    "Не уверен — не удобрять"
+  ]
+}

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сад</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Plants Care">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+    <style>
+        /* === Common design system === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f0;
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 6px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e0;
+        }
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e0;
+        }
+        h1 { color: #1a1a1a; font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+        h2 { color: #1a1a1a; font-size: 1.15rem; font-weight: 600; margin: 24px 0 12px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+        a { color: #2d6a4f; }
+        .nav-back, .nav-home {
+            display: inline-block;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #2d6a4f;
+            font-size: 0.9rem;
+        }
+        .nav-back:hover, .nav-home:hover { text-decoration: underline; }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        #searchInput {
+            flex: 1;
+            min-width: 200px;
+            padding: 7px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        #searchInput:focus {
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 2px rgba(45,106,79,0.12);
+        }
+        .btn-print, .btn-parts {
+            padding: 7px 16px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-print:hover, .btn-parts:hover { background: #1b4332; }
+        .btn-parts.active { background: #1b4332; }
+        .no-results {
+            text-align: center;
+            padding: 32px;
+            color: #888;
+            font-size: 1rem;
+            display: none;
+        }
+        footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e0;
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; }
+            .controls, .nav-back, .nav-home, .lang-switcher { display: none; }
+        }
+
+        /* Lang switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.92);
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .lang-switcher { right: auto; left: 10px; }
+        .lang-switcher a {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .lang-switcher a:hover { background: #eee; }
+        .lang-switcher a.active { background: #2d6a4f; color: #fff; }
+        body { direction: rtl; text-align: right; }
+    </style>
+    <style>
+        .trees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .tree-card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 16px;
+            background: #fff;
+            border-left: 4px solid #52b788;
+        }
+        .tree-card h3 {
+            font-size: 1.05rem;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .tree-lat {
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+        .tree-he {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .tree-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .tree-tag {
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            background: #f0f7f4;
+            color: #2d6a4f;
+            border-radius: 3px;
+            border: 1px solid #c8e0d3;
+        }
+        .needs-fill {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff8e1;
+            border: 1px dashed #d4a843;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        .needs-fill strong { color: #8a6800; display: block; margin-bottom: 6px; }
+        .needs-fill ul { padding-left: 20px; color: #6a5500; }
+
+        .fertilizers-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5e0;
+        }
+        .fert-item {
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #fafaf6;
+            border-left: 3px solid #d4a843;
+            border-radius: 0 4px 4px 0;
+        }
+        .fert-item h4 { font-size: 1rem; color: #1a1a1a; margin-bottom: 4px; }
+        .fert-purpose { color: #555; font-size: 0.9rem; margin-top: 4px; }
+        .fert-targets {
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .npk-display {
+            font-family: monospace;
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .wip-banner {
+            background: #fff8e1;
+            border: 1px solid #d4a843;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            color: #6a5500;
+            font-size: 0.92rem;
+        }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+    <a href="../garden.html" >RU</a>
+    <a href="../en/garden.html" >EN</a>
+    <a href="../he/garden.html" class="active">HE</a>
+</div>
+    <div class="container">
+        <a href="index.html" class="nav-home">← → ראשי</a>
+
+        <header>
+            <h1>🌳 Сад — плодовые деревья</h1>
+            <p class="subtitle">Кацрин, Голан · 7 деревьев</p>
+        </header>
+
+        <div class="wip-banner">
+            🚧 Раздел в разработке. Базовые карточки деревьев — данные будут пополняться по мере наблюдений.
+        </div>
+
+        <h2>Деревья</h2>
+
+        <div class="trees-grid">
+            <div class="tree-card" id="avocado">
+                <h3>Авокадо</h3>
+<div class="tree-lat">Persea americana</div><div class="tree-he" dir="rtl">אבוקדו</div>
+                <div class="tree-meta">
+<span class="tree-tag">Субтропические плодовые</span><span class="tree-tag">Вечнозелёное</span>                </div>
+
+                <div class="needs-fill">
+                    <strong>📝 Заполнить:</strong>
+                    <ul>
+                        <li>возраст</li>
+                        <li>сорт</li>
+                        <li>местоположение в саду</li>
+                        <li>текущее состояние</li>
+                        <li>сезон цветения и сбора урожая</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tree-card" id="mango">
+                <h3>Манго</h3>
+<div class="tree-lat">Mangifera indica</div><div class="tree-he" dir="rtl">מנגו</div>
+                <div class="tree-meta">
+<span class="tree-tag">Тропические плодовые</span><span class="tree-tag">Вечнозелёное</span>                </div>
+
+                <div class="needs-fill">
+                    <strong>📝 Заполнить:</strong>
+                    <ul>
+                        <li>возраст</li>
+                        <li>сорт</li>
+                        <li>местоположение в саду</li>
+                        <li>текущее состояние</li>
+                        <li>сезон цветения и сбора урожая</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tree-card" id="persimmon">
+                <h3>Хурма</h3>
+<div class="tree-lat">Diospyros kaki</div><div class="tree-he" dir="rtl">אפרסמון</div>
+                <div class="tree-meta">
+<span class="tree-tag">Листопадные плодовые</span><span class="tree-tag">Листопадное</span>                </div>
+
+                <div class="needs-fill">
+                    <strong>📝 Заполнить:</strong>
+                    <ul>
+                        <li>возраст</li>
+                        <li>сорт (Hachiya / Fuyu / Sharon)</li>
+                        <li>местоположение в саду</li>
+                        <li>текущее состояние</li>
+                        <li>сезон цветения и сбора урожая</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tree-card" id="citrus">
+                <h3>Цитрусовое</h3>
+<div class="tree-lat">Citrus sp.</div><div class="tree-he" dir="rtl">הדר</div>
+                <div class="tree-meta">
+<span class="tree-tag">Субтропические плодовые</span><span class="tree-tag">Вечнозелёное</span>                </div>
+
+                <div class="needs-fill">
+                    <strong>📝 Заполнить:</strong>
+                    <ul>
+                        <li>какой именно цитрус (лимон / апельсин / мандарин / помело / клементин)</li>
+                        <li>возраст</li>
+                        <li>сорт</li>
+                        <li>местоположение в саду</li>
+                        <li>текущее состояние</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tree-card" id="nectarine">
+                <h3>Нектарин</h3>
+<div class="tree-lat">Prunus persica var. nucipersica</div><div class="tree-he" dir="rtl">נקטרינה</div>
+                <div class="tree-meta">
+<span class="tree-tag">Косточковые листопадные</span><span class="tree-tag">Листопадное</span>                </div>
+
+                <div class="needs-fill">
+                    <strong>📝 Заполнить:</strong>
+                    <ul>
+                        <li>возраст</li>
+                        <li>сорт</li>
+                        <li>местоположение в саду</li>
+                        <li>текущее состояние</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tree-card" id="peach">
+                <h3>Персик</h3>
+<div class="tree-lat">Prunus persica</div><div class="tree-he" dir="rtl">אפרסק</div>
+                <div class="tree-meta">
+<span class="tree-tag">Косточковые листопадные</span><span class="tree-tag">Листопадное</span>                </div>
+
+                <div class="needs-fill">
+                    <strong>📝 Заполнить:</strong>
+                    <ul>
+                        <li>возраст</li>
+                        <li>сорт</li>
+                        <li>местоположение в саду</li>
+                        <li>текущее состояние</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tree-card" id="grape">
+                <h3>Виноград</h3>
+<div class="tree-lat">Vitis vinifera</div><div class="tree-he" dir="rtl">גפן</div>
+                <div class="tree-meta">
+<span class="tree-tag">Лиановидные плодовые</span><span class="tree-tag">Листопадное</span>                </div>
+
+                <div class="needs-fill">
+                    <strong>📝 Заполнить:</strong>
+                    <ul>
+                        <li>сорт (столовый / винный)</li>
+                        <li>возраст</li>
+                        <li>тип шпалеры/опоры</li>
+                        <li>местоположение в саду</li>
+                        <li>текущее состояние</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="fertilizers-section">
+            <h2>Удобрения для сада</h2>
+
+            <div class="fert-item">
+                <h4>NPK 17-10-27</h4>
+                    <div class="npk-display">
+                        N 17 - P 10 - K 27
+                    </div>
+<div class="fert-purpose"><strong>Тип:</strong> Минеральное комплексное удобрение</div><div class="fert-purpose">Базовое сезонное удобрение для плодовых деревьев</div>            </div>
+            <div class="fert-item">
+                <h4>vgi_kf_10</h4>
+<div class="fert-purpose">В каталоге для дома KF-10 был оценён как избыточный (есть flower_bio_gel).
+Для сада — основное применение по словам производителя: овощи, травы,
+декоративные, плодовые деревья, цитрусы, виноградники, оливки, миндаль.
+Сертифицирован для органического земледелия (Израиль + US NOP).
+</div>                    <div class="fert-targets"><strong>Применение для:</strong> citrus, avocado, mango, persimmon, nectarine, peach, grape</div>
+                    <div class="fert-targets"><strong>Подробно:</strong> <a href="my-products.html">my-products.html</a> (fertilizers.additives.kf_10)</div>
+            </div>
+            <div class="fert-item">
+                <h4>vgi_kf_macroboost</h4>
+<div class="fert-purpose">Калийная добавка с L-пролином, заявлена работа на холоде.
+Для сада в Кацрине — особенно полезен зимой и в холодные периоды.
+Применять для усиления цветения и плодоношения.
+</div>                    <div class="fert-targets"><strong>Применение для:</strong> all_fruiting_trees</div>
+                    <div class="fert-targets"><strong>Подробно:</strong> <a href="my-products.html">my-products.html</a> (fertilizers.additives.kf_macroboost)</div>
+            </div>
+            <div class="fert-item">
+                <h4>vgi_kf_garden_balcony</h4>
+<div class="fert-purpose">Полноценное минеральное удобрение для контейнеров.
+Применимо для деревьев в горшках на участке (если есть).
+</div>                    <div class="fert-targets"><strong>Применение для:</strong> container_plants</div>
+                    <div class="fert-targets"><strong>Подробно:</strong> <a href="my-products.html">my-products.html</a> (fertilizers.additives.kf_garden_balcony)</div>
+            </div>
+            <div class="fert-item">
+                <h4>vgi_kf_guard</h4>
+<div class="fert-purpose">Универсальное масло нима 40% — работает и в саду, и дома.
+Профилактика от тли, паутинного клеща, щитовки, белокрылки на деревьях.
+</div>                    <div class="fert-targets"><strong>Применение для:</strong> all_trees</div>
+                    <div class="fert-targets"><strong>Подробно:</strong> <a href="my-products.html">my-products.html</a> (fertilizers.additives.kf_guard)</div>
+            </div>
+            <div class="fert-item">
+                <h4>vgi_kf_iron</h4>
+<div class="fert-purpose">Хелатное железо. На странице производителя в suitable_for прямо
+указаны "плодовые деревья" и "домашние сады". В Кацрине почвы могут
+быть щелочными → железо иногда блокируется.
+</div>                    <div class="fert-targets"><strong>Применение для:</strong> citrus, avocado</div>
+                    <div class="fert-targets"><strong>Подробно:</strong> <a href="my-products.html">my-products.html</a> (fertilizers.additives.kf_iron)</div>
+            </div>
+            <div class="fert-item">
+                <h4>vgi_kf_serfico</h4>
+<div class="fert-purpose">Биостимулятор укоренения. Для сада — при посадке новых саженцев
+и для восстановления после пересадки/обрезки.
+</div>                    <div class="fert-targets"><strong>Применение для:</strong> new_plantings</div>
+                    <div class="fert-targets"><strong>Подробно:</strong> <a href="my-products.html">my-products.html</a> (fertilizers.additives.kf_serfico)</div>
+            </div>
+        </div>
+
+        <footer style="margin-top:30px; padding-top:20px; border-top:1px solid #eee; text-align:center; color:#888; font-size:0.85rem;">
+            <p>Plants Database v3.0 | PWA Ready</p>
+        </footer>
+    </div>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(function(reg) { console.log('[PWA] SW registered, scope:', reg.scope); })
+                .catch(function(err) { console.log('[PWA] SW registration failed:', err); });
+        });
+    }
+</script>
+</body>
+</html>
