@@ -1277,6 +1277,7 @@ ppm_limits:
 
 category_mapping:
   aroids: group_b
+  aroids_variegated: group_v
   sensitive: group_a
   orchids: group_a
   carnivorous: special
@@ -1336,6 +1337,28 @@ feeding_matrix:
       ecogan_multicote: forbidden
       atami_calmag: "base water additive in RO system"
       dynomyco_spark: "restricted (reduce frequency)"
+
+  # Variegated aroids (Monstera albo/aurea, Philodendron Pink Princess, Syngonium Mojito).
+  # Rules from water-requirements.yaml group_v notes:
+  # - Высокий N → потеря белизны (больше зелёных листьев) → Universal только урезанной дозой
+  # - "Стероиды" / повышенный PPM не применять
+  # - Multicote (slow-release N) запрещён всегда — N со временем убивает вариегатность
+  # - KF-IRON осторожно (тёмные пятна на белых) — не в matrix, в additives
+  # - KF-MACROBOOST не применять — не в matrix, в additives
+  # TODO Юра: ревьюишь дозировки если что-то не так.
+  aroids_variegated:
+    growth:
+      flower_universal: "restricted (1/4 dose) — снижаем N, иначе теряется вариегатность"
+      flower_flowering: "restricted (1/4 dose, only when actively blooming) — N даже в цветении опасен"
+      ecogan_multicote: forbidden
+      atami_calmag: "base water additive in RO system"
+      dynomyco_spark: "allowed (transplant / rooting only, not routine)"
+    slow:
+      flower_universal: "restricted (1/4 dose)"
+      flower_flowering: forbidden
+      ecogan_multicote: forbidden
+      atami_calmag: "base water additive in RO system"
+      dynomyco_spark: forbidden
 
   sensitive:
     growth:

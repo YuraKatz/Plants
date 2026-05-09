@@ -112,6 +112,44 @@ def check_cross_references():
                 f'plants.yaml: {pid} references missing soil mix number: {mix_num}'
             )
 
+    # plants.yaml feeding_group -> fertilizers.yaml feeding_matrix
+    # (this is the bug that crashed plants-catalog.html: aroids_variegated was used
+    # in plants but absent from feeding_matrix, JS forEach died on undefined.)
+    fert = load_yaml(DATA_DIR / 'fertilizers.yaml')
+    feeding_matrix = fert.get('feeding_matrix', {})
+    for pid, p in plants.items():
+        fg = p.get('feeding_group')
+        if fg and fg not in feeding_matrix:
+            errors.append(
+                f'plants.yaml: {pid} feeding_group "{fg}" missing from fertilizers.yaml feeding_matrix '
+                f'(known groups: {sorted(feeding_matrix.keys())}). '
+                f'This crashes plants-catalog.html JS rendering.'
+            )
+
+    # plants.yaml water_group -> water-requirements.yaml water_groups
+    water_groups_defs = water_req.get('water_groups', {})
+    # 'special' is reserved for dionaea (carnivorous), no water group needed
+    valid_water_groups = set(water_groups_defs.keys()) | {'special'}
+    for pid, p in plants.items():
+        wg = p.get('water_group')
+        if wg and wg not in valid_water_groups:
+            errors.append(
+                f'plants.yaml: {pid} water_group "{wg}" not defined in water-requirements.yaml '
+                f'(known groups: {sorted(valid_water_groups)})'
+            )
+
+    # category_mapping (feeding_group -> water_group) — sanity check
+    category_mapping = fert.get('category_mapping', {})
+    for fg, wg in category_mapping.items():
+        if fg not in feeding_matrix:
+            errors.append(
+                f'fertilizers.yaml: category_mapping has "{fg}" but it is not defined in feeding_matrix'
+            )
+        if wg not in valid_water_groups:
+            errors.append(
+                f'fertilizers.yaml: category_mapping {fg} -> "{wg}" but that water_group is not defined'
+            )
+
     return errors
 
 
