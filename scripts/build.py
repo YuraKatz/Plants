@@ -306,7 +306,7 @@ class SiteBuilder:
         asset_root = '' if self._current_lang == 'ru' else '../'
         return {
             't': self._current_t,
-            't_json': json.dumps(self._current_t, ensure_ascii=False),
+            't_json': json.dumps(self._current_t, ensure_ascii=False, default=str),
             'lang': self._current_lang,
             'dir': 'rtl' if self._current_lang == 'he' else '',
             'lang_links': self._lang_links(page_name),
@@ -576,9 +576,9 @@ class SiteBuilder:
             'settings': self.fert_settings,
             'feeding_matrix': self.feeding_matrix,
             'plants': catalog_plants,
-        }, ensure_ascii=False, indent=2)
+        }, ensure_ascii=False, indent=2, default=str)
         ctx['images_json'] = json.dumps(self._images_for_lang(), ensure_ascii=False, indent=2)
-        ctx['canister_json'] = json.dumps(canister_map, ensure_ascii=False, indent=2)
+        ctx['canister_json'] = json.dumps(canister_map, ensure_ascii=False, indent=2, default=str)
         html = self.env.get_template('pages/plants-catalog.html').render(**ctx)
         self._write('plants-catalog.html', html)
 
@@ -609,7 +609,7 @@ class SiteBuilder:
             'settings': self.fert_settings,
             'feeding_matrix': self.feeding_matrix,
             'plants': plants_feeding,
-        }, ensure_ascii=False, indent=2)
+        }, ensure_ascii=False, indent=2, default=str)
         ctx['images_json'] = json.dumps(self._images_for_lang(), ensure_ascii=False, indent=2)
         html = self.env.get_template('pages/feeding-guide.html').render(**ctx)
         self._write('feeding-guide.html', html)
@@ -754,9 +754,9 @@ class SiteBuilder:
                 'diagnostics': diag_list,
             }
 
-        ctx['plants_json'] = json.dumps(problem_plants, ensure_ascii=False, indent=2)
+        ctx['plants_json'] = json.dumps(problem_plants, ensure_ascii=False, indent=2, default=str)
         ctx['images_json'] = json.dumps(self._images_for_lang(), ensure_ascii=False, indent=2)
-        ctx['diagnostics_json'] = json.dumps(diagnostics, ensure_ascii=False, indent=2)
+        ctx['diagnostics_json'] = json.dumps(diagnostics, ensure_ascii=False, indent=2, default=str)
         html = self.env.get_template('pages/plant-problems.html').render(**ctx)
         self._write('plant-problems.html', html)
 
@@ -821,8 +821,8 @@ class SiteBuilder:
         for pid, p in self._current_plants.items():
             tracker_plants[pid] = self._plant_entry(pid, p)
             
-        ctx['plants_json'] = json.dumps(tracker_plants, ensure_ascii=False, indent=2)
-        ctx['t_json'] = json.dumps(t, ensure_ascii=False, indent=2)
+        ctx['plants_json'] = json.dumps(tracker_plants, ensure_ascii=False, indent=2, default=str)
+        ctx['t_json'] = json.dumps(t, ensure_ascii=False, indent=2, default=str)
         
         html = self.env.get_template('pages/watering-tracker.html').render(**ctx)
         self._write('watering-tracker.html', html)
@@ -923,7 +923,7 @@ def _generate_api_json(b):
 
     def write_json(name, data):
         (api_dir / name).write_text(
-            json.dumps(data, ensure_ascii=False, indent=2),
+            json.dumps(data, ensure_ascii=False, indent=2, default=str),
             encoding='utf-8'
         )
         print(f'  [OK] api/{name}')
